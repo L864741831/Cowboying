@@ -9,6 +9,6 @@
         android:id="@+id/first_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="第一个网页" />
+        android:text="第四个acticity" />
 
 </RelativeLayout>

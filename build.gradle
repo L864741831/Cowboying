@@ -29,7 +29,7 @@ subprojects {
 
 
 ext {
-    supportlib_version = '26.+'
+    supportlib_version = '27.1.1'
 
 }
 allprojects {
