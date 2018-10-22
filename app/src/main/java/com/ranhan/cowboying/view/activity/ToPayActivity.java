@@ -26,6 +26,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
+/**
+ * 支付页面
+ */
 public class ToPayActivity extends BaseActivity {
 
     @Bind(R.id.aplily_pay)

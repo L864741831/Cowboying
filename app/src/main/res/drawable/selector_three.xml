@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/use" android:state_checked="true" />
-    <item android:drawable="@drawable/use" android:state_pressed="true" />
-    <item android:drawable="@drawable/useh" />
+    <item android:drawable="@drawable/cowboy" android:state_checked="true" />
+    <item android:drawable="@drawable/cowboy" android:state_pressed="true" />
+    <item android:drawable="@drawable/cowboyh" />
 </selector>

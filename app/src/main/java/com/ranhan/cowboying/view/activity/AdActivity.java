@@ -34,8 +34,8 @@ public class AdActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            countNum();
             if (continueCount) {
+                countNum();
                 handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
             }
         }

@@ -24,6 +24,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
+/**
+ * 登录页面
+ */
 public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.aplily_login)

@@ -1,17 +1,15 @@
 package com.ranhan.cowboying.view.activity;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ranhan.cowboying.R;
 import com.ranhan.cowboying.adapter.MainFragmentAdapter;
-import com.ranhan.cowboying.view.fragment.FourFragment;
 import com.ranhan.cowboying.view.fragment.HomeFragment;
 import com.ranhan.cowboying.view.fragment.SecondFragment;
 import com.ranhan.cowboying.view.fragment.ThreeFragment;
@@ -23,6 +21,9 @@ import butterknife.ButterKnife;
 import rxfamily.view.BaseActivity;
 import rxfamily.view.BaseFragment;
 
+/**
+ * 主页面
+ */
 public class MainActivity extends BaseActivity {
 
     @Bind(R.id.bnve)
@@ -44,29 +45,27 @@ public class MainActivity extends BaseActivity {
         bnve.enableAnimation(false);
         bnve.enableShiftingMode(false);
         bnve.enableItemShiftingMode(false);
-        bnve.setTextSize(13);
-        bnve.setIconSize(20,20);
-        bnve.setIconsMarginTop(20);
+        bnve.setTextSize(12);
+        bnve.setIconSize(30,30);
+        bnve.setIconsMarginTop(13);
         bnve.setItemIconTintList(null);
-//        bnve.setTypeface(Typeface.MONOSPACE);
         fragments=new ArrayList<>();
         HomeFragment homeFragment=new HomeFragment();
         SecondFragment secondFragment=new SecondFragment();
         ThreeFragment threeFragment=new ThreeFragment();
-        FourFragment fourFragment=new FourFragment();
         fragments.add(homeFragment);
         fragments.add(secondFragment);
         fragments.add(threeFragment);
-        fragments.add(fourFragment);
-
 
         MainFragmentAdapter mAdpter = new MainFragmentAdapter(getSupportFragmentManager(),fragments);
         vp.setAdapter(mAdpter);
         bnve.setupWithViewPager(vp);
+
+        // TODO: 2018/10/15 网络请求 版本升级
+//        startActivity(UpdateVersionDialog.class);
     }
 
     private void initEvent() {
-        // set listener to do something then item selected
         bnve.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -45,7 +45,7 @@ public class BaseActivity extends RxAppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.staduss);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.black);
         if (mAllowFullScreen) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
