@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ranhan.cowboying.R;
+import com.ranhan.cowboying.view.activity.ContactUsActivity;
 import com.ranhan.cowboying.view.activity.InviteFriendActivity;
 import com.ranhan.cowboying.view.activity.PersonalInformationActivity;
 import com.ranhan.cowboying.view.activity.SetUpActivity;
@@ -120,7 +121,7 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.please_codeId:
                 //邀请码
-
+                startActivity(InviteFriendActivity.class);
                 break;
             case R.id.get_goods_codeId:
                 //取货码
@@ -180,7 +181,7 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.tell_us_id_rv:
                 //联系我们
-
+                startActivity(ContactUsActivity.class);
                 break;
             default:
                 break;

@@ -15,9 +15,13 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
     <RelativeLayout
         android:background="@drawable/shape_search_md_edit_bg"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -102,6 +106,7 @@
                 />
         </LinearLayout>
         <TextView
+            android:id="@+id/btn_share_wechat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
            android:drawableTop="@mipmap/invite_wechat"
@@ -114,6 +119,7 @@
             android:layout_marginTop="30dp"
             />
         <TextView
+            android:id="@+id/btn_share_wechat_quan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/invite_wechat_quan"
@@ -126,6 +132,7 @@
             android:layout_marginTop="30dp"
             />
         <TextView
+            android:id="@+id/btn_share_or_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/invite_or_code"
@@ -140,6 +147,12 @@
             android:layout_marginBottom="23dp"
             />
     </RelativeLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/invite_top_1"
+                    />
+            </FrameLayout>
 
     <RelativeLayout
         android:background="@drawable/shape_search_md_edit_bg"

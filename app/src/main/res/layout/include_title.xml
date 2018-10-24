@@ -18,7 +18,7 @@
         android:id="@+id/action_new_question_tv"
         android:layout_width="wrap_content" android:textSize="14sp"
         android:layout_height="wrap_content" android:layout_centerVertical="true"
-        android:layout_alignParentRight="true" android:textColor="@color/black"
+        android:layout_alignParentRight="true" android:textColor="@color/white"
         android:text="注册" android:visibility="gone" />
 
 </RelativeLayout>

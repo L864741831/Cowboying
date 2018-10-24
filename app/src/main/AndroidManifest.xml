@@ -101,12 +101,12 @@
         <activity android:name=".view.activity.PersonalInformationActivity" />
         <activity android:name=".view.activity.SetUpActivity"></activity>
         <activity android:name=".view.activity.InviteFriendActivity"/>
-        <activity android:name=".view.activity.SetUpActivity" />
         <activity android:name=".view.activity.ModifyPwdActivity" />
         <activity android:name=".view.activity.NormalQuestionActivity" />
         <activity android:name=".view.activity.OptionReturnActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.MyFeedbackActivity"/>
+        <activity android:name=".view.activity.ContactUsActivity"/>
     </application>
 
 </manifest>
