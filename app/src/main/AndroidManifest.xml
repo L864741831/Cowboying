@@ -100,6 +100,7 @@
             android:theme="@style/myTransparent" />
         <activity android:name=".view.activity.PersonalInformationActivity" />
         <activity android:name=".view.activity.SetUpActivity"></activity>
+        <activity android:name=".view.activity.InviteFriendActivity"/>
     </application>
 
 </manifest>

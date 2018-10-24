@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ranhan.cowboying.R;
+import com.ranhan.cowboying.view.activity.InviteFriendActivity;
 import com.ranhan.cowboying.view.activity.PersonalInformationActivity;
 import com.ranhan.cowboying.view.activity.SetUpActivity;
 
@@ -114,38 +115,72 @@ public class ThreeFragment extends BaseFragment {
                 startActivity(PersonalInformationActivity.class);
                 break;
             case R.id.pay_money_codeId:
+                //付款码
+
                 break;
             case R.id.please_codeId:
+                //邀请码
+
                 break;
             case R.id.get_goods_codeId:
+                //取货码
+
                 break;
             case R.id.all_order_id:
+                //商城订单
+
                 break;
             case R.id.wait_to_pay_id:
+                //待付款
+
                 break;
             case R.id.wait_to_delevery_id:
+                //待发货
+
                 break;
             case R.id.wait_get_goods_id:
+                //待收货
+
                 break;
             case R.id.wait_push_goods_id:
+                //待提货
+
                 break;
             case R.id.me_cattle_rv:
+                //我的牛只
+
                 break;
             case R.id.cattle_oder_rv:
+                //拼牛订单
+
                 break;
             case R.id.all_money_rv:
+                //总资产
+
                 break;
             case R.id.beef_house_rv:
+                //牛肉仓库
+
                 break;
             case R.id.write_money_rv:
+                //白条额度
+
                 break;
             case R.id.coupon_num_rv:
+                //优惠券
+
                 break;
             case R.id.contract_id_rv:
+                //我的合同
+
                 break;
             case R.id.invite_friend_id_rv:
+                //邀请好友
+                startActivity(InviteFriendActivity.class);
                 break;
             case R.id.tell_us_id_rv:
+                //联系我们
+
                 break;
             default:
                 break;

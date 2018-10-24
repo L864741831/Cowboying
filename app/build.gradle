@@ -67,7 +67,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$supportlib_version"
     implementation "com.android.support:recyclerview-v7:$supportlib_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
@@ -76,7 +76,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':rxfamily')
     implementation 'com.github.orhanobut:hawk:1.23'
-
     /**
      * 网络加载图，加载失败，空白页
      * https://github.com/qyxxjd/MultipleStatusView
@@ -90,7 +89,6 @@ dependencies {
      * 此处以JCore 1.2.5 版本为例。
      */
     implementation 'cn.jiguang.sdk:jcore:1.2.5'
-
     /**
      * 支付宝支付，授权登录
      */
@@ -99,10 +97,8 @@ dependencies {
      * 微信支付，授权登录
      */
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-
     implementation 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.kyleduo.switchbutton:library:1.4.4'
-
 }
