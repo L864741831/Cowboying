@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color><!--透明色 -->
-    <color name="staduss">#303F9F</color>
+    <color name="staduss">#1B1919</color>
     <color name="homef7">#F7F7F7</color>
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#FFFFF0</color><!--象牙色 -->

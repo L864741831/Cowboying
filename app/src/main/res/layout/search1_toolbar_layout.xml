@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search2_id"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp" android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp" android:layout_gravity="center_vertical">
+            <EditText
+                android:id="@+id/et_write_id1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" android:paddingRight="35dp"
+                android:drawablePadding="5dp" android:paddingLeft="2dp"
+                android:textColorHint="@color/gray"
+                android:background="@drawable/shape_home_item"
+                android:textSize="12sp" android:textColor="@color/gray"
+                android:imeOptions="actionSearch"
+                android:inputType="text" android:singleLine="true"
+                android:maxLines="1"/>
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"  android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" android:layout_marginRight="27dp"
+                android:id="@+id/cancle_img1" android:src="@mipmap/circle_delete" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

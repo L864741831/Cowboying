@@ -17,10 +17,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import rxfamily.R;
 import rxfamily.utils.StatusBarUtils;
-
-
 public class BaseActivity extends RxAppCompatActivity{
 
     /**
@@ -41,11 +42,11 @@ public class BaseActivity extends RxAppCompatActivity{
     private TextView titleSubTv;
     private Boolean hasMenu = false;
     private int menuLayout;
-
+    private MaterialDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.black);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.staduss);
         if (mAllowFullScreen) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
@@ -59,6 +60,23 @@ public class BaseActivity extends RxAppCompatActivity{
         }
     }
 
+    public void initDialog() {
+        loadingDialog = new MaterialDialog.Builder(BaseActivity.this)
+                .progress(true, 0)
+                .canceledOnTouchOutside(false)
+                .build();
+    }
+    public void showLoadings() {
+        if (loadingDialog != null && !loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
+    }
+
+    public void dismissLoading() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+    }
     /**
      * [沉浸状态栏]
      */

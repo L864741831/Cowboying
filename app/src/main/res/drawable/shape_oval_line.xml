@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!--筛选界面的小按钮的样式-->
+    <!-- 圆角 -->
+    <corners android:radius="5dp" /> <!-- 设置四个角的半径 -->
+    <solid android:color="@color/white"/>
+    <stroke
+        android:width="4px"
+        android:color="@color/homef7"/>
+</shape>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.OptionReturnActivity" android:background="@color/white">
+    <include layout="@layout/include_title"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <EditText
+                android:maxLength="300" android:padding="10dp"
+                android:textSize="15sp"
+                android:id="@+id/et_opinion" android:layout_width="match_parent"
+                android:layout_height="160dp" android:background="@drawable/shape_oval_line"
+                android:gravity="top" android:hint="您的宝贵意见，就是我们进步的源泉"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:textSize="12sp"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:text="请详细描述您的遇到问题，有助于我们快速定位并解决问题，或留下您宝贵的建议或意见，我们会认真进行评估!"
+                android:lineSpacingExtra="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/show_num_id"
+                android:layout_height="wrap_content" android:text="上传图片（0/5）"
+                android:textColor="@color/black" android:layout_marginTop="20dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content" android:id="@+id/ry_img_id"
+                android:layout_height="wrap_content" android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="wrap_content" android:id="@+id/btn_id"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                android:src="@mipmap/optionbtn" android:layout_marginTop="50dp" />
+            <ImageView
+                android:layout_width="wrap_content" android:id="@+id/me_option_btn"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                android:src="@mipmap/meoption" android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -175,5 +175,5 @@ dependencies {
      * https://github.com/tbruyelle/RxPermissions
      */
     api  'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
-
+    api 'com.afollestad.material-dialogs:core:0.9.4.4'
 }

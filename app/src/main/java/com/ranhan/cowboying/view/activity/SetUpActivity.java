@@ -1,5 +1,7 @@
 package com.ranhan.cowboying.view.activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -8,8 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.dialog.widget.MaterialDialog;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.ranhan.cowboying.R;
+import com.ranhan.cowboying.utils.CleanDataUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +54,6 @@ public class SetUpActivity extends BaseActivity {
     RelativeLayout releaseCacheRv;
     @Bind(R.id.unlogin_rv)
     RelativeLayout unloginRv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,18 @@ public class SetUpActivity extends BaseActivity {
 
             }
         });
+        getVersionCode();
+
+        try {
+            String totalCacheSize = CleanDataUtils.getTotalCacheSize(this);
+            releaseCacheTxt.setText(totalCacheSize);
+        } catch (Exception e) {
+        }
+
+        initDialog();
     }
+
+
 
     @OnClick({R.id.accout_securty_id, R.id.modify_pwd_rv, R.id.option_return_rv, R.id.nomal_question_rv, R.id.release_cache_rv,R.id.back_id,R.id.unlogin_rv})
     public void onViewClicked(View view) {
@@ -87,17 +101,44 @@ public class SetUpActivity extends BaseActivity {
             case R.id.accout_securty_id:
                 break;
             case R.id.modify_pwd_rv:
+                startActivity(ModifyPwdActivity.class);
                 break;
             case R.id.option_return_rv:
+                startActivity(OptionReturnActivity.class);
                 break;
             case R.id.nomal_question_rv:
+                startActivity(NormalQuestionActivity.class);
                 break;
             case R.id.release_cache_rv:
+                try {
+                    showLoadings();
+                    if(CleanDataUtils.clearAllCache(SetUpActivity.this)){
+                       Toast.makeText(SetUpActivity.this,"缓存清除成功~",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(SetUpActivity.this,"缓存清除失败~",Toast.LENGTH_SHORT).show();
+                    }
+                    String size = CleanDataUtils.getTotalCacheSize(SetUpActivity.this);
+                    releaseCacheTxt.setText(size);
+                    dismissLoading();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.unlogin_rv:
                 break;
             default:
                 break;
+        }
+    }
+
+    public void getVersionCode() {
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            String versionName = packageInfo.versionName;
+            versionCodeTxt.setText("版本"+versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
