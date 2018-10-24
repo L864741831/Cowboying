@@ -1,6 +1,8 @@
 package com.ranhan.cowboying.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -19,27 +21,22 @@ import rxfamily.bean.BaseBean;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class OptionReturnImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
+public class MyFeedbackImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
 
     private Context mContext;
-    public OptionReturnImgAdapter(Context context, List<BaseBean> list,int layout){
+    public MyFeedbackImgAdapter(Context context, List<BaseBean> list, int layout){
         super(layout, list);
         this.mContext=context;
     }
     @Override
     protected void convert(BaseViewHolder helper, BaseBean item) {
+
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
+        helper.setVisible(R.id.close_id,false);
         ImageView imageView= helper.getView(R.id.upload_img);
-        if(helper.getAdapterPosition()==0){
-            imageView.setImageResource(R.mipmap.uploadphotoimg);
-            helper.setVisible(R.id.close_id,false);
-        }else {
-            Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
-        }
-        helper.addOnClickListener(R.id.close_id);
-        helper.addOnClickListener(R.id.upload_img);
+        Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
     }
 }
