@@ -2,11 +2,11 @@
 
 buildscript {
     repositories {
-        google()
+        jcenter()
         mavenCentral()
         // 添加MobSDK的maven地址
         maven { url "http://mvn.mob.com/android" }
-        jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
@@ -35,7 +35,6 @@ ext {
 allprojects {
     repositories {
         google()
-        //需要添加的部分 解决glide4.3.1引入的问题
         maven { url "https://maven.google.com"}
         maven { url "https://jitpack.io"}
         mavenCentral()

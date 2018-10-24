@@ -1,112 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:context=".view.activity.PersonalInformationActivity">
-    <include layout="@layout/include_title"/>
-    <RelativeLayout
-        android:layout_width="match_parent" android:id="@+id/see_head"
-        android:layout_height="45dp"  android:background="@color/white"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="头像"
-            android:textColor="@color/black" android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp" />
-        <ImageView
-            android:layout_width="30dp" android:id="@+id/backs_id"
-            android:layout_height="30dp" android:src="@mipmap/enterright"
-            android:layout_centerVertical="true" android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="34dp"
-            android:layout_height="34dp" android:layout_centerVertical="true"
-            android:src="@mipmap/meheaddefalut" android:layout_toLeftOf="@+id/backs_id"/>
-
-    </RelativeLayout>
-    <View style="@style/line1"/>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp" android:id="@+id/nickname_rv"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:textColor="@color/black"
-            android:text="昵称" android:layout_marginLeft="30dp"
-            android:textSize="13sp" android:layout_centerVertical="true"/>
+        android:layout_height="match_parent" android:orientation="vertical">
+        <include layout="@layout/include_title"/>
+        <RelativeLayout
+            android:layout_width="match_parent" android:id="@+id/see_head"
+            android:layout_height="45dp"  android:background="@color/white"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="头像"
+                android:textColor="@color/black" android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp" />
+            <ImageView
+                android:layout_width="30dp" android:id="@+id/backs_id"
+                android:layout_height="30dp" android:src="@mipmap/enterright"
+                android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="34dp"
+                android:layout_height="34dp" android:layout_centerVertical="true"
+                android:src="@mipmap/meheaddefalut" android:layout_toLeftOf="@+id/backs_id"/>
 
-        <TextView
-            android:layout_width="wrap_content" android:id="@+id/nickname_txt"
-            android:layout_height="wrap_content" android:text="只"
-            android:textSize="13sp"
-            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-            android:gravity="center" android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
-        <View
-            style="@style/line1" android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <View style="@style/line1"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp" android:id="@+id/nickname_rv"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:text="昵称" android:layout_marginLeft="30dp"
+                android:textSize="13sp" android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/nickname_txt"
+                android:layout_height="wrap_content" android:text="只"
+                android:textSize="13sp"
+                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                android:gravity="center" android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+            <View
+                style="@style/line1" android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp" android:id="@+id/bind_phone_rv"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/bind_phone_stadus"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:text="未绑定手机号" android:layout_marginLeft="30dp"
+                android:textSize="13sp" android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/bind_phone_txt"
+                android:layout_height="wrap_content" android:text="去绑定"
+                android:textSize="13sp"
+                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                android:gravity="center" android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+            <View
+                style="@style/line1" android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp" android:id="@+id/real_info_rv"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/real_info_stadus"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:text="实名信息" android:layout_marginLeft="30dp"
+                android:textSize="13sp" android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/real_info_txt"
+                android:layout_height="wrap_content" android:text="未认证"
+                android:textSize="13sp" android:textColor="@color/red"
+                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                android:gravity="center" android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+            <View
+                style="@style/line1" android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp" android:id="@+id/modify_pwd_rv"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:text="修改密码" android:layout_marginLeft="30dp"
+                android:textSize="13sp" android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                android:gravity="center" android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+            <View
+                style="@style/line1" android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/modify_nickname_rv"
+        android:layout_height="match_parent" android:background="@color/colordialog"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"    android:orientation="vertical"
+            android:background="@drawable/cicle_write_bg" android:layout_centerInParent="true">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/title_txt_id"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:text="昵称" android:textSize="14sp" android:layout_gravity="center"
+                android:layout_marginTop="10dp" android:layout_marginBottom="15dp"/>
+            <include layout="@layout/search_toolbar_layout"/>
+            <include layout="@layout/search1_toolbar_layout"/>
+
+            <TextView
+                android:layout_width="match_parent" android:id="@+id/modify_btn"
+                android:layout_height="30dp" android:textColor="@color/white"
+                android:textSize="14sp" android:text="修改" android:layout_marginTop="20dp"
+                android:background="@drawable/shape_oval_btn" android:gravity="center"
+                android:layout_marginLeft="60dp" android:layout_marginRight="60dp"
+                android:layout_marginBottom="30dp"/>
+
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp" android:id="@+id/bind_phone_rv"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content" android:id="@+id/bind_phone_stadus"
-            android:layout_height="wrap_content" android:textColor="@color/black"
-            android:text="未绑定手机号" android:layout_marginLeft="30dp"
-            android:textSize="13sp" android:layout_centerVertical="true"/>
+        android:layout_width="match_parent" android:id="@+id/show_realinfo_rv"
+        android:layout_height="match_parent" android:background="@color/colordialog"
+        android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content" android:id="@+id/bind_phone_txt"
-            android:layout_height="wrap_content" android:text="去绑定"
-            android:textSize="13sp"
-            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-            android:gravity="center" android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
-        <View
-            style="@style/line1" android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp" android:id="@+id/real_info_rv"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content" android:id="@+id/real_info_stadus"
-            android:layout_height="wrap_content" android:textColor="@color/black"
-            android:text="实名信息" android:layout_marginLeft="30dp"
-            android:textSize="13sp" android:layout_centerVertical="true"/>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"    android:orientation="vertical"
+            android:background="@drawable/cicle_write_bg" android:layout_centerInParent="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:text="实名信息" android:layout_gravity="center"
+                android:layout_marginTop="10dp" android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:layout_width="wrap_content" android:id="@+id/real_info_txt"
-            android:layout_height="wrap_content" android:text="未认证"
-            android:textSize="13sp" android:textColor="@color/red"
-            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-            android:gravity="center" android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
-        <View
-            style="@style/line1" android:layout_alignParentBottom="true"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/name_txt_id"
+                android:layout_height="wrap_content" android:text="姓名:"
+                android:layout_marginLeft="15dp" android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/code_txt_id"
+                android:layout_height="wrap_content" android:text="身份证号："
+                android:layout_marginLeft="15dp" android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp" android:textColor="@color/black"/>
+        </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp" android:id="@+id/modify_pwd_rv"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:textColor="@color/black"
-            android:text="修改密码" android:layout_marginLeft="30dp"
-            android:textSize="13sp" android:layout_centerVertical="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-            android:gravity="center" android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
-        <View
-            style="@style/line1" android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-</LinearLayout>
+</FrameLayout>
