@@ -99,7 +99,8 @@
             android:name=".view.activity.UpdateVersionDialog"
             android:theme="@style/myTransparent" />
         <activity android:name=".view.activity.PersonalInformationActivity" />
-        <activity android:name=".view.activity.SetUpActivity" />
+        <activity android:name=".view.activity.SetUpActivity"></activity>
+        <activity android:name=".view.activity.InviteFriendActivity"/>
         <activity android:name=".view.activity.ModifyPwdActivity" />
         <activity android:name=".view.activity.NormalQuestionActivity" />
         <activity
@@ -107,6 +108,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.activity.MyFeedbackActivity" />
         <activity android:name=".view.activity.AccoutSecurityActivity"></activity>
+        <activity android:name=".view.activity.ContactUsActivity"/>
     </application>
 
 </manifest>

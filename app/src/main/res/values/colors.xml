@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1B1919</color>
-    <color name="colorPrimaryDark">#1B1919</color>
-    <color name="colorAccent">#1B1919</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
     <color name="colorGold">#CEB891</color>
     <color name="colorline">#E0E0E0</color>
     <color name="colorhome">#F3F3F3</color>
+    <color name="colorGold_1">#B7894E</color>
+    <color name="wenzi_hei">#1B1919</color>
+    <color name="wenzi_hei_2">#515151</color>
     <color name="colordialog">#70000000</color>
 
 </resources>
