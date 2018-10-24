@@ -13,19 +13,19 @@
             android:layout_width="wrap_content" android:id="@+id/response_stadus_id"
             android:layout_height="wrap_content" android:background="@drawable/shape_oval_btn"
             android:text="已回复" android:textColor="@color/white"
-            android:textSize="12sp"  android:paddingLeft="5dp"
+            android:textSize="11sp"  android:paddingLeft="5dp"
             android:paddingTop="3dp" android:paddingBottom="5dp"
             android:paddingRight="5dp"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/time_show_id"
             android:layout_height="wrap_content" android:text="2016-2-1"
-            android:layout_alignParentRight="true" android:textSize="12sp"
+            android:layout_alignParentRight="true" android:textSize="11sp"
             android:textColor="@color/txthui"/>
 
     </RelativeLayout>
     <TextView
         android:layout_width="wrap_content" android:id="@+id/question_txt_id"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" android:textSize="14sp"
         android:text="亲，我买的牛肉想退换货怎么弄？" android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp" android:layout_marginRight="10dp"/>
 
@@ -41,11 +41,12 @@
             android:layout_width="wrap_content" android:id="@+id/response_nane_id"
             android:layout_height="wrap_content" android:textColor="@color/black"
             android:text="口袋牧场回复:" android:layout_toRightOf="@+id/icon_response_id"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp" android:textSize="14sp"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/response_info_id"
             android:layout_height="wrap_content" android:text="您的牛肉已出仓库，请到附近的实体店兑换"
-            android:layout_below="@+id/response_nane_id" android:layout_marginTop="10dp"/>
+            android:layout_below="@+id/response_nane_id" android:layout_marginTop="10dp"
+            android:textSize="14sp"/>
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content" android:id="@+id/ry_id"

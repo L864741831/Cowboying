@@ -1,9 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent" android:background="@color/white"
+    android:layout_height="match_parent" android:orientation="vertical"
     tools:context=".view.activity.AccoutSecurityActivity">
+    <include layout="@layout/include_title"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp" >
 
-</android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="手机号" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/setphone" android:gravity="center_vertical"
+                    android:drawablePadding="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/phone_txt_id"
+                    android:layout_height="wrap_content" android:text="187****1121"
+                    android:layout_alignParentRight="true" android:layout_marginRight="17dp"
+                    android:gravity="center_vertical" android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/replacebinds" android:drawablePadding="10dp" />
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="微信" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/setweixin" android:gravity="center_vertical"
+                    android:drawablePadding="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/weixin_stadus_id"
+                    android:layout_height="wrap_content" android:text="已绑定"
+                    android:layout_alignParentRight="true" android:layout_marginRight="17dp"
+                    android:gravity="center_vertical" android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/unbinds" android:drawablePadding="10dp" />
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="支付宝" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/setzfb" android:gravity="center_vertical"
+                    android:drawablePadding="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/zfb_stadus_id"
+                    android:layout_height="wrap_content" android:text=""
+                    android:layout_alignParentRight="true" android:layout_marginRight="17dp"
+                    android:gravity="center_vertical" android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/binds" android:drawablePadding="10dp" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" android:background="@color/homef7"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp" android:id="@+id/set_login_pwd_rv">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="设置登录密码" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text=""
+                    android:layout_alignParentRight="true" android:layout_marginRight="17dp"
+                    android:gravity="center_vertical" android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/enterright" android:drawablePadding="10dp" />
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp" android:id="@+id/modify_mobile_rv">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="修改登录手机号" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text=""
+                    android:layout_alignParentRight="true" android:layout_marginRight="17dp"
+                    android:gravity="center_vertical" android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/enterright" android:drawablePadding="10dp" />
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent" android:id="@+id/show_bind_rv"
+            android:layout_height="match_parent" android:background="@color/colordialog"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"    android:orientation="vertical"
+                android:background="@drawable/cicle_write_bg" android:layout_centerInParent="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="解除绑定" android:layout_gravity="center"
+                    android:layout_marginTop="10dp" android:layout_marginBottom="15dp"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/name_txt_id"
+                    android:layout_height="wrap_content" android:text="确认解除微信账号的绑定吗？"
+                    android:layout_gravity="center_horizontal" android:textSize="14sp"/>
+                <View
+                   style="@style/line1" android:layout_marginTop="20dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="0dp" android:id="@+id/cancle_txt_id"
+                        android:layout_height="wrap_content" android:text="取消"
+                        android:layout_marginLeft="15dp" android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp" android:textColor="@color/colorGolds"
+                        android:textSize="15sp" android:layout_weight="0.5"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="1dp" android:layout_height="match_parent"
+                        android:background="@color/homef7"/>
+                    <TextView
+                        android:layout_width="0dp" android:id="@+id/sure_txt_id"
+                        android:layout_height="wrap_content" android:text="确定"
+                        android:layout_marginLeft="15dp" android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"  android:gravity="center"
+                        android:textSize="15sp" android:layout_weight="0.5"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

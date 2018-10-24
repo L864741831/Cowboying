@@ -35,7 +35,6 @@ public class MyFeedbackImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHold
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
-        helper.setVisible(R.id.close_id,false);
         ImageView imageView= helper.getView(R.id.upload_img);
         Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
     }

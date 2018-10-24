@@ -107,7 +107,7 @@
             android:name=".view.activity.OptionReturnActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.activity.MyFeedbackActivity" />
-        <activity android:name=".view.activity.AccoutSecurityActivity"></activity>
+        <activity android:name=".view.activity.AccoutSecurityActivity"/>
         <activity android:name=".view.activity.ContactUsActivity"/>
     </application>
 

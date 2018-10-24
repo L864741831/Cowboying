@@ -17,7 +17,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="头像"
                 android:textColor="@color/black" android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp" />
+                android:layout_marginLeft="20dp"  android:textSize="14sp"/>
             <ImageView
                 android:layout_width="30dp" android:id="@+id/backs_id"
                 android:layout_height="30dp" android:src="@mipmap/enterright"
@@ -39,13 +39,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="昵称" android:layout_marginLeft="30dp"
-                android:textSize="13sp" android:layout_centerVertical="true"/>
+                android:text="昵称" android:layout_marginLeft="20dp"
+                android:textSize="14sp" android:layout_centerVertical="true"/>
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/nickname_txt"
                 android:layout_height="wrap_content" android:text="只"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
                 android:gravity="center" android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"/>
@@ -60,13 +60,13 @@
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/bind_phone_stadus"
                 android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="未绑定手机号" android:layout_marginLeft="30dp"
-                android:textSize="13sp" android:layout_centerVertical="true"/>
+                android:text="未绑定手机号" android:layout_marginLeft="20dp"
+                android:textSize="14sp" android:layout_centerVertical="true"/>
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/bind_phone_txt"
                 android:layout_height="wrap_content" android:text="去绑定"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
                 android:gravity="center" android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"/>
@@ -80,13 +80,13 @@
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/real_info_stadus"
                 android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="实名信息" android:layout_marginLeft="30dp"
-                android:textSize="13sp" android:layout_centerVertical="true"/>
+                android:text="实名信息" android:layout_marginLeft="20dp"
+                android:textSize="14sp" android:layout_centerVertical="true"/>
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/real_info_txt"
                 android:layout_height="wrap_content" android:text="未认证"
-                android:textSize="13sp" android:textColor="@color/red"
+                android:textSize="14sp" android:textColor="@color/red"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
                 android:gravity="center" android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"/>
@@ -100,8 +100,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="修改密码" android:layout_marginLeft="30dp"
-                android:textSize="13sp" android:layout_centerVertical="true"/>
+                android:text="修改密码" android:layout_marginLeft="20dp"
+                android:textSize="14sp" android:layout_centerVertical="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/title_txt_id"
                 android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="昵称" android:textSize="14sp" android:layout_gravity="center"
+                android:text="昵称" android:textSize="15sp" android:layout_gravity="center"
                 android:layout_marginTop="10dp" android:layout_marginBottom="15dp"/>
             <include layout="@layout/search_toolbar_layout"/>
             <include layout="@layout/search1_toolbar_layout"/>
@@ -134,7 +134,7 @@
             <TextView
                 android:layout_width="match_parent" android:id="@+id/modify_btn"
                 android:layout_height="30dp" android:textColor="@color/white"
-                android:textSize="14sp" android:text="修改" android:layout_marginTop="20dp"
+                android:textSize="15sp" android:text="修改" android:layout_marginTop="20dp"
                 android:background="@drawable/shape_oval_btn" android:gravity="center"
                 android:layout_marginLeft="60dp" android:layout_marginRight="60dp"
                 android:layout_marginBottom="30dp"/>
@@ -155,17 +155,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="@color/black"
                 android:text="实名信息" android:layout_gravity="center"
-                android:layout_marginTop="10dp" android:layout_marginBottom="15dp"/>
+                android:layout_marginTop="10dp" android:layout_marginBottom="15dp"
+                android:textSize="15sp"/>
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/name_txt_id"
                 android:layout_height="wrap_content" android:text="姓名:"
-                android:layout_marginLeft="15dp" android:textColor="@color/black"/>
+                android:layout_marginLeft="15dp" android:textColor="@color/black"
+                android:textSize="15sp"/>
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/code_txt_id"
                 android:layout_height="wrap_content" android:text="身份证号："
                 android:layout_marginLeft="15dp" android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp" android:textColor="@color/black"/>
+                android:layout_marginBottom="15dp" android:textColor="@color/black"
+                android:textSize="15sp"/>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

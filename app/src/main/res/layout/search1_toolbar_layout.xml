@@ -23,7 +23,7 @@
                 android:drawablePadding="5dp" android:paddingLeft="2dp"
                 android:textColorHint="@color/gray"
                 android:background="@drawable/shape_home_item"
-                android:textSize="12sp" android:textColor="@color/gray"
+                android:textSize="15sp" android:textColor="@color/gray"
                 android:imeOptions="actionSearch"
                 android:inputType="text" android:singleLine="true"
                 android:maxLines="1"/>

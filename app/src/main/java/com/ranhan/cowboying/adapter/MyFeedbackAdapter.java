@@ -55,7 +55,7 @@ public class MyFeedbackAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder>
                 BaseBean baseBean=new BaseBean();
                 baseBean.setMessage("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
                 beanList.add(baseBean);
-                MyFeedbackImgAdapter myFeedbackImgAdapter=new MyFeedbackImgAdapter(mContext,beanList,R.layout.option_return_item);
+                MyFeedbackImgAdapter myFeedbackImgAdapter=new MyFeedbackImgAdapter(mContext,beanList,R.layout.my_feedbackimg_item);
                 recyclerView.setAdapter(myFeedbackImgAdapter);
 
             }else {
