@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/white"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.MobileLoginActivity">
+    <include layout="@layout/include_white_title"/>
+
+    <TextView
+        android:layout_width="wrap_content" android:id="@+id/stadus_title_id"
+        android:layout_height="wrap_content" android:textColor="@color/black"
+        android:text="重置密码" android:textSize="20sp"
+        android:layout_gravity="center_horizontal" android:layout_marginTop="20dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"  >
+        <EditText
+            android:id="@+id/et_new_pwd"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" android:inputType="textPassword"
+            android:layout_gravity="bottom" android:hint="输入新的密码"
+            android:maxLines="1"
+            android:background="@null" android:singleLine="true"
+            android:textSize="17sp" android:paddingLeft="15dp"
+            android:textCursorDrawable="@drawable/edit_cursor_color" />
+        <ImageView
+            android:layout_width="20dp" android:id="@+id/close_img_id"
+            android:layout_height="20dp" android:src="@mipmap/qcloseimg"
+            android:layout_toRightOf="@+id/et_new_pwd" android:layout_alignRight="@+id/line_id"
+            android:visibility="gone"/>
+        <View
+            android:id="@+id/line_id"
+            android:layout_width="230dp" android:layout_height="1dp"
+            android:background="@color/colorline" android:layout_below="@+id/et_new_pwd"
+            android:layout_marginTop="5dp" android:layout_gravity="center"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+        <EditText
+            android:id="@+id/et_again_pwd"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" android:inputType="textPassword"
+            android:layout_gravity="bottom" android:hint="再次输入密码"
+            android:maxLines="1"
+            android:background="@null" android:singleLine="true"
+            android:textSize="17sp" android:paddingLeft="15dp"
+            android:textCursorDrawable="@drawable/edit_cursor_color" />
+        <ImageView
+            android:layout_width="20dp" android:id="@+id/close1_img_id"
+            android:layout_height="20dp" android:src="@mipmap/qcloseimg"
+            android:layout_toRightOf="@+id/et_again_pwd" android:layout_alignRight="@+id/line1_id"
+            android:visibility="gone"/>
+        <View
+            android:id="@+id/line1_id"
+            android:layout_width="230dp" android:layout_height="1dp"
+            android:background="@color/colorline" android:layout_below="@+id/et_again_pwd"
+            android:layout_marginTop="5dp" android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="6-16位密码、数字或字母"
+            android:textColor="@color/txthui" android:layout_marginTop="10dp"
+            android:layout_below="@+id/line1_id" android:textSize="12sp"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="230dp" android:id="@+id/sure_id"
+        android:layout_height="40dp" android:background="@drawable/shape_square_btn"
+        android:text="确定" android:textColor="@color/white"
+        android:gravity="center" android:textSize="16sp" android:layout_gravity="center"
+        android:layout_marginTop="50dp"/>
+
+</LinearLayout>

@@ -3,15 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".view.activity.LoginActivity">
+    tools:context=".view.activity.LoginActivity" android:background="@mipmap/loginbg">
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:id="@+id/aplily_login"
-        android:text="支付宝授权登录" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"  android:id="@+id/weixin_login"
-        android:text="微信授权登录"/>
+        android:layout_height="wrap_content" android:layout_marginTop="90dp"
+        android:src="@mipmap/loginlogo" android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:gravity="bottom|center"
+        android:layout_marginBottom="20dp" android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+            <ImageView
+                android:layout_width="0dp" android:layout_weight="0.5"
+                android:layout_height="wrap_content"  android:id="@+id/login_btn"
+                android:src="@mipmap/loginbtn" />
+            <ImageView
+                android:layout_width="0dp" android:layout_weight="0.5"
+                android:layout_height="wrap_content" android:id="@+id/registe_btn"
+                android:src="@mipmap/registebtn" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+            <ImageView
+                android:layout_width="0dp" android:layout_weight="0.5"
+                android:layout_height="wrap_content"  android:id="@+id/weixin_login"
+                android:src="@mipmap/whiteweixin" />
+            <ImageView
+                android:layout_width="0dp" android:layout_weight="0.5"
+                android:layout_height="wrap_content" android:id="@+id/aplily_login"
+                android:src="@mipmap/whitezfb" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

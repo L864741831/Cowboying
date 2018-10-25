@@ -126,6 +126,8 @@ public class SetUpActivity extends BaseActivity {
                 }
                 break;
             case R.id.unlogin_rv:
+                finish();
+                startActivity(LoginActivity.class);
                 break;
             default:
                 break;

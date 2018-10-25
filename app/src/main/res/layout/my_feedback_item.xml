@@ -11,7 +11,7 @@
         android:layout_marginTop="15dp" android:layout_marginRight="10dp">
         <TextView
             android:layout_width="wrap_content" android:id="@+id/response_stadus_id"
-            android:layout_height="wrap_content" android:background="@drawable/shape_oval_btn"
+            android:layout_height="wrap_content" android:background="@drawable/shape_square_btn"
             android:text="已回复" android:textColor="@color/white"
             android:textSize="11sp"  android:paddingLeft="5dp"
             android:paddingTop="3dp" android:paddingBottom="5dp"

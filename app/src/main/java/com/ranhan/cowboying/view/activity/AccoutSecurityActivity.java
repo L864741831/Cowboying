@@ -1,5 +1,6 @@
 package com.ranhan.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -68,8 +69,16 @@ public class AccoutSecurityActivity extends BaseActivity {
             case R.id.zfb_stadus_id:
                 break;
             case R.id.set_login_pwd_rv:
+                Intent intent=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
+                intent.putExtra("stadus","4");
+                intent.putExtra("mobile","4");
+                startActivity(intent);
                 break;
             case R.id.modify_mobile_rv:
+                Intent intent1=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
+                intent1.putExtra("stadus","5");
+                intent1.putExtra("mobile","4");
+                startActivity(intent1);
                 break;
             case R.id.cancle_txt_id:
                 // TODO: 2018/10/24 取消微信绑定
