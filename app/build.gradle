@@ -101,4 +101,5 @@ dependencies {
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.kyleduo.switchbutton:library:1.4.4'
+    implementation 'com.youth.banner:banner:1.4.9'
 }

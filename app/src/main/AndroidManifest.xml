@@ -107,6 +107,9 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.MyFeedbackActivity"/>
         <activity android:name=".view.activity.ContactUsActivity"/>
+        <activity android:name=".view.activity.InviteFriendHistoryActivity"/>
+        <activity android:name=".view.activity.RanchDynamicActivity"/>
+        <activity android:name=".view.activity.RanchConsociationActivity"/>
     </application>
 
 </manifest>

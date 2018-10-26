@@ -13,6 +13,8 @@ import com.ranhan.cowboying.R;
 import com.ranhan.cowboying.view.activity.ContactUsActivity;
 import com.ranhan.cowboying.view.activity.InviteFriendActivity;
 import com.ranhan.cowboying.view.activity.PersonalInformationActivity;
+import com.ranhan.cowboying.view.activity.RanchConsociationActivity;
+import com.ranhan.cowboying.view.activity.RanchDynamicActivity;
 import com.ranhan.cowboying.view.activity.SetUpActivity;
 
 import butterknife.Bind;
@@ -117,7 +119,7 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.pay_money_codeId:
                 //付款码
-
+                startActivity(RanchDynamicActivity.class);
                 break;
             case R.id.please_codeId:
                 //邀请码
@@ -125,7 +127,7 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.get_goods_codeId:
                 //取货码
-
+                startActivity(RanchConsociationActivity.class);
                 break;
             case R.id.all_order_id:
                 //商城订单

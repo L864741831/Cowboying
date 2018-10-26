@@ -12,6 +12,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
+/**
+ * @author Administrator
+ * 全民推广主界面
+ */
 public class InviteFriendActivity extends BaseActivity {
 
     @Bind(R.id.back_id)
@@ -54,6 +58,7 @@ public class InviteFriendActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.action_new_question_tv:
+                startActivity(InviteFriendHistoryActivity.class);
                 break;
             case R.id.btn_share_wechat:
                 break;
