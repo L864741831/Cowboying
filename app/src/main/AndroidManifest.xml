@@ -71,7 +71,9 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".view.activity.LoginActivity" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBarWithBackGround" />
         <activity android:name=".view.activity.ToPayActivity" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -99,14 +101,20 @@
             android:name=".view.activity.UpdateVersionDialog"
             android:theme="@style/myTransparent" />
         <activity android:name=".view.activity.PersonalInformationActivity" />
-        <activity android:name=".view.activity.SetUpActivity"></activity>
-        <activity android:name=".view.activity.InviteFriendActivity"/>
+        <activity android:name=".view.activity.SetUpActivity" />
+        <activity android:name=".view.activity.InviteFriendActivity" />
         <activity android:name=".view.activity.ModifyPwdActivity" />
         <activity android:name=".view.activity.NormalQuestionActivity" />
-        <activity android:name=".view.activity.OptionReturnActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".view.activity.MyFeedbackActivity"/>
-        <activity android:name=".view.activity.ContactUsActivity"/>
+        <activity
+            android:name=".view.activity.OptionReturnActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.activity.MyFeedbackActivity" />
+        <activity android:name=".view.activity.AccoutSecurityActivity" />
+        <activity android:name=".view.activity.ContactUsActivity" />
+        <activity android:name=".view.activity.MobileLoginActivity" />
+        <activity android:name=".view.activity.PwdLoginActivity" />
+        <activity android:name=".view.activity.IdentifyCodeActivity" />
+        <activity android:name=".view.activity.ResetPwdActivity"></activity>
         <activity android:name=".view.activity.InviteFriendHistoryActivity"/>
         <activity android:name=".view.activity.RanchDynamicActivity"/>
         <activity android:name=".view.activity.RanchConsociationActivity"/>

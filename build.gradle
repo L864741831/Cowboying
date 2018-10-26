@@ -2,11 +2,11 @@
 
 buildscript {
     repositories {
-        jcenter()
+        google()
         mavenCentral()
         // 添加MobSDK的maven地址
         maven { url "http://mvn.mob.com/android" }
-        google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'

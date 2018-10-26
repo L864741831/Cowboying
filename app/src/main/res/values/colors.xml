@@ -11,5 +11,6 @@
     <color name="wenzi_hei_2">#515151</color>
     <color name="colordialog">#70000000</color>
     <color name="color_wenzi_black">#101010</color>
-
+    <color name="colorGolds">#BFA177</color>
+    <color name="skyblue">#4393F5</color>
 </resources>

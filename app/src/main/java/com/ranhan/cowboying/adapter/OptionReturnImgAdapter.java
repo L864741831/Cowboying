@@ -21,10 +21,10 @@ import rxfamily.bean.BaseBean;
  **/
 public class OptionReturnImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
 
-    private Context context;
+    private Context mContext;
     public OptionReturnImgAdapter(Context context, List<BaseBean> list,int layout){
         super(layout, list);
-        this.context=context;
+        this.mContext=context;
     }
     @Override
     protected void convert(BaseViewHolder helper, BaseBean item) {
@@ -32,7 +32,14 @@ public class OptionReturnImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHo
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
-        Glide.with(mContext).load(item.getMessage()).apply(options).into((ImageView) helper.getView(R.id.upload_img));
+        ImageView imageView= helper.getView(R.id.upload_img);
+        if(helper.getAdapterPosition()==0){
+            imageView.setImageResource(R.mipmap.uploadphotoimg);
+            helper.setVisible(R.id.close_id,false);
+        }else {
+            Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
+        }
         helper.addOnClickListener(R.id.close_id);
+        helper.addOnClickListener(R.id.upload_img);
     }
 }

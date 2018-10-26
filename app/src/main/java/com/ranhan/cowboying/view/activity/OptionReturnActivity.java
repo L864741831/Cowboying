@@ -54,34 +54,37 @@ public class OptionReturnActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_return);
         ButterKnife.bind(this);
+        initDialog();
         init();
     }
 
     private void init(){
         info.setText("意见反馈");
         ryImgId.setLayoutManager(new GridLayoutManager(this,4));
-        ryImgId.setHasFixedSize(true);
-        ryImgId.setNestedScrollingEnabled(false);
         beanList=new ArrayList<>();
-        for (int i=0;i<10;i++){
-            BaseBean baseBean=new BaseBean();
-            baseBean.setMessage("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
-            beanList.add(baseBean);
-        }
-
+        BaseBean baseBean=new BaseBean();
+        beanList.add(baseBean);
         optionReturnImgAdapter=new OptionReturnImgAdapter(this,beanList,R.layout.option_return_item);
         ryImgId.setAdapter(optionReturnImgAdapter);
-        optionReturnImgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        optionReturnImgAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.upload_img:
                         if(position==0){
-                            Toast.makeText(OptionReturnActivity.this,"位置一",Toast.LENGTH_SHORT).show();
-                        }
-                       break;
-                    case R.id.close_id:
+                            showLoadings();
+                            BaseBean baseBean=new BaseBean();
+                            baseBean.setMessage("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
+                            beanList.add(baseBean);
+                            optionReturnImgAdapter.notifyDataSetChanged();
+                            dismissLoading();
 
+                        }
+                        break;
+                    case R.id.close_id:
+                        Toast.makeText(OptionReturnActivity.this,"删除",Toast.LENGTH_SHORT).show();
+                        beanList.remove(position);
+                        optionReturnImgAdapter.notifyDataSetChanged();
                         break;
                     default:
                         break;

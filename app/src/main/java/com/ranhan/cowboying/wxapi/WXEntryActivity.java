@@ -1,5 +1,6 @@
 package com.ranhan.cowboying.wxapi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,8 @@ import com.ranhan.cowboying.base.WeiXinAuthBase;
 import com.ranhan.cowboying.bean.WeixinAuthFirstBean;
 import com.ranhan.cowboying.bean.WeixinAuthSecondeBean;
 import com.ranhan.cowboying.presenter.WeixinAuthPresenter;
+import com.ranhan.cowboying.view.activity.LoginActivity;
+import com.ranhan.cowboying.view.activity.MobileLoginActivity;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -79,7 +82,9 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
     @Override
     public void getWeixinAuthSeconde(WeixinAuthSecondeBean weixinAuthSecondeBean) {
-
+        Intent intent1=new Intent(WXEntryActivity.this,MobileLoginActivity.class);
+        intent1.putExtra("stadus","3");
+        startActivity(intent1);
     }
 
     @Override

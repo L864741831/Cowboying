@@ -1,12 +1,14 @@
 package com.ranhan.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
@@ -30,9 +32,13 @@ import rxfamily.view.BaseActivity;
 public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.aplily_login)
-    Button aplilyLogin;
+    ImageView aplilyLogin;
     @Bind(R.id.weixin_login)
-    Button weixinLogin;
+    ImageView weixinLogin;
+    @Bind(R.id.login_btn)
+    ImageView loginBtn;
+    @Bind(R.id.registe_btn)
+    ImageView registeBtn;
     private static final int SDK_AUTH_FLAG = 1000;
     private IWXAPI api;
 
@@ -49,14 +55,27 @@ public class LoginActivity extends BaseActivity {
         api.registerApp("wx0678b96a189375f3");
     }
 
-    @OnClick({R.id.aplily_login, R.id.weixin_login})
+    @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aplily_login:
-                aplilyLogin();
+//                aplilyLogin();
+                Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                intent2.putExtra("stadus","3");
+                startActivity(intent2);
                 break;
             case R.id.weixin_login:
                 weixinLogin();
+                break;
+            case R.id.registe_btn:
+                Intent intent1=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                intent1.putExtra("stadus","2");
+                startActivity(intent1);
+                break;
+            case R.id.login_btn:
+                Intent intent=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                intent.putExtra("stadus","0");
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -119,10 +138,12 @@ public class LoginActivity extends BaseActivity {
                     if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
                         // 获取alipay_open_id，调支付时作为参数extern_token 的value
                         // 传入，则支付账户为该授权账户
-                        // TODO: 2018/10/12 auth_code传入后台，后台获取 auth_token和用户uset_id,其他信息
+                        // TODO: 2018/10/12 auth_code传入后台，后台获取 auth_token和用户uset_id,其他信息 授权成功绑定手机号
+
                         Toast.makeText(LoginActivity.this,
                                 "授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT)
                                 .show();
+
                     } else {
                         // 其他状态值则为授权失败
                         Toast.makeText(LoginActivity.this,

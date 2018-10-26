@@ -6,11 +6,11 @@
     <!-- 填充 -->
     <solid android:color="@color/colorAccent" /> <!-- 定义填充的颜色值 -->
 
-    <!-- 间隔 -->
-    <!--<padding
-        android:bottom="10dp"
-        android:left="10dp"
-        android:right="10dp"
-        android:top="10dp" /> &lt;!&ndash; 设置各个方向的间隔 &ndash;&gt;
--->
+  <!--  &lt;!&ndash; 间隔 设置各个方向的间隔&ndash;&gt;
+   <padding
+        android:bottom="3dp"
+        android:left="3dp"
+        android:right="3dp"
+        android:top="3dp" />-->
+
 </shape>

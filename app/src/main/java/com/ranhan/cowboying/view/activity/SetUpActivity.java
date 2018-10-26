@@ -99,6 +99,7 @@ public class SetUpActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.accout_securty_id:
+                startActivity(AccoutSecurityActivity.class);
                 break;
             case R.id.modify_pwd_rv:
                 startActivity(ModifyPwdActivity.class);
@@ -125,6 +126,8 @@ public class SetUpActivity extends BaseActivity {
                 }
                 break;
             case R.id.unlogin_rv:
+                finish();
+                startActivity(LoginActivity.class);
                 break;
             default:
                 break;
