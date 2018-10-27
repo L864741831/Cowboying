@@ -2,7 +2,137 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:background="@color/white"
     tools:context=".view.activity.WelcomeActivity">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="230dp" app:image_scale_type="fit_xy" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:src="@mipmap/toptitle"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+        </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp" android:layout_weight="0.5"
+                android:layout_height="80dp" android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/sell_cow_num_id"
+                    android:layout_height="wrap_content" android:text="122222"
+                    android:layout_gravity="center" android:textColor="@color/black"
+                    android:textSize="17sp" android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="累计销售牛只数"
+                    android:layout_gravity="center" android:textColor="@color/black"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="1dp" android:layout_height="25dp"
+                android:background="@color/colorline" android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="0dp" android:layout_weight="0.5"
+                android:layout_height="80dp" android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/sell_cow_num2_id"
+                    android:layout_height="wrap_content" android:text="122222"
+                    android:layout_gravity="center" android:textColor="@color/black"
+                    android:textSize="17sp" android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="累计销售牛只数"
+                    android:layout_gravity="center" android:textColor="@color/black"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent" android:id="@+id/specialbeef_img_id"
+            android:layout_height="135dp" android:src="@mipmap/specialbeef"
+            android:scaleType="fitXY"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_marginLeft="10dp" android:layout_marginTop="10dp">
+            <View
+                android:layout_width="4dp" android:layout_height="20dp"
+                android:background="@color/black" android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="养牛赚钱"
+                android:textColor="@color/colorhometxt" android:textStyle="bold"
+                android:textSize="16sp" android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="135dp" android:orientation="horizontal"
+            android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
+            <FrameLayout
+                android:layout_width="0dp"  android:layout_weight="0.5"
+                android:layout_height="match_parent" android:id="@+id/buy_cow_fm">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:src="@mipmap/buycow"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/homenowbuy"
+                   android:layout_marginTop="80dp" android:layout_gravity="center_horizontal"/>
+            </FrameLayout>
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="match_parent"/>
+            <FrameLayout
+                android:layout_width="0dp"  android:layout_weight="0.5"
+                android:layout_height="match_parent" android:id="@+id/together_cow_fm">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:src="@mipmap/together"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/homenowbuy"
+                    android:layout_marginTop="80dp" android:layout_gravity="center_horizontal"/>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent" android:id="@+id/newpeople_img_id"
+            android:layout_height="135dp" android:src="@mipmap/newpeople"
+            android:scaleType="fitXY"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:src="@mipmap/sign"
+            android:layout_gravity="center" android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"/>
+
+        <ImageView
+            android:layout_width="match_parent" android:id="@+id/ranchconsociation_img_id"
+            android:layout_height="250dp" android:src="@mipmap/realtimepicture"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textSize="16sp"
+            android:textStyle="bold" android:text="牧场动态" android:layout_gravity="center"
+            android:layout_marginTop="20dp" android:drawableBottom="@mipmap/separate"
+            android:gravity="center" android:layout_marginBottom="15dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent" android:id="@+id/ranch_dynamics_ry"
+            android:layout_height="wrap_content"    android:scrollbars="none"
+            android:layout_marginBottom="100dp"   app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:focusable="false"/>
 </LinearLayout>

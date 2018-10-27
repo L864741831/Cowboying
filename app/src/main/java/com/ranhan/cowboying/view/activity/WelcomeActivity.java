@@ -42,8 +42,9 @@ public class WelcomeActivity extends BaseActivity {
                     finish();
                 }else {
                     //非第一次启动进入广告页
-                    startActivity(new Intent(WelcomeActivity.this,AdActivity.class));
+//                    startActivity(new Intent(WelcomeActivity.this,AdActivity.class));
                     // TODO: 2018/10/13  需要请求服务器携带广告地址和title
+                    startActivity(MainActivity.class);
                     finish();
                 }
 

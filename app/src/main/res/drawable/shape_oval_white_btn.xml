@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 圆角 -->
+    <corners android:radius="5dp" /> <!-- 设置四个角的半径 -->
+
+    <!-- 填充 -->
+    <solid android:color="@color/white" /> <!-- 定义填充的颜色值 -->
+
+  <!--  &lt;!&ndash; 间隔 设置各个方向的间隔&ndash;&gt;
+   <padding
+        android:bottom="3dp"
+        android:left="3dp"
+        android:right="3dp"
+        android:top="3dp" />-->
+
+</shape>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ranhan.cowboying.R;
 import com.ranhan.cowboying.view.activity.ContactUsActivity;
 import com.ranhan.cowboying.view.activity.InviteFriendActivity;
+import com.ranhan.cowboying.view.activity.MyMessegeActivity;
 import com.ranhan.cowboying.view.activity.PersonalInformationActivity;
 import com.ranhan.cowboying.view.activity.RanchConsociationActivity;
 import com.ranhan.cowboying.view.activity.RanchDynamicActivity;
@@ -108,6 +109,7 @@ public class ThreeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.messege_id:
+                startActivity(MyMessegeActivity.class);
                 break;
             case R.id.setting_id:
                 //设置界面
