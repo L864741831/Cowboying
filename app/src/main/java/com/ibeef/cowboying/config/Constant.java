@@ -4,7 +4,10 @@ package com.ibeef.cowboying.config;
  * 用到的公共常量
  */
 public class Constant {
-    public static final String BASE_URL = "";
+    /**
+     * 尹俊杰服务
+     */
+    public static final String BASE_URL = "http://192.168.0.122:8082/rest/";
     /**
      * 微信支付appid
      */
@@ -19,4 +22,5 @@ public class Constant {
      * 微信授权url
      */
     public static  final String weixinUrl= "https://api.weixin.qq.com/";
+
 }

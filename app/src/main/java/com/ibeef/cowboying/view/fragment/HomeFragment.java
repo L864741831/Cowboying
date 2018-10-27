@@ -14,6 +14,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
+import com.ibeef.cowboying.base.HomeBannerBase;
+import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
@@ -30,7 +33,7 @@ import butterknife.ButterKnife;
 import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseFragment;
 
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,OnBannerListener,View.OnClickListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,BaseQuickAdapter.RequestLoadMoreListener,HomeBannerBase.IView {
 
     @Bind(R.id.home_ry_id)
     RecyclerView homeRyId;
@@ -49,6 +52,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private RecyclerView ranchDynamicsRy;
     private RanchDynamicsAdapter ranchDynamicsAdapter;
     private List<BaseBean> beanList;
+    private HomeBannerPresenter homeBannerPresenter;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -65,6 +69,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeProductListAdapter.addHeaderView(headView);
         homeRyId.setAdapter(homeProductListAdapter);
 
+        homeBannerPresenter=new HomeBannerPresenter(this);
+        homeBannerPresenter.getHomeBanner();
     }
 
     @Override
@@ -98,8 +104,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置指示器位置（当banner模式中有指示器时）
-
-        banner.setOnBannerListener(this);
         banner.setClickable(true);
 
         sellCowNumId=view.findViewById(R.id.sell_cow_num_id);
@@ -154,10 +158,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         swipeLy.setRefreshing(false);
     }
 
-    @Override
-    public void OnBannerClick(int position) {
 
-    }
 
     @Override
     public void onClick(View v) {
@@ -186,5 +187,27 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onLoadMoreRequested() {
 
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getHomeBanner(HomeAdResultBean homeAdResultBean) {
+        ArrayList<String> imgStr = new ArrayList<>();
+//        for (int i=0;i<bannerBean.getData().size();i++){
+//            imgStr.add(YbConstant.imageDomain+bannerBean.getData().get(i).getImageUrl());
+//        }
+        banner.setImages(imgStr);
+        //设置图片集合
+        banner.start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+
+            }
+        });
     }
 }

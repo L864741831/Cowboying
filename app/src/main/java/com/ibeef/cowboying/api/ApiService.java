@@ -1,5 +1,7 @@
 package com.ibeef.cowboying.api;
 
+import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.bean.WeixinAuthSecondeBean;
 
@@ -27,4 +29,25 @@ public interface ApiService {
      */
     @GET("sns/userinfo")
     Observable<WeixinAuthSecondeBean> getWeixinAuthSeconde(@Query("access_token") String access_token, @Query("openid") String openid);
+
+    /**
+     *开屏广告
+     * @return
+     */
+    @GET("banner/start")
+    Observable<HomeAdResultBean> getHomeAd(@Query("version") String version);
+
+    /**
+     *首页banner
+     * @return
+     */
+    @GET("banner/home")
+    Observable<HomeAdResultBean> getHomeBanner();
+
+    /**
+     *首页视频
+     * @return
+     */
+    @GET("pasture/video/home")
+    Observable<HomeVideoResultBean> getHomeVideo();
 }
