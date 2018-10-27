@@ -33,7 +33,7 @@ MobSDK {
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.ranhan.cowboying"
+        applicationId "com.ibeef.cowboying"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -49,8 +49,8 @@ android {
         //添加如下配置就OK了
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
         manifestPlaceholders = [
-                JPUSH_PKGNAME: "com.ranhan.cowboying",
-                JPUSH_APPKEY : "2ea97e814946cc15e9b37c5a", //JPush上注册的包名对应的appkey.
+                JPUSH_PKGNAME: "com.ibeef.cowboying",
+                JPUSH_APPKEY : "2ebad5d9b0a236b479b7f352", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 

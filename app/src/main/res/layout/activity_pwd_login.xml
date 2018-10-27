@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:background="@color/white"
     android:layout_height="match_parent" android:orientation="vertical"
-    tools:context=".view.activity.MobileLoginActivity">
+    tools:context=".cowboying.view.activity.MobileLoginActivity">
     <include layout="@layout/include_white_title"/>
 
     <TextView
