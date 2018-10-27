@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
@@ -41,6 +44,8 @@ public class OptionReturnActivity extends BaseActivity {
     EditText etOpinion;
     @Bind(R.id.show_num_id)
     TextView showNumId;
+    @Bind(R.id.txt_num_id)
+    TextView txtNumId;
     @Bind(R.id.ry_img_id)
     RecyclerView ryImgId;
     @Bind(R.id.btn_id)
@@ -88,6 +93,37 @@ public class OptionReturnActivity extends BaseActivity {
                         break;
                     default:
                         break;
+                }
+            }
+        });
+
+
+        etOpinion.addTextChangedListener(new TextWatcher() {
+            private CharSequence temp;
+            private int selectionStart;
+            private int selectionEnd;
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                temp =charSequence;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                selectionStart = etOpinion.getSelectionStart();
+                selectionEnd = etOpinion.getSelectionEnd();
+                txtNumId.setText(temp.length()+"/200");
+                if(temp.length()>200){
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etOpinion.setText(s);
+                    //设置光标在最后
+                    etOpinion.setSelection(tempSelection);
+                    showToast("意见不能超过200个字");
                 }
             }
         });

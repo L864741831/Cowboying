@@ -13,13 +13,27 @@
             android:layout_height="match_parent" android:orientation="vertical"
             android:layout_margin="16dp">
 
-            <EditText
-                android:maxLength="300" android:padding="10dp"
-                android:textSize="15sp"
-                android:id="@+id/et_opinion" android:layout_width="match_parent"
-                android:layout_height="160dp" android:background="@drawable/shape_oval_line"
-                android:gravity="top" android:hint="您的宝贵意见，就是我们进步的源泉"
-                android:inputType="textMultiLine" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:background="@drawable/shape_oval_line">
+                <EditText
+                    android:maxLength="300" android:padding="10dp"
+                    android:textSize="15sp"
+                    android:id="@+id/et_opinion" android:layout_width="match_parent"
+                    android:layout_height="160dp" android:background="@null"
+                    android:gravity="top" android:hint="您的宝贵意见，就是我们进步的源泉"
+                    android:inputType="textMultiLine" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="140dp">
+                    <TextView
+                        android:layout_width="wrap_content"  android:id="@+id/txt_num_id"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content" android:text="0/200"
+                        android:layout_marginRight="10dp" android:layout_marginBottom="10dp"/>
+                </RelativeLayout>
+            </FrameLayout>
+
 
             <TextView
                 android:textSize="12sp"

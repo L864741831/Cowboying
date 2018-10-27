@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ranhan.cowboying.R;
 import com.ranhan.cowboying.adapter.MyFeedbackAdapter;
 
@@ -22,7 +23,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 我的反馈界面
  */
-public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -55,6 +56,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         baseBeans.add(baseBean1);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         myFeedbackAdapter=new MyFeedbackAdapter(this,baseBeans,R.layout.my_feedback_item);
+        myFeedbackAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(myFeedbackAdapter);
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeLayout.setOnRefreshListener(this);
@@ -69,5 +71,10 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         mSwipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+
     }
 }

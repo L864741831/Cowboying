@@ -29,7 +29,7 @@ public class GuideActivity extends BaseActivity {
     @Bind(R.id.iv_start)
     ImageView ivStart;
     private List<ImageView> imgs;
-    private int[] imgIds = new int[]{R.mipmap.guide_1, R.mipmap.guide_2};
+    private int[] imgIds = new int[]{R.mipmap.guide_1, R.mipmap.guide_2, R.mipmap.guide_3};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
