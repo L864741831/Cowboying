@@ -17,6 +17,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.OptionReturnImgAdapter;
+import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.bean.MyFeedbackResultBean;
+import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
+import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
+import com.ibeef.cowboying.presenter.FeedbackPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 意见反馈
  */
-public class OptionReturnActivity extends BaseActivity {
+public class OptionReturnActivity extends BaseActivity implements FeedbackBase.IView {
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -48,7 +53,8 @@ public class OptionReturnActivity extends BaseActivity {
     @Bind(R.id.me_option_btn)
     ImageView meOptionBtn;
     private OptionReturnImgAdapter optionReturnImgAdapter;
-    private List<BaseBean> beanList;
+    private List<String> stringList;
+    private FeedbackPresenter feedbackPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +67,9 @@ public class OptionReturnActivity extends BaseActivity {
     private void init(){
         info.setText("意见反馈");
         ryImgId.setLayoutManager(new GridLayoutManager(this,4));
-        beanList=new ArrayList<>();
-        BaseBean baseBean=new BaseBean();
-        beanList.add(baseBean);
-        optionReturnImgAdapter=new OptionReturnImgAdapter(this,beanList,R.layout.option_return_item);
+        stringList=new ArrayList<>();
+        stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
+        optionReturnImgAdapter=new OptionReturnImgAdapter(this,stringList,R.layout.option_return_item);
         ryImgId.setAdapter(optionReturnImgAdapter);
         optionReturnImgAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -73,9 +78,7 @@ public class OptionReturnActivity extends BaseActivity {
                     case R.id.upload_img:
                         if(position==0){
                             showLoadings();
-                            BaseBean baseBean=new BaseBean();
-                            baseBean.setMessage("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
-                            beanList.add(baseBean);
+                            stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
                             optionReturnImgAdapter.notifyDataSetChanged();
                             dismissLoading();
 
@@ -83,7 +86,7 @@ public class OptionReturnActivity extends BaseActivity {
                         break;
                     case R.id.close_id:
                         Toast.makeText(OptionReturnActivity.this,"删除",Toast.LENGTH_SHORT).show();
-                        beanList.remove(position);
+                        stringList.remove(position);
                         optionReturnImgAdapter.notifyDataSetChanged();
                         break;
                     default:
@@ -138,6 +141,8 @@ public class OptionReturnActivity extends BaseActivity {
                 return false;
             }
         });
+
+        feedbackPresenter=new FeedbackPresenter(this);
     }
 
 
@@ -152,6 +157,10 @@ public class OptionReturnActivity extends BaseActivity {
                     Toast.makeText(OptionReturnActivity.this,"请输入您的意见！",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                SubmitFeedbackParamBean submitFeedbackParamBean=new SubmitFeedbackParamBean();
+                submitFeedbackParamBean.setContent(etOpinion.getText().toString().trim());
+                submitFeedbackParamBean.setImageList(stringList);
+                feedbackPresenter.getSubmitFeedback("",submitFeedbackParamBean);
                 break;
             case R.id.me_option_btn:
                 startActivity(MyFeedbackActivity.class);
@@ -161,4 +170,37 @@ public class OptionReturnActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getMyFeedback(MyFeedbackResultBean myFeedbackResultBean) {
+
+    }
+
+    @Override
+    public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(feedbackPresenter != null){
+            feedbackPresenter.detachView();
+        }
+        super.onDestroy();
+
+    }
 }

@@ -15,7 +15,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/7 14:07
- * @describe 登录
+ * @describe 启动广告
  * @package com.ranhan.cowboying.presenter
  **/
 public class HomeAdPresenter extends BasePresenter implements HomeAdBase.IPresenter  {
@@ -42,6 +42,7 @@ public class HomeAdPresenter extends BasePresenter implements HomeAdBase.IPresen
             @Override
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
+                mView.hideLoading();
                 mView.showMsg(msg);
             }
         }));

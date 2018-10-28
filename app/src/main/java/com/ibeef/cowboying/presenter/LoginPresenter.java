@@ -1,9 +1,15 @@
 package com.ibeef.cowboying.presenter;
 
+import android.util.Log;
+
 import com.ibeef.cowboying.base.LoginBase;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
+import com.ibeef.cowboying.bean.LoginBean;
+import com.ibeef.cowboying.bean.LoginParamBean;
 import com.ibeef.cowboying.model.LoginModel;
 
 import rxfamily.mvp.BasePresenter;
+import rxfamily.net.ResponseCallback;
 
 /**
  * @author ls
@@ -21,4 +27,20 @@ public class LoginPresenter extends BasePresenter implements LoginBase.IPresente
         mModel = new LoginModel();
     }
 
+    @Override
+    public void getUserLogin(String version, LoginParamBean loginParamBean) {
+        addSubscription(mModel.getUserLogin(version,loginParamBean,new ResponseCallback<LoginBean>() {
+            @Override
+            public void onSuccess(LoginBean result) {
+                mView.getUserLogin(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.showMsg(msg);
+            }
+        }));
+    }
 }

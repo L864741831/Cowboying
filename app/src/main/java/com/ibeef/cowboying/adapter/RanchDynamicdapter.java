@@ -1,4 +1,4 @@
-package com.ranhan.cowboying.adapter;
+package com.ibeef.cowboying.adapter;
 
 
 import android.content.Context;
@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import com.ibeef.cowboying.R;
-import com.ranhan.cowboying.bean.RanchDynamicListBean;
+import com.ibeef.cowboying.bean.RanchDynamicListBean;
 
 import java.util.List;
 

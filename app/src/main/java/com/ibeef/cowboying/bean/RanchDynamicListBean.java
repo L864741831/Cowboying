@@ -1,4 +1,4 @@
-package com.ranhan.cowboying.bean;
+package com.ibeef.cowboying.bean;
 
 import java.util.List;
 

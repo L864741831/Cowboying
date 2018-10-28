@@ -3,6 +3,8 @@ package rxfamily.view;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -91,12 +93,28 @@ public class BaseActivity extends RxAppCompatActivity{
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
 //        StatSDKService.onResume(this,"f680476896");
     }
 
+    /**
+     * 获取版本号
+     * @return
+     */
+    public String getVersionCodes() {
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            String versionName = packageInfo.versionName;
+            return versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return  null;
+        }
+    }
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub

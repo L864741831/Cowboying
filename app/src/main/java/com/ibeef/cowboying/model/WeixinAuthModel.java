@@ -39,7 +39,7 @@ public class WeixinAuthModel implements WeiXinAuthBase.IModel {
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(3, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
                 .subscribe(new Action1<WeixinAuthFirstBean>() {
                     @Override
@@ -61,7 +61,7 @@ public class WeixinAuthModel implements WeiXinAuthBase.IModel {
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(3, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
                 .subscribe(new Action1<WeixinAuthSecondeBean>() {
                     @Override

@@ -1,6 +1,8 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -9,9 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.LoginBase;
+import com.ibeef.cowboying.bean.LoginBean;
+import com.ibeef.cowboying.bean.LoginParamBean;
+import com.ibeef.cowboying.presenter.LoginPresenter;
 import com.ibeef.cowboying.utils.TimeUtils;
 
 import butterknife.Bind;
@@ -22,7 +29,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 手机密码登录
  */
-public class PwdLoginActivity extends BaseActivity {
+public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -40,6 +47,8 @@ public class PwdLoginActivity extends BaseActivity {
     TextView forgetPwdId;
     @Bind(R.id.identify_code_login_id)
     TextView identifyCodeLoginId;
+
+    private LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +95,8 @@ public class PwdLoginActivity extends BaseActivity {
                 }
             }
         });
+
+        loginPresenter=new LoginPresenter(this);
     }
 
     @OnClick({R.id.back_id, R.id.close_img_id, R.id.close1_img_id, R.id.sure_id, R.id.forget_pwd_id, R.id.identify_code_login_id})
@@ -114,10 +125,13 @@ public class PwdLoginActivity extends BaseActivity {
                     return;
                 }
 
-                Intent intent1=new Intent(PwdLoginActivity.this,MainActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent1);
+                LoginParamBean loginParamBean=new LoginParamBean();
+                loginParamBean.setUserName(etMobile.getText().toString().trim());
+                loginParamBean.setType("1");
+                //1：密码登录；2：短信验证码登录
+                loginParamBean.setPassword(etPwd.getText().toString().trim());
+                loginPresenter.getUserLogin(getVersionCodes(),loginParamBean);
+
                 break;
             case R.id.forget_pwd_id:
                 //通过手机号验证码 修改密码
@@ -134,5 +148,31 @@ public class PwdLoginActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+        showMsg(msg);
+    }
+
+    @Override
+    public void getUserLogin(LoginBean loginBean) {
+        if("000000".equals(loginBean.getCode())){
+            Intent intent1=new Intent(PwdLoginActivity.this,MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
+        }else {
+            showMsg(loginBean.getMessage());
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if(loginPresenter!=null){
+            loginPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

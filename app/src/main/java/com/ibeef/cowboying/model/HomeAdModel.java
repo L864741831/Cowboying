@@ -20,7 +20,7 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 登录
+ * @describe 启动广告
  * @package com.ranhan.cowboying.model
  **/
 public class HomeAdModel implements HomeAdBase.IModel {
@@ -38,7 +38,7 @@ public class HomeAdModel implements HomeAdBase.IModel {
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(3, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
                 .subscribe(new Action1<HomeAdResultBean>() {
                     @Override

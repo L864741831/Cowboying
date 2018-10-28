@@ -10,7 +10,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/7 14:04
- * @describe 登录
+ * @describe 开屏广告
  * @package com.ranhan.cowboying.base
  **/
 public class HomeAdBase {

@@ -1,6 +1,9 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -11,14 +14,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.SmscodeBase;
+import com.ibeef.cowboying.bean.SmsCodeParamBean;
+import com.ibeef.cowboying.bean.SmsCodeResultBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.presenter.SmsCodePresenter;
+import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.TimeUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
+import rxfamily.utils.PermissionsUtils;
 import rxfamily.view.BaseActivity;
 
 /**
@@ -49,6 +66,7 @@ public class MobileLoginActivity extends BaseActivity {
     @Bind(R.id.show_bind_rv)
     RelativeLayout showBindRv;
     private String stadus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +125,7 @@ public class MobileLoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.close_img_id, R.id.sure_id,R.id.back_id,R.id.pwd_login_id,R.id.action_right_tv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv})
+    @OnClick({R.id.close_img_id, R.id.sure_id,R.id.back_id,R.id.pwd_login_id,R.id.action_right_tv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv,R.id.register_rule_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_img_id:
@@ -138,24 +156,45 @@ public class MobileLoginActivity extends BaseActivity {
                     showToast("请输入正确的手机号码！");
                     return;
                 }
-                Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                intent.putExtra("stadus",stadus);
-                intent.putExtra("mobile",etMobile.getText().toString().trim());
-                startActivity(intent);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
+                    grantObservable.subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean granted) {
+                            if (granted) {
+                                Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                                intent.putExtra("stadus",stadus);
+                                intent.putExtra("mobile",etMobile.getText().toString().trim());
+                                startActivity(intent);
+                            } else {
+                                PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
+                            }
+                        }
+                    });
+                }else {
+                    Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                    intent.putExtra("stadus",stadus);
+                    intent.putExtra("mobile",etMobile.getText().toString().trim());
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.back_id:
                 finish();
+                break;
+            case R.id.register_rule_id:
+                Toast.makeText(MobileLoginActivity.this,"显示注册协议",Toast.LENGTH_LONG).show();
                 break;
             case R.id.pwd_login_id:
                 if("0".equals(stadus)){
                     //正常登录流程
                     startActivity(PwdLoginActivity.class);
-                }else if("2".equals(stadus)){
-                        //注册流程
                 }
                 break;
             default:
                 break;
         }
     }
+
 }

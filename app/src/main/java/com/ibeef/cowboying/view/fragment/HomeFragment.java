@@ -16,6 +16,8 @@ import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
 import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
@@ -71,6 +73,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         homeBannerPresenter=new HomeBannerPresenter(this);
         homeBannerPresenter.getHomeBanner();
+        homeBannerPresenter.getHomeVideo();
     }
 
     @Override
@@ -195,7 +198,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void getHomeBanner(HomeAdResultBean homeAdResultBean) {
+    public void getHomeBanner(HomeBannerResultBean homeBannerResultBean) {
         ArrayList<String> imgStr = new ArrayList<>();
 //        for (int i=0;i<bannerBean.getData().size();i++){
 //            imgStr.add(YbConstant.imageDomain+bannerBean.getData().get(i).getImageUrl());
@@ -209,5 +212,15 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             }
         });
+    }
+
+    @Override
+    public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
+
+    }
+
+    @Override
+    public void getAllVideo(HomeVideoResultBean homeAdResultBean) {
+
     }
 }

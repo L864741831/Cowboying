@@ -1,9 +1,12 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +14,11 @@ import android.widget.TextView;
 
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.EditLogionPwdBase;
+import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
+import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.presenter.EditLoginPwdPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +28,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 重置密码界面
  */
-public class ResetPwdActivity extends BaseActivity {
+public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -37,6 +45,7 @@ public class ResetPwdActivity extends BaseActivity {
     @Bind(R.id.stadus_title_id)
     TextView stadusTitleId;
     private boolean setPwd;
+    private EditLoginPwdPresenter editLoginPwdPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +56,7 @@ public class ResetPwdActivity extends BaseActivity {
 
     private void init(){
         setPwd=getIntent().getBooleanExtra("setPwd",false);
+        editLoginPwdPresenter=new EditLoginPwdPresenter(this);
         if(setPwd){
             //设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码
             stadusTitleId.setText("设置密码");
@@ -117,11 +127,47 @@ public class ResetPwdActivity extends BaseActivity {
                     showToast("两次密码输入不相同~，请重新输入！");
                     return;
                 }
-                //修改密码成功，重新跳到密码登录的界面，重新登录
-                startActivity(PwdLoginActivity.class);
+
+                EditLoginPwdParamBean editLoginPwdParamBean=new EditLoginPwdParamBean();
+                editLoginPwdParamBean.setPassWord(etNewPwd.getText().toString().trim());
+                if(setPwd){
+                    //设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码
+                    editLoginPwdParamBean.setType("5");
+                }else {
+                    //忘记密码
+                    editLoginPwdParamBean.setType("3");
+                }
+
+                editLoginPwdPresenter.getEditLoginPwd(getVersionCodes(),editLoginPwdParamBean);
                 break;
             default:
                 break;
         }
     }
+
+    @Override
+    public void showMsg(String msg) {
+        showMsg(msg);
+    }
+
+    @Override
+    public void getEditLoginPwd(EditLoginPwdResultBean editLoginPwdResultBean) {
+        if("000000".equals(editLoginPwdResultBean.getCode())){
+            //修改密码成功，重新跳到密码登录的界面，重新登录
+            startActivity(PwdLoginActivity.class);
+        }else {
+            showMsg(editLoginPwdResultBean.getMessage());
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(editLoginPwdPresenter!=null){
+            editLoginPwdPresenter.detachView();
+        }
+        super.onDestroy();
+    }
+
+
 }

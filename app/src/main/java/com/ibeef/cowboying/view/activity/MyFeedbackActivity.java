@@ -11,6 +11,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyFeedbackAdapter;
+import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.bean.MyFeedbackResultBean;
+import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
+import com.ibeef.cowboying.presenter.FeedbackPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 我的反馈界面
  */
-public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener {
+public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener ,FeedbackBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -38,6 +42,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     SwipeRefreshLayout mSwipeLayout;
     private MyFeedbackAdapter myFeedbackAdapter;
     private List<BaseBean> baseBeans;
+    private FeedbackPresenter feedbackPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,9 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setEnabled(true);
+
+        feedbackPresenter=new FeedbackPresenter(this);
+        feedbackPresenter.getMyFeedback("");
     }
 
     @OnClick(R.id.back_id)
@@ -77,5 +85,38 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     @Override
     public void onLoadMoreRequested() {
 
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getMyFeedback(MyFeedbackResultBean myFeedbackResultBean) {
+
+    }
+
+    @Override
+    public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(feedbackPresenter != null){
+            feedbackPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

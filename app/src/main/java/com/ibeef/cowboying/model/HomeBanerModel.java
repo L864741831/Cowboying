@@ -4,6 +4,8 @@ import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
 
 import rx.Observable;
@@ -19,7 +21,7 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 登录
+ * @describe 首页banner
  * @package com.ranhan.cowboying.model
  **/
 public class HomeBanerModel implements HomeBannerBase.IModel {
@@ -33,16 +35,60 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
 
 
     @Override
-    public Subscription getHomeBanner(final ResponseCallback<HomeAdResultBean> callback) {
-        Observable<HomeAdResultBean> observable = service.getHomeBanner();
+    public Subscription getHomeBanner(final ResponseCallback<HomeBannerResultBean> callback) {
+        Observable<HomeBannerResultBean> observable = service.getHomeBanner();
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(3, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<HomeAdResultBean>() {
+                .subscribe(new Action1<HomeBannerResultBean>() {
                     @Override
-                    public void call(HomeAdResultBean result) {
+                    public void call(HomeBannerResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getHomeVideo(final ResponseCallback<HomeVideoResultBean> callback) {
+        Observable<HomeVideoResultBean> observable = service.getHomeVideo();
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<HomeVideoResultBean>() {
+                    @Override
+                    public void call(HomeVideoResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getAllVideo(final ResponseCallback<HomeVideoResultBean> callback) {
+        Observable<HomeVideoResultBean> observable = service.getAllVideo();
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<HomeVideoResultBean>() {
+                    @Override
+                    public void call(HomeVideoResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

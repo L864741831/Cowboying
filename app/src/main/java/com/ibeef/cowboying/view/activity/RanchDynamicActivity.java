@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.ranhan.cowboying.adapter.RanchDynamicdapter;
-import com.ranhan.cowboying.bean.RanchDynamicListBean;
+import com.ibeef.cowboying.adapter.RanchDynamicdapter;
+import com.ibeef.cowboying.bean.RanchDynamicListBean;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;

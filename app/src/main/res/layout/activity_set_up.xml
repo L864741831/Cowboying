@@ -44,6 +44,9 @@
             android:layout_height="wrap_content" android:orientation="horizontal"
             android:layout_toLeftOf="@+id/station_txt" android:layout_centerVertical="true">
             <ImageView
+                android:layout_width="40dp" android:id="@+id/phone_stadus"
+                android:layout_height="40dp" android:src="@mipmap/setphone"/>
+            <ImageView
                 android:layout_width="40dp" android:id="@+id/weixin_stadus"
                 android:layout_height="40dp" android:src="@mipmap/setweixin"/>
             <ImageView
@@ -61,7 +64,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp" android:id="@+id/modify_pwd_rv">
+        android:layout_height="50dp" android:id="@+id/modify_pwd_rv"
+        android:visibility="gone">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:textColor="@color/black"

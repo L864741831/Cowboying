@@ -132,13 +132,16 @@ public class SetUpActivity extends BaseActivity {
                 break;
         }
     }
-
+    /**
+     * 获取版本号
+     * @return
+     */
     public void getVersionCode() {
         PackageManager packageManager = getPackageManager();
         try {
             PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
             String versionName = packageInfo.versionName;
-            versionCodeTxt.setText("版本"+versionName);
+            versionCodeTxt.setText("版本 "+versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
