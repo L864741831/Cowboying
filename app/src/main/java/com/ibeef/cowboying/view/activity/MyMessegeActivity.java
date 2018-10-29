@@ -11,6 +11,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyMessegeListAdapter;
+import com.ibeef.cowboying.config.HawkKey;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
 
     private MyMessegeListAdapter myMessegeListAdapter;
     private List<BaseBean> beanList;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
     }
 
     private void init(){
+        token= Hawk.get(HawkKey.TOKEN);
         info.setText("消息");
         messageRy.setLayoutManager(new LinearLayoutManager(this));
         beanList=new ArrayList<>();

@@ -18,13 +18,19 @@ import android.widget.Toast;
 
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.BindMobileBase;
 import com.ibeef.cowboying.base.SmscodeBase;
+import com.ibeef.cowboying.bean.BindMobileParamBean;
+import com.ibeef.cowboying.bean.BindMobileResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.BindMobilePresenter;
 import com.ibeef.cowboying.presenter.SmsCodePresenter;
 import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.TimeUtils;
+import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +47,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 手机号登录
  */
-public class MobileLoginActivity extends BaseActivity {
+public class MobileLoginActivity extends BaseActivity implements BindMobileBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -66,6 +72,8 @@ public class MobileLoginActivity extends BaseActivity {
     @Bind(R.id.show_bind_rv)
     RelativeLayout showBindRv;
     private String stadus;
+    private BindMobilePresenter bindMobilePresenter;
+    private String token,oldmobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,8 @@ public class MobileLoginActivity extends BaseActivity {
     }
 
     private void init(){
+        bindMobilePresenter=new BindMobilePresenter(this);
+        token= Hawk.get(HawkKey.TOKEN);
         etMobile.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -122,6 +132,16 @@ public class MobileLoginActivity extends BaseActivity {
             //设置<账号安全<修改登录手机号 <验证码，输入新的手机号
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("输入新的手机号");
+        }else if("7".equals(stadus)){
+            //个人信息 绑定手机号
+            actionRightTv.setVisibility(View.GONE);
+            pwdLoginId.setVisibility(View.GONE);
+            stadusTitleId.setText("绑定手机号");
+        }else if("8".equals(stadus)){
+            //换绑手机号
+            pwdLoginId.setVisibility(View.GONE);
+            stadusTitleId.setText("输入新的手机号");
+            oldmobile=getIntent().getStringExtra("oldmobile");
         }
     }
 
@@ -157,28 +177,44 @@ public class MobileLoginActivity extends BaseActivity {
                     return;
                 }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
-                    grantObservable.subscribe(new Action1<Boolean>() {
-                        @Override
-                        public void call(Boolean granted) {
-                            if (granted) {
-                                Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                                intent.putExtra("stadus",stadus);
-                                intent.putExtra("mobile",etMobile.getText().toString().trim());
-                                startActivity(intent);
-                            } else {
-                                PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
-                            }
-                        }
-                    });
-                }else {
+                if("3".equals(stadus)||"7".equals(stadus)){
+                    //第三方登录，个人信息 绑定手机号
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("token",token);
+                    reqData.put("version",getVersionCodes());
+                    BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
+                    bindMobileParamBean.setMobile(etMobile.getText().toString().trim());
+                    bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
+                }else   if("8".equals(stadus)){
+                    //设置 账号安全 手机号换绑
                     Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                    intent.putExtra("stadus",stadus);
+                    intent.putExtra("stadus","9");
+                    intent.putExtra("oldmobile",oldmobile);
                     intent.putExtra("mobile",etMobile.getText().toString().trim());
                     startActivity(intent);
+                }else{
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
+                        grantObservable.subscribe(new Action1<Boolean>() {
+                            @Override
+                            public void call(Boolean granted) {
+                                if (granted) {
+                                    Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                                    intent.putExtra("stadus",stadus);
+                                    intent.putExtra("mobile",etMobile.getText().toString().trim());
+                                    startActivity(intent);
+                                } else {
+                                    PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
+                                }
+                            }
+                        });
+                    }else {
+                        Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                        intent.putExtra("stadus",stadus);
+                        intent.putExtra("mobile",etMobile.getText().toString().trim());
+                        startActivity(intent);
+                    }
                 }
-
                 break;
             case R.id.back_id:
                 finish();
@@ -197,4 +233,33 @@ public class MobileLoginActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void showMsg(String msg) {
+        showMsg(msg);
+    }
+
+    @Override
+    public void getBindMobile(BindMobileResultBean bindMobileResultBean) {
+        if("000000".equals(bindMobileResultBean.getCode())){
+            if("3".equals(stadus)){
+                Intent intent=new Intent(MobileLoginActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }else {
+                finish();
+            }
+
+        }else {
+            showMsg(bindMobileResultBean.getMessage());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(bindMobilePresenter!=null){
+            bindMobilePresenter.detachView();
+        }
+        super.onDestroy();
+    }
 }

@@ -2,19 +2,20 @@ package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.classic.common.MultipleStatusView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.presenter.HomeAdPresenter;
 
 import butterknife.Bind;
@@ -29,14 +30,15 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
 
     @Bind(R.id.bg_img)
     ImageView bgImg;
-    @Bind(R.id.multiple_status_view)
-    MultipleStatusView multipleStatusView;
-
     @Bind(R.id.go_main_activity)
     RelativeLayout goMainActivity;
+    @Bind(R.id.loading_layout)
+    RelativeLayout loadingLayout;
     int timeCount = 0;
     boolean continueCount = true;
+    boolean isShow = false;
     private HomeAdPresenter homeAdPresenter;
+    private HomeAdResultBean homeAdResultBean;
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressWarnings("unused")
@@ -56,7 +58,7 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
         ButterKnife.bind(this);
         handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
         homeAdPresenter=new HomeAdPresenter(this);
-        homeAdPresenter.getHomeAd(getVersionCode());
+        homeAdPresenter.getHomeAd(getVersionCodes());
     }
 
     @OnClick({R.id.bg_img, R.id.go_main_activity})
@@ -65,11 +67,17 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
             case R.id.bg_img:
                 continueCount = false;
                 // url广告webview地址，广告title
-                Intent intent=new Intent(AdActivity.this, AdWebviewActivity.class);
-                intent.putExtra("url","https://www.baidu.com/");
-                intent.putExtra("title","口袋牧场");
-                startActivity(intent);
-                finish();
+
+                if(isShow){
+                    Intent intent=new Intent(AdActivity.this, AdWebviewActivity.class);
+                    intent.putExtra("url",homeAdResultBean.getBizData().getLinkUrl());
+                    intent.putExtra("title","口袋牧场");
+                    startActivity(intent);
+                    finish();
+                }else {
+                    showMsg("暂无广告详情~");
+                }
+
                 break;
             case R.id.go_main_activity:
                 continueCount = false;
@@ -83,7 +91,7 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
 
     private int countNum() {//数秒
         timeCount++;
-        if(timeCount==3){
+        if(timeCount==5){
             continueCount = false;
             //超过三秒进入下个页面
             startActivity(new Intent(AdActivity.this, MainActivity.class));
@@ -94,35 +102,42 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
 
     @Override
     public void showMsg(String msg) {
-        multipleStatusView.showLoading();
+
     }
 
     @Override
     public void getHomeAd(HomeAdResultBean homeAdResultBean) {
+        if("000000".equals(homeAdResultBean.getCode())){
+            RequestOptions options = new RequestOptions()
+                    .error(R.mipmap.startup)
+                    //加载错误之后的错误图
+                    .skipMemoryCache(true)
+                    //跳过内存缓存
+                    ;
+            if(!TextUtils.isEmpty(homeAdResultBean.getBizData().getLinkUrl())){
+                isShow=true;
+            }
+            this.homeAdResultBean=homeAdResultBean;
+            Glide.with(this).load(Constant.imageDomain+homeAdResultBean.getBizData().getImageUrl()).apply(options).into(bgImg);
+        }else {
+            showMsg(homeAdResultBean.getMessage());
+        }
 
     }
 
     @Override
-    public void showLoading() {
-
+    public void showLoading(){
+        loadingLayout.setVisibility(View.VISIBLE);
+        bgImg.setVisibility(View.GONE);
     }
 
     @Override
     public void hideLoading() {
-        multipleStatusView.showContent();
+        loadingLayout.setVisibility(View.GONE);
+        bgImg.setVisibility(View.VISIBLE);
     }
 
-    public String getVersionCode() {
-        PackageManager packageManager = getPackageManager();
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            return versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
+
 
     @Override
     protected void onDestroy() {

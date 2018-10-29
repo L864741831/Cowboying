@@ -21,10 +21,14 @@ import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,6 +59,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     private OptionReturnImgAdapter optionReturnImgAdapter;
     private List<String> stringList;
     private FeedbackPresenter feedbackPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     }
 
     private void init(){
+        token= Hawk.get(HawkKey.TOKEN);
         info.setText("意见反馈");
         ryImgId.setLayoutManager(new GridLayoutManager(this,4));
         stringList=new ArrayList<>();
@@ -157,10 +163,13 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                     Toast.makeText(OptionReturnActivity.this,"请输入您的意见！",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("token",token);
+                reqData.put("version",getVersionCodes());
                 SubmitFeedbackParamBean submitFeedbackParamBean=new SubmitFeedbackParamBean();
                 submitFeedbackParamBean.setContent(etOpinion.getText().toString().trim());
                 submitFeedbackParamBean.setImageList(stringList);
-                feedbackPresenter.getSubmitFeedback("",submitFeedbackParamBean);
+                feedbackPresenter.getSubmitFeedback(reqData,submitFeedbackParamBean);
                 break;
             case R.id.me_option_btn:
                 startActivity(MyFeedbackActivity.class);

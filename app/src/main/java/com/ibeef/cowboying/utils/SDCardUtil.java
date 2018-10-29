@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.utils;
 
 import android.os.Environment;
+import android.os.StatFs;
 
 import java.io.File;
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.Map;
  * @createdate 2013年3月1日 上午11:23:00
  * @Description: SD卡相关的辅助类
  */
-public class SdCardUtil {
+public class SDCardUtil {
 	/**
 	 * 判断SDCard是否可用
 	 * 
@@ -32,6 +33,22 @@ public class SdCardUtil {
 				+ File.separator;
 	}
 
+	/**
+	 * 获取SD卡的剩余容量 单位byte
+	 * 
+	 * @return
+	 */
+	public static long getSDCardAllSize() {
+		if (isSDCardEnable()) {
+			StatFs stat = new StatFs(getSDCardPath());
+			// 获取空闲的数据块的数量
+			long availableBlocks = (long) stat.getAvailableBlocks() - 4;
+			// 获取单个数据块的大小（byte）
+			long freeBlocks = stat.getAvailableBlocks();
+			return freeBlocks * availableBlocks;
+		}
+		return 0;
+	}
 
 	/**
 	 * 判断对象或对象数组中每一个对象是否为空: 对象为null，字符序列长度为0，集合类、Map为empty
@@ -43,15 +60,19 @@ public class SdCardUtil {
 		if (obj == null) {
 			return true;
 		}
+
 		if (obj instanceof CharSequence) {
 			return ((CharSequence) obj).length() == 0;
 		}
+
 		if (obj instanceof Collection) {
 			return ((Collection) obj).isEmpty();
 		}
+
 		if (obj instanceof Map) {
 			return ((Map) obj).isEmpty();
 		}
+
 		if (obj instanceof Object[]) {
 			Object[] object = (Object[]) obj;
 			if (object.length == 0) {
@@ -69,6 +90,23 @@ public class SdCardUtil {
 		return false;
 	}
 
+	/**
+	 * 获取指定路径所在空间的剩余可用容量字节数，单位byte
+	 * 
+	 * @param filePath
+	 * @return 容量字节 SDCard可用空间，内部存储可用空间
+	 */
+	public static long getFreeBytes(String filePath) {
+		// 如果是sd卡的下的路径，则获取sd卡可用容量
+		if (filePath.startsWith(getSDCardPath())) {
+			filePath = getSDCardPath();
+		} else {// 如果是内部存储的路径，则获取内存存储的可用容量
+			filePath = Environment.getDataDirectory().getAbsolutePath();
+		}
+		StatFs stat = new StatFs(filePath);
+		long availableBlocks = (long) stat.getAvailableBlocks() - 4;
+		return stat.getBlockSize() * availableBlocks;
+	}
 
 	/**
 	 * 获取系统存储路径

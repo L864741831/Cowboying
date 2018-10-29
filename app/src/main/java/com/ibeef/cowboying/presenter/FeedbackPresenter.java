@@ -11,6 +11,8 @@ import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.model.FeedbackModel;
 import com.ibeef.cowboying.model.HomeAdModel;
 
+import java.util.Map;
+
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -31,9 +33,9 @@ public class FeedbackPresenter extends BasePresenter implements FeedbackBase.IPr
     }
 
     @Override
-    public void getMyFeedback(String jwt) {
+    public void getMyFeedback(Map<String, String> headers) {
         mView.showLoading();
-        addSubscription(mModel.getMyFeedback(jwt,new ResponseCallback<MyFeedbackResultBean>() {
+        addSubscription(mModel.getMyFeedback(headers,new ResponseCallback<MyFeedbackResultBean>() {
             @Override
             public void onSuccess(MyFeedbackResultBean result) {
                 mView.hideLoading();
@@ -51,8 +53,8 @@ public class FeedbackPresenter extends BasePresenter implements FeedbackBase.IPr
     }
 
     @Override
-    public void getSubmitFeedback(String jwt, SubmitFeedbackParamBean submitFeedbackParamBean) {
-        addSubscription(mModel.getSubmitFeedback(jwt,submitFeedbackParamBean,new ResponseCallback<SubmitFeedbackResultBean>() {
+    public void getSubmitFeedback(Map<String, String> headers, SubmitFeedbackParamBean submitFeedbackParamBean) {
+        addSubscription(mModel.getSubmitFeedback(headers,submitFeedbackParamBean,new ResponseCallback<SubmitFeedbackResultBean>() {
             @Override
             public void onSuccess(SubmitFeedbackResultBean result) {
                 mView.getSubmitFeedback(result);

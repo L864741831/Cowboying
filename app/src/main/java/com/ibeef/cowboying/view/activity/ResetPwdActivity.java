@@ -18,7 +18,12 @@ import com.ibeef.cowboying.base.EditLogionPwdBase;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.EditLoginPwdPresenter;
+import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,6 +51,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     TextView stadusTitleId;
     private boolean setPwd;
     private EditLoginPwdPresenter editLoginPwdPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     }
 
     private void init(){
+        token= Hawk.get(HawkKey.TOKEN);
         setPwd=getIntent().getBooleanExtra("setPwd",false);
         editLoginPwdPresenter=new EditLoginPwdPresenter(this);
         if(setPwd){
@@ -138,7 +145,10 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
                     editLoginPwdParamBean.setType("3");
                 }
 
-                editLoginPwdPresenter.getEditLoginPwd(getVersionCodes(),editLoginPwdParamBean);
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("version", getVersionCodes());
+                reqData.put("token", token);// TODO: 2018/10/29
+                editLoginPwdPresenter.getEditLoginPwd(reqData,editLoginPwdParamBean);
                 break;
             default:
                 break;

@@ -9,6 +9,8 @@ import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.config.Constant;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,8 +37,8 @@ public class EditLoginPwdModel implements EditLogionPwdBase.IModel {
     }
 
     @Override
-    public Subscription getEditLoginPwd(String version, EditLoginPwdParamBean editLoginPwdParamBean, final ResponseCallback<EditLoginPwdResultBean> callback) {
-        Observable<EditLoginPwdResultBean> observable = service.getEditLoginPwd(version,editLoginPwdParamBean);
+    public Subscription getEditLoginPwd(Map<String, String> headers, EditLoginPwdParamBean editLoginPwdParamBean, final ResponseCallback<EditLoginPwdResultBean> callback) {
+        Observable<EditLoginPwdResultBean> observable = service.getEditLoginPwd(headers,editLoginPwdParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

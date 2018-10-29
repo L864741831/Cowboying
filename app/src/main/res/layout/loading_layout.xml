@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"   android:id="@+id/rv_loading"
     android:layout_centerInParent="true"
-    android:visibility="gone">
+    >
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_loading"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:indicatorName="PacmanIndicator"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:indicatorName="BallClipRotateMultipleIndicator"
         android:layout_centerInParent="true"
-        app:indicatorColor="@color/gray_cc"/>
+        app:indicatorColor="@color/black"/>
 
 </RelativeLayout>

@@ -11,8 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.config.HawkKey;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.ibeef.cowboying.utils.CleanDataUtils;
+import com.orhanobut.hawk.Hawk;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,6 +55,7 @@ public class SetUpActivity extends BaseActivity {
     RelativeLayout releaseCacheRv;
     @Bind(R.id.unlogin_rv)
     RelativeLayout unloginRv;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,7 @@ public class SetUpActivity extends BaseActivity {
     }
 
     private void init() {
+        token= Hawk.get(HawkKey.TOKEN);
         info.setText("设置");
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

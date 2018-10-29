@@ -16,19 +16,25 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.LoginBase;
 import com.ibeef.cowboying.base.SmscodeBase;
+import com.ibeef.cowboying.base.UpdateMobileBase;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
+import com.ibeef.cowboying.bean.UpdateMobileParamBean;
+import com.ibeef.cowboying.bean.UpdateMobileResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountRegisterPresenter;
 import com.ibeef.cowboying.presenter.LoginPresenter;
 import com.ibeef.cowboying.presenter.SmsCodePresenter;
+import com.ibeef.cowboying.presenter.UpdateMobilePresenter;
 import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
+import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +51,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 输入验证码界面
  */
-public class IdentifyCodeActivity extends BaseActivity implements AccountRegisterBase.IView ,SmscodeBase.IView ,LoginBase.IView {
+public class IdentifyCodeActivity extends BaseActivity implements AccountRegisterBase.IView ,SmscodeBase.IView ,LoginBase.IView ,UpdateMobileBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -61,10 +67,12 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     TextView againGetcodeId;
 
     private String stadus;
-    private String contents,mobile;
+    private String contents,mobile,oldmobile;
     private SmsCodePresenter smsCodePresenter;
     private AccountRegisterPresenter accountRegisterPresenter;
     private LoginPresenter loginPresenter;
+    private UpdateMobilePresenter updateMobilePresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +82,17 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     }
 
     private void init(){
+        token= Hawk.get(HawkKey.TOKEN);
         //1 忘记密码流程
         stadus=getIntent().getStringExtra("stadus");
-        mobile=getIntent().getStringExtra("mobile");
+        if("8".equals(stadus)){
+            oldmobile=getIntent().getStringExtra("oldmobile");
+        }else if("9".equals(stadus)){
+            oldmobile=getIntent().getStringExtra("oldmobile");
+            mobile=getIntent().getStringExtra("mobile");
+        }else {
+            mobile=getIntent().getStringExtra("mobile");
+        }
         mobileTxtId.setText("+86  "+mobile);
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
@@ -89,6 +105,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         smsCodePresenter=new SmsCodePresenter(this);
         accountRegisterPresenter=new AccountRegisterPresenter(this);
         loginPresenter=new LoginPresenter(this);
+        updateMobilePresenter=new UpdateMobilePresenter(this);
         getCodes();
     }
     @OnClick({R.id.sure_id, R.id.again_getcode_id,R.id.back_id})
@@ -114,6 +131,16 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                     accountRegisterParamBean.setCode(contents);
                     accountRegisterPresenter.getAccoutRegister(getVersionCodes(),accountRegisterParamBean);
 
+                }else if("9".equals(stadus)){
+                    //设置 账号安全 手机号换绑
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("token",token);
+                    reqData.put("version",getVersionCodes());
+                    UpdateMobileParamBean  updateMobileParamBean=new UpdateMobileParamBean();
+                    updateMobileParamBean.setMobile(mobile);
+                    updateMobileParamBean.setOldMobile(oldmobile);
+                    updateMobilePresenter.getUpdateMobile(reqData,updateMobileParamBean);
+                    // TODO: 2018/10/29  
                 }else {
                     //校验验证码接口
                     validade();
@@ -172,6 +199,9 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             case "6":
                 validateSmsCodeParamBean.setSmsType("editPhone");
                 break;
+            case "8":
+                validateSmsCodeParamBean.setSmsType("editPhone");
+                break;
             default:
                 break;
         }
@@ -217,6 +247,10 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 smsCodeParamBean.setSmsType("editPhone");
                 reqData.put("smsType", "editPhone");
                 break;
+            case "8":
+                smsCodeParamBean.setSmsType("editPhone");
+                reqData.put("smsType", "editPhone");
+                break;
             default:
                 break;
         }
@@ -238,12 +272,29 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     }
 
     @Override
+    public void getUpdateMobile(UpdateMobileResultBean updateMobileResultBean) {
+        if("000000".equals(updateMobileResultBean.getCode())){
+            Intent intent=new Intent(IdentifyCodeActivity.this,LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            showMsg("换绑手机号成功，请重新登录");
+        }else {
+            showMsg(updateMobileResultBean.getMessage());
+        }
+    }
+
+    @Override
     public void getUserLogin(LoginBean loginBean) {
         if("000000".equals(loginBean.getCode())){
+            Hawk.put(HawkKey.TOKEN, "");
+            Hawk.put(HawkKey.userId, "");
+
             Intent intent=new Intent(IdentifyCodeActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+
         }else {
             showMsg(loginBean.getMessage());
         }
@@ -284,6 +335,12 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             }else if("6".equals(stadus)){
                 //设置<账号安全<修改登录手机号 <验证码，输入新的手机号 获取验证码的界面
                 startActivity(LoginActivity.class);
+            }else if("8".equals(stadus)){
+                 // 8 设置<账号安全<手机号换绑
+                Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
+                intent.putExtra("stadus","8");
+                intent.putExtra("oldmobile",oldmobile);
+                startActivity(intent);
             }
         }else {
             showMsg(smsCodeResultBean.getMessage());

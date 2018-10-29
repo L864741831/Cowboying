@@ -9,6 +9,9 @@ import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.config.Constant;
 
+import java.util.Map;
+
+import retrofit2.http.HeaderMap;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,8 +37,8 @@ public class FeedbackModel implements FeedbackBase.IModel {
         service = httpService.getHttpService().create(ApiService.class);
     }
     @Override
-    public Subscription getMyFeedback(String jwt,final ResponseCallback<MyFeedbackResultBean> callback) {
-        Observable<MyFeedbackResultBean> observable = service.getMyFeedback(jwt);
+    public Subscription getMyFeedback(@HeaderMap Map<String, String> headers, final ResponseCallback<MyFeedbackResultBean> callback) {
+        Observable<MyFeedbackResultBean> observable = service.getMyFeedback(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,8 +59,8 @@ public class FeedbackModel implements FeedbackBase.IModel {
     }
 
     @Override
-    public Subscription getSubmitFeedback(String jwt, SubmitFeedbackParamBean submitFeedbackParamBean,final ResponseCallback<SubmitFeedbackResultBean> callback) {
-        Observable<SubmitFeedbackResultBean> observable = service.getSubmitFeedback(jwt,submitFeedbackParamBean);
+    public Subscription getSubmitFeedback(@HeaderMap Map<String, String> headers,SubmitFeedbackParamBean submitFeedbackParamBean,final ResponseCallback<SubmitFeedbackResultBean> callback) {
+        Observable<SubmitFeedbackResultBean> observable = service.getSubmitFeedback(headers,submitFeedbackParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

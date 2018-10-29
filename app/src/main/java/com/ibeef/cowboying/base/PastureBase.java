@@ -24,12 +24,12 @@ public class PastureBase {
     }
 
     public interface IPresenter {
-        void getPastureAllVideo();
-        void getPastureDetelVideo();
+        void getPastureAllVideo(String version);
+        void getPastureDetelVideo(String version,int pastureId);
     }
 
     public interface IModel {
-        Subscription getPastureAllVideo(ResponseCallback<PastureAllResultBean> callback);
-        Subscription getPastureDetelVideo(ResponseCallback<PastureDetelResultBean> callback);
+        Subscription getPastureAllVideo(String version,ResponseCallback<PastureAllResultBean> callback);
+        Subscription getPastureDetelVideo(String version,int pastureId,ResponseCallback<PastureDetelResultBean> callback);
     }
 }

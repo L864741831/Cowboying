@@ -23,7 +23,7 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 登录
+ * @describe 注册
  * @package com.ranhan.cowboying.model
  **/
 public class AccountRegisetModel implements AccountRegisterBase.IModel {

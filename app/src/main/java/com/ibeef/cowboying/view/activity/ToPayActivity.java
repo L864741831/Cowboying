@@ -14,6 +14,8 @@ import com.alipay.sdk.app.PayTask;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.PayResult;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -36,6 +38,7 @@ public class ToPayActivity extends BaseActivity {
     Button weixinPay;
     private static final int SDK_PAY_FLAG = 1;
     private IWXAPI api;
+    private String token;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -75,6 +78,7 @@ public class ToPayActivity extends BaseActivity {
 
     private void init(){
         api = WXAPIFactory.createWXAPI(this, "wx0678b96a189375f3",false);
+        token= Hawk.get(HawkKey.TOKEN);
     }
 
     @OnClick({R.id.aplily_pay, R.id.weixin_pay})

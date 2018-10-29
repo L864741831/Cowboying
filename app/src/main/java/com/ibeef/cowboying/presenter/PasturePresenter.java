@@ -31,9 +31,9 @@ public class PasturePresenter extends BasePresenter implements PastureBase.IPres
 
 
     @Override
-    public void getPastureAllVideo() {
+    public void getPastureAllVideo(String version) {
         mView.showLoading();
-        addSubscription(mModel.getPastureAllVideo(new ResponseCallback<PastureAllResultBean>() {
+        addSubscription(mModel.getPastureAllVideo(version,new ResponseCallback<PastureAllResultBean>() {
             @Override
             public void onSuccess(PastureAllResultBean result) {
                 mView.hideLoading();
@@ -50,9 +50,9 @@ public class PasturePresenter extends BasePresenter implements PastureBase.IPres
     }
 
     @Override
-    public void getPastureDetelVideo() {
+    public void getPastureDetelVideo(String version,int pastureId) {
         mView.showLoading();
-        addSubscription(mModel.getPastureDetelVideo(new ResponseCallback<PastureDetelResultBean>() {
+        addSubscription(mModel.getPastureDetelVideo(version,pastureId,new ResponseCallback<PastureDetelResultBean>() {
             @Override
             public void onSuccess(PastureDetelResultBean result) {
                 mView.hideLoading();

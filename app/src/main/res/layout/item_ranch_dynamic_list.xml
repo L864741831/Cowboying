@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true" android:id="@+id/swipe_layout"
-    android:layout_margin="5dp"
-    android:background="@color/white">
+    android:layout_height="wrap_content" android:background="@color/white"
+    android:orientation="vertical" android:layout_margin="7dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent" android:id="@+id/img_id"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:src="@mipmap/vediostart"
+            android:layout_marginTop="65dp" android:layout_gravity="center_horizontal"/>
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp">
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/name_id"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" android:text="澳大利亚牧场"
+            android:textColor="@color/black"/>
 
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/time_id"
+            android:layout_height="wrap_content" android:layout_alignParentRight="true"
+            android:textSize="15sp" android:text="2018/12/12" />
+    </RelativeLayout>
 
-</com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+</LinearLayout>

@@ -34,8 +34,8 @@ public class PastureModel implements PastureBase.IModel {
     }
 
     @Override
-    public Subscription getPastureAllVideo(final ResponseCallback<PastureAllResultBean> callback) {
-        Observable<PastureAllResultBean> observable = service.getPastureAllVideo();
+    public Subscription getPastureAllVideo(String version,final ResponseCallback<PastureAllResultBean> callback) {
+        Observable<PastureAllResultBean> observable = service.getPastureAllVideo(version);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,8 +56,8 @@ public class PastureModel implements PastureBase.IModel {
     }
 
     @Override
-    public Subscription getPastureDetelVideo(final ResponseCallback<PastureDetelResultBean> callback) {
-        Observable<PastureDetelResultBean> observable = service.getPastureDetelVideo();
+    public Subscription getPastureDetelVideo(String version,int pastureId,final ResponseCallback<PastureDetelResultBean> callback) {
+        Observable<PastureDetelResultBean> observable = service.getPastureDetelVideo(version,pastureId);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

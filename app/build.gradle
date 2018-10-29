@@ -37,7 +37,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
-        versionName "2.3.1"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true    // dex突破65535的限制
@@ -76,11 +76,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':rxfamily')
     implementation 'com.github.orhanobut:hawk:1.23'
-    /**
-     * 网络加载图，加载失败，空白页
-     * https://github.com/qyxxjd/MultipleStatusView
-     */
-    implementation 'com.classic.common:multiple-status-view:1.5.1'
+
     /**
      * 此处以JPush 3.1.6 版本为例。
      */

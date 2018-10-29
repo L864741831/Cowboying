@@ -4,6 +4,7 @@ import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
@@ -35,8 +36,8 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
 
 
     @Override
-    public Subscription getHomeBanner(final ResponseCallback<HomeBannerResultBean> callback) {
-        Observable<HomeBannerResultBean> observable = service.getHomeBanner();
+    public Subscription getHomeBanner(String version,final ResponseCallback<HomeBannerResultBean> callback) {
+        Observable<HomeBannerResultBean> observable = service.getHomeBanner(version);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,8 +58,8 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
     }
 
     @Override
-    public Subscription getHomeVideo(final ResponseCallback<HomeVideoResultBean> callback) {
-        Observable<HomeVideoResultBean> observable = service.getHomeVideo();
+    public Subscription getHomeVideo(String version,final ResponseCallback<HomeVideoResultBean> callback) {
+        Observable<HomeVideoResultBean> observable = service.getHomeVideo(version);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,16 +80,16 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
     }
 
     @Override
-    public Subscription getAllVideo(final ResponseCallback<HomeVideoResultBean> callback) {
-        Observable<HomeVideoResultBean> observable = service.getAllVideo();
+    public Subscription getAllVideo(String version,int currentPage,final ResponseCallback<HomeAllVideoResultBean> callback) {
+        Observable<HomeAllVideoResultBean> observable = service.getAllVideo(version,currentPage);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<HomeVideoResultBean>() {
+                .subscribe(new Action1<HomeAllVideoResultBean>() {
                     @Override
-                    public void call(HomeVideoResultBean result) {
+                    public void call(HomeAllVideoResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

@@ -13,8 +13,11 @@ import android.widget.Toast;
 import com.alipay.sdk.app.AuthTask;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.bean.AuthResult;
+import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -29,7 +32,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView {
 
     @Bind(R.id.aplily_login)
     ImageView aplilyLogin;
@@ -42,6 +45,8 @@ public class LoginActivity extends BaseActivity {
     private static final int SDK_AUTH_FLAG = 1000;
     private IWXAPI api;
 
+    private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class LoginActivity extends BaseActivity {
     private void init(){
         api = WXAPIFactory.createWXAPI(this, "wx0678b96a189375f3",true);
         api.registerApp("wx0678b96a189375f3");
+        thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
     }
 
     @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
@@ -158,5 +164,21 @@ public class LoginActivity extends BaseActivity {
     };
 
 
+    @Override
+    public void showMsg(String msg) {
 
+    }
+
+    @Override
+    public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(thirdAccountLoginPresenter!=null){
+            thirdAccountLoginPresenter.detachView();
+        }
+        super.onDestroy();
+    }
 }

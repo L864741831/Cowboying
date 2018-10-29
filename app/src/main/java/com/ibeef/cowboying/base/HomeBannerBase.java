@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.base;
 
 import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 
@@ -19,18 +20,20 @@ public class HomeBannerBase {
         void showMsg(String msg);
         void getHomeBanner(HomeBannerResultBean homeBannerResultBean);
         void getHomeVideo(HomeVideoResultBean homeAdResultBean);
-        void getAllVideo(HomeVideoResultBean homeAdResultBean);
+        void getAllVideo(HomeAllVideoResultBean homeAllVideoResultBean);
+        void showLoading();
+        void hideLoading();
     }
 
     public interface IPresenter {
-        void getHomeBanner();
-        void getHomeVideo();
-        void getAllVideo();
+        void getHomeBanner(String version);
+        void getHomeVideo(String version);
+        void getAllVideo(String version,int currentPage);
     }
 
     public interface IModel {
-        Subscription getHomeBanner(ResponseCallback<HomeBannerResultBean> callback);
-        Subscription getHomeVideo(ResponseCallback<HomeVideoResultBean> callback);
-        Subscription getAllVideo(ResponseCallback<HomeVideoResultBean> callback);
+        Subscription getHomeBanner(String version,ResponseCallback<HomeBannerResultBean> callback);
+        Subscription getHomeVideo(String version,ResponseCallback<HomeVideoResultBean> callback);
+        Subscription getAllVideo(String version,int currentPage,ResponseCallback<HomeAllVideoResultBean> callback);
     }
 }

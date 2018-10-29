@@ -11,6 +11,8 @@ import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.EditLoginPwdModel;
 
+import java.util.Map;
+
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -31,8 +33,8 @@ public class EditLoginPwdPresenter extends BasePresenter implements EditLogionPw
     }
 
     @Override
-    public void getEditLoginPwd(String version, EditLoginPwdParamBean editLoginPwdParamBean) {
-        addSubscription(mModel.getEditLoginPwd(version,editLoginPwdParamBean,new ResponseCallback<EditLoginPwdResultBean>() {
+    public void getEditLoginPwd(Map<String, String> headers, EditLoginPwdParamBean editLoginPwdParamBean) {
+        addSubscription(mModel.getEditLoginPwd(headers,editLoginPwdParamBean,new ResponseCallback<EditLoginPwdResultBean>() {
             @Override
             public void onSuccess(EditLoginPwdResultBean result) {
                 mView.getEditLoginPwd(result);

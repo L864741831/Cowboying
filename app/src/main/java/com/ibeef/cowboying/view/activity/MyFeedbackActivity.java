@@ -14,10 +14,14 @@ import com.ibeef.cowboying.adapter.MyFeedbackAdapter;
 import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,6 +47,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     private MyFeedbackAdapter myFeedbackAdapter;
     private List<BaseBean> baseBeans;
     private FeedbackPresenter feedbackPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     }
 
     private void init(){
+        token= Hawk.get(HawkKey.TOKEN);
         info.setText("我的反馈");
         baseBeans=new ArrayList<>();
         BaseBean baseBean=new BaseBean();
@@ -69,7 +75,10 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         mSwipeLayout.setEnabled(true);
 
         feedbackPresenter=new FeedbackPresenter(this);
-        feedbackPresenter.getMyFeedback("");
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("token",token);
+        reqData.put("version",getVersionCodes());
+        feedbackPresenter.getMyFeedback(reqData);
     }
 
     @OnClick(R.id.back_id)

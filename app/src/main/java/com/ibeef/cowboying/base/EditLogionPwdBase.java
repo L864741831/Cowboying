@@ -5,6 +5,8 @@ import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 
+import java.util.Map;
+
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -22,10 +24,10 @@ public class EditLogionPwdBase {
     }
 
     public interface IPresenter {
-        void getEditLoginPwd(String version,EditLoginPwdParamBean editLoginPwdParamBean);
+        void getEditLoginPwd(Map<String, String> headers,EditLoginPwdParamBean editLoginPwdParamBean);
     }
 
     public interface IModel {
-        Subscription getEditLoginPwd(String version, EditLoginPwdParamBean editLoginPwdParamBean, ResponseCallback<EditLoginPwdResultBean> callback);
+        Subscription getEditLoginPwd(Map<String, String> headers, EditLoginPwdParamBean editLoginPwdParamBean, ResponseCallback<EditLoginPwdResultBean> callback);
     }
 }
