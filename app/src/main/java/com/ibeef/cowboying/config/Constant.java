@@ -5,7 +5,7 @@ package com.ibeef.cowboying.config;
  */
 public class Constant {
     /**
-     * 尹俊杰服务
+     * 殷俊杰服务
      */
 //    public static final String BASE_URL = "http://192.168.0.122:8082/";
     public static final String BASE_URL = "http://192.168.0.162:8090/";
