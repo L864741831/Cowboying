@@ -8,7 +8,6 @@ android {
         minSdkVersion 16//android 4.1  最小兼容版本
         targetSdkVersion 27 // 目标版本
 
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner" // android单元测试配置
         multiDexEnabled true // 启用多dex，如果app中的代码方法数超过65535
     }

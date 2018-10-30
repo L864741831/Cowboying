@@ -29,34 +29,34 @@ public class HttpService {
     private static Retrofit httpService;
     private static  OkHttpClient.Builder httpClient;
 
-    public HttpService(String baseUrl,Boolean useCache){
+    public HttpService(String base_url,Boolean use_cache){
 
         httpClient = new OkHttpClient.Builder();
 
         httpClient.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-                  .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-                  .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-                  .retryOnConnectionFailure(true)
+                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
                 //错误重连
-                  .addInterceptor(new LoggingInterceptor());
+                .addInterceptor(new LoggingInterceptor());
         //开启OKHttp的日志拦截
 
-        if(useCache){
+        if(use_cache){
             //设置缓存路径
             final File httpCacheDirectory = new File(RxApplication.getInstance().getCacheDir(), "okhttpCache");
             Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
             //缓存可用大小为10M
 
             httpClient.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-                      .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-                      .cache(cache);
+                    .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+                    .cache(cache);
         }
 
-        httpService = new Retrofit.Builder().baseUrl(baseUrl)
-                                            .addConverterFactory(GsonConverterFactory.create())
-                                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                                            .client(httpClient.build())
-                                            .build();
+        httpService = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(httpClient.build())
+                .build();
     }
     public static void changeApiBaseUrl(String newApiBaseUrl) {
         httpService = new Retrofit.Builder().baseUrl(newApiBaseUrl)
@@ -67,7 +67,7 @@ public class HttpService {
     }
 
 
-    public static HttpService getInstance(String baseUrl,Boolean useCache) {
+    public static HttpService getInstance(String base_url,Boolean use_cache) {
 //        if (INSTANCE == null) {
 //            synchronized (HttpService.class) {
 //                if (INSTANCE == null) {
@@ -76,7 +76,7 @@ public class HttpService {
 //            }
 //        }
 //        return INSTANCE;
-        return new HttpService(baseUrl,useCache);
+        return new HttpService(base_url,use_cache);
     }
 
     public Retrofit getHttpService() {
