@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class HomeBannerResultBean {
+public class HomeBannerResultBean implements Serializable {
 
     /**
      * code : 000000
@@ -44,7 +45,7 @@ public class HomeBannerResultBean {
         this.bizData = bizData;
     }
 
-    public  class BizDataBean {
+    public  class BizDataBean implements Serializable{
         /**
          * topBannerList : [{"id":2,"position":"1","imageUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png","pageId":null,"linkUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png"},{"id":3,"position":"1","imageUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png","pageId":null,"linkUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png"}]
          * middleBannerList : [{"id":4,"position":"2","imageUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png","pageId":null,"linkUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png"},{"id":5,"position":"2","imageUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png","pageId":null,"linkUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png"}]
@@ -79,7 +80,7 @@ public class HomeBannerResultBean {
             this.middleBannerList = middleBannerList;
         }
 
-        public  class PopBannerResDtoBean {
+        public  class PopBannerResDtoBean implements Serializable{
             /**
              * id : 7
              * position : 4
@@ -135,7 +136,7 @@ public class HomeBannerResultBean {
             }
         }
 
-        public  class TopBannerListBean {
+        public  class TopBannerListBean implements Serializable{
             /**
              * id : 2
              * position : 1
@@ -191,7 +192,7 @@ public class HomeBannerResultBean {
             }
         }
 
-        public  class MiddleBannerListBean {
+        public  class MiddleBannerListBean implements Serializable{
             /**
              * id : 4
              * position : 2

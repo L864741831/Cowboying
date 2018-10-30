@@ -1,10 +1,13 @@
 package com.ibeef.cowboying.view.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -25,21 +28,26 @@ import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CheckVersionPresenter;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
+import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.view.activity.AdActivity;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
+import com.ibeef.cowboying.view.activity.GivePoursActivity;
 import com.ibeef.cowboying.view.activity.HomeVideoPlayActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
+import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -66,7 +74,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private RanchDynamicsAdapter ranchDynamicsAdapter;
     private List<HomeVideoResultBean.BizDataBean> beanList;
     private HomeBannerPresenter homeBannerPresenter;
-
+    //判断弹框
+    private SharedPreferences mPrefDailog;
+    public static final String KEY_HISTORY_KEYWORD = "key_mPrefDailogtimes";
+    public String history;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -87,7 +98,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeBannerPresenter=new HomeBannerPresenter(this);
         homeBannerPresenter.getHomeBanner(getVersionCodes());
         homeBannerPresenter.getHomeVideo(getVersionCodes());
-
+        mPrefDailog = getHoldingActivity().getSharedPreferences("firstopenDailogs", Activity.MODE_PRIVATE);
+        history= mPrefDailog.getString(KEY_HISTORY_KEYWORD, "");
 
     }
 
@@ -165,7 +177,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             }
         });
-
     }
 
     @Override
@@ -215,7 +226,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void showMsg(String msg) {
-
     }
 
 
@@ -256,6 +266,25 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
 
+
+        if(TextUtils.isEmpty(history)){
+            SharedPreferences.Editor editor = mPrefDailog.edit();
+            editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
+            editor.commit();
+            Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
+            intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
+            startActivity(intent);
+        }else {
+            if(!DateUtils.getTime(new Date()).equals(history)){
+                SharedPreferences.Editor editor = mPrefDailog.edit();
+                editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
+                editor.commit();
+                Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
+                intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
+                startActivity(intent);
+            }
+
+        }
     }
 
     @Override

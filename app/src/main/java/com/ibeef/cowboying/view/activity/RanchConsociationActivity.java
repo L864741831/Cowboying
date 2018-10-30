@@ -101,7 +101,7 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
 
     @Override
     public void showMsg(String msg) {
-
+        showToast(msg);
     }
 
     @Override

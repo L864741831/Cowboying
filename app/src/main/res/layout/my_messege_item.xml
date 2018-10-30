@@ -32,10 +32,10 @@
             android:lineSpacingExtra="5dp" android:layout_marginRight="15dp"/>
         <ImageView
             android:layout_width="match_parent" android:id="@+id/show_img_id"
-            android:layout_height="150dp"
+            android:layout_height="150dp" android:src="@mipmap/newpeople"
             android:scaleType="fitXY" android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="15dp"/>
     </LinearLayout>
 
 </LinearLayout>

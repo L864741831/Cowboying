@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +20,20 @@ import rxfamily.bean.BaseBean;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class MyFeedbackAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
+public class MyFeedbackAdapter extends BaseQuickAdapter<MyFeedbackResultBean.BizDataBean,BaseViewHolder> {
 
     private Context mContext;
-    public MyFeedbackAdapter(Context context, List<BaseBean> list, int layout){
+    public MyFeedbackAdapter(Context context, List<MyFeedbackResultBean.BizDataBean> list, int layout){
         super(layout, list);
         this.mContext=context;
     }
     @Override
-    protected void convert(BaseViewHolder helper, BaseBean item) {
+    protected void convert(BaseViewHolder helper, MyFeedbackResultBean.BizDataBean item) {
         helper.setText(R.id.time_show_id,"2015-23-23")
                 .setText(R.id.question_txt_id,"亲，我买的牛肉想退换货怎么弄？");
 
         //已回复
-        if("0".equals(item.getStatus())){
+        if("0".equals("0")){
             helper.setText(R.id.response_stadus_id,"已回复")
             .setText(R.id.response_nane_id,"口袋牧场回复:")
             .setText(R.id.response_info_id,"您的牛肉已出仓库，请到附近的实体店兑换您的牛肉已出仓库，请到附近的实体店兑换您的牛肉已出仓库，请到附近的实体店兑换:");

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -26,10 +27,10 @@ public class RanchDynamicdapter extends BaseQuickAdapter<HomeAllVideoResultBean.
     @Override
     protected void convert(BaseViewHolder helper, final HomeAllVideoResultBean.BizDataBean item) {
 
-        RequestOptions options = new RequestOptions()
-                .skipMemoryCache(true)
-                //跳过内存缓存
-                ;
+        //设置图片圆角角度
+        RoundedCorners roundedCorners= new RoundedCorners(20);
+        RequestOptions options =RequestOptions.bitmapTransform(roundedCorners);
+
         ImageView imageView= helper.getView(R.id.img_id);
         Glide.with(mContext).load(item.getCoverUrl()).apply(options).into(imageView);
         helper.setText(R.id.name_id,item.getName())

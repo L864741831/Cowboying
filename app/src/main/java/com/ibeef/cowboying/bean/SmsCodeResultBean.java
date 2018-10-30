@@ -8,15 +8,16 @@ package com.ibeef.cowboying.bean;
  **/
 public class SmsCodeResultBean {
 
+
     /**
-     * code :
-     * message :
-     * data :
+     * code : 000000
+     * message : “”
+     * bizData : true
      */
 
     private String code;
     private String message;
-    private String data;
+    private String bizData;
 
     public String getCode() {
         return code;
@@ -34,11 +35,11 @@ public class SmsCodeResultBean {
         this.message = message;
     }
 
-    public String getData() {
-        return data;
+    public String getBizData() {
+        return bizData;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setBizData(String bizData) {
+        this.bizData = bizData;
     }
 }

@@ -152,7 +152,7 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
 
     @Override
     public void showMsg(String msg) {
-        showMsg(msg);
+        showToast(msg);
     }
 
     @Override
@@ -163,7 +163,7 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent1);
         }else {
-            showMsg(loginBean.getMessage());
+            showToast(loginBean.getMessage());
         }
     }
 

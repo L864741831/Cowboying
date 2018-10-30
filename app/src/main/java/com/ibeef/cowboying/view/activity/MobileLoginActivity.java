@@ -235,7 +235,7 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
 
     @Override
     public void showMsg(String msg) {
-        showMsg(msg);
+        showToast(msg);
     }
 
     @Override
@@ -251,7 +251,7 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
             }
 
         }else {
-            showMsg(bindMobileResultBean.getMessage());
+            showToast(bindMobileResultBean.getMessage());
         }
     }
 

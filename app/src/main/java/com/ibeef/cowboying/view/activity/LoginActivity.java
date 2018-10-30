@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,10 +14,14 @@ import android.widget.Toast;
 import com.alipay.sdk.app.AuthTask;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.InitThirdLoginBase;
 import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.bean.AuthResult;
+import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
+import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -32,7 +37,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView {
+public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView ,InitThirdLoginBase.IView {
 
     @Bind(R.id.aplily_login)
     ImageView aplilyLogin;
@@ -46,7 +51,9 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     private IWXAPI api;
 
     private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
+    private InitThirdLoginPresenter initThirdLoginPresenter;
 
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +66,19 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         api = WXAPIFactory.createWXAPI(this, "wx0678b96a189375f3",true);
         api.registerApp("wx0678b96a189375f3");
         thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
+        initThirdLoginPresenter=new InitThirdLoginPresenter(this);
     }
 
     @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aplily_login:
-//                aplilyLogin();
-                Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
-                intent2.putExtra("stadus","3");
-                startActivity(intent2);
+                type="4";
+                initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"4");
                 break;
             case R.id.weixin_login:
-                weixinLogin();
+                type="3";
+                initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"3");
                 break;
             case R.id.registe_btn:
                 Intent intent1=new Intent(LoginActivity.this,MobileLoginActivity.class);
@@ -92,7 +99,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     /**
      * 支付宝授权登录
      */
-    private void aplilyLogin(){
+    private void aplilyLogin(final String authInfo){
         //异步处理
         Runnable payRunnable = new Runnable() {
 
@@ -101,7 +108,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
                 AuthTask authTask = new AuthTask(LoginActivity.this);
                 // 调用授权接口，获取授权结果ta
-                Map<String, String> result = authTask.authV2(Constant.ALIPAYINFO, true);
+                Map<String, String> result = authTask.authV2(authInfo, true);
                 Message msg = new Message();
                 msg.what = SDK_AUTH_FLAG;
                 msg.obj = result;
@@ -144,8 +151,17 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                     if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
                         // 获取alipay_open_id，调支付时作为参数extern_token 的value
                         // 传入，则支付账户为该授权账户
-                        // TODO: 2018/10/12 auth_code传入后台，后台获取 auth_token和用户uset_id,其他信息 授权成功绑定手机号
+                        // auth_code传入后台，后台获取 auth_token,其他信息 授权成功绑定手机号
+                        ThirdCountLoginParamBean thirdCountLoginParamBean=new ThirdCountLoginParamBean();
+                        thirdCountLoginParamBean.setAccessToken(authResult.getAuthCode());
+                        thirdCountLoginParamBean.setType("4");
+                        thirdCountLoginParamBean.setOpenId(authResult.getUserId());
+//                        thirdCountLoginParamBean.setLoginZone("");
+                        thirdAccountLoginPresenter.getThirdCountLogin(getVersionCodes(),thirdCountLoginParamBean);
 
+                        Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                        intent2.putExtra("stadus","3");
+                        startActivity(intent2);
                         Toast.makeText(LoginActivity.this,
                                 "授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT)
                                 .show();
@@ -156,6 +172,8 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                                 "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT).show();
 
                     }
+
+                    Log.e(Constant.TAG,"支付宝结果"+authResult+"????????"+resultStatus);
                     break;
                 default:
                     break;
@@ -167,6 +185,20 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     @Override
     public void showMsg(String msg) {
 
+    }
+
+    @Override
+    public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
+        if("000000".equals(thirdLoginResultBean.getCode())){
+            if("4".equals(type)){
+//                aplilyLogin("apiname=com.alipay.account.auth&app_id=2018102761793917&app_name=mc&auth_type=AUTHACCOUNT&biz_type=openservice&method=alipay.open.auth.sdk.code.get&pid=2088331251524480&product_id=APP_FAST_LOGIN&scope=kuaijie&sign_type=RSA2&target_id=20141225xxxx&sign=XG4R3c0WZiQMr7S0p1ZB%2FDCDT36F7%2B5epdiKT2U%2FX6fdgYfqTW%2FJ4qr1ow0WsAfrMkOO42iY3HQwzDRt%2BsOqILe2THkmDJXcnFw%2FpwLgz3ye3CLyxDdCSLfYUuq4sUZPObQWP%2FbSyqM8CKskcotrN9%2FJipdnugHLKOJ633JyzR21mBcxz7a4sBkJy1o1zdq4Z988DSCwmiz4JcYfzlArbrEBpMSvFEnhVuTjsaGrSlSZM%2FvcTLOIpVIAYbb27xnd%2BuuLjrju0cTrjN9nZPA%2FX66bA8AjcfXQcIebdLixN4iUGDAndPL68m6XrUjKoytbbsjHH8di6u%2Fdw8prRg5%2BTA%3D%3D");
+                  aplilyLogin(thirdLoginResultBean.getBizData());
+            }else if("3".equals(type)){
+                weixinLogin();
+            }
+        }else {
+            showToast(thirdLoginResultBean.getMessage());
+        }
     }
 
     @Override

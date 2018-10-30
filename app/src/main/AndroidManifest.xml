@@ -135,6 +135,8 @@
         <activity android:name=".view.activity.PlayerVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.GivePoursActivity"
+            android:theme="@style/myTransparent" />
     </application>
 
 </manifest>
