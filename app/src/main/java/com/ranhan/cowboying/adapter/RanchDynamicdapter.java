@@ -4,7 +4,8 @@ package com.ranhan.cowboying.adapter;
 import android.content.Context;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ranhan.cowboying.R;
+
+import com.ibeef.cowboying.R;
 import com.ranhan.cowboying.bean.RanchDynamicListBean;
 
 import java.util.List;

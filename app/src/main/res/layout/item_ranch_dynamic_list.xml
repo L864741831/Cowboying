@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true" android:id="@+id/swipe_layout"
-    android:layout_margin="5dp"
+    android:id="@+id/swipe_layout"
     android:background="@color/white">
 
+    <ImageView
+        android:id="@+id/iv_item_ranchdynamic_icon"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@mipmap/ranch_consociation_banner"
+        android:scaleType="centerCrop"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="航拍澳大利亚牧场视频"
+        android:textSize="15sp"
+        android:textColor="@color/wenzi_hei"
+        android:layout_below="@+id/iv_item_ranchdynamic_icon"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18/8/26"
+        android:textSize="15sp"
+        android:textColor="@color/txthui"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/iv_item_ranchdynamic_icon"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="5dp"
+        />
 
-</com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+</RelativeLayout>
