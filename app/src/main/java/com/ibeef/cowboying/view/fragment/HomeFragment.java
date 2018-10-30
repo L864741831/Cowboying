@@ -15,12 +15,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
+import com.ibeef.cowboying.base.CheckVersionBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
+import com.ibeef.cowboying.bean.CheckVersionBean;
+import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.presenter.CheckVersionPresenter;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.view.activity.AdActivity;
@@ -41,11 +45,10 @@ import butterknife.ButterKnife;
 import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseFragment;
 
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,HomeBannerBase.IView {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,HomeBannerBase.IView  {
 
     @Bind(R.id.home_ry_id)
     RecyclerView homeRyId;
-    @Bind(R.id.swipe_ly)
     SwipeRefreshLayout swipeLy;
     private Banner banner;
     private HomeProductListAdapter homeProductListAdapter;
@@ -61,9 +64,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private RanchDynamicsAdapter ranchDynamicsAdapter;
     private List<HomeVideoResultBean.BizDataBean> beanList;
     private HomeBannerPresenter homeBannerPresenter;
+
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
@@ -80,6 +85,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeBannerPresenter=new HomeBannerPresenter(this);
         homeBannerPresenter.getHomeBanner(getVersionCodes());
         homeBannerPresenter.getHomeVideo(getVersionCodes());
+
+
     }
 
     @Override
@@ -207,6 +214,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     }
 
+
     @Override
     public void getHomeBanner(final HomeBannerResultBean homeBannerResultBean) {
         ArrayList<String> imgStr = new ArrayList<>();
@@ -273,6 +281,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if(homeBannerPresenter!=null){
             homeBannerPresenter.detachView();
         }
+
         super.onDestroy();
     }
 }

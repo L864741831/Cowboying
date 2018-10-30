@@ -308,7 +308,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
 
     @Override
     public void showMsg(String msg) {
-        showMsg(msg);
+//        showMsg(msg);
     }
 
     @Override

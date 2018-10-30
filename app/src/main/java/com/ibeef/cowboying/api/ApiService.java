@@ -6,6 +6,8 @@ import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.CheckVersionBean;
+import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
@@ -229,4 +231,11 @@ public interface ApiService {
      */
     @POST("user/thirdLogin")
     Observable<ThirdCountLoginResultBean> getThirdCountLogin(@Header("version") String version, @Body ThirdCountLoginParamBean thirdCountLoginParamBean);
+
+    /**
+     * 检查版本号
+     * @return
+     */
+    @POST("app/check/version")
+    Observable<CheckVersionBean> getCheckVersion(@Header("version") String version, @Body CheckVersionParamBean checkVersionParamBean);
 }

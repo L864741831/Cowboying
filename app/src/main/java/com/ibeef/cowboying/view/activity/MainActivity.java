@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,6 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.CheckVersionBase;
+import com.ibeef.cowboying.bean.CheckVersionBean;
+import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.presenter.CheckVersionPresenter;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.view.fragment.HomeFragment;
@@ -23,13 +28,14 @@ import rxfamily.view.BaseFragment;
 /**
  * 主页面
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements CheckVersionBase.IView{
 
     @Bind(R.id.bnve)
     BottomNavigationViewEx bnve;
     @Bind(R.id.vp)
     ViewPager vp;
     private ArrayList<BaseFragment> fragments;
+    private CheckVersionPresenter checkVersionPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +66,12 @@ public class MainActivity extends BaseActivity {
         vp.setAdapter(mAdpter);
         bnve.setupWithViewPager(vp);
 
-        // TODO: 2018/10/15 网络请求 版本升级
-//        startActivity(UpdateVersionDialog.class);
+        checkVersionPresenter=new CheckVersionPresenter(this);
+        CheckVersionParamBean checkVersionParamBean=new CheckVersionParamBean();
+        checkVersionParamBean.setAppType("1");
+        checkVersionParamBean.setVersion(getVersionCodes());
+        checkVersionPresenter.getCheckVersion(getVersionCodes(),checkVersionParamBean);
+
     }
 
     private void initEvent() {
@@ -76,5 +86,36 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getCheckVersion(CheckVersionBean checkVersionBean) {
+        if("1".equals(checkVersionBean.getBizData().getUpgrade())){
+            if("1".equals(checkVersionBean.getBizData().getMust())){
+                // 这里的提示框是我自定义的
+                Intent intent=new Intent(MainActivity.this,UpdateVersionDialog.class);
+                intent.putExtra("from","1");
+                intent.putExtra("version",checkVersionBean.getBizData().getVersion());
+                startActivity(intent);
+            }else  if("0".equals(checkVersionBean.getBizData().getMust())){
+                Intent intent=new Intent(MainActivity.this,UpdateVersionDialog.class);
+                intent.putExtra("from","0");
+                intent.putExtra("version",checkVersionBean.getBizData().getVersion());
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(checkVersionPresenter!=null){
+            checkVersionPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

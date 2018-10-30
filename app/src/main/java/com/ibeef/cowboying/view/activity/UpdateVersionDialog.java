@@ -25,18 +25,21 @@ public class UpdateVersionDialog extends AppCompatActivity {
     @Bind(R.id.version_txt_id)
     TextView versionTxtId;
 
+    private String from,version;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_version_dialog);
         ButterKnife.bind(this);
-        // TODO: 2018/10/27  如果是强更，不展示关闭按钮
-        versionTxtId.setText("1.0.0 版本");
-        if(true){
+        from=getIntent().getStringExtra("from");
+        version=getIntent().getStringExtra("version");
+        // 如果是强更，不展示关闭按钮
+        if("1".equals(from)){
             imgCloseId.setVisibility(View.GONE);
         }else {
             imgCloseId.setVisibility(View.VISIBLE);
         }
+        versionTxtId.setText(version+" 版本");
     }
 
     @OnClick({R.id.img_close_id, R.id.sure_id})

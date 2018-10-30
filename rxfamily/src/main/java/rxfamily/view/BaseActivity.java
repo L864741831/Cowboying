@@ -105,15 +105,7 @@ public class BaseActivity extends RxAppCompatActivity{
      * @return
      */
     public String getVersionCodes() {
-        PackageManager packageManager = getPackageManager();
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            return versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return  null;
-        }
+       return "1.0";
     }
     @Override
     protected void onPause() {
