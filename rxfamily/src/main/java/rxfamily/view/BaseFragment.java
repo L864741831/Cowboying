@@ -70,15 +70,7 @@ public abstract class BaseFragment extends RxFragment {
      * @return
      */
     public String getVersionCodes() {
-        PackageManager packageManager = mActivity.getPackageManager();
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(mActivity.getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            return versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return  null;
-        }
+        return "1.0";
     }
     @Override
     public void onCreate(Bundle savedInstanceState){
