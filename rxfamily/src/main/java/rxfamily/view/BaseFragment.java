@@ -2,8 +2,6 @@ package rxfamily.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -65,21 +63,7 @@ public abstract class BaseFragment extends RxFragment {
     protected BaseActivity getHoldingActivity() {
         return mActivity;
     }
-    /**
-     * 获取版本号
-     * @return
-     */
-    public String getVersionCodes() {
-        PackageManager packageManager = mActivity.getPackageManager();
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(mActivity.getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            return versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return  null;
-        }
-    }
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
