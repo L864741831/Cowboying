@@ -7,8 +7,8 @@ public class Constant {
     /**
      * 殷俊杰服务
      */
-//    public static final String BASE_URL = "http://192.168.0.122:8082/";
-    public static final String BASE_URL = "http://192.168.0.162:8090/";
+    public static final String BASE_URL = "http://192.168.0.122:8082/";
+//    public static final String BASE_URL = "http://192.168.0.162:8090/";
     /**
      * 微信支付appid
      */

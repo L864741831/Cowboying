@@ -1,9 +1,11 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -70,6 +72,8 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         ranchDynamicdapter = new RanchDynamicdapter(listData,this);
         ranchDynamicdapter.setOnLoadMoreListener(this, videoListRv);
         videoListRv.setAdapter(ranchDynamicdapter);
+        homeBannerPresenter=new HomeBannerPresenter(this);
+        homeBannerPresenter.getAllVideo(getVersionCodes(),currentPage);
         videoListRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -86,9 +90,15 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
                 }
             }
         });
-
-        homeBannerPresenter=new HomeBannerPresenter(this);
-        homeBannerPresenter.getAllVideo(getVersionCodes(),currentPage);
+        ranchDynamicdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(RanchDynamicActivity.this, PlayerVideoActivity.class);
+                intent.putExtra("video_url",listData.get(position).getPlayUrl());
+                startActivity(intent);
+                Log.i("htht", "video_url:::::::"+listData.get(position).getPlayUrl());
+            }
+        });
     }
 
     @OnClick(R.id.back_id)
@@ -172,4 +182,5 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         }
         super.onDestroy();
     }
+
 }

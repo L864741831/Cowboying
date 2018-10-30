@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.view.activity.AdActivity;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.HomeVideoPlayActivity;
+import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
 import com.youth.banner.Banner;
@@ -154,10 +156,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 if(position==beanList.size()-1){
                     startActivity(RanchDynamicActivity.class);
                 }else {
-                    Intent intent=new Intent(getHoldingActivity(),HomeVideoPlayActivity.class);
+                    Intent intent = new Intent(getHoldingActivity(), PlayerVideoActivity.class);
+                    intent.putExtra("video_url",item.getPlayUrl());
                     intent.putExtra("title",item.getName());
-                    intent.putExtra("playUrl",item.getPlayUrl());
+                    intent.putExtra("coverUrl",item.getCoverUrl());
                     startActivity(intent);
+                    Log.i("htht", "video_url:::::::"+item.getPlayUrl());
                 }
             }
         });

@@ -132,6 +132,9 @@
         <activity android:name=".view.activity.RanchConsociationActivity" />
         <activity android:name=".view.activity.MyMessegeActivity" />
         <activity android:name=".view.activity.HomeVideoPlayActivity"></activity>
+        <activity android:name=".view.activity.PlayerVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
