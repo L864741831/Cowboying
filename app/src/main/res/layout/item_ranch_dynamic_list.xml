@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/swipe_layout"
-    android:background="@color/white">
-
-    <ImageView
-        android:id="@+id/iv_item_ranchdynamic_icon"
+    android:layout_height="wrap_content" android:background="@color/white"
+    android:orientation="vertical" android:layout_margin="7dp">
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:src="@mipmap/ranch_consociation_banner"
-        android:scaleType="centerCrop"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="航拍澳大利亚牧场视频"
-        android:textSize="15sp"
-        android:textColor="@color/wenzi_hei"
-        android:layout_below="@+id/iv_item_ranchdynamic_icon"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="5dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="18/8/26"
-        android:textSize="15sp"
-        android:textColor="@color/txthui"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/iv_item_ranchdynamic_icon"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="5dp"
-        />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent" android:id="@+id/img_id"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:src="@mipmap/vediostart"
+            android:layout_marginTop="65dp" android:layout_gravity="center_horizontal"/>
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp">
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/name_id"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" android:text="澳大利亚牧场"
+            android:textColor="@color/black"/>
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/time_id"
+            android:layout_height="wrap_content" android:layout_alignParentRight="true"
+            android:textSize="15sp" android:text="2018/12/12" />
+    </RelativeLayout>
+
+</LinearLayout>

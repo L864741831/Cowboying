@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cowboying.view.activity.AdActivity">
+    tools:context=".view.activity.AdActivity" android:background="@color/white">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
             android:layout_width="match_parent" android:id="@+id/bg_img"
             android:layout_height="match_parent"
-            android:src="@mipmap/guide_1" android:scaleType="fitXY"/>
+            android:scaleType="fitXY"/>
+        <include
+            layout="@layout/loading_layout"
+            android:id="@+id/loading_layout"  />
 
         <RelativeLayout
             android:layout_width="wrap_content"

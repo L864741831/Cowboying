@@ -4,24 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"  android:background="#70000000"
-    tools:context=".cowboying.view.activity.UpdateVersionDialog">
+    tools:context=".view.activity.UpdateVersionDialog">
 
-    <RelativeLayout
-        android:layout_width="280dp"
-        android:layout_height="280dp"  android:layout_centerInParent="true">
+    <LinearLayout
+        android:layout_width="300dp" android:id="@+id/lv_id"
+        android:layout_height="350dp"  android:layout_centerInParent="true"
+        android:background="@mipmap/updatebg" android:orientation="vertical">
         <ImageView
-            android:layout_width="270dp"
-            android:layout_height="270dp" android:src="@color/colorAccent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:src="@mipmap/updateicon"
+           android:layout_gravity="center_horizontal" android:layout_marginTop="27dp"/>
 
-        <ImageView
-            android:layout_width="15dp" android:id="@+id/img_close_id"
-            android:layout_height="15dp" android:src="@color/red"
-            android:layout_centerHorizontal="true" android:layout_alignParentRight="true"
-            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="口袋牧场内测版本可以更新啦！"
+            android:textColor="@color/colorGold_2" android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/version_txt_id"
+            android:layout_height="wrap_content" android:text="0.1.3版本"
+            android:textColor="@color/colorGold" android:background="@drawable/shape_oval_line_solid"
+            android:layout_gravity="center_horizontal" android:layout_marginTop="15dp"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="检测到当前有新版本\n确保第一时间体验更好的口袋牧场"
+            android:layout_gravity="center_horizontal" android:gravity="center"
+            android:layout_marginTop="20dp" android:textColor="@color/colorGold_1"
+            android:textSize="14sp"/>
+
         <ImageView
             android:layout_width="wrap_content" android:id="@+id/sure_id"
-            android:layout_height="wrap_content" android:layout_marginTop="190dp"
-            android:src="@mipmap/ic_launcher_round" android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content" android:layout_marginTop="90dp"
+            android:src="@mipmap/updatebtn" android:layout_gravity="center_horizontal"/>
 
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content" android:id="@+id/img_close_id"
+        android:layout_height="wrap_content" android:src="@mipmap/updateclose"
+        android:layout_centerHorizontal="true" android:layout_below="@+id/lv_id"
+        android:layout_marginTop="30dp" android:visibility="gone"/>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +15,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
+import com.ibeef.cowboying.base.HomeBannerBase;
+import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
+import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
+import com.ibeef.cowboying.view.activity.AdActivity;
+import com.ibeef.cowboying.view.activity.AdWebviewActivity;
+import com.ibeef.cowboying.view.activity.HomeVideoPlayActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
 import com.youth.banner.Banner;
@@ -30,7 +41,7 @@ import butterknife.ButterKnife;
 import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseFragment;
 
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,OnBannerListener,View.OnClickListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,HomeBannerBase.IView {
 
     @Bind(R.id.home_ry_id)
     RecyclerView homeRyId;
@@ -41,14 +52,15 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private List<Object> objectList;
     private TextView sellCowNumId;
     private TextView sellCowNum2Id;
-    private ImageView specialbeefImgId;
+    private Banner specialbeefImgId;
     private ImageView newpeopleImgId;
     private ImageView ranchconsociationImgId;
     private FrameLayout buyCowFm;
     private FrameLayout togetherCowFm;
     private RecyclerView ranchDynamicsRy;
     private RanchDynamicsAdapter ranchDynamicsAdapter;
-    private List<BaseBean> beanList;
+    private List<HomeVideoResultBean.BizDataBean> beanList;
+    private HomeBannerPresenter homeBannerPresenter;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -65,6 +77,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeProductListAdapter.addHeaderView(headView);
         homeRyId.setAdapter(homeProductListAdapter);
 
+        homeBannerPresenter=new HomeBannerPresenter(this);
+        homeBannerPresenter.getHomeBanner(getVersionCodes());
+        homeBannerPresenter.getHomeVideo(getVersionCodes());
     }
 
     @Override
@@ -83,23 +98,16 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         banner = view.findViewById(R.id.banner);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置banner样式
-
         banner.setImageLoader(new GlideImageLoader());
         //设置图片加载器
-
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置banner动画效果
-
         banner.isAutoPlay(true);
         //设置自动轮播，默认为true
-
         banner.setDelayTime(1000 * 3);
         //设置轮播时间
-
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置指示器位置（当banner模式中有指示器时）
-
-        banner.setOnBannerListener(this);
         banner.setClickable(true);
 
         sellCowNumId=view.findViewById(R.id.sell_cow_num_id);
@@ -111,26 +119,38 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         newpeopleImgId=view.findViewById(R.id.newpeople_img_id);
         ranchDynamicsRy=view.findViewById(R.id.ranch_dynamics_ry);
         ranchDynamicsRy.setLayoutManager(new LinearLayoutManager(getHoldingActivity(), LinearLayoutManager.HORIZONTAL, false));
-        specialbeefImgId.setOnClickListener(this);
         ranchconsociationImgId.setOnClickListener(this);
         buyCowFm.setOnClickListener(this);
         togetherCowFm.setOnClickListener(this);
         newpeopleImgId.setOnClickListener(this);
 
-        beanList=new ArrayList<>();
-        for (int i=0;i<3;i++){
-            BaseBean baseBean=new BaseBean();
-            beanList.add(baseBean);
-        }
-        ranchDynamicsAdapter=new RanchDynamicsAdapter(beanList,getHoldingActivity(),R.layout.ranch_dynamics_item);
+        specialbeefImgId.setBannerStyle(BannerConfig.NOT_INDICATOR);
+        //设置banner样式
+        specialbeefImgId.setImageLoader(new GlideImageLoader());
+        //设置图片加载器
+        specialbeefImgId.setBannerAnimation(Transformer.DepthPage);
+        //设置banner动画效果
+        specialbeefImgId.isAutoPlay(true);
+        specialbeefImgId.setDelayTime(1000 * 6);
+        //设置轮播时间
+        specialbeefImgId.setClickable(true);
 
-//        ranchDynamicsAdapter.setOnLoadMoreListener(this, ranchDynamicsRy);
+        beanList=new ArrayList<>();
+
+        ranchDynamicsAdapter=new RanchDynamicsAdapter(beanList,getHoldingActivity(),R.layout.ranch_dynamics_item);
         ranchDynamicsRy.setAdapter(ranchDynamicsAdapter);
+
         ranchDynamicsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HomeVideoResultBean.BizDataBean item=ranchDynamicsAdapter.getItem(position);
                 if(position==beanList.size()-1){
                     startActivity(RanchDynamicActivity.class);
+                }else {
+                    Intent intent=new Intent(getHoldingActivity(),HomeVideoPlayActivity.class);
+                    intent.putExtra("title",item.getName());
+                    intent.putExtra("playUrl",item.getPlayUrl());
+                    startActivity(intent);
                 }
             }
         });
@@ -151,20 +171,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
+        beanList.clear();
+        homeBannerPresenter.getHomeBanner(getVersionCodes());
+        homeBannerPresenter.getHomeVideo(getVersionCodes());
         swipeLy.setRefreshing(false);
     }
 
-    @Override
-    public void OnBannerClick(int position) {
 
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.specialbeef_img_id:
-                //特价牛排
-                break;
             case R.id.buy_cow_fm:
                 //买牛
                 break;
@@ -183,8 +200,79 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
     }
 
-    @Override
-    public void onLoadMoreRequested() {
 
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getHomeBanner(final HomeBannerResultBean homeBannerResultBean) {
+        ArrayList<String> imgStr = new ArrayList<>();
+        for (int i=0;i<homeBannerResultBean.getBizData().getTopBannerList().size();i++){
+            imgStr.add(Constant.imageDomain+homeBannerResultBean.getBizData().getTopBannerList().get(i).getImageUrl());
+        }
+        banner.setImages(imgStr);
+        //设置图片集合
+        banner.start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
+                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
+                intent.putExtra("title","口袋牧场");
+                startActivity(intent);
+            }
+        });
+
+
+        ArrayList<String> imgStr1 = new ArrayList<>();
+        for (int i=0;i<homeBannerResultBean.getBizData().getTopBannerList().size();i++){
+            imgStr1.add(Constant.imageDomain+homeBannerResultBean.getBizData().getMiddleBannerList().get(i).getImageUrl());
+        }
+        specialbeefImgId.setImages(imgStr1);
+        //设置图片集合
+        specialbeefImgId.start();
+        specialbeefImgId.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
+                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
+                intent.putExtra("title","口袋牧场");
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
+        beanList.addAll(homeAdResultBean.getBizData());
+        ranchDynamicsAdapter.setNewData(this.beanList);
+        ranchDynamicsAdapter.loadMoreEnd();
+    }
+
+    @Override
+    public void getAllVideo(HomeAllVideoResultBean homeAdResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        if(homeBannerPresenter!=null){
+            homeBannerPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

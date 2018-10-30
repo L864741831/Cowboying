@@ -4,7 +4,11 @@ package com.ibeef.cowboying.config;
  * 用到的公共常量
  */
 public class Constant {
-    public static final String BASE_URL = "";
+    /**
+     * 尹俊杰服务
+     */
+    public static final String BASE_URL = "http://192.168.0.122:8082/";
+//    public static final String BASE_URL = "http://192.168.0.162:8090/";
     /**
      * 微信支付appid
      */
@@ -19,4 +23,15 @@ public class Constant {
      * 微信授权url
      */
     public static  final String weixinUrl= "https://api.weixin.qq.com/";
+
+    /**
+     * 短信验证码//Md5Key
+     */
+    public static  final String MD5KEY = "4f3ef09822b48ec28f0ff3dbf923344f116315d22f28017be39eb119555a9582";
+    public static  final String prodYbAvatarDomin = "";
+    /**
+     * //测试环境图片服务器域名
+     */
+    public static String imageDomain = "http://lgf8953.oss-cn-beijing.aliyuncs.com/";
+
 }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.RanchConsociationTitleBean;
+import com.ibeef.cowboying.bean.PastureAllResultBean;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public class RanchConsociationTitleAdapter extends BaseQuickAdapter<RanchConsociationTitleBean.DataBean, BaseViewHolder> {
+public class RanchConsociationTitleAdapter extends BaseQuickAdapter<PastureAllResultBean.BizDataBean, BaseViewHolder> {
     private Context context;
     public RanchConsociationTitleAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -25,7 +25,7 @@ public class RanchConsociationTitleAdapter extends BaseQuickAdapter<RanchConsoci
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final RanchConsociationTitleBean.DataBean item) {
+    protected void convert(BaseViewHolder helper, final PastureAllResultBean.BizDataBean item) {
         helper.setText(R.id.tv_title,item.getName());
         helper.addOnClickListener(R.id.tv_title);
         TextView tv=helper.getView(R.id.tv_title);

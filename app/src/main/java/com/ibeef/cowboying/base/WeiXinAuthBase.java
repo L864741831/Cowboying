@@ -9,7 +9,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/12 16:16
- * @describe
+ * @describe 微信授权登录
  * @package com.ranhan.yabei.base
  **/
 public class WeiXinAuthBase {

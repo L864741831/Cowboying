@@ -1,6 +1,9 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -11,20 +14,40 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.BindMobileBase;
+import com.ibeef.cowboying.base.SmscodeBase;
+import com.ibeef.cowboying.bean.BindMobileParamBean;
+import com.ibeef.cowboying.bean.BindMobileResultBean;
+import com.ibeef.cowboying.bean.SmsCodeParamBean;
+import com.ibeef.cowboying.bean.SmsCodeResultBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.BindMobilePresenter;
+import com.ibeef.cowboying.presenter.SmsCodePresenter;
+import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.TimeUtils;
+import com.orhanobut.hawk.Hawk;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
+import rxfamily.utils.PermissionsUtils;
 import rxfamily.view.BaseActivity;
 
 /**
  * 手机号登录
  */
-public class MobileLoginActivity extends BaseActivity {
+public class MobileLoginActivity extends BaseActivity implements BindMobileBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -49,6 +72,9 @@ public class MobileLoginActivity extends BaseActivity {
     @Bind(R.id.show_bind_rv)
     RelativeLayout showBindRv;
     private String stadus;
+    private BindMobilePresenter bindMobilePresenter;
+    private String token,oldmobile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +84,8 @@ public class MobileLoginActivity extends BaseActivity {
     }
 
     private void init(){
+        bindMobilePresenter=new BindMobilePresenter(this);
+        token= Hawk.get(HawkKey.TOKEN);
         etMobile.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -104,10 +132,20 @@ public class MobileLoginActivity extends BaseActivity {
             //设置<账号安全<修改登录手机号 <验证码，输入新的手机号
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("输入新的手机号");
+        }else if("7".equals(stadus)){
+            //个人信息 绑定手机号
+            actionRightTv.setVisibility(View.GONE);
+            pwdLoginId.setVisibility(View.GONE);
+            stadusTitleId.setText("绑定手机号");
+        }else if("8".equals(stadus)){
+            //换绑手机号
+            pwdLoginId.setVisibility(View.GONE);
+            stadusTitleId.setText("输入新的手机号");
+            oldmobile=getIntent().getStringExtra("oldmobile");
         }
     }
 
-    @OnClick({R.id.close_img_id, R.id.sure_id,R.id.back_id,R.id.pwd_login_id,R.id.action_right_tv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv})
+    @OnClick({R.id.close_img_id, R.id.sure_id,R.id.back_id,R.id.pwd_login_id,R.id.action_right_tv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv,R.id.register_rule_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_img_id:
@@ -138,24 +176,90 @@ public class MobileLoginActivity extends BaseActivity {
                     showToast("请输入正确的手机号码！");
                     return;
                 }
-                Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                intent.putExtra("stadus",stadus);
-                intent.putExtra("mobile",etMobile.getText().toString().trim());
-                startActivity(intent);
+
+                if("3".equals(stadus)||"7".equals(stadus)){
+                    //第三方登录，个人信息 绑定手机号
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("token",token);
+                    reqData.put("version",getVersionCodes());
+                    BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
+                    bindMobileParamBean.setMobile(etMobile.getText().toString().trim());
+                    bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
+                }else   if("8".equals(stadus)){
+                    //设置 账号安全 手机号换绑
+                    Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                    intent.putExtra("stadus","9");
+                    intent.putExtra("oldmobile",oldmobile);
+                    intent.putExtra("mobile",etMobile.getText().toString().trim());
+                    startActivity(intent);
+                }else{
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
+                        grantObservable.subscribe(new Action1<Boolean>() {
+                            @Override
+                            public void call(Boolean granted) {
+                                if (granted) {
+                                    Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                                    intent.putExtra("stadus",stadus);
+                                    intent.putExtra("mobile",etMobile.getText().toString().trim());
+                                    startActivity(intent);
+                                } else {
+                                    PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
+                                }
+                            }
+                        });
+                    }else {
+                        Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
+                        intent.putExtra("stadus",stadus);
+                        intent.putExtra("mobile",etMobile.getText().toString().trim());
+                        startActivity(intent);
+                    }
+                }
                 break;
             case R.id.back_id:
                 finish();
+                break;
+            case R.id.register_rule_id:
+                Toast.makeText(MobileLoginActivity.this,"显示注册协议",Toast.LENGTH_LONG).show();
                 break;
             case R.id.pwd_login_id:
                 if("0".equals(stadus)){
                     //正常登录流程
                     startActivity(PwdLoginActivity.class);
-                }else if("2".equals(stadus)){
-                        //注册流程
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+        showMsg(msg);
+    }
+
+    @Override
+    public void getBindMobile(BindMobileResultBean bindMobileResultBean) {
+        if("000000".equals(bindMobileResultBean.getCode())){
+            if("3".equals(stadus)){
+                Intent intent=new Intent(MobileLoginActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }else {
+                finish();
+            }
+
+        }else {
+            showMsg(bindMobileResultBean.getMessage());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(bindMobilePresenter!=null){
+            bindMobilePresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

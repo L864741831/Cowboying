@@ -20,15 +20,15 @@ import rxfamily.bean.BaseBean;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class OptionReturnImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
+public class OptionReturnImgAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
 
     private Context mContext;
-    public OptionReturnImgAdapter(Context context, List<BaseBean> list,int layout){
+    public OptionReturnImgAdapter(Context context, List<String> list,int layout){
         super(layout, list);
         this.mContext=context;
     }
     @Override
-    protected void convert(BaseViewHolder helper, BaseBean item) {
+    protected void convert(BaseViewHolder helper, String item) {
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 //跳过内存缓存
@@ -38,7 +38,8 @@ public class OptionReturnImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHo
             imageView.setImageResource(R.mipmap.uploadphotoimg);
             helper.setVisible(R.id.close_id,false);
         }else {
-            Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
+            Glide.with(mContext).load(item).apply(options).into(imageView);
+            helper.setVisible(R.id.close_id,true);
         }
         helper.addOnClickListener(R.id.close_id);
         helper.addOnClickListener(R.id.upload_img);
