@@ -308,7 +308,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
 
     @Override
     public void showMsg(String msg) {
-//        showMsg(msg);
+        showToast(msg);
     }
 
     @Override
@@ -319,7 +319,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
             reqData.put("version",getVersionCodes());
             userInfoPresenter.getUserInfo(reqData);
         }else {
-            showMsg(modifyHeadResultBean.getMessage());
+            showToast(modifyHeadResultBean.getMessage());
         }
     }
 
@@ -331,7 +331,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
             reqData.put("version",getVersionCodes());
             userInfoPresenter.getUserInfo(reqData);
         }else {
-            showMsg(modifyNickResultBean.getMessage());
+            showToast(modifyNickResultBean.getMessage());
         }
     }
 
@@ -373,7 +373,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 bindPhoneTxt.setText("去绑定");
             }
         }else {
-            showMsg(userInfoResultBean.getMessage());
+            showToast(userInfoResultBean.getMessage());
         }
 
     }

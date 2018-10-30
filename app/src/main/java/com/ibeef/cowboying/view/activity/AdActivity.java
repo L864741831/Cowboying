@@ -120,7 +120,7 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
             this.homeAdResultBean=homeAdResultBean;
             Glide.with(this).load(Constant.imageDomain+homeAdResultBean.getBizData().getImageUrl()).apply(options).into(bgImg);
         }else {
-            showMsg(homeAdResultBean.getMessage());
+            showToast(homeAdResultBean.getMessage());
         }
 
     }

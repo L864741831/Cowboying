@@ -181,7 +181,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     public void showMsg(String msg) {
-
+        showToast(msg);
     }
 
     @Override
@@ -191,6 +191,11 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
+        if("000000".equals(submitFeedbackResultBean.getCode())){
+
+        }else {
+            showToast(submitFeedbackResultBean.getMessage());
+        }
 
     }
 

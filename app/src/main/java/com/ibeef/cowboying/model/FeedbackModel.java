@@ -37,8 +37,8 @@ public class FeedbackModel implements FeedbackBase.IModel {
         service = httpService.getHttpService().create(ApiService.class);
     }
     @Override
-    public Subscription getMyFeedback(@HeaderMap Map<String, String> headers, final ResponseCallback<MyFeedbackResultBean> callback) {
-        Observable<MyFeedbackResultBean> observable = service.getMyFeedback(headers);
+    public Subscription getMyFeedback(@HeaderMap Map<String, String> headers, int currentPage,final ResponseCallback<MyFeedbackResultBean> callback) {
+        Observable<MyFeedbackResultBean> observable = service.getMyFeedback(headers,currentPage);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

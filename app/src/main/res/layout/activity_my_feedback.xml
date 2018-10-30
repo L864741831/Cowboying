@@ -19,6 +19,20 @@
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent" android:id="@+id/ry_id"
                 android:layout_height="match_parent" android:layout_marginTop="10dp"/>
+            <include
+                layout="@layout/loading_layout"
+                android:id="@+id/loading_layout"  />
+
+            <RelativeLayout
+                android:layout_width="match_parent" android:id="@+id/rv_order"
+                android:layout_height="match_parent" android:visibility="gone">
+                <ImageView
+                    android:id="@+id/tv_text_null"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

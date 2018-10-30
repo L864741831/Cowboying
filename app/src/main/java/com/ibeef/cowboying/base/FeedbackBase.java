@@ -28,12 +28,12 @@ public class FeedbackBase {
     }
 
     public interface IPresenter {
-        void getMyFeedback(@HeaderMap Map<String, String> headers);
+        void getMyFeedback(@HeaderMap Map<String, String> headers,int currentPage);
         void getSubmitFeedback(@HeaderMap Map<String, String> headers,SubmitFeedbackParamBean submitFeedbackParamBean);
     }
 
     public interface IModel {
-        Subscription getMyFeedback(@HeaderMap Map<String, String> headers, ResponseCallback<MyFeedbackResultBean> callback);
+        Subscription getMyFeedback(@HeaderMap Map<String, String> headers,int currentPage, ResponseCallback<MyFeedbackResultBean> callback);
         Subscription getSubmitFeedback(@HeaderMap Map<String, String> headers, SubmitFeedbackParamBean submitFeedbackParamBean, ResponseCallback<SubmitFeedbackResultBean> callback);
     }
 }

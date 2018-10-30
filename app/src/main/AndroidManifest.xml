@@ -131,7 +131,9 @@
         <activity android:name=".view.activity.RanchDynamicActivity" />
         <activity android:name=".view.activity.RanchConsociationActivity" />
         <activity android:name=".view.activity.MyMessegeActivity" />
-        <activity android:name=".view.activity.HomeVideoPlayActivity"></activity>
+        <activity android:name=".view.activity.HomeVideoPlayActivity" />
+        <activity android:name=".view.activity.GivePoursActivity"
+            android:theme="@style/myTransparent" />
     </application>
 
 </manifest>

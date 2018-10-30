@@ -195,7 +195,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void showMsg(String msg) {
-        showMsg(msg);
+        showToast(msg);
     }
 
     @Override
@@ -203,7 +203,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         if("000000".equals(safeInfoResultBean.getCode())){
 
         }else {
-            showMsg(safeInfoResultBean.getMessage());
+            showToast(safeInfoResultBean.getMessage());
         }
 
     }
@@ -215,9 +215,9 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             reqData.put("token",token);
             reqData.put("version",getVersionCodes());
             accountSecurityPresenter.getSafeInfo(reqData);
-            showMsg("绑定第三方账号成功~");
+            showToast("绑定第三方账号成功~");
         }else {
-            showMsg(bindThirdCountResultBean.getMessage());
+            showToast(bindThirdCountResultBean.getMessage());
         }
     }
 
@@ -228,9 +228,9 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             reqData.put("token",token);
             reqData.put("version",getVersionCodes());
             accountSecurityPresenter.getSafeInfo(reqData);
-            showMsg("解绑成功~");
+            showToast("解绑成功~");
         }else {
-            showMsg(bindThirdCountResultBean.getMessage());
+            showToast(bindThirdCountResultBean.getMessage());
         }
     }
 

@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
 
     @Override
     public void showMsg(String msg) {
-
+        showToast(msg);
     }
 
     @Override

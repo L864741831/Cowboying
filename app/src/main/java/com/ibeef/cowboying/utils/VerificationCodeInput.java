@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -198,7 +199,7 @@ public class VerificationCodeInput extends ViewGroup {
 
             if (listener != null) {
                 listener.onComplete(stringBuilder.toString());
-                setEnabled(false);
+//                setEnabled(false);
             }
 
         }

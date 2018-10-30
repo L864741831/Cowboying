@@ -33,9 +33,9 @@ public class FeedbackPresenter extends BasePresenter implements FeedbackBase.IPr
     }
 
     @Override
-    public void getMyFeedback(Map<String, String> headers) {
+    public void getMyFeedback(Map<String, String> headers,int currentPage) {
         mView.showLoading();
-        addSubscription(mModel.getMyFeedback(headers,new ResponseCallback<MyFeedbackResultBean>() {
+        addSubscription(mModel.getMyFeedback(headers,currentPage,new ResponseCallback<MyFeedbackResultBean>() {
             @Override
             public void onSuccess(MyFeedbackResultBean result) {
                 mView.hideLoading();

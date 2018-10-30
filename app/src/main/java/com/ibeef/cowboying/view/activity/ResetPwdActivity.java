@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ibeef.cowboying.R;
@@ -51,7 +52,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     TextView stadusTitleId;
     private boolean setPwd;
     private EditLoginPwdPresenter editLoginPwdPresenter;
-    private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     }
 
     private void init(){
-        token= Hawk.get(HawkKey.TOKEN);
+
         setPwd=getIntent().getBooleanExtra("setPwd",false);
         editLoginPwdPresenter=new EditLoginPwdPresenter(this);
         if(setPwd){
@@ -134,7 +135,14 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
                     showToast("两次密码输入不相同~，请重新输入！");
                     return;
                 }
-
+                if (etNewPwd.getText().toString().trim().length() < 6) {
+                    Toast.makeText(ResetPwdActivity.this, "密码不能少于六位！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (etNewPwd.getText().toString().trim().length() >20) {
+                    Toast.makeText(ResetPwdActivity.this, "密码不能多于20位！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 EditLoginPwdParamBean editLoginPwdParamBean=new EditLoginPwdParamBean();
                 editLoginPwdParamBean.setPassWord(etNewPwd.getText().toString().trim());
                 if(setPwd){
@@ -147,7 +155,6 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
 
                 Map<String, String> reqData = new HashMap<>();
                 reqData.put("version", getVersionCodes());
-                reqData.put("token", token);// TODO: 2018/10/29
                 editLoginPwdPresenter.getEditLoginPwd(reqData,editLoginPwdParamBean);
                 break;
             default:
@@ -157,7 +164,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
 
     @Override
     public void showMsg(String msg) {
-        showMsg(msg);
+        showToast(msg);
     }
 
     @Override
@@ -166,7 +173,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
             //修改密码成功，重新跳到密码登录的界面，重新登录
             startActivity(PwdLoginActivity.class);
         }else {
-            showMsg(editLoginPwdResultBean.getMessage());
+            showToast(editLoginPwdResultBean.getMessage());
         }
 
     }

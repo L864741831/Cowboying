@@ -31,6 +31,7 @@ import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
+import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.bean.UpdateMobileParamBean;
 import com.ibeef.cowboying.bean.UpdateMobileResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
@@ -125,7 +126,7 @@ public interface ApiService {
      * @return
      */
     @GET("feedback/my")
-    Observable<MyFeedbackResultBean> getMyFeedback(@HeaderMap Map<String, String> headers);
+    Observable<MyFeedbackResultBean> getMyFeedback(@HeaderMap Map<String, String> headers,@Query("currentPage") int currentPage);
 
     /**
      *用户注册
@@ -238,4 +239,11 @@ public interface ApiService {
      */
     @POST("app/check/version")
     Observable<CheckVersionBean> getCheckVersion(@Header("version") String version, @Body CheckVersionParamBean checkVersionParamBean);
+
+    /**
+     * 检查版本号
+     * @return
+     */
+    @GET("user/thirdLogin/init")
+    Observable<ThirdLoginResultBean> getInitThirdLogin(@Header("version") String version, @Query("loginType") String loginType);
 }

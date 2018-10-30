@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,6 +99,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             @Override
             public void onComplete(String content) {
                 contents=content;
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 Log.e(Constant.TAG, "完成输入：" + content);
             }
         });
@@ -140,7 +142,6 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                     updateMobileParamBean.setMobile(mobile);
                     updateMobileParamBean.setOldMobile(oldmobile);
                     updateMobilePresenter.getUpdateMobile(reqData,updateMobileParamBean);
-                    // TODO: 2018/10/29  
                 }else {
                     //校验验证码接口
                     validade();
@@ -220,8 +221,10 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         Map<String, String> reqData = new HashMap<>();
         switch (stadus){
             case "0":
-                smsCodeParamBean.setSmsType("login");
-                reqData.put("smsType", "login");
+//                smsCodeParamBean.setSmsType("login");
+//                reqData.put("smsType", "login");
+                smsCodeParamBean.setSmsType("register");
+                reqData.put("smsType", "register");
                 break;
             case "1":
                 smsCodeParamBean.setSmsType("findPwd");
@@ -268,7 +271,6 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void showMsg(String msg) {
-        Toast.makeText(IdentifyCodeActivity.this,msg,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -278,17 +280,16 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            showMsg("换绑手机号成功，请重新登录");
+            showToast("换绑手机号成功，请重新登录");
         }else {
-            showMsg(updateMobileResultBean.getMessage());
+            showToast(updateMobileResultBean.getMessage());
         }
     }
 
     @Override
     public void getUserLogin(LoginBean loginBean) {
         if("000000".equals(loginBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, "");
-            Hawk.put(HawkKey.userId, "");
+            Hawk.put(HawkKey.TOKEN, loginBean.getBizData());
 
             Intent intent=new Intent(IdentifyCodeActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
@@ -296,7 +297,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             startActivity(intent);
 
         }else {
-            showMsg(loginBean.getMessage());
+            showToast(loginBean.getMessage());
         }
 
     }
@@ -305,7 +306,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     public void getSms(SmsCodeResultBean smsCodeResultBean) {
         if("000000".equals(smsCodeResultBean.getCode())){
         }else {
-            showMsg(smsCodeResultBean.getMessage());
+            showToast(smsCodeResultBean.getMessage());
         }
     }
 
@@ -343,7 +344,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 startActivity(intent);
             }
         }else {
-            showMsg(smsCodeResultBean.getMessage());
+            showToast(smsCodeResultBean.getMessage());
         }
 
     }
@@ -355,7 +356,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             intent.putExtra("stadus","2");
             startActivity(intent);
         }else {
-            showMsg(accountRegisterResultBean.getMessage());
+            showToast(accountRegisterResultBean.getMessage());
         }
 
     }
