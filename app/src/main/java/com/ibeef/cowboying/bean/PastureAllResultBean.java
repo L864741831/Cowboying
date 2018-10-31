@@ -53,6 +53,15 @@ public class PastureAllResultBean {
 
         private int pastureId;
         private String name;
+        private int defaultFlag;
+
+        public int getDefaultFlag() {
+            return defaultFlag;
+        }
+
+        public void setDefaultFlag(int defaultFlag) {
+            this.defaultFlag = defaultFlag;
+        }
 
         public int getPastureId() {
             return pastureId;
