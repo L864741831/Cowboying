@@ -47,7 +47,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 手机号登录
  */
-public class MobileLoginActivity extends BaseActivity implements BindMobileBase.IView {
+public class MobileLoginActivity extends BaseActivity {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -72,7 +72,6 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
     @Bind(R.id.show_bind_rv)
     RelativeLayout showBindRv;
     private String stadus;
-    private BindMobilePresenter bindMobilePresenter;
     private String token,oldmobile;
 
     @Override
@@ -84,7 +83,7 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
     }
 
     private void init(){
-        bindMobilePresenter=new BindMobilePresenter(this);
+
         token= Hawk.get(HawkKey.TOKEN);
         etMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -158,13 +157,14 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
                 showBindRv.setVisibility(View.GONE);
                 break;
             case R.id.cancle_txt_id:
-                // TODO: 2018/10/25 第三方登录绑定手机号 网络请求成功 跳转到主界面
+                //  第三方登录取消绑定手机号  跳转到主界面
                 Intent intent1=new Intent(MobileLoginActivity.this,MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
                 break;
             case R.id.sure_txt_id:
+                //  第三方登录绑定手机号  继续绑定
                 showBindRv.setVisibility(View.GONE);
                 break;
             case R.id.sure_id:
@@ -177,15 +177,7 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
                     return;
                 }
 
-                if("3".equals(stadus)||"7".equals(stadus)){
-                    //第三方登录，个人信息 绑定手机号
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("token",token);
-                    reqData.put("version",getVersionCodes());
-                    BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
-                    bindMobileParamBean.setMobile(etMobile.getText().toString().trim());
-                    bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
-                }else   if("8".equals(stadus)){
+             if("8".equals(stadus)){
                     //设置 账号安全 手机号换绑
                     Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
                     intent.putExtra("stadus","9");
@@ -233,33 +225,4 @@ public class MobileLoginActivity extends BaseActivity implements BindMobileBase.
         }
     }
 
-    @Override
-    public void showMsg(String msg) {
-        showToast(msg);
-    }
-
-    @Override
-    public void getBindMobile(BindMobileResultBean bindMobileResultBean) {
-        if("000000".equals(bindMobileResultBean.getCode())){
-            if("3".equals(stadus)){
-                Intent intent=new Intent(MobileLoginActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }else {
-                finish();
-            }
-
-        }else {
-            showToast(bindMobileResultBean.getMessage());
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(bindMobilePresenter!=null){
-            bindMobilePresenter.detachView();
-        }
-        super.onDestroy();
-    }
 }

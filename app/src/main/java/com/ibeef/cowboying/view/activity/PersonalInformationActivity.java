@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,24 +20,36 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.UplodImgQIniuBase;
 import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.QiniuBean;
+import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.UploadImgQiNiuPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,7 +68,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 个人信息界面
  */
-public class PersonalInformationActivity extends BaseActivity implements UserInfoBase.IView {
+public class PersonalInformationActivity extends BaseActivity implements UserInfoBase.IView ,UplodImgQIniuBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -116,12 +130,16 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     private String imgPath;
     @SuppressLint("SdCardPath")
     private static String path = "/sdcard/myHead/";
+    private boolean isCheck=false;
+    private UploadImgQiNiuPresenter uploadImgQiNiuPresenter;
+    private String imgUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_information);
         ButterKnife.bind(this);
         init();
+        initDialog();
     }
 
     private void init() {
@@ -129,14 +147,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         token= Hawk.get(HawkKey.TOKEN);
         userId= Hawk.get(HawkKey.userId);
         userInfoPresenter=new UserInfoPresenter(this);
-
+        uploadImgQiNiuPresenter=new UploadImgQiNiuPresenter(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("token",token);
+        reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         userInfoPresenter.getUserInfo(reqData);
     }
@@ -160,26 +178,32 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 break;
             case R.id.bind_phone_rv:
                 // TODO: 2018/10/29 是否绑定手机号
-                Intent intent=new Intent(PersonalInformationActivity.this,MobileLoginActivity.class);
-                intent.putExtra("stadus","7");
-                startActivity(intent);
+                if(isCheck){
+                    if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getMobile())){
+                        Intent intent=new Intent(PersonalInformationActivity.this,MobileLoginActivity.class);
+                        intent.putExtra("stadus","7");
+                        startActivity(intent);
+                    }
+                }
                 break;
             case R.id.real_info_rv:
-                if(false){
-                    //已实名认证
-                    showRealinfoRv.setVisibility(View.VISIBLE);
-                    nameTxtId.setText("姓名：**斌");
-                    codeTxtId.setText("身份证号：4201123330*****");
-                }else {
-                    //未实名认证
-                    isNickname=false;
-                    etWriteId.setHint("请输入真实姓名");
-                    etWriteId1.setHint("请输入真实身份证号");
-                    etWriteId.setText("");
-                    etWriteId1.setText("");
-                    modifyNicknameRv.setVisibility(View.VISIBLE);
-                    titleTxtId.setText("实名认证");
-                    search2Id.setVisibility(View.VISIBLE);
+                if(isCheck){
+                    if(!"0".equals(userInfoResultBean.getBizData().getIsValidate())){
+                        //已实名认证
+                        showRealinfoRv.setVisibility(View.VISIBLE);
+                        nameTxtId.setText("姓名："+userInfoResultBean.getBizData().getRealName());
+                        codeTxtId.setText("身份证号："+userInfoResultBean.getBizData().getRealCardNo());
+                    }else {
+                        //未实名认证
+                        isNickname=false;
+                        etWriteId.setHint("请输入真实姓名");
+                        etWriteId1.setHint("请输入真实身份证号");
+                        etWriteId.setText("");
+                        etWriteId1.setText("");
+                        modifyNicknameRv.setVisibility(View.VISIBLE);
+                        titleTxtId.setText("实名认证");
+                        search2Id.setVisibility(View.VISIBLE);
+                    }
                 }
                 break;
             case R.id.modify_pwd_rv:
@@ -189,7 +213,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 if(isNickname){
                     // 昵称
                     Map<String, String> reqData = new HashMap<>();
-                    reqData.put("token",token);
+                    reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());
                     ModifyNickParamBean modifyNickParamBean=new ModifyNickParamBean();
                     modifyNickParamBean.setNiceName(etWriteId.getText().toString().trim());
@@ -197,11 +221,13 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 }else {
                     // 实名认证
                     Map<String, String> reqData = new HashMap<>();
-                    reqData.put("token",token);
+                    reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());
                     RealNameParamBean realNameParamBean=new RealNameParamBean();
-                    realNameParamBean.setUserId(userId);
-                    realNameParamBean.setUserMobile("");// TODO: 2018/10/29
+                    realNameParamBean.setUserId(userInfoResultBean.getBizData().getUserId()+"");
+                    if(!SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getMobile())){
+                        realNameParamBean.setUserMobile(userInfoResultBean.getBizData().getMobile());
+                    }
                     realNameParamBean.setRealName(etWriteId.getText().toString().trim());
                     realNameParamBean.setRealCardNo(etWriteId1.getText().toString().trim());
                     userInfoPresenter.getRealName(reqData,realNameParamBean);
@@ -308,15 +334,23 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
 
     @Override
     public void showMsg(String msg) {
-        showToast(msg);
+        if(!TextUtils.isEmpty(msg)){
+            if(msg.contains("401")){
+                Hawk.put(HawkKey.TOKEN, "");
+                Toast.makeText(this,"Authorization失效，请重新登录",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
+        }
     }
 
     @Override
     public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
         if("000000".equals(modifyHeadResultBean.getCode())){
             Map<String, String> reqData = new HashMap<>();
-            reqData.put("token",token);
+            reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
+            showToast("更新头像成功~");
             userInfoPresenter.getUserInfo(reqData);
         }else {
             showToast(modifyHeadResultBean.getMessage());
@@ -327,8 +361,9 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     public void getModifNick(ModifyNickResultBean modifyNickResultBean) {
         if("000000".equals(modifyNickResultBean.getCode())){
             Map<String, String> reqData = new HashMap<>();
-            reqData.put("token",token);
+            reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
+            showToast("更新昵称成功~");
             userInfoPresenter.getUserInfo(reqData);
         }else {
             showToast(modifyNickResultBean.getMessage());
@@ -337,7 +372,15 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
 
     @Override
     public void getRealName(RealNameReaultBean realNameReaultBean) {
-
+        if("000000".equals(realNameReaultBean.getCode())){
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            showToast("实名认证成功~");
+            userInfoPresenter.getUserInfo(reqData);
+        }else {
+            showToast(realNameReaultBean.getMessage());
+        }
     }
 
     @Override
@@ -350,27 +393,35 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                     .skipMemoryCache(true)
                     //跳过内存缓存
                     ;
-            Glide.with(this).load(Constant.prodYbAvatarDomin).apply(options).into(ivIcon);
+            Hawk.put(HawkKey.userId, userInfoResultBean.getBizData().getUserId()+"");
+            Glide.with(this).load(Constant.prodYbAvatarDomin+userInfoResultBean.getBizData().getHeadImage()).apply(options).into(ivIcon);
             nicknameTxt.setText("");
-            if(true){
-                //认证
-                realInfoTxt.setText("名字");
-                realInfoTxt.setTextColor(getResources().getColor(R.color.gray));
-            }else {
+            if("0".equals(userInfoResultBean.getBizData().getIsValidate())){
                 //未认证
                 realInfoTxt.setText("未认证");
                 realInfoTxt.setTextColor(getResources().getColor(R.color.red));
-            }
-
-            if(true){
-                // TODO: 2018/10/29
-                //绑定手机号
-                bindPhoneStadus.setText("手机号");
-                bindPhoneTxt.setText("12455555555");
             }else {
+                //认证
+                realInfoTxt.setText(userInfoResultBean.getBizData().getRealName());
+                realInfoTxt.setTextColor(getResources().getColor(R.color.gray));
+            }
+            isCheck=true;
+
+            if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getMobile())){
                 //绑定手机号
                 bindPhoneStadus.setText("未绑定手机号");
                 bindPhoneTxt.setText("去绑定");
+
+            }else {
+                //绑定手机号
+                bindPhoneStadus.setText("手机号");
+                bindPhoneTxt.setText(userInfoResultBean.getBizData().getMobile());
+            }
+
+            if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getNickName())){
+                nicknameTxt.setText("设置昵称");
+            }else {
+                nicknameTxt.setText(userInfoResultBean.getBizData().getNickName());
             }
         }else {
             showToast(userInfoResultBean.getMessage());
@@ -382,7 +433,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     public void isTakePhoeto(String msg) {
         imgPath=msg;
         //七牛上传图片
-        // TODO: 2018/10/29  网络上传图片
+        uploadImgQiNiuPresenter.UploadImg(Constant.ybAvatarBucket);
     }
 
 
@@ -455,5 +506,47 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
             userInfoPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void setMsg(QiniuUploadImg qiniuUploadImg) {
+        showLoadings();
+        UploadManager uploadManager = new UploadManager();
+        String data1 =imgPath ;
+        //<File对象、或 文件路径、或 字节数组>
+        String key =null;
+        //<指定七牛服务上的文件名，或 null>;
+        String token =qiniuUploadImg.getRetMsg() ;
+        //<从服务端SDK获取>;
+        uploadManager.put(data1, key, token,
+                new UpCompletionHandler() {
+                    @Override
+                    public void complete(String key, ResponseInfo info, JSONObject res) {
+                        //res包含hash、key等信息，具体字段取决于上传策略的设置
+                        if(info.isOK()) {
+                            Log.e("qiniu", "Upload Success"+"????"+res.toString());
+                            String str=res.toString();
+                            Gson gson = new Gson();
+                            QiniuBean qiniuBean = gson.fromJson(str, QiniuBean.class);
+                            imgUrl=qiniuBean.getHash();
+                            dismissLoading();
+                            Toast.makeText(PersonalInformationActivity.this,"头像上传成功",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e("qiniu", "Upload Fail");
+                            //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                        }
+                        Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
+                    }
+                }, null);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

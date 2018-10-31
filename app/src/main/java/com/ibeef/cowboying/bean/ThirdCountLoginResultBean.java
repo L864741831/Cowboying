@@ -8,15 +8,16 @@ package com.ibeef.cowboying.bean;
  **/
 public class ThirdCountLoginResultBean {
 
+
     /**
-     * code :
-     * message :
-     * data : {}
+     * code : 000000
+     * message : null
+     * bizData : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1NDA5NzE4NzEsImxvZ2luVHlwZSI6IjQiLCJpc3MiOiJ3d3cueWFiZWkuc2hvcCIsImV4cCI6MTU0MzU2Mzg3MSwiaWF0IjoxNTQwOTcxODcxLCJ1c2VySWQiOjIyfQ.KTebhKhxVenc-rkNqd1qTLnhvgdbIQ-r6MOp6CwY_EE
      */
 
     private String code;
     private String message;
-    private DataBean data;
+    private String bizData;
 
     public String getCode() {
         return code;
@@ -34,14 +35,11 @@ public class ThirdCountLoginResultBean {
         this.message = message;
     }
 
-    public DataBean getData() {
-        return data;
+    public String getBizData() {
+        return bizData;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
-    }
-
-    public  class DataBean {
+    public void setBizData(String bizData) {
+        this.bizData = bizData;
     }
 }

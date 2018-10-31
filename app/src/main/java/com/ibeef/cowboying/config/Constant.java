@@ -7,8 +7,8 @@ public class Constant {
     /**
      * 殷俊杰服务
      */
-    public static final String BASE_URL = "http://192.168.0.122:8082/";
-//    public static final String BASE_URL = "http://192.168.0.162:8090/";
+//    public static final String BASE_URL = "http://192.168.0.122:8082/";
+    public static final String BASE_URL = "http://192.168.0.162:8090/";
 //    public static final String BASE_URL = "http://192.168.1.100:8090/";
     /**
      * 微信支付appid
@@ -34,5 +34,17 @@ public class Constant {
      * //测试环境图片服务器域名
      */
     public static String imageDomain = "http://lgf8953.oss-cn-beijing.aliyuncs.com/";
+    /**
+     * //正式七牛获取token
+     */
+//    public static final String BASE_URL3 = "http://qiniu.yabei.shop/";
+    /**
+     * //测试访问七牛地址
+     */
+    public static final String BASE_URL3="http://192.168.0.81:9101/";
+    /**
+     * 头像
+     */
+    public static final String ybAvatarBucket="ybAvatar";
 
 }

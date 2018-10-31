@@ -21,8 +21,10 @@ import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
+import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -153,18 +155,11 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                         // 传入，则支付账户为该授权账户
                         // auth_code传入后台，后台获取 auth_token,其他信息 授权成功绑定手机号
                         ThirdCountLoginParamBean thirdCountLoginParamBean=new ThirdCountLoginParamBean();
-                        thirdCountLoginParamBean.setAccessToken(authResult.getAuthCode());
+                        thirdCountLoginParamBean.setAuthCode(authResult.getAuthCode());
                         thirdCountLoginParamBean.setType("4");
                         thirdCountLoginParamBean.setOpenId(authResult.getUserId());
 //                        thirdCountLoginParamBean.setLoginZone("");
                         thirdAccountLoginPresenter.getThirdCountLogin(getVersionCodes(),thirdCountLoginParamBean);
-
-                        Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
-                        intent2.putExtra("stadus","3");
-                        startActivity(intent2);
-                        Toast.makeText(LoginActivity.this,
-                                "授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT)
-                                .show();
 
                     } else {
                         // 其他状态值则为授权失败
@@ -191,7 +186,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
         if("000000".equals(thirdLoginResultBean.getCode())){
             if("4".equals(type)){
-//                aplilyLogin("apiname=com.alipay.account.auth&app_id=2018102761793917&app_name=mc&auth_type=AUTHACCOUNT&biz_type=openservice&method=alipay.open.auth.sdk.code.get&pid=2088331251524480&product_id=APP_FAST_LOGIN&scope=kuaijie&sign_type=RSA2&target_id=20141225xxxx&sign=XG4R3c0WZiQMr7S0p1ZB%2FDCDT36F7%2B5epdiKT2U%2FX6fdgYfqTW%2FJ4qr1ow0WsAfrMkOO42iY3HQwzDRt%2BsOqILe2THkmDJXcnFw%2FpwLgz3ye3CLyxDdCSLfYUuq4sUZPObQWP%2FbSyqM8CKskcotrN9%2FJipdnugHLKOJ633JyzR21mBcxz7a4sBkJy1o1zdq4Z988DSCwmiz4JcYfzlArbrEBpMSvFEnhVuTjsaGrSlSZM%2FvcTLOIpVIAYbb27xnd%2BuuLjrju0cTrjN9nZPA%2FX66bA8AjcfXQcIebdLixN4iUGDAndPL68m6XrUjKoytbbsjHH8di6u%2Fdw8prRg5%2BTA%3D%3D");
                   aplilyLogin(thirdLoginResultBean.getBizData());
             }else if("3".equals(type)){
                 weixinLogin();
@@ -203,6 +197,14 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
+        if("000000".equals(thirdCountLoginResultBean.getCode())){
+            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData());
+            Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
+            intent2.putExtra("stadus","3");
+            startActivity(intent2);
+        }else {
+            showToast(thirdCountLoginResultBean.getMessage());
+        }
 
     }
 

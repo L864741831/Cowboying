@@ -23,6 +23,7 @@ import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
+import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
@@ -246,4 +247,11 @@ public interface ApiService {
      */
     @GET("user/thirdLogin/init")
     Observable<ThirdLoginResultBean> getInitThirdLogin(@Header("version") String version, @Query("loginType") String loginType);
+
+    /**
+     * 七牛上传图片
+     * @return
+     */
+    @GET("token/upload")
+    Observable<QiniuUploadImg> qiNiuUpload(@Query("bucket") String bucket);
 }

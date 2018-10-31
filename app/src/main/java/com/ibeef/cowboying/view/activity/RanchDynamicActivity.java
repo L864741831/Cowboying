@@ -90,13 +90,15 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
                 }
             }
         });
-        ranchDynamicdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        ranchDynamicdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HomeAllVideoResultBean.BizDataBean item=ranchDynamicdapter.getItem(position);
                 Intent intent = new Intent(RanchDynamicActivity.this, PlayerVideoActivity.class);
-                intent.putExtra("video_url",listData.get(position).getPlayUrl());
+                intent.putExtra("video_url",item.getPlayUrl());
+                intent.putExtra("title",item.getName());
+                intent.putExtra("coverUrl",item.getCoverUrl());
                 startActivity(intent);
-                Log.i("htht", "video_url:::::::"+listData.get(position).getPlayUrl());
             }
         });
     }
