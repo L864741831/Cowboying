@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,13 +9,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
+import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
+import com.orhanobut.hawk.Hawk;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,6 +84,8 @@ public class ThreeFragment extends BaseFragment {
     @Bind(R.id.tell_us_id_rv)
     RelativeLayout tellUsIdRv;
 
+    private String token;
+
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -96,6 +102,11 @@ public class ThreeFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        token= Hawk.get(HawkKey.TOKEN);
+    }
 
     @Override
     public void onDestroyView() {
@@ -111,11 +122,19 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.setting_id:
                 //设置界面
-                startActivity(SetUpActivity.class);
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(SetUpActivity.class);
+                }
                 break;
             case R.id.head_img:
                 //个人信息界面
-                startActivity(PersonalInformationActivity.class);
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(PersonalInformationActivity.class);
+                }
                 break;
             case R.id.pay_money_codeId:
                 //付款码

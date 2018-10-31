@@ -8,7 +8,7 @@ package com.ibeef.cowboying.bean;
  **/
 public class ThirdCountLoginParamBean {
     private String type;
-    private String accessToken;
+    private String authCode;
     private String openId;
     private String loginZone;
 
@@ -20,12 +20,12 @@ public class ThirdCountLoginParamBean {
         this.type = type;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getAuthCode() {
+        return authCode;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
     }
 
     public String getOpenId() {

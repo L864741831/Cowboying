@@ -3,13 +3,16 @@ package com.ibeef.cowboying.view.activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountSecurityBase;
@@ -24,6 +27,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.SmsCodePresenter;
 import com.ibeef.cowboying.utils.Md5Util;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;
@@ -67,11 +71,11 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     RelativeLayout showBindRv;
 
     private String stadus;
-    private String mobile="18703643373";
     private String token,userId;
     // TODO: 2018/10/28
-
+    private boolean isSetPwd=false,isMobie=false;
     private AccountSecurityPresenter accountSecurityPresenter;
+    private SafeInfoResultBean safeInfoResultBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +96,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     protected void onResume() {
         super.onResume();
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("token",token);
+        reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         accountSecurityPresenter.getSafeInfo(reqData);
     }
@@ -104,28 +108,38 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 finish();
                 break;
             case R.id.phone_txt_id:
+                if(!isMobie){
+                    showToast("暂无手机号，不可以换绑~");
+                    return;
+                }
                 sureBtn("8");
                 break;
             case R.id.weixin_stadus_id:
                 //解绑弹框
-                if(true){
-                    nameTxtId.setText("确认解除微信账号的绑定吗？");
-                    showBindRv.setVisibility(View.VISIBLE);
-                }else {
-                    bindThird("3");
+                if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
+                    if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxName())){
+                        nameTxtId.setText("确认解除微信账号的绑定吗？");
+                        showBindRv.setVisibility(View.VISIBLE);
+                    }else {
+                        bindThird("3");
+                    }
                 }
                 break;
             case R.id.zfb_stadus_id:
                 //解绑弹框
-                if(true){
-                    nameTxtId.setText("确认解除支付宝账号的绑定吗？");
-                    showBindRv.setVisibility(View.VISIBLE);
-                }else {
-                    bindThird("4");
+                if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
+                    if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbName())) {
+                        nameTxtId.setText("确认解除支付宝账号的绑定吗？");
+                        showBindRv.setVisibility(View.VISIBLE);
+                    } else {
+                        bindThird("4");
+                    }
                 }
                 break;
             case R.id.set_login_pwd_rv:
-                sureBtn("5");
+                if(!isSetPwd){
+                    sureBtn("5");
+                }
                 break;
             case R.id.modify_mobile_rv:
                 sureBtn("4");
@@ -137,7 +151,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 // 解除绑定
                 showBindRv.setVisibility(View.GONE);
                 Map<String, String> reqData = new HashMap<>();
-                reqData.put("token",token);
+                reqData.put("Authorization",token);
                 reqData.put("version",getVersionCodes());
                 accountSecurityPresenter.getUnBindThidCount(reqData,"");
                 break;
@@ -151,7 +165,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     private void bindThird(String type){
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("token",token);
+        reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         BindThirdCountParamBean bindThirdCountParamBean=new BindThirdCountParamBean();
         bindThirdCountParamBean.setUserId(userId);
@@ -169,9 +183,9 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                     if (granted) {
                         Intent intent=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
                         if("8".equals(stadus)){
-                            intent.putExtra("oldmobile",mobile);
+                            intent.putExtra("oldmobile",safeInfoResultBean.getBizData().getMobile());
                         }else {
-                            intent.putExtra("mobile",mobile);
+                            intent.putExtra("mobile",safeInfoResultBean.getBizData().getMobile());
                         }
                         intent.putExtra("stadus",stadus);
 
@@ -185,9 +199,9 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             Intent intent=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
             intent.putExtra("stadus",stadus);
             if("8".equals(stadus)){
-                intent.putExtra("oldmobile",mobile);
+                intent.putExtra("oldmobile",safeInfoResultBean.getBizData().getMobile());
             }else {
-                intent.putExtra("mobile",mobile);
+                intent.putExtra("mobile",safeInfoResultBean.getBizData().getMobile());
             }
             startActivity(intent);
         }
@@ -195,12 +209,60 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void showMsg(String msg) {
-        showToast(msg);
+        if(!TextUtils.isEmpty(msg)){
+            if(msg.contains("401")){
+                Hawk.put(HawkKey.TOKEN, "");
+                Toast.makeText(this,"Authorization失效，请重新登录",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
+        }
     }
 
     @Override
     public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
         if("000000".equals(safeInfoResultBean.getCode())){
+            this.safeInfoResultBean=safeInfoResultBean;
+            if("0".equals(safeInfoResultBean.getBizData().getIsPassWord())){
+                isSetPwd=false;
+            }else {
+                isSetPwd=true;
+            }
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+                phoneTxtId.setText("暂无手机号");
+                isMobie=false;
+            }else {
+                phoneTxtId.setText(safeInfoResultBean.getBizData().getMobile());
+                isMobie=true;
+            }
+
+
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxName())){
+                weixinStadusId.setText("");
+                Drawable drawable = getResources().getDrawable(R.mipmap.binds);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
+                weixinStadusId.setCompoundDrawablePadding(10);
+            }else {
+                weixinStadusId.setText("已绑定");
+                Drawable drawable = getResources().getDrawable(R.mipmap.unbinds);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
+                weixinStadusId.setCompoundDrawablePadding(10);
+            }
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbName())){
+                zfbStadusId.setText("");
+                Drawable drawable = getResources().getDrawable(R.mipmap.binds);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
+                weixinStadusId.setCompoundDrawablePadding(10);
+            }else {
+                zfbStadusId.setText("已绑定");
+                Drawable drawable = getResources().getDrawable(R.mipmap.unbinds);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
+                weixinStadusId.setCompoundDrawablePadding(10);
+            }
 
         }else {
             showToast(safeInfoResultBean.getMessage());
@@ -212,7 +274,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     public void getBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
         if("000000".equals(bindThirdCountResultBean.getCode())){
             Map<String, String> reqData = new HashMap<>();
-            reqData.put("token",token);
+            reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
             accountSecurityPresenter.getSafeInfo(reqData);
             showToast("绑定第三方账号成功~");
@@ -225,7 +287,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     public void getUnBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
         if("000000".equals(bindThirdCountResultBean.getCode())){
             Map<String, String> reqData = new HashMap<>();
-            reqData.put("token",token);
+            reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
             accountSecurityPresenter.getSafeInfo(reqData);
             showToast("解绑成功~");

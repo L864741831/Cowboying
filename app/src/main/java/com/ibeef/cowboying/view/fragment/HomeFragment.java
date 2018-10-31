@@ -19,28 +19,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
-import com.ibeef.cowboying.base.CheckVersionBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
-import com.ibeef.cowboying.bean.CheckVersionBean;
-import com.ibeef.cowboying.bean.CheckVersionParamBean;
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.CheckVersionPresenter;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
-import com.ibeef.cowboying.view.activity.AdActivity;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
-import com.ibeef.cowboying.view.activity.HomeVideoPlayActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
-import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -52,7 +43,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseFragment;
 
 public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,HomeBannerBase.IView  {
@@ -173,7 +163,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     intent.putExtra("title",item.getName());
                     intent.putExtra("coverUrl",item.getCoverUrl());
                     startActivity(intent);
-                    Log.i("htht", "video_url:::::::"+item.getPlayUrl());
                 }
             }
         });

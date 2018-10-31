@@ -1,8 +1,10 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -129,8 +131,9 @@ public class SetUpActivity extends BaseActivity {
                 }
                 break;
             case R.id.unlogin_rv:
+                Hawk.put(HawkKey.TOKEN, "");
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
-                startActivity(LoginActivity.class);
                 break;
             default:
                 break;

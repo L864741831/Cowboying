@@ -105,4 +105,6 @@ dependencies {
     //更多ijk的编码支持
     implementation 'com.shuyu:gsyVideoPlayer-ex_so:6.0.0-beta'
     implementation 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
+
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.+'
 }
