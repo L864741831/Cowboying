@@ -1,5 +1,7 @@
 package com.ibeef.cowboying.base;
 
+import java.util.List;
+
 /**
  * @Author $ls
  * @Date 2018/5/10 10:19
@@ -8,22 +10,23 @@ package com.ibeef.cowboying.base;
 
 public class MdUploadImgBean {
 
+
     /**
-     * status : 000000000
-     * message :
-     * data : {"fileName":"tryout/images/d3430faa9a5f4df7a924f28f41408055.jpg","filePath":"http://lgf8953.oss-cn-beijing.aliyuncs.com/tryout/images/d3430faa9a5f4df7a924f28f41408055.jpg"}
+     * code : 000000
+     * message : null
+     * bizData : [{"fileName":"tryout/images/012992fdbef6265ab0663ef3b47fbf89.jpg","filePath":"http://pasture.oss-cn-beijing.aliyuncs.com/tryout/images/012992fdbef6265ab0663ef3b47fbf89.jpg"}]
      */
 
-    private String status;
+    private String code;
     private String message;
-    private DataBean data;
+    private List<BizDataBean> bizData;
 
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getMessage() {
@@ -34,18 +37,18 @@ public class MdUploadImgBean {
         this.message = message;
     }
 
-    public DataBean getData() {
-        return data;
+    public List<BizDataBean> getBizData() {
+        return bizData;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setBizData(List<BizDataBean> bizData) {
+        this.bizData = bizData;
     }
 
-    public  class DataBean {
+    public static class BizDataBean {
         /**
-         * fileName : tryout/images/d3430faa9a5f4df7a924f28f41408055.jpg
-         * filePath : http://lgf8953.oss-cn-beijing.aliyuncs.com/tryout/images/d3430faa9a5f4df7a924f28f41408055.jpg
+         * fileName : tryout/images/012992fdbef6265ab0663ef3b47fbf89.jpg
+         * filePath : http://pasture.oss-cn-beijing.aliyuncs.com/tryout/images/012992fdbef6265ab0663ef3b47fbf89.jpg
          */
 
         private String fileName;

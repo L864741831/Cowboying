@@ -73,10 +73,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     private List<String> stringList;
     private FeedbackPresenter feedbackPresenter;
     private String token;
-    private SubmitFeedbackResultBean submitFeedbackResultBean;
     private MdUploadImgBean mdUploadImgBean;
-    private String productImg;
-    private MultipartBody multipartBody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +89,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         info.setText("意见反馈");
         ryImgId.setLayoutManager(new GridLayoutManager(this,4));
         stringList=new ArrayList<>();
-        stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
         optionReturnImgAdapter=new OptionReturnImgAdapter(this,stringList,R.layout.option_return_item);
         ryImgId.setAdapter(optionReturnImgAdapter);
         optionReturnImgAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -100,12 +96,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.upload_img:
-//                        if(position==0){
-//                            showLoadings();
-//                            stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
-//                            optionReturnImgAdapter.notifyDataSetChanged();
-//                            dismissLoading();
-//                        }
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
                             rx.Observable<Boolean> grantObservable = PermissionsUtils.getCameraGrant(OptionReturnActivity.this);
@@ -180,10 +170,8 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                 return false;
             }
         });
-
         feedbackPresenter=new FeedbackPresenter(this);
     }
-
 
     @OnClick({R.id.back_id, R.id.btn_id, R.id.me_option_btn})
     public void onViewClicked(View view) {
@@ -221,7 +209,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
      */
     private void callGallery(){
         PhotoPicker.builder()
-                .setPhotoCount(5)
+                .setPhotoCount(1)
                 .setShowCamera(true)
                 .setShowGif(true)
                 .setPreviewEnabled(false)
@@ -300,6 +288,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 //        dismissLoading();
         if("000000".equals(submitFeedbackResultBean.getCode())){
             showToast("提交成功");
+            finish();
         }else {
             showToast(submitFeedbackResultBean.getMessage());
         }
@@ -320,22 +309,16 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     public void getUploadImg(MdUploadImgBean mdUploadImgBean) {
         this.mdUploadImgBean=mdUploadImgBean;
         dismissLoading();
-        if("000000".equals(mdUploadImgBean.getStatus())){
+        if("000000".equals(mdUploadImgBean.getCode())){
             Toast.makeText(OptionReturnActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
-            productImg=mdUploadImgBean.getData().getFileName();
-            RequestOptions options = new RequestOptions()
-                    .skipMemoryCache(true)
-                    //跳过内存缓存
-                    .error(R.mipmap.jzsb)
-                    ;
-//            if(twoImageListBean.getData().size()==1){
-//                Glide.with(this).load(mdUploadImgBean.getData().getFilePath()).apply(options).into(put_img);
-//                putImageParamBeanList.get(0).setUserImageUrl(productImg);
-//            }else {
-//                Glide.with(this).load(mdUploadImgBean.getData().getFilePath()).apply(options).into(itemImg);
-//                putImageParamBeanList.get(index).setUserImageUrl(productImg);
-//
-//            }
+//            productImg=mdUploadImgBean.getData().getFileName();
+//            RequestOptions options = new RequestOptions()
+//                    .skipMemoryCache(true)
+//                    //跳过内存缓存
+//                    .error(R.mipmap.jzsb)
+//                    ;
+            stringList.add(mdUploadImgBean.getBizData().get(0).getFilePath());
+            optionReturnImgAdapter.notifyDataSetChanged();
         }else {
             Toast.makeText(OptionReturnActivity.this,mdUploadImgBean.getMessage(),Toast.LENGTH_SHORT).show();
         }
