@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -69,6 +71,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     private void init(){
         token= Hawk.get(HawkKey.TOKEN);
+        Log.i("htht", "token:::: "+token);
         info.setText("我的反馈");
         baseBeans=new ArrayList<>();
         ryId.setLayoutManager(new LinearLayoutManager(this));
@@ -81,7 +84,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
         feedbackPresenter=new FeedbackPresenter(this);
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("token",token);
+        reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         feedbackPresenter.getMyFeedback(reqData,currentPage);
     }
@@ -97,9 +100,11 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         isFirst=true;
         baseBeans.clear();
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("token",token);
+        reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        feedbackPresenter.getMyFeedback(reqData,currentPage);
+        if (!TextUtils.isEmpty(token)) {
+            feedbackPresenter.getMyFeedback(reqData,currentPage);
+        }
         mSwipeLayout.setRefreshing(false);
     }
 
@@ -108,7 +113,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         isMoreLoad=true;
         currentPage+=1;
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("token",token);
+        reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         feedbackPresenter.getMyFeedback(reqData,currentPage);
     }

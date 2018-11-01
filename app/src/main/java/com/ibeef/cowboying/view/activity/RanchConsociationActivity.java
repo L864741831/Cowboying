@@ -51,6 +51,7 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
     ImageView iv_ranch_canosciation;
     @Bind(R.id.banner)
     Banner banner;
+    private int positions=0;
     private RanchConsociationTitleAdapter ranchConsociationTitleAdapter;
     private List<PastureAllResultBean.BizDataBean> dataBeen;
     private PasturePresenter pasturePresenter;
@@ -87,11 +88,11 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
         ranchConsociationTitleAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                positions=position;
+                clickShow();
                 pasturePresenter.getPastureDetelVideo(getVersionCodes(), dataBeen.get(position).getPastureId());
             }
         });
-
-
     }
 
     @OnClick(R.id.back_id)
@@ -104,9 +105,20 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
         showToast(msg);
     }
 
+    private void clickShow(){
+        for (int j=0;j<dataBeen.size();j++){
+            if(j==positions){
+                dataBeen.get(j).setDefaultFlag(0);
+            }else {
+                dataBeen.get(j).setDefaultFlag(1);
+            }
+        }
+        ranchConsociationTitleAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void getPastureAllVideo(PastureAllResultBean pastureAllResultBean) {
-        if ("000000".equals(pastureAllResultBean)) {
+        if ("000000".equals(pastureAllResultBean.getCode())) {
             dataBeen.addAll(pastureAllResultBean.getBizData());
             ranchConsociationTitleAdapter.setNewData(dataBeen);
             ranchConsociationTitleAdapter.loadMoreEnd();

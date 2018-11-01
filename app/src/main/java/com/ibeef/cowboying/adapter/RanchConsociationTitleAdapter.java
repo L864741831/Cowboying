@@ -29,11 +29,11 @@ public class RanchConsociationTitleAdapter extends BaseQuickAdapter<PastureAllRe
         helper.setText(R.id.tv_title,item.getName());
         helper.addOnClickListener(R.id.tv_title);
         TextView tv=helper.getView(R.id.tv_title);
-//        if (item.getDefaultFlag()==0) {
-//            tv.setTextColor(ContextCompat.getColor(context,R.color.colorAccent));
-//        }else {
-//            tv.setTextColor(ContextCompat.getColor(context,R.color.black));
-//        }
+        if (item.getDefaultFlag()==0) {
+            tv.setTextColor(ContextCompat.getColor(context,R.color.goldenrod));
+        }else {
+            tv.setTextColor(ContextCompat.getColor(context,R.color.black));
+        }
     }
 }
 

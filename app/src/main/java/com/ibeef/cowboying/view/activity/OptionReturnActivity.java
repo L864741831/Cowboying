@@ -1,11 +1,14 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
 import com.orhanobut.hawk.Hawk;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +37,13 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPicker;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.functions.Action1;
 import rxfamily.bean.BaseBean;
+import rxfamily.utils.PermissionsUtils;
 import rxfamily.view.BaseActivity;
 
 /**
@@ -82,12 +92,27 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.upload_img:
-                        if(position==0){
-                            showLoadings();
-                            stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
-                            optionReturnImgAdapter.notifyDataSetChanged();
-                            dismissLoading();
+//                        if(position==0){
+//                            showLoadings();
+//                            stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
+//                            optionReturnImgAdapter.notifyDataSetChanged();
+//                            dismissLoading();
+//                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
+                            rx.Observable<Boolean> grantObservable = PermissionsUtils.getCameraGrant(OptionReturnActivity.this);
+                            grantObservable.subscribe(new Action1<Boolean>() {
+                                @Override
+                                public void call(Boolean granted) {
+                                    if (granted) {
+                                        callGallery();
+                                    } else {
+                                        PermissionsUtils.showPermissionDeniedDialog(OptionReturnActivity.this, false);
+                                    }
+                                }
+                            });
+                        }else {
+                            callGallery();
                         }
                         break;
                     case R.id.close_id:
@@ -164,18 +189,75 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                     return;
                 }
                 Map<String, String> reqData = new HashMap<>();
-                reqData.put("token",token);
+                reqData.put("Authorization",token);
                 reqData.put("version",getVersionCodes());
                 SubmitFeedbackParamBean submitFeedbackParamBean=new SubmitFeedbackParamBean();
+                Log.i("/feedback/submit", "反馈文字：：：：：：: "+etOpinion.getText().toString().trim());
                 submitFeedbackParamBean.setContent(etOpinion.getText().toString().trim());
                 submitFeedbackParamBean.setImageList(stringList);
                 feedbackPresenter.getSubmitFeedback(reqData,submitFeedbackParamBean);
                 break;
             case R.id.me_option_btn:
-                startActivity(MyFeedbackActivity.class);
+                if(!TextUtils.isEmpty(token)){
+                    startActivity(MyFeedbackActivity.class);
+                }else {
+                    startActivity(LoginActivity.class);
+                }
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 调用图库选择
+     */
+    private void callGallery(){
+        PhotoPicker.builder()
+                .setPhotoCount(5)
+                .setShowCamera(true)
+                .setShowGif(true)
+                .setPreviewEnabled(false)
+                .start(this, PhotoPicker.REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                if (requestCode == 1){
+                    //处理调用系统图库
+                } else if (requestCode == PhotoPicker.REQUEST_CODE){
+                    //异步方式插入图片
+                    insertImagesSync(data);
+                }
+            }
+        }
+    }
+
+    /**
+     * 异步方式插入图片
+     * @param data
+     */
+    private void insertImagesSync(final Intent data){
+        stringList = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+        //可以同时插入多张图片
+        for (String imagePath : stringList) {
+            //imagePath<File对象、或 文件路径、或 字节数组>
+            File file = new File(imagePath);
+            MultipartBody multipartBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("imageFile", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
+                    .build();
+//            showLoadings();
+            Log.i("htht", "stringList: :::::"+stringList);
+//            if(TextUtils.isEmpty(token)){
+//                startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
+//            }else {
+//                OptionReturnActivity.getUploadImg(token,multipartBody);
+//            }
+
         }
     }
 
@@ -192,7 +274,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     @Override
     public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
         if("000000".equals(submitFeedbackResultBean.getCode())){
-
+            showToast(submitFeedbackResultBean.getMessage()+"成功？");
         }else {
             showToast(submitFeedbackResultBean.getMessage());
         }
