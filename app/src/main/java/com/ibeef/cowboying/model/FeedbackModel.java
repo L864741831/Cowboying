@@ -3,14 +3,18 @@ package com.ibeef.cowboying.model;
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.base.HomeAdBase;
+import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.config.Constant;
 
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.HeaderMap;
 import rx.Observable;
 import rx.Subscription;
@@ -69,6 +73,28 @@ public class FeedbackModel implements FeedbackBase.IModel {
                 .subscribe(new Action1<SubmitFeedbackResultBean>() {
                     @Override
                     public void call(SubmitFeedbackResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getUploadImg(@HeaderMap Map<String, String> headers, MultipartBody multipartBody, final ResponseCallback<MdUploadImgBean> callback) {
+        Observable<MdUploadImgBean> observable = service.getUploadImg(headers,multipartBody);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(3, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MdUploadImgBean>() {
+                    @Override
+                    public void call(MdUploadImgBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

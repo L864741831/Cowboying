@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyFeedbackAdapter;
 import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.config.HawkKey;
@@ -168,6 +169,11 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void getUploadImg(MdUploadImgBean mdUploadImgBean) {
+
     }
 
     @Override

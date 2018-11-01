@@ -16,11 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.OptionReturnImgAdapter;
 import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
@@ -70,6 +73,11 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     private List<String> stringList;
     private FeedbackPresenter feedbackPresenter;
     private String token;
+    private SubmitFeedbackResultBean submitFeedbackResultBean;
+    private MdUploadImgBean mdUploadImgBean;
+    private String productImg;
+    private MultipartBody multipartBody;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,7 +200,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                 reqData.put("Authorization",token);
                 reqData.put("version",getVersionCodes());
                 SubmitFeedbackParamBean submitFeedbackParamBean=new SubmitFeedbackParamBean();
-                Log.i("/feedback/submit", "反馈文字：：：：：：: "+etOpinion.getText().toString().trim());
                 submitFeedbackParamBean.setContent(etOpinion.getText().toString().trim());
                 submitFeedbackParamBean.setImageList(stringList);
                 feedbackPresenter.getSubmitFeedback(reqData,submitFeedbackParamBean);
@@ -241,24 +248,41 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
      * @param data
      */
     private void insertImagesSync(final Intent data){
-        stringList = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+        ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+        ArrayList<File> files=new ArrayList<>();
         //可以同时插入多张图片
-        for (String imagePath : stringList) {
+        for (String imagePath : photos) {
             //imagePath<File对象、或 文件路径、或 字节数组>
             File file = new File(imagePath);
-            MultipartBody multipartBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("imageFile", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
-                    .build();
-//            showLoadings();
-            Log.i("htht", "stringList: :::::"+stringList);
-//            if(TextUtils.isEmpty(token)){
-//                startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
-//            }else {
-//                OptionReturnActivity.getUploadImg(token,multipartBody);
-//            }
-
+            files.add(file);
+//            multipartBody = new MultipartBody.Builder()
+//                    .setType(MultipartBody.FORM)
+//                    .addFormDataPart("imageFile",file.getName() , RequestBody.create(MediaType.parse("image/*"), file))
+//                    .build();
         }
+        Log.i("file/image/upload", "files: :::::"+files.size());
+        MultipartBody multipartBody = filesToMultipartBody(files);
+        showLoadings();
+        if(TextUtils.isEmpty(token)){
+            startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
+        }else {
+            Map<String, String> reqData1 = new HashMap<>();
+            reqData1.put("Authorization",token);
+            reqData1.put("version",getVersionCodes());
+            feedbackPresenter.getUploadImg(reqData1, multipartBody);
+        }
+    }
+
+    private  MultipartBody filesToMultipartBody(List<File> files) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        for (File file : files) {
+            // TODO: 16-4-2  这里为了简单起见，没有判断file的类型
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            builder.addFormDataPart("imageFile", file.getName(), requestBody);
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        return multipartBody;
     }
 
     @Override
@@ -273,8 +297,9 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
+//        dismissLoading();
         if("000000".equals(submitFeedbackResultBean.getCode())){
-            showToast(submitFeedbackResultBean.getMessage()+"成功？");
+            showToast("提交成功");
         }else {
             showToast(submitFeedbackResultBean.getMessage());
         }
@@ -289,6 +314,31 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void getUploadImg(MdUploadImgBean mdUploadImgBean) {
+        this.mdUploadImgBean=mdUploadImgBean;
+        dismissLoading();
+        if("000000".equals(mdUploadImgBean.getStatus())){
+            Toast.makeText(OptionReturnActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
+            productImg=mdUploadImgBean.getData().getFileName();
+            RequestOptions options = new RequestOptions()
+                    .skipMemoryCache(true)
+                    //跳过内存缓存
+                    .error(R.mipmap.jzsb)
+                    ;
+//            if(twoImageListBean.getData().size()==1){
+//                Glide.with(this).load(mdUploadImgBean.getData().getFilePath()).apply(options).into(put_img);
+//                putImageParamBeanList.get(0).setUserImageUrl(productImg);
+//            }else {
+//                Glide.with(this).load(mdUploadImgBean.getData().getFilePath()).apply(options).into(itemImg);
+//                putImageParamBeanList.get(index).setUserImageUrl(productImg);
+//
+//            }
+        }else {
+            Toast.makeText(OptionReturnActivity.this,mdUploadImgBean.getMessage(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

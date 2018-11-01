@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.base.HomeAdBase;
+import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
@@ -11,8 +12,11 @@ import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.model.FeedbackModel;
 import com.ibeef.cowboying.model.HomeAdModel;
 
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -65,6 +69,22 @@ public class FeedbackPresenter extends BasePresenter implements FeedbackBase.IPr
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
                 mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getUploadImg(Map<String, String> headers, MultipartBody multipartBody) {
+        addSubscription(mModel.getUploadImg(headers,multipartBody,new ResponseCallback<MdUploadImgBean>() {
+            @Override
+            public void onSuccess(MdUploadImgBean result) {
+                mView.getUploadImg(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
             }
         }));
     }

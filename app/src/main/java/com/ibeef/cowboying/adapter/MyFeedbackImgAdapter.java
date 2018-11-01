@@ -20,21 +20,22 @@ import rxfamily.bean.BaseBean;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class MyFeedbackImgAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
+public class MyFeedbackImgAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
 
     private Context mContext;
-    public MyFeedbackImgAdapter(Context context, List<BaseBean> list, int layout){
+    public MyFeedbackImgAdapter(Context context, List<String> list, int layout){
         super(layout, list);
         this.mContext=context;
     }
     @Override
-    protected void convert(BaseViewHolder helper, BaseBean item) {
+    protected void convert(BaseViewHolder helper, String item) {
 
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.upload_img);
-        Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
+        Glide.with(mContext).load(item).apply(options).into(imageView);
     }
+
 }

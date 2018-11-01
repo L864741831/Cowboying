@@ -29,38 +29,36 @@ public class MyFeedbackAdapter extends BaseQuickAdapter<MyFeedbackResultBean.Biz
     }
     @Override
     protected void convert(BaseViewHolder helper, MyFeedbackResultBean.BizDataBean item) {
-//        helper.setText(R.id.time_show_id,"2015-23-23")
-//                .setText(R.id.question_txt_id,"亲，我买的牛肉想退换货怎么弄？");
-//
-//        //已回复
-//        if("0".equals("0")){
-//            helper.setText(R.id.response_stadus_id,"已回复")
-//            .setText(R.id.response_nane_id,"口袋牧场回复:")
-//            .setText(R.id.response_info_id,"您的牛肉已出仓库，请到附近的实体店兑换您的牛肉已出仓库，请到附近的实体店兑换您的牛肉已出仓库，请到附近的实体店兑换:");
-//            //显示回复内容
-//            helper.setVisible(R.id.response_rv,true);
-//            helper.setVisible(R.id.ry_id,false);
-//        }else {
-//            helper.setText(R.id.response_stadus_id,"未回复");
-//            //隐藏回复内容
-//            helper.setVisible(R.id.response_rv,false);
-//            //如果有图片，展示图片
-//            if(true){
-//                helper.setVisible(R.id.ry_id,true);
-//                RecyclerView recyclerView=helper.getView(R.id.ry_id);
-//                recyclerView.setLayoutManager(new GridLayoutManager(mContext,4));
-//                List<BaseBean> beanList=new ArrayList<>();
-//                BaseBean baseBean=new BaseBean();
-//                baseBean.setMessage("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
-//                beanList.add(baseBean);
-//                MyFeedbackImgAdapter myFeedbackImgAdapter=new MyFeedbackImgAdapter(mContext,beanList,R.layout.my_feedbackimg_item);
-//                recyclerView.setAdapter(myFeedbackImgAdapter);
-//
-//            }else {
-//                helper.setVisible(R.id.ry_id,false);
-//            }
-//
-//        }
+        helper.setText(R.id.time_show_id,item.getCreateTime())
+                .setText(R.id.question_txt_id,item.getContent());
+
+        //已回复
+        if("2".equals(item.getStatus())){
+            helper.setText(R.id.response_stadus_id,"已回复")
+            .setText(R.id.response_nane_id,"口袋牧场回复:")
+            .setText(R.id.response_info_id,item.getReplyContent());
+            //显示回复内容
+            helper.setVisible(R.id.response_rv,true);
+            helper.setVisible(R.id.ry_id,false);
+        }else if("1".equals(item.getStatus())){
+            helper.setText(R.id.response_stadus_id,"未回复");
+            //隐藏回复内容
+            helper.setVisible(R.id.response_rv,false);
+        }
+
+        //如果有图片，展示图片
+        if(item.getImageList().size()>0){
+            helper.setVisible(R.id.ry_id,true);
+            RecyclerView recyclerView=helper.getView(R.id.ry_id);
+            recyclerView.setLayoutManager(new GridLayoutManager(mContext,4));
+            List<String> beanList=new ArrayList<>();
+            beanList.addAll(item.getImageList());
+            MyFeedbackImgAdapter myFeedbackImgAdapter=new MyFeedbackImgAdapter(mContext,beanList,R.layout.my_feedbackimg_item);
+            recyclerView.setAdapter(myFeedbackImgAdapter);
+
+        }else {
+            helper.setVisible(R.id.ry_id,false);
+        }
 
 
     }

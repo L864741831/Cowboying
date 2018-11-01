@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.api;
 
+import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
@@ -43,6 +44,8 @@ import com.ibeef.cowboying.bean.WeixinAuthSecondeBean;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -254,4 +257,11 @@ public interface ApiService {
      */
     @GET("token/upload")
     Observable<QiniuUploadImg> qiNiuUpload(@Query("bucket") String bucket);
+
+    /**
+     *上传图片
+     * @return
+     */
+    @POST("file/image/upload")
+    Observable<MdUploadImgBean> getUploadImg(@HeaderMap Map<String, String> headers, @Body MultipartBody multipartBody);
 }
