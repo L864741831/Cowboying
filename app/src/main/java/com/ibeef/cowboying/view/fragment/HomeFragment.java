@@ -27,6 +27,7 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
@@ -220,6 +221,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void getHomeBanner(final HomeBannerResultBean homeBannerResultBean) {
+        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getTopBannerList())){
+            return;
+        }
+
         ArrayList<String> imgStr = new ArrayList<>();
         for (int i=0;i<homeBannerResultBean.getBizData().getTopBannerList().size();i++){
             imgStr.add(Constant.imageDomain+homeBannerResultBean.getBizData().getTopBannerList().get(i).getImageUrl());
@@ -237,9 +242,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
 
-
+        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getMiddleBannerList())){
+            return;
+        }
         ArrayList<String> imgStr1 = new ArrayList<>();
-        for (int i=0;i<homeBannerResultBean.getBizData().getTopBannerList().size();i++){
+        for (int i=0;i<homeBannerResultBean.getBizData().getMiddleBannerList().size();i++){
             imgStr1.add(Constant.imageDomain+homeBannerResultBean.getBizData().getMiddleBannerList().get(i).getImageUrl());
         }
         specialbeefImgId.setImages(imgStr1);
@@ -255,7 +262,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
 
-
+        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBannerResDto())){
+            return;
+        }
         if(TextUtils.isEmpty(history)){
             SharedPreferences.Editor editor = mPrefDailog.edit();
             editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));

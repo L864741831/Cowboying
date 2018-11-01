@@ -127,17 +127,13 @@ public class MobileLoginActivity extends BaseActivity {
             actionRightTv.setVisibility(View.VISIBLE);
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("绑定手机号");
-        }else if("6".equals(stadus)){
-            //设置<账号安全<修改登录手机号 <验证码，输入新的手机号
-            pwdLoginId.setVisibility(View.GONE);
-            stadusTitleId.setText("输入新的手机号");
         }else if("7".equals(stadus)){
             //个人信息 绑定手机号
             actionRightTv.setVisibility(View.GONE);
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("绑定手机号");
-        }else if("8".equals(stadus)){
-            //换绑手机号
+        }else if("8".equals(stadus)||"6".equals(stadus)){
+            //换绑手机号    //设置<账号安全<修改登录手机号 <验证码，输入新的手机号
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("输入新的手机号");
             oldmobile=getIntent().getStringExtra("oldmobile");
@@ -177,14 +173,18 @@ public class MobileLoginActivity extends BaseActivity {
                     return;
                 }
 
-             if("8".equals(stadus)){
-                    //设置 账号安全 手机号换绑
+             if("8".equals(stadus)||"6".equals(stadus)){
+                    //设置 账号安全 手机号换绑 修改登录手机号
                     Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                    intent.putExtra("stadus","9");
+                    if("6".equals(stadus)){
+                        intent.putExtra("stadus","10");
+                    }else {
+                        intent.putExtra("stadus","9");
+                    }
                     intent.putExtra("oldmobile",oldmobile);
                     intent.putExtra("mobile",etMobile.getText().toString().trim());
                     startActivity(intent);
-                }else{
+                }else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                         rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
                         grantObservable.subscribe(new Action1<Boolean>() {

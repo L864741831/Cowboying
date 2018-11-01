@@ -29,7 +29,20 @@ public class Constant {
      * 短信验证码//Md5Key
      */
     public static  final String MD5KEY = "4f3ef09822b48ec28f0ff3dbf923344f116315d22f28017be39eb119555a9582";
-    public static  final String prodYbAvatarDomin = "";
+    /**
+     * //头像正式
+     */
+//    public static final String prodYbAvatarDomin = "http://p0vzdseok.bkt.clouddn.com/";
+
+    /**
+     * //测试头像
+     */
+    public static String prodYbAvatarDomin ="http://oy9pdbwo3.bkt.clouddn.com/";
+    /**
+     * //正式环境图片服务器域名
+     */
+//    public static final String imageDomain = "http://yabei.oss-cn-beijing.aliyuncs.com/";
+
     /**
      * //测试环境图片服务器域名
      */
@@ -37,14 +50,27 @@ public class Constant {
     /**
      * //正式七牛获取token
      */
-//    public static final String BASE_URL3 = "http://qiniu.yabei.shop/";
+    public static final String BASE_URL3 = "http://qiniu.yabei.shop/";
     /**
      * //测试访问七牛地址
      */
-    public static final String BASE_URL3="http://192.168.0.81:9101/";
+//    public static final String BASE_URL3="http://192.168.0.162:9101/";
     /**
      * 头像
      */
     public static final String ybAvatarBucket="ybAvatar";
+    /**
+     * 是否是绑定微信true,微信登录 false
+     */
+    public static  boolean isBindWeiXin=false;
+    /**
+     * 微信appid
+     */
+    public static  final String WeixinAppId="wx24d5c4c32ab90b65";
+
+    /**
+     * 微信appSecret
+     */
+    public static  final String appappSecret="9780986f8ce29b0c6db809ecec0874a5";
 
 }

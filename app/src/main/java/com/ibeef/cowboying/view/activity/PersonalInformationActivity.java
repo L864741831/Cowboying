@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.UplodImgQIniuBase;
 import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
@@ -131,7 +132,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     private String imgPath;
     @SuppressLint("SdCardPath")
     private static String path = "/sdcard/myHead/";
-    private boolean isCheck=false;
+    private boolean isCheck=false,isBindPhone=false;
     private UploadImgQiNiuPresenter uploadImgQiNiuPresenter;
     private String imgUrl;
     @Override
@@ -178,12 +179,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 search2Id.setVisibility(View.GONE);
                 break;
             case R.id.bind_phone_rv:
-                // TODO: 2018/10/29 是否绑定手机号
-                if(isCheck){
-                    if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getMobile())){
-                        Intent intent=new Intent(PersonalInformationActivity.this,MobileLoginActivity.class);
-                        intent.putExtra("stadus","7");
-                        startActivity(intent);
+                // 是否绑定手机号
+                if(!isBindPhone){
+                    if(!SDCardUtil.isNullOrEmpty(userInfoResultBean)){
+                        if(!SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData())){
+                            Intent intent=new Intent(PersonalInformationActivity.this,MobileLoginActivity.class);
+                            intent.putExtra("stadus","7");
+                            startActivity(intent);
+                        }
                     }
                 }
                 break;
@@ -412,11 +415,11 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 //绑定手机号
                 bindPhoneStadus.setText("未绑定手机号");
                 bindPhoneTxt.setText("去绑定");
-
+                isBindPhone=false;
             }else {
-                //绑定手机号
                 bindPhoneStadus.setText("手机号");
                 bindPhoneTxt.setText(userInfoResultBean.getBizData().getMobile());
+                isBindPhone=true;
             }
 
             if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getNickName())){
@@ -517,9 +520,9 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         //<File对象、或 文件路径、或 字节数组>
         String key =null;
         //<指定七牛服务上的文件名，或 null>;
-        String token =qiniuUploadImg.getRetMsg() ;
+        String tokens =qiniuUploadImg.getRetMsg() ;
         //<从服务端SDK获取>;
-        uploadManager.put(data1, key, token,
+        uploadManager.put(data1, key, tokens,
                 new UpCompletionHandler() {
                     @Override
                     public void complete(String key, ResponseInfo info, JSONObject res) {
@@ -530,6 +533,12 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                             Gson gson = new Gson();
                             QiniuBean qiniuBean = gson.fromJson(str, QiniuBean.class);
                             imgUrl=qiniuBean.getHash();
+                            ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
+                            modifyHeadParamBean.setImageUrl(imgUrl);
+                            Map<String, String> reqData = new HashMap<>();
+                            reqData.put("Authorization",token);
+                            reqData.put("version",getVersionCodes());
+                            userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
                             dismissLoading();
                             Toast.makeText(PersonalInformationActivity.this,"头像上传成功",Toast.LENGTH_SHORT).show();
                         } else {

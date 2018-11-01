@@ -18,8 +18,10 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.LoginBase;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.LoginPresenter;
 import com.ibeef.cowboying.utils.TimeUtils;
+import com.orhanobut.hawk.Hawk;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -158,6 +160,8 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
     @Override
     public void getUserLogin(LoginBean loginBean) {
         if("000000".equals(loginBean.getCode())){
+            Hawk.put(HawkKey.TOKEN, loginBean.getBizData());
+
             Intent intent1=new Intent(PwdLoginActivity.this,MainActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);

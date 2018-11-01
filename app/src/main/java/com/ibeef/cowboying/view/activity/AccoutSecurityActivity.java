@@ -1,34 +1,47 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Telephony;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.AuthTask;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountSecurityBase;
+import com.ibeef.cowboying.base.InitThirdLoginBase;
 import com.ibeef.cowboying.base.SmscodeBase;
+import com.ibeef.cowboying.bean.AuthResult;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
+import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
+import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
+import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.SmsCodePresenter;
 import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +58,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 账号安全界面
  */
-public class AccoutSecurityActivity extends BaseActivity implements AccountSecurityBase.IView {
+public class AccoutSecurityActivity extends BaseActivity implements AccountSecurityBase.IView ,InitThirdLoginBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -61,6 +74,8 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     TextView zfbStadusId;
     @Bind(R.id.cancle_txt_id)
     TextView cancleTxtId;
+    @Bind(R.id.modify_pwd_id)
+    TextView modifyPwdId;
     @Bind(R.id.sure_txt_id)
     TextView sureTxtId;
     @Bind(R.id.set_login_pwd_rv)
@@ -71,11 +86,14 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     RelativeLayout showBindRv;
 
     private String stadus;
-    private String token,userId;
-    // TODO: 2018/10/28
+    private String token;
+    private static final int SDK_AUTH_FLAG = 1000;
     private boolean isSetPwd=false,isMobie=false;
     private AccountSecurityPresenter accountSecurityPresenter;
     private SafeInfoResultBean safeInfoResultBean;
+    private InitThirdLoginPresenter initThirdLoginPresenter;
+    private IWXAPI api;
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +105,10 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     private void init(){
         info.setText("账号安全");
         token= Hawk.get(HawkKey.TOKEN);
-        userId= Hawk.get(HawkKey.userId);
+        api = WXAPIFactory.createWXAPI(this,  Constant.WeixinAppId,true);
+        api.registerApp(Constant.WeixinAppId);
         accountSecurityPresenter=new AccountSecurityPresenter(this);
-
+        initThirdLoginPresenter=new InitThirdLoginPresenter(this);
     }
 
     @Override
@@ -109,36 +128,45 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 break;
             case R.id.phone_txt_id:
                 if(!isMobie){
-                    showToast("暂无手机号，不可以换绑~");
-                    return;
+                    Intent intent=new Intent(AccoutSecurityActivity.this,MobileLoginActivity.class);
+                    intent.putExtra("stadus","7");
+                    startActivity(intent);
+                }else {
+                    sureBtn("8");
                 }
-                sureBtn("8");
                 break;
             case R.id.weixin_stadus_id:
                 //解绑弹框
-                if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
-                    if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxName())){
+                type="3";
+                if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
+                    if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxId())){
                         nameTxtId.setText("确认解除微信账号的绑定吗？");
                         showBindRv.setVisibility(View.VISIBLE);
                     }else {
-                        bindThird("3");
+                        Constant.isBindWeiXin=true;
+                        weixinLogin();
                     }
                 }
                 break;
             case R.id.zfb_stadus_id:
                 //解绑弹框
-                if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
-                    if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbName())) {
+                type="4";
+                if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
+                    if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbId())) {
                         nameTxtId.setText("确认解除支付宝账号的绑定吗？");
                         showBindRv.setVisibility(View.VISIBLE);
                     } else {
-                        bindThird("4");
+                        initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"4");
                     }
                 }
                 break;
             case R.id.set_login_pwd_rv:
                 if(!isSetPwd){
                     sureBtn("5");
+                }else {
+                    Intent intent=new Intent(AccoutSecurityActivity.this,MobileLoginActivity.class);
+                    intent.putExtra("stadus","11");
+                    startActivity(intent);
                 }
                 break;
             case R.id.modify_mobile_rv:
@@ -153,7 +181,11 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 Map<String, String> reqData = new HashMap<>();
                 reqData.put("Authorization",token);
                 reqData.put("version",getVersionCodes());
-                accountSecurityPresenter.getUnBindThidCount(reqData,"");
+                if("4".equals(type)){
+                    accountSecurityPresenter.getUnBindThidCount(reqData,safeInfoResultBean.getBizData().getZfbId()+"");
+                }else if("3".equals(type)){
+                    accountSecurityPresenter.getUnBindThidCount(reqData,safeInfoResultBean.getBizData().getWxId()+"");
+                }
                 break;
             case R.id.show_bind_rv:
                 showBindRv.setVisibility(View.GONE);
@@ -163,18 +195,17 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         }
     }
 
-    private void bindThird(String type){
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        BindThirdCountParamBean bindThirdCountParamBean=new BindThirdCountParamBean();
-        bindThirdCountParamBean.setUserId(userId);
-        bindThirdCountParamBean.setAccessToken("");
-        bindThirdCountParamBean.setOpenId("");
-        bindThirdCountParamBean.setType(type);
-        accountSecurityPresenter.getBindThidCount(reqData,bindThirdCountParamBean);
-    }
     private void sureBtn(final String stadus){
+        if(SDCardUtil.isNullOrEmpty(safeInfoResultBean)){
+            return;
+        }
+        if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
+            return;
+        }
+        if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+            showToast("暂无手机号，请先设置手机号");
+            return;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(AccoutSecurityActivity.this);
             grantObservable.subscribe(new Action1<Boolean>() {
@@ -182,7 +213,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 public void call(Boolean granted) {
                     if (granted) {
                         Intent intent=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
-                        if("8".equals(stadus)){
+                        if("8".equals(stadus)||"4".equals(stadus)){
                             intent.putExtra("oldmobile",safeInfoResultBean.getBizData().getMobile());
                         }else {
                             intent.putExtra("mobile",safeInfoResultBean.getBizData().getMobile());
@@ -220,48 +251,152 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     }
 
     @Override
+    public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
+        if("000000".equals(thirdLoginResultBean.getCode())){
+            aplilyLogin(thirdLoginResultBean.getBizData());
+        }else {
+            showToast(thirdLoginResultBean.getMessage());
+        }
+    }
+
+    /**
+     * 支付宝授权登录
+     */
+    private void aplilyLogin(final String authInfo){
+        //异步处理
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+
+                AuthTask authTask = new AuthTask(AccoutSecurityActivity.this);
+                // 调用授权接口，获取授权结果ta
+                Map<String, String> result = authTask.authV2(authInfo, true);
+                Message msg = new Message();
+                msg.what = SDK_AUTH_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+
+    }
+
+
+    /**
+     * 微信授权登录
+     */
+    private void weixinLogin(){
+        if (!api.isWXAppInstalled()) {
+            Toast.makeText(this, "安装微信后再授权登录" , Toast.LENGTH_SHORT).show();
+            return;
+        }
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo_test";
+        api.sendReq(req);
+    }
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case SDK_AUTH_FLAG:
+                    @SuppressWarnings("unchecked")
+                    AuthResult authResult = new AuthResult((Map<String, String>) msg.obj, true);
+                    String resultStatus = authResult.getResultStatus();
+                    // 判断resultStatus 为“9000”且result_code
+                    // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
+                    if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
+                        // 获取alipay_open_id，调支付时作为参数extern_token 的value
+                        // 传入，则支付账户为该授权账户
+                        // auth_code传入后台，后台获取 auth_token,其他信息 授权成功绑定手机号
+                        Map<String, String> reqData = new HashMap<>();
+                        reqData.put("version",getVersionCodes());
+                        reqData.put("Authorization",token);
+                        BindThirdCountParamBean bindThirdCountParamBean=new BindThirdCountParamBean();
+                        bindThirdCountParamBean.setAuthCode(authResult.getAuthCode());
+                        bindThirdCountParamBean.setOpenId(authResult.getUserId());
+                        bindThirdCountParamBean.setType("4");
+                        accountSecurityPresenter.getBindThidCount(reqData,bindThirdCountParamBean);
+
+                    } else {
+                        // 其他状态值则为授权失败
+                        Toast.makeText(AccoutSecurityActivity.this,
+                                "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT).show();
+
+                    }
+                    Log.e(Constant.TAG,"支付宝结果"+authResult+"????????"+resultStatus);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    @Override
     public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
         if("000000".equals(safeInfoResultBean.getCode())){
             this.safeInfoResultBean=safeInfoResultBean;
             if("0".equals(safeInfoResultBean.getBizData().getIsPassWord())){
                 isSetPwd=false;
+                modifyPwdId.setText("修改登录密码");
             }else {
                 isSetPwd=true;
+                modifyPwdId.setText("设置登录密码");
             }
             if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
-                phoneTxtId.setText("暂无手机号");
+                phoneTxtId.setText("");
                 isMobie=false;
+                Drawable drawableRight = getResources().getDrawable(
+                        R.mipmap.binds);
+                phoneTxtId.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null, drawableRight, null);
+                phoneTxtId.setCompoundDrawablePadding(4);
             }else {
                 phoneTxtId.setText(safeInfoResultBean.getBizData().getMobile());
                 isMobie=true;
+                Drawable drawableRight = getResources().getDrawable(
+                        R.mipmap.replacebinds);
+                phoneTxtId.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null, drawableRight, null);
+                phoneTxtId.setCompoundDrawablePadding(4);
             }
 
-
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxName())){
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxId())){
                 weixinStadusId.setText("");
-                Drawable drawable = getResources().getDrawable(R.mipmap.binds);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
-                weixinStadusId.setCompoundDrawablePadding(10);
+                Drawable drawableRight = getResources().getDrawable(
+                        R.mipmap.binds);
+                weixinStadusId.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null, drawableRight, null);
+                weixinStadusId.setCompoundDrawablePadding(4);
             }else {
                 weixinStadusId.setText("已绑定");
-                Drawable drawable = getResources().getDrawable(R.mipmap.unbinds);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
-                weixinStadusId.setCompoundDrawablePadding(10);
+                Drawable drawableRight = getResources().getDrawable(
+                        R.mipmap.unbinds);
+                weixinStadusId.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null, drawableRight, null);
+                weixinStadusId.setCompoundDrawablePadding(4);
             }
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbName())){
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbId())){
                 zfbStadusId.setText("");
-                Drawable drawable = getResources().getDrawable(R.mipmap.binds);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
-                weixinStadusId.setCompoundDrawablePadding(10);
+                Drawable drawableRight = getResources().getDrawable(
+                        R.mipmap.binds);
+                zfbStadusId.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null, drawableRight, null);
+                zfbStadusId.setCompoundDrawablePadding(4);
             }else {
                 zfbStadusId.setText("已绑定");
-                Drawable drawable = getResources().getDrawable(R.mipmap.unbinds);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                weixinStadusId.setCompoundDrawables(drawable, null, null, null);
-                weixinStadusId.setCompoundDrawablePadding(10);
+                Drawable drawableRight = getResources().getDrawable(
+                        R.mipmap.unbinds);
+                zfbStadusId.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null, drawableRight, null);
+                zfbStadusId.setCompoundDrawablePadding(4);
             }
 
         }else {

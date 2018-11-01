@@ -7,18 +7,10 @@ package com.ibeef.cowboying.bean;
  * @package com.ibeef.cowboying.bean
  **/
 public class BindThirdCountParamBean {
-    private String userId;
     private String type;
-    private String accessToken;
+    private String authCode;
     private String openId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    private String loginZone;
 
     public String getType() {
         return type;
@@ -28,12 +20,12 @@ public class BindThirdCountParamBean {
         this.type = type;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getAuthCode() {
+        return authCode;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
     }
 
     public String getOpenId() {
@@ -42,5 +34,13 @@ public class BindThirdCountParamBean {
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public String getLoginZone() {
+        return loginZone;
+    }
+
+    public void setLoginZone(String loginZone) {
+        this.loginZone = loginZone;
     }
 }

@@ -8,6 +8,8 @@ import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
+import com.ibeef.cowboying.bean.RestLoginParamBean;
+import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.EditLoginPwdModel;
 
@@ -19,7 +21,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/7 14:07
- * @describe 设置登录密码
+ * @describe 重置登录密码
  * @package com.ranhan.cowboying.presenter
  **/
 public class EditLoginPwdPresenter extends BasePresenter implements EditLogionPwdBase.IPresenter  {
@@ -38,6 +40,23 @@ public class EditLoginPwdPresenter extends BasePresenter implements EditLogionPw
             @Override
             public void onSuccess(EditLoginPwdResultBean result) {
                 mView.getEditLoginPwd(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getRestLoginPwd(Map<String, String> headers, RestLoginParamBean restLoginParamBean) {
+        addSubscription(mModel.getRestLoginPwd(headers,restLoginParamBean,new ResponseCallback<RestLoginPwdResultBean>() {
+            @Override
+            public void onSuccess(RestLoginPwdResultBean result) {
+                mView.getRestLoginPwd(result);
 
             }
 

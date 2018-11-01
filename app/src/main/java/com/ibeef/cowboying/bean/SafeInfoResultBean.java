@@ -11,8 +11,8 @@ public class SafeInfoResultBean {
 
     /**
      * code : 000000
-     * message : null
-     * bizData : {"id":13,"mobile":"18703643373","zfbName":"","zfbId":"","wxName":"","wxId":"","isPassWord":"0"}
+     * message :
+     * bizData : {"id":25,"mobile":"13673360652","zfbName":"","zfbId":16,"wxName":"","wxId":0,"isPassWord":"1"}
      */
 
     private String code;
@@ -45,29 +45,45 @@ public class SafeInfoResultBean {
 
     public  class BizDataBean {
         /**
-         * id : 13
-         * mobile : 18703643373
+         * id : 25
+         * mobile : 13673360652
          * zfbName :
-         * zfbId :
+         * zfbId : 16
          * wxName :
-         * wxId :
-         * isPassWord : 0
+         * wxId : 0
+         * isPassWord : 1
          */
 
-        private int id;
+        private Integer id;
         private String mobile;
         private String zfbName;
-        private String zfbId;
+        private Integer zfbId;
         private String wxName;
-        private String wxId;
+        private Integer wxId;
         private String isPassWord;
 
-        public int getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Integer id) {
             this.id = id;
+        }
+
+        public Integer getZfbId() {
+            return zfbId;
+        }
+
+        public void setZfbId(Integer zfbId) {
+            this.zfbId = zfbId;
+        }
+
+        public Integer getWxId() {
+            return wxId;
+        }
+
+        public void setWxId(Integer wxId) {
+            this.wxId = wxId;
         }
 
         public String getMobile() {
@@ -86,13 +102,7 @@ public class SafeInfoResultBean {
             this.zfbName = zfbName;
         }
 
-        public String getZfbId() {
-            return zfbId;
-        }
 
-        public void setZfbId(String zfbId) {
-            this.zfbId = zfbId;
-        }
 
         public String getWxName() {
             return wxName;
@@ -102,13 +112,7 @@ public class SafeInfoResultBean {
             this.wxName = wxName;
         }
 
-        public String getWxId() {
-            return wxId;
-        }
 
-        public void setWxId(String wxId) {
-            this.wxId = wxId;
-        }
 
         public String getIsPassWord() {
             return isPassWord;

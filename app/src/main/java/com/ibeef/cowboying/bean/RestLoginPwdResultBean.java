@@ -2,12 +2,11 @@ package com.ibeef.cowboying.bean;
 
 /**
  * @author ls
- * @date on 2018/10/28 16:51
+ * @date on 2018/11/1 15:13
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class EditLoginPwdResultBean {
-
+public class RestLoginPwdResultBean {
     /**
      * code : 000000
      * message :
