@@ -44,7 +44,7 @@
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/nickname_txt"
-                android:layout_height="wrap_content" android:text="只"
+                android:layout_height="wrap_content" android:text=""
                 android:textSize="14sp"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
                 android:gravity="center" android:layout_centerVertical="true"
@@ -65,7 +65,7 @@
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/bind_phone_txt"
-                android:layout_height="wrap_content" android:text="去绑定"
+                android:layout_height="wrap_content" android:text=""
                 android:textSize="14sp"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
                 android:gravity="center" android:layout_centerVertical="true"
@@ -85,7 +85,7 @@
 
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/real_info_txt"
-                android:layout_height="wrap_content" android:text="未认证"
+                android:layout_height="wrap_content" android:text=""
                 android:textSize="14sp" android:textColor="@color/red"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
                 android:gravity="center" android:layout_centerVertical="true"

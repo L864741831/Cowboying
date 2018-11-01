@@ -94,13 +94,16 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         stadus=getIntent().getStringExtra("stadus");
         if("8".equals(stadus)){
             oldmobile=getIntent().getStringExtra("oldmobile");
+            mobileTxtId.setText("+86  "+oldmobile);
         }else if("9".equals(stadus)){
             oldmobile=getIntent().getStringExtra("oldmobile");
             mobile=getIntent().getStringExtra("mobile");
+            mobileTxtId.setText("+86  "+mobile);
         }else {
             mobile=getIntent().getStringExtra("mobile");
+            mobileTxtId.setText("+86  "+mobile);
         }
-        mobileTxtId.setText("+86  "+mobile);
+
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
             public void onComplete(String content) {
@@ -139,16 +142,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                     accountRegisterParamBean.setCode(contents);
                     accountRegisterPresenter.getAccoutRegister(getVersionCodes(),accountRegisterParamBean);
 
-                }else if("9".equals(stadus)){
-                    //设置 账号安全 手机号换绑
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("Authorization",token);
-                    reqData.put("version",getVersionCodes());
-                    UpdateMobileParamBean  updateMobileParamBean=new UpdateMobileParamBean();
-                    updateMobileParamBean.setMobile(mobile);
-                    updateMobileParamBean.setOldMobile(oldmobile);
-                    updateMobilePresenter.getUpdateMobile(reqData,updateMobileParamBean);
-                } else {
+                }else {
                     //校验验证码接口
                     validade();
                 }
@@ -182,7 +176,12 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     private void validade(){
         ValidateSmsCodeParamBean validateSmsCodeParamBean=new ValidateSmsCodeParamBean();
-        validateSmsCodeParamBean.setPhone(mobile);
+        if("8".equals(stadus)){
+            validateSmsCodeParamBean.setPhone(oldmobile);
+        }else {
+            validateSmsCodeParamBean.setPhone(mobile);
+        }
+
         validateSmsCodeParamBean.setSmsCode(contents);
         switch (stadus){
             case "0":
@@ -195,7 +194,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 validateSmsCodeParamBean.setSmsType("register");
                 break;
             case "3":
-                validateSmsCodeParamBean.setSmsType("editPhone");
+                validateSmsCodeParamBean.setSmsType("bindPhone");
                 break;
             case "4":
                 validateSmsCodeParamBean.setSmsType("editPhone");
@@ -207,9 +206,12 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 validateSmsCodeParamBean.setSmsType("editPhone");
                 break;
             case "7":
-                validateSmsCodeParamBean.setSmsType("editPhone");
+                validateSmsCodeParamBean.setSmsType("bindPhone");
                 break;
             case "8":
+                validateSmsCodeParamBean.setSmsType("editPhone");
+                break;
+            case "9":
                 validateSmsCodeParamBean.setSmsType("editPhone");
                 break;
             default:
@@ -223,7 +225,11 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
         SmsCodeParamBean smsCodeParamBean=new SmsCodeParamBean();
         smsCodeParamBean.setPlatform("2");
-        smsCodeParamBean.setPhone(mobile);
+        if("8".equals(stadus)){
+            smsCodeParamBean.setPhone(oldmobile);
+        }else {
+            smsCodeParamBean.setPhone(mobile);
+        }
         smsCodeParamBean.setTime(times);
         smsCodeParamBean.setUniqueCode(Md5Util.getIMEI(IdentifyCodeActivity.this));
 
@@ -242,8 +248,8 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 reqData.put("smsType", "register");
                 break;
             case "3":
-                smsCodeParamBean.setSmsType("editPhone");
-                reqData.put("smsType", "editPhone");
+                smsCodeParamBean.setSmsType("bindPhone");
+                reqData.put("smsType", "bindPhone");
                 break;
             case "4":
                 smsCodeParamBean.setSmsType("editPhone");
@@ -258,17 +264,25 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 reqData.put("smsType", "editPhone");
                 break;
             case "7":
+                smsCodeParamBean.setSmsType("bindPhone");
+                reqData.put("smsType", "bindPhone");
+                break;
+            case "8":
                 smsCodeParamBean.setSmsType("editPhone");
                 reqData.put("smsType", "editPhone");
                 break;
-            case "8":
+            case "9":
                 smsCodeParamBean.setSmsType("editPhone");
                 reqData.put("smsType", "editPhone");
                 break;
             default:
                 break;
         }
-        reqData.put("phone", mobile);
+        if("8".equals(stadus)){
+            reqData.put("phone", oldmobile);
+        }else {
+            reqData.put("phone", mobile);
+        }
         reqData.put("uniqueCode", Md5Util.getIMEI(IdentifyCodeActivity.this));
         reqData.put("platform", "2");
         reqData.put("time", times);
@@ -370,6 +384,15 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
                 bindMobileParamBean.setMobile(mobile);
                 bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
+            }else if("9".equals(stadus)){
+                //设置 账号安全 手机号换绑
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
+                UpdateMobileParamBean  updateMobileParamBean=new UpdateMobileParamBean();
+                updateMobileParamBean.setMobile(mobile);
+                updateMobileParamBean.setOldMobile(oldmobile);
+                updateMobilePresenter.getUpdateMobile(reqData,updateMobileParamBean);
             }
         }else {
             showToast(smsCodeResultBean.getMessage());
