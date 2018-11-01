@@ -31,6 +31,7 @@ MobSDK {
     }
 }
 android {
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.ibeef.cowboying"
@@ -63,6 +64,17 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+    signingConfigs {
+        debug {
+            keyAlias 'cows'
+            keyPassword 'liangniu888'
+            storeFile file('C:/Users/lwang/Desktop/cows.keystore')
+            storePassword 'liangniu888'
+        }
     }
 }
 
@@ -76,7 +88,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':rxfamily')
     implementation 'com.github.orhanobut:hawk:1.23'
-
     /**
      * 此处以JPush 3.1.6 版本为例。
      */
@@ -98,7 +109,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.kyleduo.switchbutton:library:1.4.4'
     implementation 'com.youth.banner:banner:1.4.9'
-
     implementation 'com.shuyu:gsyVideoPlayer-java:6.0.0-beta'
     //是否需要ExoPlayer模式
     implementation 'com.shuyu:GSYVideoPlayer-exo2:6.0.0-beta'

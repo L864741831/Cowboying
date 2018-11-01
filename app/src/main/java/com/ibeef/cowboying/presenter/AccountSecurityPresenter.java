@@ -73,7 +73,7 @@ public class AccountSecurityPresenter extends BasePresenter implements AccountSe
         addSubscription(mModel.getUnBindThidCount(headers,thirdUserId,new ResponseCallback<BindThirdCountResultBean>() {
             @Override
             public void onSuccess(BindThirdCountResultBean result) {
-                mView.getBindThidCount(result);
+                mView.getUnBindThidCount(result);
 
             }
 

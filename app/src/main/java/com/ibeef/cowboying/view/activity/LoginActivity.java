@@ -54,8 +54,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
     private InitThirdLoginPresenter initThirdLoginPresenter;
-
-    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +63,8 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     }
 
     private void init(){
-        api = WXAPIFactory.createWXAPI(this, "wx0678b96a189375f3",true);
-        api.registerApp("wx0678b96a189375f3");
+        api = WXAPIFactory.createWXAPI(this, Constant.WeixinAppId,true);
+        api.registerApp(Constant.WeixinAppId);
         thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
     }
@@ -75,12 +73,10 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aplily_login:
-                type="4";
                 initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"4");
                 break;
             case R.id.weixin_login:
-                type="3";
-                initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"3");
+                weixinLogin();
                 break;
             case R.id.registe_btn:
                 Intent intent1=new Intent(LoginActivity.this,MobileLoginActivity.class);
@@ -129,11 +125,14 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     private void weixinLogin(){
         if (!api.isWXAppInstalled()) {
             Toast.makeText(this, "安装微信后再授权登录" , Toast.LENGTH_SHORT).show();
+            return;
         }
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "wechat_sdk_demo_test";
         api.sendReq(req);
+
+        finish();
     }
 
 
@@ -185,11 +184,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     @Override
     public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
         if("000000".equals(thirdLoginResultBean.getCode())){
-            if("4".equals(type)){
-                  aplilyLogin(thirdLoginResultBean.getBizData());
-            }else if("3".equals(type)){
-                weixinLogin();
-            }
+            aplilyLogin(thirdLoginResultBean.getBizData());
         }else {
             showToast(thirdLoginResultBean.getMessage());
         }
@@ -202,6 +197,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
             Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
             intent2.putExtra("stadus","3");
             startActivity(intent2);
+            finish();
         }else {
             showToast(thirdCountLoginResultBean.getMessage());
         }

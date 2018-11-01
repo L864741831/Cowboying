@@ -8,9 +8,10 @@ package com.ibeef.cowboying.bean;
 
 public class QiniuUploadImg {
 
+
     /**
      * retCode : 1
-     * retMsg : nuQ0djrUDXHEsWFp5SLykFL3wLUgva6JyEckydoc:936QJla3s1OZUN8oHn1rg6MH69E=:eyJzY29wZSI6InliLWF2YXRhciIsImRlYWRsaW5lIjoxNTI0Mjk5NTM1fQ==
+     * retMsg : hLmj0BXrSEvJMGM0wERTxYhl0BAMXoH_5Ka7r_d6:q6Nos8aWo-mH_DoNu5ZxloNKe74=:eyJzY29wZSI6InliLWF2YXRhciIsImRlYWRsaW5lIjoxNTQxMDYyMjU5fQ==
      * result : 获取token成功！
      */
 

@@ -92,10 +92,10 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         bindMobilePresenter=new BindMobilePresenter(this);
         //1 忘记密码流程
         stadus=getIntent().getStringExtra("stadus");
-        if("8".equals(stadus)){
+        if("8".equals(stadus)||"4".equals(stadus)){
             oldmobile=getIntent().getStringExtra("oldmobile");
             mobileTxtId.setText("+86  "+oldmobile);
-        }else if("9".equals(stadus)){
+        }else if("9".equals(stadus)||"10".equals(stadus)){
             oldmobile=getIntent().getStringExtra("oldmobile");
             mobile=getIntent().getStringExtra("mobile");
             mobileTxtId.setText("+86  "+mobile);
@@ -176,7 +176,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     private void validade(){
         ValidateSmsCodeParamBean validateSmsCodeParamBean=new ValidateSmsCodeParamBean();
-        if("8".equals(stadus)){
+        if("8".equals(stadus)||"4".equals(stadus)){
             validateSmsCodeParamBean.setPhone(oldmobile);
         }else {
             validateSmsCodeParamBean.setPhone(mobile);
@@ -214,6 +214,12 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             case "9":
                 validateSmsCodeParamBean.setSmsType("editPhone");
                 break;
+            case "10":
+                validateSmsCodeParamBean.setSmsType("editPhone");
+                break;
+            case "11":
+                validateSmsCodeParamBean.setSmsType("editPwd");
+                break;
             default:
                 break;
         }
@@ -225,7 +231,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
         SmsCodeParamBean smsCodeParamBean=new SmsCodeParamBean();
         smsCodeParamBean.setPlatform("2");
-        if("8".equals(stadus)){
+        if("8".equals(stadus)||"4".equals(stadus)){
             smsCodeParamBean.setPhone(oldmobile);
         }else {
             smsCodeParamBean.setPhone(mobile);
@@ -275,10 +281,18 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 smsCodeParamBean.setSmsType("editPhone");
                 reqData.put("smsType", "editPhone");
                 break;
+            case "10":
+                smsCodeParamBean.setSmsType("editPhone");
+                reqData.put("smsType", "editPhone");
+                break;
+            case "11":
+                smsCodeParamBean.setSmsType("editPwd");
+                reqData.put("smsType", "editPwd");
+                break;
             default:
                 break;
         }
-        if("8".equals(stadus)){
+        if("8".equals(stadus)||"4".equals(stadus)){
             reqData.put("phone", oldmobile);
         }else {
             reqData.put("phone", mobile);
@@ -309,11 +323,13 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     @Override
     public void getUpdateMobile(UpdateMobileResultBean updateMobileResultBean) {
         if("000000".equals(updateMobileResultBean.getCode())){
-            Intent intent=new Intent(IdentifyCodeActivity.this,MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            showToast("绑定手机号成功~");
+            if("9".equals(stadus)){
+                showToast("换绑手机号成功~");
+            }else  if("10".equals(stadus)){
+                Hawk.put(HawkKey.TOKEN, "");
+                startActivity(LoginActivity.class);
+                showToast("登陆手机号设置成功，请重新登陆~");
+            }
         }else {
             showToast(updateMobileResultBean.getMessage());
         }
@@ -346,14 +362,16 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     @Override
     public void getValidateSms(SmsCodeResultBean smsCodeResultBean) {
         if("000000".equals(smsCodeResultBean.getCode())){
-            if("1".equals(stadus)||"5".equals(stadus)){
+            if("1".equals(stadus)||"5".equals(stadus)||"11".equals(stadus)){
                 //1来自忘记密码，跳到重置密码界面，  //5 设置<账号安全<设置登录密码
                 Intent intent=new Intent(IdentifyCodeActivity.this,ResetPwdActivity.class);
                 if("1".equals(stadus)){
                     intent.putExtra("setPwd",false);
-                }else if ("5".equals(stadus)){
+                }else if ("5".equals(stadus)||"11".equals(stadus)){
                     intent.putExtra("setPwd",true);
                 }
+                intent.putExtra("mobile",mobile);
+                intent.putExtra("stadus",stadus);
                 startActivity(intent);
             }else   if("3".equals(stadus)){
                 //0 正常手机号登录完成  //3 第三方登录绑定手机号
@@ -363,13 +381,10 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 startActivity(intent);
             }else   if("4".equals(stadus)){
                 //2注册流程 4 //设置<账号安全<修改登录手机号
-                Hawk.put(HawkKey.TOKEN, "");
                 Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
                 intent.putExtra("stadus","6");
+                intent.putExtra("oldmobile",oldmobile);
                 startActivity(intent);
-            }else if("6".equals(stadus)){
-                //设置<账号安全<修改登录手机号 <验证码，输入新的手机号 获取验证码的界面
-                startActivity(LoginActivity.class);
             }else if("8".equals(stadus)){
                  // 8 设置<账号安全<手机号换绑
                 Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
@@ -384,7 +399,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
                 bindMobileParamBean.setMobile(mobile);
                 bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
-            }else if("9".equals(stadus)){
+            }else if("9".equals(stadus)||"10".equals(stadus)){
                 //设置 账号安全 手机号换绑
                 Map<String, String> reqData = new HashMap<>();
                 reqData.put("Authorization",token);

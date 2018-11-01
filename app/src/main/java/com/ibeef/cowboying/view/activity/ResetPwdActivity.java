@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.EditLogionPwdBase;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
+import com.ibeef.cowboying.bean.RestLoginParamBean;
+import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.EditLoginPwdPresenter;
@@ -52,7 +55,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     TextView stadusTitleId;
     private boolean setPwd;
     private EditLoginPwdPresenter editLoginPwdPresenter;
-
+    private String token,mobile,stadus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +65,10 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     }
 
     private void init(){
-
+        token= Hawk.get(HawkKey.TOKEN);
         setPwd=getIntent().getBooleanExtra("setPwd",false);
+        mobile=getIntent().getStringExtra("mobile");
+        stadus=getIntent().getStringExtra("stadus");
         editLoginPwdPresenter=new EditLoginPwdPresenter(this);
         if(setPwd){
             //设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码
@@ -143,19 +148,36 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
                     Toast.makeText(ResetPwdActivity.this, "密码不能多于20位！", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                EditLoginPwdParamBean editLoginPwdParamBean=new EditLoginPwdParamBean();
-                editLoginPwdParamBean.setPassWord(etNewPwd.getText().toString().trim());
                 if(setPwd){
-                    //设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码
-                    editLoginPwdParamBean.setType("5");
+                    if("11".equals(stadus)){
+                        //设置<账号安全<设置登录密码 跳到获取验证码界面 修改密码
+                        EditLoginPwdParamBean editLoginPwdParamBean=new EditLoginPwdParamBean();
+                        editLoginPwdParamBean.setPassWord(etNewPwd.getText().toString().trim());
+                        editLoginPwdParamBean.setType("2");
+                        Map<String, String> reqData = new HashMap<>();
+                        reqData.put("version", getVersionCodes());
+                        reqData.put("Authorization", token);
+                        editLoginPwdPresenter.getEditLoginPwd(reqData,editLoginPwdParamBean);
+                    }else {
+                        //设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码
+                        EditLoginPwdParamBean editLoginPwdParamBean=new EditLoginPwdParamBean();
+                        editLoginPwdParamBean.setPassWord(etNewPwd.getText().toString().trim());
+                        editLoginPwdParamBean.setType("5");
+                        Map<String, String> reqData = new HashMap<>();
+                        reqData.put("version", getVersionCodes());
+                        reqData.put("Authorization", token);
+                        editLoginPwdPresenter.getEditLoginPwd(reqData,editLoginPwdParamBean);
+                    }
                 }else {
                     //忘记密码
-                    editLoginPwdParamBean.setType("3");
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("version", getVersionCodes());
+                    RestLoginParamBean restLoginParamBean=new RestLoginParamBean();
+                    restLoginParamBean.setMobile(mobile);
+                    restLoginParamBean.setPassWord(etNewPwd.getText().toString().trim());
+                    editLoginPwdPresenter.getRestLoginPwd(reqData,restLoginParamBean);
                 }
 
-                Map<String, String> reqData = new HashMap<>();
-                reqData.put("version", getVersionCodes());
-                editLoginPwdPresenter.getEditLoginPwd(reqData,editLoginPwdParamBean);
                 break;
             default:
                 break;
@@ -170,12 +192,34 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
     @Override
     public void getEditLoginPwd(EditLoginPwdResultBean editLoginPwdResultBean) {
         if("000000".equals(editLoginPwdResultBean.getCode())){
-            //修改密码成功，重新跳到密码登录的界面，重新登录
-            startActivity(PwdLoginActivity.class);
+            if("11".equals(stadus)){
+                showToast("修改密码成功~");
+                Hawk.put(HawkKey.TOKEN, "");
+                Intent intent=new Intent(ResetPwdActivity.this,LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }else {
+                showToast("密码设置成功~");
+            }
         }else {
             showToast(editLoginPwdResultBean.getMessage());
         }
 
+    }
+
+    @Override
+    public void getRestLoginPwd(RestLoginPwdResultBean restLoginPwdResultBean) {
+        if("000000".equals(restLoginPwdResultBean.getCode())){
+            showToast("重置密码成功~");
+            Hawk.put(HawkKey.TOKEN, "");
+            Intent intent=new Intent(ResetPwdActivity.this,LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }else {
+            showToast(restLoginPwdResultBean.getMessage());
+        }
     }
 
     @Override

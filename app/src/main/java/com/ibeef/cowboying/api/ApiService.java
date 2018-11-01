@@ -26,6 +26,8 @@ import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
+import com.ibeef.cowboying.bean.RestLoginParamBean;
+import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
@@ -165,6 +167,13 @@ public interface ApiService {
     Observable<EditLoginPwdResultBean> getEditLoginPwd(@HeaderMap Map<String, String> headers, @Body EditLoginPwdParamBean editLoginPwdParamBean);
 
     /**
+     * 重置密码
+     * @return
+     */
+    @POST("account/reSetPassword")
+    Observable<RestLoginPwdResultBean> getRestLoginPwd(@HeaderMap Map<String, String> headers, @Body RestLoginParamBean editLoginPwdParamBean);
+
+    /**
      * 更新头像
      * @return
      */
@@ -242,7 +251,7 @@ public interface ApiService {
     Observable<CheckVersionBean> getCheckVersion(@Header("version") String version, @Body CheckVersionParamBean checkVersionParamBean);
 
     /**
-     * 检查版本号
+     * 第三方账号初始化
      * @return
      */
     @GET("user/thirdLogin/init")

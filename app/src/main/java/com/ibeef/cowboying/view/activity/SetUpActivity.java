@@ -3,6 +3,7 @@ package com.ibeef.cowboying.view.activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,10 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.AccountSecurityBase;
+import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.ibeef.cowboying.utils.CleanDataUtils;
 import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +36,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 设置界面
  */
-public class SetUpActivity extends BaseActivity {
+public class SetUpActivity extends BaseActivity implements AccountSecurityBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -39,6 +48,8 @@ public class SetUpActivity extends BaseActivity {
     ImageView weixinStadus;
     @Bind(R.id.zfb_stadus)
     ImageView zfbStadus;
+    @Bind(R.id.phone_stadus)
+    ImageView phoneStadus;
     @Bind(R.id.station_txt)
     TextView stationTxt;
     @Bind(R.id.accout_securty_id)
@@ -58,16 +69,27 @@ public class SetUpActivity extends BaseActivity {
     @Bind(R.id.unlogin_rv)
     RelativeLayout unloginRv;
     private String token;
+    private AccountSecurityPresenter accountSecurityPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up);
         ButterKnife.bind(this);
         init();
+        token= Hawk.get(HawkKey.TOKEN);
+        accountSecurityPresenter=new AccountSecurityPresenter(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        accountSecurityPresenter.getSafeInfo(reqData);
     }
 
     private void init() {
-        token= Hawk.get(HawkKey.TOKEN);
         info.setText("设置");
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,11 +97,9 @@ public class SetUpActivity extends BaseActivity {
                 if (isChecked) {
                     // 点击恢复按钮后，极光推送服务会恢复正常工作
                     JPushInterface.resumePush(getApplicationContext());
-                    Toast.makeText(SetUpActivity.this,"true",Toast.LENGTH_SHORT).show();
                 }else {
                     // 点击停止按钮后，极光推送服务会被停止掉
                     JPushInterface.stopPush(getApplicationContext());
-                    Toast.makeText(SetUpActivity.this,"false",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -152,5 +172,53 @@ public class SetUpActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
+        if("000000".equals(safeInfoResultBean.getCode())){
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+                phoneStadus.setImageResource(R.mipmap.setphoneh);
+            }else {
+                phoneStadus.setImageResource(R.mipmap.setphone);
+            }
+
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxId())){
+                weixinStadus.setImageResource(R.mipmap.setweixinh);
+            }else {
+                weixinStadus.setImageResource(R.mipmap.setweixin);
+            }
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbId())){
+               zfbStadus.setImageResource(R.mipmap.setzfbh);
+            }else {
+                zfbStadus.setImageResource(R.mipmap.setzfb);
+            }
+
+        }else {
+            showToast(safeInfoResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void getBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
+
+    }
+
+    @Override
+    public void getUnBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(accountSecurityPresenter!=null){
+            accountSecurityPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }
