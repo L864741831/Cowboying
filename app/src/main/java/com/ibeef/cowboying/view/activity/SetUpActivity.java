@@ -67,7 +67,7 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
     @Bind(R.id.release_cache_rv)
     RelativeLayout releaseCacheRv;
     @Bind(R.id.unlogin_rv)
-    RelativeLayout unloginRv;
+    TextView unloginRv;
     private String token;
     private AccountSecurityPresenter accountSecurityPresenter;
     @Override
