@@ -72,9 +72,9 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(etMobile.getText().toString().trim())){
+                if (TextUtils.isEmpty(etMobile.getText().toString().trim())) {
                     closeImgId.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     closeImgId.setVisibility(View.VISIBLE);
                 }
             }
@@ -90,15 +90,15 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(etPwd.getText().toString().trim())){
+                if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
                     close1ImgId.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     close1ImgId.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        loginPresenter=new LoginPresenter(this);
+        loginPresenter = new LoginPresenter(this);
     }
 
     @OnClick({R.id.back_id, R.id.close_img_id, R.id.close1_img_id, R.id.sure_id, R.id.forget_pwd_id, R.id.identify_code_login_id})
@@ -114,37 +114,37 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
                 etPwd.setText("");
                 break;
             case R.id.sure_id:
-                if(TextUtils.isEmpty(etMobile.getText().toString().trim())){
+                if (TextUtils.isEmpty(etMobile.getText().toString().trim())) {
                     showToast("手机号码不能为空！");
                     return;
                 }
-                if(TextUtils.isEmpty(etPwd.getText().toString().trim())){
+                if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
                     showToast("密码不能为空！");
                     return;
                 }
-                if(!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN,etMobile.getText().toString().trim())){
+                if (!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN, etMobile.getText().toString().trim())) {
                     showToast("请输入正确的手机号码！");
                     return;
                 }
 
-                LoginParamBean loginParamBean=new LoginParamBean();
+                LoginParamBean loginParamBean = new LoginParamBean();
                 loginParamBean.setUserName(etMobile.getText().toString().trim());
                 loginParamBean.setType("1");
                 //1：密码登录；2：短信验证码登录
                 loginParamBean.setPassword(etPwd.getText().toString().trim());
-                loginPresenter.getUserLogin(getVersionCodes(),loginParamBean);
+                loginPresenter.getUserLogin(getVersionCodes(), loginParamBean);
 
                 break;
             case R.id.forget_pwd_id:
                 //通过手机号验证码 修改密码
-                Intent intent=new Intent(PwdLoginActivity.this,MobileLoginActivity.class);
-                intent.putExtra("stadus","1");
+                Intent intent = new Intent(PwdLoginActivity.this, MobileLoginActivity.class);
+                intent.putExtra("stadus", "1");
                 startActivity(intent);
                 break;
             case R.id.identify_code_login_id:
                 //验证码登录
-                Intent intent2=new Intent(PwdLoginActivity.this,MobileLoginActivity.class);
-                intent2.putExtra("stadus","0");
+                Intent intent2 = new Intent(PwdLoginActivity.this, MobileLoginActivity.class);
+                intent2.putExtra("stadus", "0");
                 startActivity(intent2);
                 break;
             default:
@@ -170,7 +170,6 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
             showToast(loginBean.getMessage());
         }
     }
-
 
     @Override
     protected void onDestroy() {

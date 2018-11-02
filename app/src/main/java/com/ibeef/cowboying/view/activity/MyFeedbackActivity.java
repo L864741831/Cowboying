@@ -70,24 +70,24 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         init();
     }
 
-    private void init(){
-        token= Hawk.get(HawkKey.TOKEN);
-        Log.i("htht", "token:::: "+token);
+    private void init() {
+        token = Hawk.get(HawkKey.TOKEN);
+        Log.i("htht", "token:::: " + token);
         info.setText("我的反馈");
-        baseBeans=new ArrayList<>();
+        baseBeans = new ArrayList<>();
         ryId.setLayoutManager(new LinearLayoutManager(this));
-        myFeedbackAdapter=new MyFeedbackAdapter(this,baseBeans,R.layout.my_feedback_item);
+        myFeedbackAdapter = new MyFeedbackAdapter(this, baseBeans, R.layout.my_feedback_item);
         myFeedbackAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(myFeedbackAdapter);
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setEnabled(true);
 
-        feedbackPresenter=new FeedbackPresenter(this);
+        feedbackPresenter = new FeedbackPresenter(this);
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        feedbackPresenter.getMyFeedback(reqData,currentPage);
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        feedbackPresenter.getMyFeedback(reqData, currentPage);
     }
 
     @OnClick(R.id.back_id)
@@ -97,26 +97,26 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        currentPage=1;
-        isFirst=true;
+        currentPage = 1;
+        isFirst = true;
         baseBeans.clear();
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
         if (!TextUtils.isEmpty(token)) {
-            feedbackPresenter.getMyFeedback(reqData,currentPage);
+            feedbackPresenter.getMyFeedback(reqData, currentPage);
         }
         mSwipeLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoadMoreRequested() {
-        isMoreLoad=true;
-        currentPage+=1;
+        isMoreLoad = true;
+        currentPage += 1;
         Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        feedbackPresenter.getMyFeedback(reqData,currentPage);
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        feedbackPresenter.getMyFeedback(reqData, currentPage);
     }
 
     @Override
@@ -126,23 +126,23 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void getMyFeedback(MyFeedbackResultBean myFeedbackResultBean) {
-        if("000000".equals(myFeedbackResultBean.getCode())){
-            if(SDCardUtil.isNullOrEmpty(myFeedbackResultBean.getBizData())){
-                if(isFirst){
+        if ("000000".equals(myFeedbackResultBean.getCode())) {
+            if (SDCardUtil.isNullOrEmpty(myFeedbackResultBean.getBizData())) {
+                if (isFirst) {
                     rvOrder.setVisibility(View.VISIBLE);
                     ryId.setVisibility(View.GONE);
-                }else {
+                } else {
                     rvOrder.setVisibility(View.GONE);
                     ryId.setVisibility(View.VISIBLE);
                 }
                 myFeedbackAdapter.loadMoreEnd();
-            }else {
-                isFirst=false;
+            } else {
+                isFirst = false;
                 baseBeans.addAll(myFeedbackResultBean.getBizData());
                 myFeedbackAdapter.setNewData(this.baseBeans);
                 myFeedbackAdapter.loadMoreComplete();
             }
-        }else {
+        } else {
             showToast(myFeedbackResultBean.getMessage());
         }
 
@@ -155,11 +155,11 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void showLoading() {
-        if(isMoreLoad){
+        if (isMoreLoad) {
             loadingLayout.setVisibility(View.GONE);
             ryId.setVisibility(View.VISIBLE);
-            isMoreLoad=false;
-        }else {
+            isMoreLoad = false;
+        } else {
             loadingLayout.setVisibility(View.VISIBLE);
             ryId.setVisibility(View.GONE);
         }
@@ -178,7 +178,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     protected void onDestroy() {
-        if(feedbackPresenter != null){
+        if (feedbackPresenter != null) {
             feedbackPresenter.detachView();
         }
         super.onDestroy();

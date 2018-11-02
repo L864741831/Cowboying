@@ -85,8 +85,8 @@ public class FeedbackModel implements FeedbackBase.IModel {
     }
 
     @Override
-    public Subscription getUploadImg(@HeaderMap Map<String, String> headers, MultipartBody multipartBody, final ResponseCallback<MdUploadImgBean> callback) {
-        Observable<MdUploadImgBean> observable = service.getUploadImg(headers,multipartBody);
+    public Subscription getUploadImg(@HeaderMap Map<String, String> headers, List<MultipartBody.Part> parts, final ResponseCallback<MdUploadImgBean> callback) {
+        Observable<MdUploadImgBean> observable = service.getUploadImg(headers,parts);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

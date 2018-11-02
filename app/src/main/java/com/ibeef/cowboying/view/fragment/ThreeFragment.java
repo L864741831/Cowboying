@@ -138,7 +138,6 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.pay_money_codeId:
                 //付款码
-                startActivity(RanchDynamicActivity.class);
                 break;
             case R.id.please_codeId:
                 //邀请码
@@ -146,7 +145,6 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.get_goods_codeId:
                 //取货码
-                startActivity(RanchConsociationActivity.class);
                 break;
             case R.id.all_order_id:
                 //商城订单

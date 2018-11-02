@@ -147,12 +147,10 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override

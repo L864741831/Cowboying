@@ -84,38 +84,47 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         init();
     }
 
-    private void init(){
-        token= Hawk.get(HawkKey.TOKEN);
+    private void init() {
+        token = Hawk.get(HawkKey.TOKEN);
         info.setText("意见反馈");
-        ryImgId.setLayoutManager(new GridLayoutManager(this,4));
-        stringList=new ArrayList<>();
-        optionReturnImgAdapter=new OptionReturnImgAdapter(this,stringList,R.layout.option_return_item);
+        ryImgId.setLayoutManager(new GridLayoutManager(this, 4));
+        stringList = new ArrayList<>();
+        stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
+        optionReturnImgAdapter = new OptionReturnImgAdapter(this, stringList, R.layout.option_return_item);
         ryImgId.setAdapter(optionReturnImgAdapter);
         optionReturnImgAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.upload_img:
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-
-                            rx.Observable<Boolean> grantObservable = PermissionsUtils.getCameraGrant(OptionReturnActivity.this);
-                            grantObservable.subscribe(new Action1<Boolean>() {
-                                @Override
-                                public void call(Boolean granted) {
-                                    if (granted) {
-                                        callGallery();
-                                    } else {
-                                        PermissionsUtils.showPermissionDeniedDialog(OptionReturnActivity.this, false);
+                        if (position == 0) {
+                            if (stringList.size() >= 6) {
+                                showToast("最多只能上传五张图片");
+                                return;
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                rx.Observable<Boolean> grantObservable = PermissionsUtils.getCameraGrant(OptionReturnActivity.this);
+                                grantObservable.subscribe(new Action1<Boolean>() {
+                                    @Override
+                                    public void call(Boolean granted) {
+                                        if (granted) {
+                                            callGallery();
+                                        } else {
+                                            PermissionsUtils.showPermissionDeniedDialog(OptionReturnActivity.this, false);
+                                        }
                                     }
-                                }
-                            });
-                        }else {
-                            callGallery();
+                                });
+                            } else {
+                                callGallery();
+                            }
+                        } else {
+                            return;
                         }
                         break;
                     case R.id.close_id:
-                        Toast.makeText(OptionReturnActivity.this,"删除",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OptionReturnActivity.this, "删除", Toast.LENGTH_SHORT).show();
                         stringList.remove(position);
+                        showNumId.setText("上传图片（" + (stringList.size() - 1) + "/5）");
                         optionReturnImgAdapter.notifyDataSetChanged();
                         break;
                     default:
@@ -136,7 +145,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -189,8 +197,11 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                 reqData.put("version",getVersionCodes());
                 SubmitFeedbackParamBean submitFeedbackParamBean=new SubmitFeedbackParamBean();
                 submitFeedbackParamBean.setContent(etOpinion.getText().toString().trim());
+                stringList.remove(0);
                 submitFeedbackParamBean.setImageList(stringList);
-                feedbackPresenter.getSubmitFeedback(reqData,submitFeedbackParamBean);
+                if (!TextUtils.isEmpty(token)) {
+                    feedbackPresenter.getSubmitFeedback(reqData,submitFeedbackParamBean);
+                }
                 break;
             case R.id.me_option_btn:
                 if(!TextUtils.isEmpty(token)){
@@ -207,9 +218,9 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     /**
      * 调用图库选择
      */
-    private void callGallery(){
+    private void callGallery() {
         PhotoPicker.builder()
-                .setPhotoCount(1)
+                .setPhotoCount(5)
                 .setShowCamera(true)
                 .setShowGif(true)
                 .setPreviewEnabled(false)
@@ -221,10 +232,12 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (data != null) {
-                if (requestCode == 1){
+                if (requestCode == 1) {
                     //处理调用系统图库
-                } else if (requestCode == PhotoPicker.REQUEST_CODE){
+                } else if (requestCode == PhotoPicker.REQUEST_CODE) {
                     //异步方式插入图片
+                    stringList.clear();
+                    stringList.add("https://upload-images.jianshu.io/upload_images/2057501-a4d09d5892ca1518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/868/format/webp");
                     insertImagesSync(data);
                 }
             }
@@ -243,13 +256,9 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
             //imagePath<File对象、或 文件路径、或 字节数组>
             File file = new File(imagePath);
             files.add(file);
-//            multipartBody = new MultipartBody.Builder()
-//                    .setType(MultipartBody.FORM)
-//                    .addFormDataPart("imageFile",file.getName() , RequestBody.create(MediaType.parse("image/*"), file))
-//                    .build();
         }
-        Log.i("file/image/upload", "files: :::::"+files.size());
         MultipartBody multipartBody = filesToMultipartBody(files);
+        List<MultipartBody.Part> parts = filesToMultipartBodyParts(files);
         showLoadings();
         if(TextUtils.isEmpty(token)){
             startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
@@ -257,14 +266,13 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
             Map<String, String> reqData1 = new HashMap<>();
             reqData1.put("Authorization",token);
             reqData1.put("version",getVersionCodes());
-            feedbackPresenter.getUploadImg(reqData1, multipartBody);
+            feedbackPresenter.getUploadImg(reqData1, parts);
         }
     }
 
     private  MultipartBody filesToMultipartBody(List<File> files) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (File file : files) {
-            // TODO: 16-4-2  这里为了简单起见，没有判断file的类型
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
             builder.addFormDataPart("imageFile", file.getName(), requestBody);
         }
@@ -272,6 +280,16 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         MultipartBody multipartBody = builder.build();
         return multipartBody;
     }
+    public static List<MultipartBody.Part> filesToMultipartBodyParts(List<File> files) {
+        List<MultipartBody.Part> parts = new ArrayList<>(files.size());
+        for (File file : files) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
+            parts.add(part);
+        }
+        return parts;
+    }
+
 
     @Override
     public void showMsg(String msg) {
@@ -280,29 +298,25 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     public void getMyFeedback(MyFeedbackResultBean myFeedbackResultBean) {
-
     }
 
     @Override
     public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
-//        dismissLoading();
         if("000000".equals(submitFeedbackResultBean.getCode())){
             showToast("提交成功");
-            finish();
         }else {
             showToast(submitFeedbackResultBean.getMessage());
         }
+        finish();
 
     }
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
@@ -311,13 +325,10 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         dismissLoading();
         if("000000".equals(mdUploadImgBean.getCode())){
             Toast.makeText(OptionReturnActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
-//            productImg=mdUploadImgBean.getData().getFileName();
-//            RequestOptions options = new RequestOptions()
-//                    .skipMemoryCache(true)
-//                    //跳过内存缓存
-//                    .error(R.mipmap.jzsb)
-//                    ;
-            stringList.add(mdUploadImgBean.getBizData().get(0).getFilePath());
+            for (int j = 0; j < mdUploadImgBean.getBizData().size(); j++) {
+                stringList.add(mdUploadImgBean.getBizData().get(j).getFilePath());
+            }
+            showNumId.setText("上传图片（"+(stringList.size()-1)+"/5）");
             optionReturnImgAdapter.notifyDataSetChanged();
         }else {
             Toast.makeText(OptionReturnActivity.this,mdUploadImgBean.getMessage(),Toast.LENGTH_SHORT).show();
@@ -326,10 +337,9 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     protected void onDestroy() {
-        if(feedbackPresenter != null){
+        if (feedbackPresenter != null) {
             feedbackPresenter.detachView();
         }
         super.onDestroy();
-
     }
 }

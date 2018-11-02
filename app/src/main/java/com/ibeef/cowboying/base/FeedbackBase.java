@@ -34,12 +34,12 @@ public class FeedbackBase {
     public interface IPresenter {
         void getMyFeedback(@HeaderMap Map<String, String> headers,int currentPage);
         void getSubmitFeedback(@HeaderMap Map<String, String> headers,SubmitFeedbackParamBean submitFeedbackParamBean);
-        void getUploadImg(@HeaderMap Map<String, String> headers, MultipartBody multipartBody);
+        void getUploadImg(@HeaderMap Map<String, String> headers, List<MultipartBody.Part> parts);
     }
 
     public interface IModel {
         Subscription getMyFeedback(@HeaderMap Map<String, String> headers,int currentPage, ResponseCallback<MyFeedbackResultBean> callback);
         Subscription getSubmitFeedback(@HeaderMap Map<String, String> headers, SubmitFeedbackParamBean submitFeedbackParamBean, ResponseCallback<SubmitFeedbackResultBean> callback);
-        Subscription getUploadImg(@HeaderMap Map<String, String> headers, MultipartBody multipartBody, ResponseCallback<MdUploadImgBean> callback);
+        Subscription getUploadImg(@HeaderMap Map<String, String> headers, List<MultipartBody.Part> parts, ResponseCallback<MdUploadImgBean> callback);
     }
 }
