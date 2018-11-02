@@ -18,9 +18,7 @@ import rxfamily.view.BaseActivity;
 public class PlayerVideoActivity extends BaseActivity {
 
     StandardGSYVideoPlayer videoPlayer;
-
     OrientationUtils orientationUtils;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +32,7 @@ public class PlayerVideoActivity extends BaseActivity {
         String title = getIntent().getStringExtra("title");
         String coverUrl = getIntent().getStringExtra("coverUrl");
 
-        videoPlayer =  (StandardGSYVideoPlayer)findViewById(R.id.video_player);
+        videoPlayer =  findViewById(R.id.video_player);
 
         String source1 = video_url;
         videoPlayer.setUp(source1, true, title);
@@ -42,9 +40,9 @@ public class PlayerVideoActivity extends BaseActivity {
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.mipmap.ranch_consociation_banner_2);
+        Glide.with(this).load(coverUrl).into(imageView);
         videoPlayer.setThumbImageView(imageView);
-        Glide.with(this).load(Constant.imageDomain + coverUrl).into(imageView);
+
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
         //设置返回键
@@ -87,8 +85,9 @@ public class PlayerVideoActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
-        if (orientationUtils != null)
+        if (orientationUtils != null) {
             orientationUtils.releaseListener();
+        }
     }
 
     @Override

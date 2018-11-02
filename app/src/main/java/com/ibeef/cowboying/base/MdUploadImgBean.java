@@ -45,7 +45,7 @@ public class MdUploadImgBean {
         this.bizData = bizData;
     }
 
-    public static class BizDataBean {
+    public  class BizDataBean {
         /**
          * fileName : tryout/images/012992fdbef6265ab0663ef3b47fbf89.jpg
          * filePath : http://pasture.oss-cn-beijing.aliyuncs.com/tryout/images/012992fdbef6265ab0663ef3b47fbf89.jpg

@@ -21,48 +21,45 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
-import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.UplodImgQIniuBase;
+import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
-import com.ibeef.cowboying.bean.QiniuBean;
-import com.ibeef.cowboying.bean.QiniuUploadImg;
+import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
+import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.UploadImgQiNiuPresenter;
+import com.ibeef.cowboying.presenter.FeedbackPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UploadManager;
-
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.functions.Action1;
 import rxfamily.utils.PermissionsUtils;
 import rxfamily.view.BaseActivity;
@@ -70,7 +67,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 个人信息界面
  */
-public class PersonalInformationActivity extends BaseActivity implements UserInfoBase.IView ,UplodImgQIniuBase.IView{
+public class PersonalInformationActivity extends BaseActivity implements UserInfoBase.IView ,FeedbackBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -131,10 +128,9 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     private FileOutputStream b;
     private String imgPath;
     @SuppressLint("SdCardPath")
-    private static String path = "/sdcard/myHead/";
+    private static String path = "/storage/emulated/0/myHead/";
     private boolean isCheck=false,isBindPhone=false;
-    private UploadImgQiNiuPresenter uploadImgQiNiuPresenter;
-    private String imgUrl;
+    private FeedbackPresenter feedbackPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +145,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         token= Hawk.get(HawkKey.TOKEN);
         userId= Hawk.get(HawkKey.userId);
         userInfoPresenter=new UserInfoPresenter(this);
-        uploadImgQiNiuPresenter=new UploadImgQiNiuPresenter(this);
+        feedbackPresenter=new FeedbackPresenter(this);
     }
 
     @Override
@@ -349,6 +345,16 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     }
 
     @Override
+    public void getMyFeedback(MyFeedbackResultBean myFeedbackResultBean) {
+
+    }
+
+    @Override
+    public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
+
+    }
+
+    @Override
     public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
         if("000000".equals(modifyHeadResultBean.getCode())){
             Map<String, String> reqData = new HashMap<>();
@@ -398,7 +404,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                     //跳过内存缓存
                     ;
             Hawk.put(HawkKey.userId, userInfoResultBean.getBizData().getUserId()+"");
-            Glide.with(this).load(Constant.prodYbAvatarDomin+userInfoResultBean.getBizData().getHeadImage()).apply(options).into(ivIcon);
+            Glide.with(this).load(userInfoResultBean.getBizData().getHeadImage()).apply(options).into(ivIcon);
             nicknameTxt.setText("");
             if("0".equals(userInfoResultBean.getBizData().getIsValidate())){
                 //未认证
@@ -436,8 +442,19 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     @Override
     public void isTakePhoeto(String msg) {
         imgPath=msg;
-        //七牛上传图片
-        uploadImgQiNiuPresenter.UploadImg(Constant.ybAvatarBucket);
+        Log.e(Constant.TAG,imgPath+"??????????头像");
+        //文件上传图片
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        List<MultipartBody.Part> parts = new ArrayList<>(1);
+        File file = new File(imgPath);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
+        parts.add(part);
+
+        Log.e(Constant.TAG,file.getName()+"??????????头像" + file);
+        feedbackPresenter.getUploadImg(reqData,parts);
     }
 
 
@@ -503,53 +520,6 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        if(userInfoPresenter!=null){
-            userInfoPresenter.detachView();
-        }
-        super.onDestroy();
-    }
-
-    @Override
-    public void setMsg(QiniuUploadImg qiniuUploadImg) {
-        showLoadings();
-        UploadManager uploadManager = new UploadManager();
-        String data1 =imgPath ;
-        //<File对象、或 文件路径、或 字节数组>
-        String key =null;
-        //<指定七牛服务上的文件名，或 null>;
-        String tokens =qiniuUploadImg.getRetMsg() ;
-        //<从服务端SDK获取>;
-        uploadManager.put(data1, key, tokens,
-                new UpCompletionHandler() {
-                    @Override
-                    public void complete(String key, ResponseInfo info, JSONObject res) {
-                        //res包含hash、key等信息，具体字段取决于上传策略的设置
-                        if(info.isOK()) {
-                            Log.e("qiniu", "Upload Success"+"????"+res.toString());
-                            String str=res.toString();
-                            Gson gson = new Gson();
-                            QiniuBean qiniuBean = gson.fromJson(str, QiniuBean.class);
-                            imgUrl=qiniuBean.getHash();
-                            ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
-                            modifyHeadParamBean.setImageUrl(imgUrl);
-                            Map<String, String> reqData = new HashMap<>();
-                            reqData.put("Authorization",token);
-                            reqData.put("version",getVersionCodes());
-                            userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
-                            dismissLoading();
-                            Toast.makeText(PersonalInformationActivity.this,"头像上传成功",Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e("qiniu", "Upload Fail");
-                            //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                        }
-                        Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
-                    }
-                }, null);
-    }
-
     @Override
     public void showLoading() {
 
@@ -559,4 +529,29 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     public void hideLoading() {
 
     }
+
+    @Override
+    public void getUploadImg(MdUploadImgBean mdUploadImgBean) {
+        if("000000".equals(mdUploadImgBean.getCode())){
+            Toast.makeText(PersonalInformationActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
+
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
+            modifyHeadParamBean.setImageUrl(mdUploadImgBean.getBizData().get(0).getFilePath());
+            userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
+        }else {
+            Toast.makeText(PersonalInformationActivity.this,mdUploadImgBean.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(feedbackPresenter!=null){
+            feedbackPresenter.detachView();
+        }
+        super.onDestroy();
+    }
+
 }

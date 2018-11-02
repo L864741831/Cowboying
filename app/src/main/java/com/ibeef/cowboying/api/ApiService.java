@@ -25,6 +25,7 @@ import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.QiniuUploadImg;
+import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.RestLoginParamBean;
@@ -277,4 +278,11 @@ public interface ApiService {
     @Multipart
     @POST("file/image/upload")
     Observable<MdUploadImgBean> getUploadImg(@HeaderMap Map<String, String> headers, @Part() List<MultipartBody.Part> parts);
+
+    /**
+     * 牧场详情推荐视频
+     * @return
+     */
+    @GET("pasture/video/recommend")
+    Observable<RanchBottomVideoResultBean> getRanchBottomVideo(@Header("version") String version);
 }

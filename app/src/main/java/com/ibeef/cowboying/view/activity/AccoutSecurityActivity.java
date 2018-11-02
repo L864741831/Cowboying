@@ -342,10 +342,10 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
-        if ("000000".equals(safeInfoResultBean.getCode())) {
-            this.safeInfoResultBean = safeInfoResultBean;
-            if ("0".equals(safeInfoResultBean.getBizData().getIsPassWord())) {
-                isSetPwd = false;
+        if("000000".equals(safeInfoResultBean.getCode())){
+            this.safeInfoResultBean=safeInfoResultBean;
+            if("1".equals(safeInfoResultBean.getBizData().getIsPassWord())){
+                isSetPwd=false;
                 modifyPwdId.setText("修改登录密码");
             } else {
                 isSetPwd = true;

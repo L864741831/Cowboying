@@ -156,8 +156,7 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
         File file = new File(path);
         file.mkdirs();// 创建文件夹
         String fileName = path + System.currentTimeMillis()+"head.jpg";
-        // 图片名字
-        mView.isTakePhoeto(fileName);
+
         try {
             b = new FileOutputStream(fileName);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
@@ -173,5 +172,8 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
                 e.printStackTrace();
             }
         }
+
+        // 图片名字
+        mView.isTakePhoeto(fileName);
     }
 }

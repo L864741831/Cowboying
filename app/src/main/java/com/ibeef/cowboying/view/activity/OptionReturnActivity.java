@@ -250,15 +250,15 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
      */
     private void insertImagesSync(final Intent data){
         ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-        ArrayList<File> files=new ArrayList<>();
+        List<MultipartBody.Part> parts = new ArrayList<>(photos.size());
         //可以同时插入多张图片
         for (String imagePath : photos) {
             //imagePath<File对象、或 文件路径、或 字节数组>
             File file = new File(imagePath);
-            files.add(file);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
+            parts.add(part);
         }
-        MultipartBody multipartBody = filesToMultipartBody(files);
-        List<MultipartBody.Part> parts = filesToMultipartBodyParts(files);
         showLoadings();
         if(TextUtils.isEmpty(token)){
             startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
@@ -268,26 +268,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
             reqData1.put("version",getVersionCodes());
             feedbackPresenter.getUploadImg(reqData1, parts);
         }
-    }
-
-    private  MultipartBody filesToMultipartBody(List<File> files) {
-        MultipartBody.Builder builder = new MultipartBody.Builder();
-        for (File file : files) {
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-            builder.addFormDataPart("imageFile", file.getName(), requestBody);
-        }
-        builder.setType(MultipartBody.FORM);
-        MultipartBody multipartBody = builder.build();
-        return multipartBody;
-    }
-    public static List<MultipartBody.Part> filesToMultipartBodyParts(List<File> files) {
-        List<MultipartBody.Part> parts = new ArrayList<>(files.size());
-        for (File file : files) {
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-            MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
-            parts.add(part);
-        }
-        return parts;
     }
 
 
