@@ -45,7 +45,7 @@ public class MyFeedbackResultBean {
         this.bizData = bizData;
     }
 
-    public static class BizDataBean {
+    public  class BizDataBean {
         /**
          * feedbackId : 4
          * content : 啊啊啊啊

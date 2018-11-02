@@ -27,7 +27,6 @@ public class RanchConsociationTitleAdapter extends BaseQuickAdapter<PastureAllRe
     @Override
     protected void convert(BaseViewHolder helper, final PastureAllResultBean.BizDataBean item) {
         helper.setText(R.id.tv_title,item.getName());
-        helper.addOnClickListener(R.id.tv_title);
         TextView tv=helper.getView(R.id.tv_title);
         if (item.getDefaultFlag()==0) {
             tv.setTextColor(ContextCompat.getColor(context,R.color.goldenrod));
