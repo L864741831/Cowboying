@@ -21,25 +21,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
-import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.base.MdUploadImgBean;
-import com.ibeef.cowboying.base.UplodImgQIniuBase;
 import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
-import com.ibeef.cowboying.bean.QiniuBean;
-import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
@@ -47,16 +41,9 @@ import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
-import com.ibeef.cowboying.presenter.UploadImgQiNiuPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UploadManager;
-
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -460,14 +447,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
+        List<MultipartBody.Part> parts = new ArrayList<>(1);
         File file = new File(imgPath);
-        MultipartBody multipartBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("imageFile", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
-                .build();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
+        parts.add(part);
 
         Log.e(Constant.TAG,file.getName()+"??????????头像" + file);
-        feedbackPresenter.getUploadImg(reqData,multipartBody);
+        feedbackPresenter.getUploadImg(reqData,parts);
     }
 
 

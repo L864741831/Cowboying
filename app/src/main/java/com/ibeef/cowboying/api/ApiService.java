@@ -275,8 +275,9 @@ public interface ApiService {
      *上传图片
      * @return
      */
+    @Multipart
     @POST("file/image/upload")
-    Observable<MdUploadImgBean> getUploadImg(@HeaderMap Map<String, String> headers, @Body MultipartBody multipartBody);
+    Observable<MdUploadImgBean> getUploadImg(@HeaderMap Map<String, String> headers, @Part() List<MultipartBody.Part> parts);
 
     /**
      * 牧场详情推荐视频
