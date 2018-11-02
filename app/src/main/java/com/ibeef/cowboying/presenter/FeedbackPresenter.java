@@ -74,8 +74,8 @@ public class FeedbackPresenter extends BasePresenter implements FeedbackBase.IPr
     }
 
     @Override
-    public void getUploadImg(Map<String, String> headers, MultipartBody multipartBody) {
-        addSubscription(mModel.getUploadImg(headers,multipartBody,new ResponseCallback<MdUploadImgBean>() {
+    public void getUploadImg(Map<String, String> headers, List<MultipartBody.Part> parts) {
+        addSubscription(mModel.getUploadImg(headers,parts,new ResponseCallback<MdUploadImgBean>() {
             @Override
             public void onSuccess(MdUploadImgBean result) {
                 mView.getUploadImg(result);

@@ -126,17 +126,14 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
 
     @Override
     public void showMsg(String msg) {
-
     }
 
     @Override
     public void getHomeBanner(HomeBannerResultBean homeBannerResultBean) {
-
     }
 
     @Override
     public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
-
     }
 
     @Override

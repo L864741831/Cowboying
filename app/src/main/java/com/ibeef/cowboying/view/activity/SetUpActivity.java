@@ -115,8 +115,6 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
         initDialog();
     }
 
-
-
     @OnClick({R.id.accout_securty_id, R.id.modify_pwd_rv, R.id.option_return_rv, R.id.nomal_question_rv, R.id.release_cache_rv,R.id.back_id,R.id.unlogin_rv})
     public void onViewClicked(View view) {
         switch (view.getId()) {

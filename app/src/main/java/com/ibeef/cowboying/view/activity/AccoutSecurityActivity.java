@@ -195,30 +195,30 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         }
     }
 
-    private void sureBtn(final String stadus){
-        if(SDCardUtil.isNullOrEmpty(safeInfoResultBean)){
+    private void sureBtn(final String stadus) {
+        if (SDCardUtil.isNullOrEmpty(safeInfoResultBean)) {
             return;
         }
-        if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
+        if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())) {
             return;
         }
-        if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+        if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())) {
             showToast("暂无手机号，请先设置手机号");
             return;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(AccoutSecurityActivity.this);
             grantObservable.subscribe(new Action1<Boolean>() {
                 @Override
                 public void call(Boolean granted) {
                     if (granted) {
-                        Intent intent=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
-                        if("8".equals(stadus)||"4".equals(stadus)){
-                            intent.putExtra("oldmobile",safeInfoResultBean.getBizData().getMobile());
-                        }else {
-                            intent.putExtra("mobile",safeInfoResultBean.getBizData().getMobile());
+                        Intent intent = new Intent(AccoutSecurityActivity.this, IdentifyCodeActivity.class);
+                        if ("8".equals(stadus) || "4".equals(stadus)) {
+                            intent.putExtra("oldmobile", safeInfoResultBean.getBizData().getMobile());
+                        } else {
+                            intent.putExtra("mobile", safeInfoResultBean.getBizData().getMobile());
                         }
-                        intent.putExtra("stadus",stadus);
+                        intent.putExtra("stadus", stadus);
 
                         startActivity(intent);
                     } else {
@@ -226,13 +226,13 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                     }
                 }
             });
-        }else {
-            Intent intent=new Intent(AccoutSecurityActivity.this,IdentifyCodeActivity.class);
-            intent.putExtra("stadus",stadus);
-            if("8".equals(stadus)){
-                intent.putExtra("oldmobile",safeInfoResultBean.getBizData().getMobile());
-            }else {
-                intent.putExtra("mobile",safeInfoResultBean.getBizData().getMobile());
+        } else {
+            Intent intent = new Intent(AccoutSecurityActivity.this, IdentifyCodeActivity.class);
+            intent.putExtra("stadus", stadus);
+            if ("8".equals(stadus)) {
+                intent.putExtra("oldmobile", safeInfoResultBean.getBizData().getMobile());
+            } else {
+                intent.putExtra("mobile", safeInfoResultBean.getBizData().getMobile());
             }
             startActivity(intent);
         }
@@ -240,10 +240,10 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void showMsg(String msg) {
-        if(!TextUtils.isEmpty(msg)){
-            if(msg.contains("401")){
+        if (!TextUtils.isEmpty(msg)) {
+            if (msg.contains("401")) {
                 Hawk.put(HawkKey.TOKEN, "");
-                Toast.makeText(this,"Authorization失效，请重新登录",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Authorization失效，请重新登录", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
             }
@@ -252,9 +252,9 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
-        if("000000".equals(thirdLoginResultBean.getCode())){
+        if ("000000".equals(thirdLoginResultBean.getCode())) {
             aplilyLogin(thirdLoginResultBean.getBizData());
-        }else {
+        } else {
             showToast(thirdLoginResultBean.getMessage());
         }
     }
@@ -262,7 +262,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     /**
      * 支付宝授权登录
      */
-    private void aplilyLogin(final String authInfo){
+    private void aplilyLogin(final String authInfo) {
         //异步处理
         Runnable payRunnable = new Runnable() {
 
@@ -288,9 +288,9 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     /**
      * 微信授权登录
      */
-    private void weixinLogin(){
+    private void weixinLogin() {
         if (!api.isWXAppInstalled()) {
-            Toast.makeText(this, "安装微信后再授权登录" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "安装微信后再授权登录", Toast.LENGTH_SHORT).show();
             return;
         }
         SendAuth.Req req = new SendAuth.Req();
@@ -318,13 +318,13 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                         // 传入，则支付账户为该授权账户
                         // auth_code传入后台，后台获取 auth_token,其他信息 授权成功绑定手机号
                         Map<String, String> reqData = new HashMap<>();
-                        reqData.put("version",getVersionCodes());
-                        reqData.put("Authorization",token);
-                        BindThirdCountParamBean bindThirdCountParamBean=new BindThirdCountParamBean();
+                        reqData.put("version", getVersionCodes());
+                        reqData.put("Authorization", token);
+                        BindThirdCountParamBean bindThirdCountParamBean = new BindThirdCountParamBean();
                         bindThirdCountParamBean.setAuthCode(authResult.getAuthCode());
                         bindThirdCountParamBean.setOpenId(authResult.getUserId());
                         bindThirdCountParamBean.setType("4");
-                        accountSecurityPresenter.getBindThidCount(reqData,bindThirdCountParamBean);
+                        accountSecurityPresenter.getBindThidCount(reqData, bindThirdCountParamBean);
 
                     } else {
                         // 其他状态值则为授权失败
@@ -332,13 +332,14 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                                 "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT).show();
 
                     }
-                    Log.e(Constant.TAG,"支付宝结果"+authResult+"????????"+resultStatus);
+                    Log.e(Constant.TAG, "支付宝结果" + authResult + "????????" + resultStatus);
                     break;
                 default:
                     break;
             }
         }
     };
+
     @Override
     public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
         if("000000".equals(safeInfoResultBean.getCode())){
@@ -346,21 +347,21 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             if("1".equals(safeInfoResultBean.getBizData().getIsPassWord())){
                 isSetPwd=false;
                 modifyPwdId.setText("修改登录密码");
-            }else {
-                isSetPwd=true;
+            } else {
+                isSetPwd = true;
                 modifyPwdId.setText("设置登录密码");
             }
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+            if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())) {
                 phoneTxtId.setText("");
-                isMobie=false;
+                isMobie = false;
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.binds);
                 phoneTxtId.setCompoundDrawablesWithIntrinsicBounds(null,
                         null, drawableRight, null);
                 phoneTxtId.setCompoundDrawablePadding(4);
-            }else {
+            } else {
                 phoneTxtId.setText(safeInfoResultBean.getBizData().getMobile());
-                isMobie=true;
+                isMobie = true;
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.replacebinds);
                 phoneTxtId.setCompoundDrawablesWithIntrinsicBounds(null,
@@ -368,14 +369,14 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 phoneTxtId.setCompoundDrawablePadding(4);
             }
 
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxId())){
+            if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxId())) {
                 weixinStadusId.setText("");
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.binds);
                 weixinStadusId.setCompoundDrawablesWithIntrinsicBounds(null,
                         null, drawableRight, null);
                 weixinStadusId.setCompoundDrawablePadding(4);
-            }else {
+            } else {
                 weixinStadusId.setText("已绑定");
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.unbinds);
@@ -383,14 +384,14 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                         null, drawableRight, null);
                 weixinStadusId.setCompoundDrawablePadding(4);
             }
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbId())){
+            if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbId())) {
                 zfbStadusId.setText("");
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.binds);
                 zfbStadusId.setCompoundDrawablesWithIntrinsicBounds(null,
                         null, drawableRight, null);
                 zfbStadusId.setCompoundDrawablePadding(4);
-            }else {
+            } else {
                 zfbStadusId.setText("已绑定");
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.unbinds);
@@ -399,7 +400,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 zfbStadusId.setCompoundDrawablePadding(4);
             }
 
-        }else {
+        } else {
             showToast(safeInfoResultBean.getMessage());
         }
 
@@ -407,33 +408,33 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void getBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
-        if("000000".equals(bindThirdCountResultBean.getCode())){
+        if ("000000".equals(bindThirdCountResultBean.getCode())) {
             Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
             accountSecurityPresenter.getSafeInfo(reqData);
             showToast("绑定第三方账号成功~");
-        }else {
+        } else {
             showToast(bindThirdCountResultBean.getMessage());
         }
     }
 
     @Override
     public void getUnBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
-        if("000000".equals(bindThirdCountResultBean.getCode())){
+        if ("000000".equals(bindThirdCountResultBean.getCode())) {
             Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
             accountSecurityPresenter.getSafeInfo(reqData);
             showToast("解绑成功~");
-        }else {
+        } else {
             showToast(bindThirdCountResultBean.getMessage());
         }
     }
 
     @Override
     protected void onDestroy() {
-        if(accountSecurityPresenter!=null){
+        if (accountSecurityPresenter != null) {
             accountSecurityPresenter.detachView();
         }
         super.onDestroy();

@@ -48,11 +48,11 @@ public class ModifyPwdActivity extends BaseActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         info.setText("修改密码");
     }
 
-    @OnClick({R.id.back_id, R.id.btn_sure,R.id.btn_code})
+    @OnClick({R.id.back_id, R.id.btn_sure, R.id.btn_code})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -62,7 +62,7 @@ public class ModifyPwdActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_code:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(ModifyPwdActivity.this);
                     grantObservable.subscribe(new Action1<Boolean>() {
                         @Override
@@ -74,7 +74,7 @@ public class ModifyPwdActivity extends BaseActivity {
                             }
                         }
                     });
-                }else {
+                } else {
                     // TODO: 2018/10/23 网络请求
                 }
                 break;

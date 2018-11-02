@@ -1,7 +1,10 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +36,15 @@ public class ContactUsActivity extends BaseActivity {
 
     private void init() {
         info.setText("联系我们");
-        webId.loadUrl("https://www.baidu.com");
+        webId.setWebViewClient(new WebViewClient());
+        webId.setWebChromeClient(new WebChromeClient());
+        WebSettings settings = webId.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setDomStorageEnabled(true);
+        webId.getSettings().setUseWideViewPort(true);
+        webId.getSettings().setLoadWithOverviewMode(true);
+        webId.loadUrl("http://www.baidu.com");
     }
 
     @OnClick(R.id.back_id)

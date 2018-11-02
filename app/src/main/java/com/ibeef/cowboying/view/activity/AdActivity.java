@@ -67,7 +67,6 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
             case R.id.bg_img:
                 continueCount = false;
                 // url广告webview地址，广告title
-
                 if(isShow){
                     Intent intent=new Intent(AdActivity.this, AdWebviewActivity.class);
                     intent.putExtra("url",homeAdResultBean.getBizData().getLinkUrl());
@@ -77,7 +76,6 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
                 }else {
                     showMsg("暂无广告详情~");
                 }
-
                 break;
             case R.id.go_main_activity:
                 continueCount = false;
@@ -136,8 +134,6 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
         loadingLayout.setVisibility(View.GONE);
         bgImg.setVisibility(View.VISIBLE);
     }
-
-
 
     @Override
     protected void onDestroy() {

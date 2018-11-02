@@ -82,9 +82,8 @@ public class MobileLoginActivity extends BaseActivity {
         init();
     }
 
-    private void init(){
-
-        token= Hawk.get(HawkKey.TOKEN);
+    private void init() {
+        token = Hawk.get(HawkKey.TOKEN);
         etMobile.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -96,51 +95,51 @@ public class MobileLoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(etMobile.getText().toString().trim())){
+                if (TextUtils.isEmpty(etMobile.getText().toString().trim())) {
                     closeImgId.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     closeImgId.setVisibility(View.VISIBLE);
                 }
             }
         });
 
         actionRightTv.setText("跳过");
-        stadus=getIntent().getStringExtra("stadus");
-        if("1".equals(stadus)){
+        stadus = getIntent().getStringExtra("stadus");
+        if ("1".equals(stadus)) {
             //1 来自密码登录 的忘记密码，0 为正常的手机号登录流程
             stadusTitleId.setText("验证手机号");
             sureId.setText("发送验证码");
             pwdLoginId.setVisibility(View.GONE);
-        }else  if("2".equals(stadus)){
+        } else if ("2".equals(stadus)) {
             //注册流程
             pwdLoginId.setVisibility(View.GONE);
             registerRuleId.setVisibility(View.VISIBLE);
             stadusTitleId.setText("输入手机号码");
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                registerRuleId.setText(Html.fromHtml("注册代表你已同意<font color='#4393F5'>注册协议</font>和<font color='#4393F5'>隐私政策</font>",Html.FROM_HTML_MODE_LEGACY));
+                registerRuleId.setText(Html.fromHtml("注册代表你已同意<font color='#4393F5'>注册协议</font>和<font color='#4393F5'>隐私政策</font>", Html.FROM_HTML_MODE_LEGACY));
             } else {
                 registerRuleId.setText(Html.fromHtml("注册代表你已同意<font color='#4393F5'>注册协议</font>和<font color='#4393F5'>隐私政策</font>"));
             }
 
-        }else if("3".equals(stadus)){
+        } else if ("3".equals(stadus)) {
             //第三方登录绑定
             actionRightTv.setVisibility(View.VISIBLE);
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("绑定手机号");
-        }else if("7".equals(stadus)){
+        } else if ("7".equals(stadus)) {
             //个人信息 绑定手机号
             actionRightTv.setVisibility(View.GONE);
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("绑定手机号");
-        }else if("8".equals(stadus)||"6".equals(stadus)){
+        } else if ("8".equals(stadus) || "6".equals(stadus)) {
             //换绑手机号    //设置<账号安全<修改登录手机号 <验证码，输入新的手机号
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("输入新的手机号");
-            oldmobile=getIntent().getStringExtra("oldmobile");
+            oldmobile = getIntent().getStringExtra("oldmobile");
         }
     }
 
-    @OnClick({R.id.close_img_id, R.id.sure_id,R.id.back_id,R.id.pwd_login_id,R.id.action_right_tv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv,R.id.register_rule_id})
+    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.cancle_txt_id, R.id.sure_txt_id, R.id.show_bind_rv, R.id.register_rule_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_img_id:
@@ -154,7 +153,7 @@ public class MobileLoginActivity extends BaseActivity {
                 break;
             case R.id.cancle_txt_id:
                 //  第三方登录取消绑定手机号  跳转到主界面
-                Intent intent1=new Intent(MobileLoginActivity.this,MainActivity.class);
+                Intent intent1 = new Intent(MobileLoginActivity.this, MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
@@ -164,46 +163,46 @@ public class MobileLoginActivity extends BaseActivity {
                 showBindRv.setVisibility(View.GONE);
                 break;
             case R.id.sure_id:
-                if(TextUtils.isEmpty(etMobile.getText().toString().trim())){
+                if (TextUtils.isEmpty(etMobile.getText().toString().trim())) {
                     showToast("手机号码不能为空！");
                     return;
                 }
-                if(!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN,etMobile.getText().toString().trim())){
+                if (!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN, etMobile.getText().toString().trim())) {
                     showToast("请输入正确的手机号码！");
                     return;
                 }
 
-             if("8".equals(stadus)||"6".equals(stadus)){
+                if ("8".equals(stadus) || "6".equals(stadus)) {
                     //设置 账号安全 手机号换绑 修改登录手机号
-                    Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                    if("6".equals(stadus)){
-                        intent.putExtra("stadus","10");
-                    }else {
-                        intent.putExtra("stadus","9");
+                    Intent intent = new Intent(MobileLoginActivity.this, IdentifyCodeActivity.class);
+                    if ("6".equals(stadus)) {
+                        intent.putExtra("stadus", "10");
+                    } else {
+                        intent.putExtra("stadus", "9");
                     }
-                    intent.putExtra("oldmobile",oldmobile);
-                    intent.putExtra("mobile",etMobile.getText().toString().trim());
+                    intent.putExtra("oldmobile", oldmobile);
+                    intent.putExtra("mobile", etMobile.getText().toString().trim());
                     startActivity(intent);
-                }else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
                         grantObservable.subscribe(new Action1<Boolean>() {
                             @Override
                             public void call(Boolean granted) {
                                 if (granted) {
-                                    Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                                    intent.putExtra("stadus",stadus);
-                                    intent.putExtra("mobile",etMobile.getText().toString().trim());
+                                    Intent intent = new Intent(MobileLoginActivity.this, IdentifyCodeActivity.class);
+                                    intent.putExtra("stadus", stadus);
+                                    intent.putExtra("mobile", etMobile.getText().toString().trim());
                                     startActivity(intent);
                                 } else {
                                     PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
                                 }
                             }
                         });
-                    }else {
-                        Intent  intent=new Intent(MobileLoginActivity.this,IdentifyCodeActivity.class);
-                        intent.putExtra("stadus",stadus);
-                        intent.putExtra("mobile",etMobile.getText().toString().trim());
+                    } else {
+                        Intent intent = new Intent(MobileLoginActivity.this, IdentifyCodeActivity.class);
+                        intent.putExtra("stadus", stadus);
+                        intent.putExtra("mobile", etMobile.getText().toString().trim());
                         startActivity(intent);
                     }
                 }
@@ -212,10 +211,10 @@ public class MobileLoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.register_rule_id:
-                Toast.makeText(MobileLoginActivity.this,"显示注册协议",Toast.LENGTH_LONG).show();
+                Toast.makeText(MobileLoginActivity.this, "显示注册协议", Toast.LENGTH_LONG).show();
                 break;
             case R.id.pwd_login_id:
-                if("0".equals(stadus)){
+                if ("0".equals(stadus)) {
                     //正常登录流程
                     startActivity(PwdLoginActivity.class);
                 }
