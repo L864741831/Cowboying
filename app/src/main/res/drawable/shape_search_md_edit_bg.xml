@@ -8,6 +8,6 @@
         android:topRightRadius="20dp" /> <!-- 设置四个角的半径 -->
 
     <!-- 填充 -->
-    <solid android:color="@color/homef7" /> <!-- 定义填充的颜色值 -->
+    <solid android:color="@color/white" /> <!-- 定义填充的颜色值 -->
 
 </shape>

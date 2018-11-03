@@ -48,7 +48,6 @@ import rxfamily.view.BaseFragment;
 
 public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,HomeBannerBase.IView  {
 
-    @Bind(R.id.home_ry_id)
     RecyclerView homeRyId;
     SwipeRefreshLayout swipeLy;
     private Banner banner;
@@ -73,6 +72,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         swipeLy=view.findViewById(R.id.swipe_ly);
+        homeRyId=view.findViewById(R.id.home_ry_id);
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
@@ -91,6 +91,23 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeBannerPresenter.getHomeVideo(getVersionCodes());
         mPrefDailog = getHoldingActivity().getSharedPreferences("firstopenDailogs", Activity.MODE_PRIVATE);
         history= mPrefDailog.getString(KEY_HISTORY_KEYWORD, "");
+
+        homeRyId.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(!homeRyId.canScrollVertically(-1)){
+                    swipeLy.setEnabled(true);
+                }else {
+                    swipeLy.setEnabled(false);
+                }
+            }
+        });
 
     }
 

@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -36,7 +37,8 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
     RecyclerView messageRy;
     @Bind(R.id.swipe_ly)
     SwipeRefreshLayout swipeLy;
-
+    @Bind(R.id.loading_layout)
+    RelativeLayout loadingLayout;
     private MyMessegeListAdapter myMessegeListAdapter;
     private List<BaseBean> beanList;
     private String token;
@@ -63,6 +65,23 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
+
+        messageRy.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(!messageRy.canScrollVertically(-1)){
+                    swipeLy.setEnabled(true);
+                }else {
+                    swipeLy.setEnabled(false);
+                }
+            }
+        });
     }
 
     @OnClick(R.id.back_id)

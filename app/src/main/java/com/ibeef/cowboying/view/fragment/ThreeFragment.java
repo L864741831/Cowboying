@@ -13,6 +13,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
+import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
@@ -192,7 +193,11 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.contract_id_rv:
                 //我的合同
-
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(MyContractActivity.class);
+                }
                 break;
             case R.id.invite_friend_id_rv:
                 //邀请好友

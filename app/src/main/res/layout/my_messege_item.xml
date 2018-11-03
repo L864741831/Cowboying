@@ -16,26 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:orientation="vertical"
         android:layout_marginTop="15dp" android:background="@drawable/shape_oval_white_btn"
-        android:layout_margin="12dp">
+        android:layout_marginLeft="12dp" android:layout_marginRight="12dp">
 
         <TextView
             android:layout_width="wrap_content" android:id="@+id/title_txt_id"
             android:layout_height="wrap_content" android:textColor="@color/black"
-            android:text="订单已提交，请尽快支付哟！" android:layout_marginTop="20dp"
+            android:text="订单已提交，请尽快支付哟！" android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp" android:textSize="16sp"
             android:layout_marginRight="15dp"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/info_txt_id"
             android:layout_height="wrap_content" android:textSize="14sp"
             android:text="主人，您已提交认购安格斯牛一头，需支付5000，请在45分钟内完成支付哟！"
-            android:layout_marginTop="10dp" android:layout_marginLeft="15dp"
-            android:lineSpacingExtra="5dp" android:layout_marginRight="15dp"/>
+            android:layout_marginTop="8dp" android:layout_marginLeft="15dp"
+            android:lineSpacingExtra="4dp" android:layout_marginRight="15dp"/>
         <ImageView
             android:layout_width="match_parent" android:id="@+id/show_img_id"
             android:layout_height="150dp" android:src="@mipmap/newpeople"
             android:scaleType="fitXY" android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

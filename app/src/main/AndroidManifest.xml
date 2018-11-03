@@ -131,14 +131,17 @@
         <activity android:name=".view.activity.RanchDynamicActivity" />
         <activity android:name=".view.activity.RanchConsociationActivity" />
         <activity android:name=".view.activity.MyMessegeActivity" />
-        <activity android:name=".view.activity.PlayerVideoActivity"
+        <activity
+            android:name=".view.activity.PlayerVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.GivePoursActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.GivePoursActivity"
             android:theme="@style/myTransparent" />
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.MyContractActivity"></activity>
     </application>
 
 </manifest>

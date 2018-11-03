@@ -16,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,6 +32,7 @@ import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
 import com.orhanobut.hawk.Hawk;
@@ -263,10 +269,26 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         if(TextUtils.isEmpty(token)){
             startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
         }else {
-            Map<String, String> reqData1 = new HashMap<>();
-            reqData1.put("Authorization",token);
-            reqData1.put("version",getVersionCodes());
-            feedbackPresenter.getUploadImg(reqData1, parts);
+//            Map<String, String> reqData1 = new HashMap<>();
+//            reqData1.put("Authorization",token);
+//            reqData1.put("version",getVersionCodes());
+//            feedbackPresenter.getUploadImg(reqData1, parts);
+
+            // 推荐使用OSSAuthCredentialsProvider，token过期后会自动刷新。
+//            String stsServer = "应用服务器地址，例如http://abc.com:8080"
+            String stsServer = Constant.BASE_URLAL;
+            OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+//config
+            ClientConfiguration conf = new ClientConfiguration();
+            // 连接超时时间，默认15秒
+            conf.setConnectionTimeout(15 * 1000);
+            // Socket超时时间，默认15秒
+            conf.setSocketTimeout(15 * 1000);
+            // 最大并发请求数，默认5个
+            conf.setMaxConcurrentRequest(5);
+            // 失败后最大重试次数，默认2次
+            conf.setMaxErrorRetry(2);
+//            OSS oss = new OSSClient(getApplicationContext(), endpoint, credentialProvider, conf);
         }
     }
 

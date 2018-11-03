@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" android:orientation="vertical"
     tools:context=".view.activity.OptionReturnActivity" android:background="@color/white">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" android:background="@color/homef7"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:layout_marginLeft="10dp"
@@ -53,7 +55,5 @@
         android:layout_height="wrap_content" android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" android:layout_gravity="center"
         android:layout_marginBottom="15dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp" android:background="@color/homef7"/>
+
 </LinearLayout>

@@ -72,7 +72,6 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     private void init() {
         token = Hawk.get(HawkKey.TOKEN);
-        Log.i("htht", "token:::: " + token);
         info.setText("我的反馈");
         baseBeans = new ArrayList<>();
         ryId.setLayoutManager(new LinearLayoutManager(this));
@@ -88,6 +87,23 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
         feedbackPresenter.getMyFeedback(reqData, currentPage);
+
+        ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(!ryId.canScrollVertically(-1)){
+                    mSwipeLayout.setEnabled(true);
+                }else {
+                    mSwipeLayout.setEnabled(false);
+                }
+            }
+        });
     }
 
     @OnClick(R.id.back_id)

@@ -22,6 +22,7 @@ import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
+import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.QiniuUploadImg;
@@ -285,4 +286,11 @@ public interface ApiService {
      */
     @GET("pasture/video/recommend")
     Observable<RanchBottomVideoResultBean> getRanchBottomVideo(@Header("version") String version);
+
+    /**
+     * oss图片上传
+     * @return
+     */
+    @GET("file/appUploadInit")
+    Observable<OssResultBean> getOssImg(@Header("version") String version);
 }

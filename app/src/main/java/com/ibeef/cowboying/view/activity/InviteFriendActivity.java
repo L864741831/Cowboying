@@ -1,11 +1,14 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.config.HawkKey;
+import com.orhanobut.hawk.Hawk;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,7 +39,7 @@ public class InviteFriendActivity extends BaseActivity {
     TextView btnShareWechatQuan;
     @Bind(R.id.btn_share_or_code)
     TextView btnShareOrCode;
-
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class InviteFriendActivity extends BaseActivity {
     }
 
     private void init() {
+        token= Hawk.get(HawkKey.TOKEN);
         actionNewQuestionTv.setVisibility(View.VISIBLE);
         actionNewQuestionTv.setText("邀请记录");
         info.setText("全民推广");
@@ -58,7 +62,11 @@ public class InviteFriendActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.action_new_question_tv:
-                startActivity(InviteFriendHistoryActivity.class);
+                if (TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(InviteFriendHistoryActivity.class);
+                }
                 break;
             case R.id.btn_share_wechat:
                 break;
