@@ -1,8 +1,11 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,10 +20,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,13 +40,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.OptionReturnImgAdapter;
 import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.base.GetOssImgBase;
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
+import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
+import com.ibeef.cowboying.presenter.GetOssImgPresenter;
+import com.ibeef.cowboying.utils.Md5Utils;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.io.File;
@@ -58,7 +75,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 意见反馈
  */
-public class OptionReturnActivity extends BaseActivity implements FeedbackBase.IView {
+public class OptionReturnActivity extends BaseActivity implements FeedbackBase.IView ,GetOssImgBase.IView {
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -79,8 +96,11 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
     private List<String> stringList;
     private FeedbackPresenter feedbackPresenter;
     private String token;
-    private MdUploadImgBean mdUploadImgBean;
-
+    private GetOssImgPresenter getOssImgPresenter;
+    private ClientConfiguration conf = null;
+    private OSS oss = null;
+    private OssResultBean ossResultBean;
+    private  List<String> photos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +148,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                         }
                         break;
                     case R.id.close_id:
-                        Toast.makeText(OptionReturnActivity.this, "删除", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OptionReturnActivity.this, "删除成功~", Toast.LENGTH_SHORT).show();
                         stringList.remove(position);
                         showNumId.setText("上传图片（" + (stringList.size() - 1) + "/5）");
                         optionReturnImgAdapter.notifyDataSetChanged();
@@ -185,6 +205,9 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
             }
         });
         feedbackPresenter=new FeedbackPresenter(this);
+        getOssImgPresenter=new GetOssImgPresenter(this);
+        getOssImgPresenter.getOssImg(getVersionCodes());
+
     }
 
     @OnClick({R.id.back_id, R.id.btn_id, R.id.me_option_btn})
@@ -255,47 +278,143 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
      * @param data
      */
     private void insertImagesSync(final Intent data){
-        ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-        List<MultipartBody.Part> parts = new ArrayList<>(photos.size());
-        //可以同时插入多张图片
-        for (String imagePath : photos) {
-            //imagePath<File对象、或 文件路径、或 字节数组>
-            File file = new File(imagePath);
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-            MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
-            parts.add(part);
-        }
+        photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
         showLoadings();
         if(TextUtils.isEmpty(token)){
             startActivity(new Intent(OptionReturnActivity.this,LoginActivity.class));
         }else {
-//            Map<String, String> reqData1 = new HashMap<>();
-//            reqData1.put("Authorization",token);
-//            reqData1.put("version",getVersionCodes());
-//            feedbackPresenter.getUploadImg(reqData1, parts);
-
-            // 推荐使用OSSAuthCredentialsProvider，token过期后会自动刷新。
-//            String stsServer = "应用服务器地址，例如http://abc.com:8080"
-            String stsServer = Constant.BASE_URLAL;
-            OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
-//config
-            ClientConfiguration conf = new ClientConfiguration();
-            // 连接超时时间，默认15秒
-            conf.setConnectionTimeout(15 * 1000);
-            // Socket超时时间，默认15秒
-            conf.setSocketTimeout(15 * 1000);
-            // 最大并发请求数，默认5个
-            conf.setMaxConcurrentRequest(5);
-            // 失败后最大重试次数，默认2次
-            conf.setMaxErrorRetry(2);
-//            OSS oss = new OSSClient(getApplicationContext(), endpoint, credentialProvider, conf);
+            if(!SDCardUtil.isNullOrEmpty(ossResultBean)){
+                if(!SDCardUtil.isNullOrEmpty(ossResultBean.getBizData())){
+                    ossUpload(photos,ossResultBean.getBizData().getBucketName(),ossResultBean.getBizData().getFolder());
+                }
+            }
         }
     }
+
+    /**
+     * 调用这个方法之前必须先设置accessKeyId，accessKeySecret，securityToken;
+     */
+    public  void initOss( String accessKeyId,
+                          String accessKeySecret,
+                          String securityToken,String Endpoint){
+        conf = new ClientConfiguration();
+        conf.setConnectionTimeout(5*60*1000);
+        conf.setSocketTimeout(5*60*1000);
+        conf.setMaxConcurrentRequest(5);
+        conf.setMaxErrorRetry(2);
+        OSSLog.enableLog();
+
+        OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(
+                accessKeyId, accessKeySecret,
+                securityToken
+        );
+
+        oss = new OSSClient(OptionReturnActivity.this,Endpoint,credentialProvider,conf);
+    }
+
+    /**
+     * 阿里云OSS上传（默认是异步多文件上传）
+     * @param urls
+     */
+    private void ossUpload(final List<String> urls, final String BucketName, final String Folder) {
+        if (urls.size() <= 0) {
+            handler.sendEmptyMessage(0);
+            // 文件全部上传完毕，这里编写上传结束的逻辑，如果要在主线程操作，最好用Handler或runOnUiThead做对应逻辑
+            return;// 这个return必须有，否则下面报越界异常，原因自己思考下哈
+        }
+        final String url = urls.get(0);
+        if (TextUtils.isEmpty(url)) {
+            urls.remove(0);
+            // url为空就没必要上传了，这里做的是跳过它继续上传的逻辑。
+            ossUpload(urls,BucketName,Folder);
+            return;
+        }
+
+        File file = new File(url);
+        if (null == file || !file.exists()) {
+            urls.remove(0);
+            // 文件为空或不存在就没必要上传了，这里做的是跳过它继续上传的逻辑。
+            ossUpload(urls,BucketName,Folder);
+            return;
+        }
+        // 文件后缀
+        String fileSuffix = "";
+        if (file.isFile()) {
+            // 获取文件后缀名
+            fileSuffix = file.getName().substring(file.getName().lastIndexOf("."));
+        }
+        // 文件标识符objectKey
+        final String objectKey = Folder + Md5Utils.stringToMD5(Md5Utils.getFileName(url)) + fileSuffix;
+        Log.e(Constant.TAG,objectKey+"?????????");
+        // 下面3个参数依次为bucket名，ObjectKey名，上传文件路径
+        PutObjectRequest put = new PutObjectRequest(BucketName, objectKey, url);
+
+        // 设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                // 进度逻辑
+            }
+        });
+        // 异步上传
+        oss.asyncPutObject(put,
+                new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                    @Override
+                    public void onSuccess(PutObjectRequest request, PutObjectResult result) { // 上传成功
+                        urls.remove(0);
+                        stringList.add(objectKey);
+                        // 递归同步效果
+                        ossUpload(urls,BucketName,Folder);
+                    }
+
+                    @Override
+                    public void onFailure(PutObjectRequest request, ClientException clientExcepion,
+                                          ServiceException serviceException) { // 上传失败
+                        // 请求异常
+                        if (clientExcepion != null) {
+                            // 本地异常如网络异常等
+                            clientExcepion.printStackTrace();
+                        }
+                        if (serviceException != null) {
+                            // 服务异常
+                            Log.e("ErrorCode", serviceException.getErrorCode());
+                            Log.e("RequestId", serviceException.getRequestId());
+                            Log.e("HostId", serviceException.getHostId());
+                            Log.e("RawMessage", serviceException.getRawMessage());
+                        }
+                    }
+                });
+    }
+    @SuppressLint("HandlerLeak")
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==0){
+                Toast.makeText(OptionReturnActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
+                showNumId.setText("上传图片（"+(stringList.size()-1)+"/5）");
+                optionReturnImgAdapter.notifyDataSetChanged();
+                dismissLoading();
+            }
+
+        }
+    };
 
 
     @Override
     public void showMsg(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void getOssImg(OssResultBean ossResultBean) {
+        if("000000".equals(ossResultBean.getCode())){
+            this.ossResultBean=ossResultBean;
+            initOss(ossResultBean.getBizData().getAccessKeyId(),ossResultBean.getBizData().getAccessKeySecret(),ossResultBean.getBizData().getSecurityToken(),ossResultBean.getBizData().getEndpoint());
+        }else {
+            showToast(ossResultBean.getMessage());
+        }
+
     }
 
     @Override
@@ -323,18 +442,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     public void getUploadImg(MdUploadImgBean mdUploadImgBean) {
-        this.mdUploadImgBean=mdUploadImgBean;
-        dismissLoading();
-        if("000000".equals(mdUploadImgBean.getCode())){
-            Toast.makeText(OptionReturnActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
-            for (int j = 0; j < mdUploadImgBean.getBizData().size(); j++) {
-                stringList.add(mdUploadImgBean.getBizData().get(j).getFilePath());
-            }
-            showNumId.setText("上传图片（"+(stringList.size()-1)+"/5）");
-            optionReturnImgAdapter.notifyDataSetChanged();
-        }else {
-            Toast.makeText(OptionReturnActivity.this,mdUploadImgBean.getMessage(),Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override

@@ -29,19 +29,20 @@ public class MyFeedbackAdapter extends BaseQuickAdapter<MyFeedbackResultBean.Biz
     }
     @Override
     protected void convert(BaseViewHolder helper, MyFeedbackResultBean.BizDataBean item) {
-        helper.setText(R.id.time_show_id,item.getCreateTime())
-                .setText(R.id.question_txt_id,item.getContent());
+        helper.setText(R.id.question_txt_id,item.getContent());
 
         //已回复
         if("2".equals(item.getStatus())){
             helper.setText(R.id.response_stadus_id,"已回复")
             .setText(R.id.response_nane_id,"口袋牧场回复:")
-            .setText(R.id.response_info_id,item.getReplyContent());
+            .setText(R.id.response_info_id,item.getReplyContent())
+            .setText(R.id.time_show_id,item.getReplyTime());
             //显示回复内容
             helper.setVisible(R.id.response_rv,true);
             helper.setVisible(R.id.ry_id,false);
         }else if("1".equals(item.getStatus())){
-            helper.setText(R.id.response_stadus_id,"未回复");
+            helper.setText(R.id.response_stadus_id,"未回复")
+            .setText(R.id.time_show_id,item.getCreateTime());
             //隐藏回复内容
             helper.setVisible(R.id.response_rv,false);
         }
