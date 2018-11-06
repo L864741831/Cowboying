@@ -16,4 +16,6 @@
     <color name="skyblue">#4393F5</color>
     <color name="colorhometxt">#101010</color>
     <color name="colormessegegray">#CCCCCC</color>
+    <color name="seekbar_bg_first">#D9D0B1</color>
+    <color name="seekbar_bg_last">#B0957A</color>
 </resources>

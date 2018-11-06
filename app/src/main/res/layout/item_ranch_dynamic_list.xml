@@ -21,10 +21,12 @@
         android:layout_height="wrap_content" android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp">
         <TextView
-            android:layout_width="wrap_content" android:id="@+id/name_id"
+            android:layout_width="match_parent" android:id="@+id/name_id"
             android:layout_height="wrap_content"
             android:textSize="15sp" android:text="澳大利亚牧场"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" android:layout_toLeftOf="@+id/time_id"
+            android:layout_marginRight="10dp" android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:layout_width="wrap_content" android:id="@+id/time_id"

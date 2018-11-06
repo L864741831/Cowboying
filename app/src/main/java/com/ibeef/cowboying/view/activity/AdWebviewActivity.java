@@ -65,13 +65,13 @@ public class AdWebviewActivity extends BaseActivity {
 
     @OnClick(R.id.back_id)
     public void onViewClicked() {
-        startActivity(new Intent(AdWebviewActivity.this, MainActivity.class));
+//        startActivity(new Intent(AdWebviewActivity.this, MainActivity.class));
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AdWebviewActivity.this, MainActivity.class));
+//        startActivity(new Intent(AdWebviewActivity.this, MainActivity.class));
         finish();
     }
 }

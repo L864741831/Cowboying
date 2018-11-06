@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:id="@+id/swipe_layout"
         android:layout_height="match_parent"
-        android:background="@color/homef7"
         android:orientation="vertical"  android:fadingEdge="vertical"
         android:scrollbars="vertical">
     <LinearLayout

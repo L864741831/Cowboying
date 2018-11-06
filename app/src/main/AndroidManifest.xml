@@ -141,7 +141,9 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.MyContractActivity"></activity>
+        <activity android:name=".view.activity.MyContractActivity" />
+        <activity android:name=".view.activity.BuyCowsPlanActivity" />
+        <activity android:name=".view.activity.CowsClaimActivity"></activity>
     </application>
 
 </manifest>
