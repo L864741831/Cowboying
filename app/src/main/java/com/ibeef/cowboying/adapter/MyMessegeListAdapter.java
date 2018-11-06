@@ -39,6 +39,6 @@ public class MyMessegeListAdapter extends BaseQuickAdapter<BaseBean,BaseViewHold
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.show_img_id);
-        Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
+//        Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
     }
 }

@@ -117,4 +117,5 @@ dependencies {
     implementation 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
     implementation 'com.qiniu:qiniu-android-sdk:7.3.+'
     implementation 'jp.wasabeef:richeditor-android:1.2.2'
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 }

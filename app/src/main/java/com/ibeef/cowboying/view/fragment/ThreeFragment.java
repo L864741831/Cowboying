@@ -7,18 +7,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.ModifyHeadResultBean;
+import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.RealNameReaultBean;
+import com.ibeef.cowboying.bean.UserInfoResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.UserInfoPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
+import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
 import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,7 +44,7 @@ import rxfamily.view.BaseFragment;
 /**
  * 牛人界面
  */
-public class ThreeFragment extends BaseFragment {
+public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
 
     @Bind(R.id.messege_id)
     ImageView messegeId;
@@ -85,10 +100,11 @@ public class ThreeFragment extends BaseFragment {
     RelativeLayout tellUsIdRv;
 
     private String token;
-
+    private UserInfoPresenter userInfoPresenter;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        userInfoPresenter=new UserInfoPresenter(this);
     }
 
     @Override
@@ -106,6 +122,10 @@ public class ThreeFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        userInfoPresenter.getUserInfo(reqData);
     }
 
     @Override
@@ -192,7 +212,11 @@ public class ThreeFragment extends BaseFragment {
                 break;
             case R.id.contract_id_rv:
                 //我的合同
-
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(MyContractActivity.class);
+                }
                 break;
             case R.id.invite_friend_id_rv:
                 //邀请好友
@@ -206,4 +230,56 @@ public class ThreeFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
+
+    }
+
+    @Override
+    public void getModifNick(ModifyNickResultBean modifyNickResultBean) {
+
+    }
+
+    @Override
+    public void getRealName(RealNameReaultBean realNameReaultBean) {
+
+    }
+
+    @Override
+    public void getUserInfo(UserInfoResultBean userInfoResultBean) {
+        if("000000".equals(userInfoResultBean.getCode())){
+            RequestOptions options = new RequestOptions()
+                    .error(R.mipmap.meheaddefalut)
+                    //加载错误之后的错误图
+                    .skipMemoryCache(true)
+                    //跳过内存缓存
+                    ;
+            Hawk.put(HawkKey.userId, userInfoResultBean.getBizData().getUserId()+"");
+            Glide.with(this).load(Constant.imageDomain+userInfoResultBean.getBizData().getHeadImage()).apply(options).into(headImg);
+
+        }else {
+            Toast.makeText(getHoldingActivity(),userInfoResultBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    public void isTakePhoeto(String msg) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        if(userInfoPresenter!=null){
+            userInfoPresenter.detachView();
+        }
+        super.onDestroy();
+    }
+
 }

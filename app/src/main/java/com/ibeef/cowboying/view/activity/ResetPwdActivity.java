@@ -71,7 +71,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
         stadus=getIntent().getStringExtra("stadus");
         editLoginPwdPresenter=new EditLoginPwdPresenter(this);
         if(setPwd){
-            //设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码
+            //5 11设置<账号安全<设置登录密码 跳到获取验证码界面 设置密码 修改登录密码
             stadusTitleId.setText("设置密码");
         }else {
             //忘记密码
@@ -150,7 +150,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
                 }
                 if(setPwd){
                     if("11".equals(stadus)){
-                        //设置<账号安全<设置登录密码 跳到获取验证码界面 修改密码
+                        //设置<账号安全<修改登录密码 跳到获取验证码界面 修改密码
                         EditLoginPwdParamBean editLoginPwdParamBean=new EditLoginPwdParamBean();
                         editLoginPwdParamBean.setPassWord(etNewPwd.getText().toString().trim());
                         editLoginPwdParamBean.setType("2");

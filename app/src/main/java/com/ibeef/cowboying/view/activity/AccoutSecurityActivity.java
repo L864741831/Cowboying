@@ -138,8 +138,15 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             case R.id.weixin_stadus_id:
                 //解绑弹框
                 type="3";
+                if(SDCardUtil.isNullOrEmpty(safeInfoResultBean)){
+                    return;
+                }
                 if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
                     if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getWxId())){
+                        if(!isMobie){
+                            showToast("小主人，绑定完手机号才可以解绑哟~");
+                            return;
+                        }
                         nameTxtId.setText("确认解除微信账号的绑定吗？");
                         showBindRv.setVisibility(View.VISIBLE);
                     }else {
@@ -151,8 +158,15 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             case R.id.zfb_stadus_id:
                 //解绑弹框
                 type="4";
+                if(SDCardUtil.isNullOrEmpty(safeInfoResultBean)){
+                    return;
+                }
                 if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData())){
                     if(!SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getZfbId())) {
+                        if(!isMobie){
+                            showToast("小主人，绑定完手机号才可以解绑哟~");
+                            return;
+                        }
                         nameTxtId.setText("确认解除支付宝账号的绑定吗？");
                         showBindRv.setVisibility(View.VISIBLE);
                     } else {
@@ -164,9 +178,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 if(!isSetPwd){
                     sureBtn("5");
                 }else {
-                    Intent intent=new Intent(AccoutSecurityActivity.this,MobileLoginActivity.class);
-                    intent.putExtra("stadus","11");
-                    startActivity(intent);
+                    sureBtn("11");
                 }
                 break;
             case R.id.modify_mobile_rv:
@@ -203,7 +215,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             return;
         }
         if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())) {
-            showToast("暂无手机号，请先设置手机号");
+            showToast("小主人,请先绑定手机号,才可以操作哟~");
             return;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -345,10 +357,10 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         if("000000".equals(safeInfoResultBean.getCode())){
             this.safeInfoResultBean=safeInfoResultBean;
             if("1".equals(safeInfoResultBean.getBizData().getIsPassWord())){
-                isSetPwd=false;
+                isSetPwd=true;
                 modifyPwdId.setText("修改登录密码");
             } else {
-                isSetPwd = true;
+                isSetPwd = false;
                 modifyPwdId.setText("设置登录密码");
             }
             if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())) {

@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.config.Constant;
 
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class MyFeedbackImgAdapter extends BaseQuickAdapter<String,BaseViewHolder
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.upload_img);
-        Glide.with(mContext).load(item).apply(options).into(imageView);
+        Glide.with(mContext).load(Constant.imageDomain+item).apply(options).into(imageView);
     }
 
 }

@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" android:orientation="vertical"
     tools:context=".view.activity.OptionReturnActivity" android:background="@color/white">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" android:background="@color/homef7"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:layout_marginLeft="10dp"
@@ -12,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content" android:id="@+id/response_stadus_id"
             android:layout_height="wrap_content" android:background="@drawable/shape_square_btn"
-            android:text="已回复" android:textColor="@color/white"
+            android:text="未回复" android:textColor="@color/white"
             android:textSize="11sp"  android:paddingLeft="5dp"
             android:paddingTop="3dp" android:paddingBottom="5dp"
             android:paddingRight="5dp"/>
@@ -28,12 +30,16 @@
         android:layout_height="wrap_content" android:textSize="14sp"
         android:text="亲，我买的牛肉想退换货怎么弄？" android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp" android:layout_marginRight="10dp"/>
-
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content" android:id="@+id/ry_id"
+        android:layout_height="wrap_content" android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:layout_gravity="center"
+        android:layout_marginBottom="10dp"/>
     <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/response_rv"
-        android:layout_height="wrap_content" android:layout_marginTop="25dp"
-        android:layout_marginLeft="10dp" android:layout_marginRight="10dp"
-        android:visibility="gone" android:layout_marginBottom="15dp">
+        android:layout_height="wrap_content" android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:layout_marginBottom="15dp"
+        android:visibility="gone">
         <ImageView
             android:layout_width="18dp" android:id="@+id/icon_response_id"
             android:layout_height="18dp" android:src="@mipmap/cowboyresponse" />
@@ -48,12 +54,6 @@
             android:layout_below="@+id/response_nane_id" android:layout_marginTop="10dp"
             android:textSize="14sp"/>
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content" android:id="@+id/ry_id"
-        android:layout_height="wrap_content" android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" android:layout_gravity="center"
-        android:layout_marginBottom="15dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp" android:background="@color/homef7"/>
+
+
 </LinearLayout>

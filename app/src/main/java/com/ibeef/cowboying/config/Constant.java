@@ -7,14 +7,17 @@ public class Constant {
     /**
      * 殷俊杰服务
      */
-//      public static final String BASE_URL = "http://192.168.0.122:8082/";
+//    public static final String BASE_URL = "http://192.168.0.122:8082/";
 //    public static final String BASE_URL = "http://192.168.0.162:8090/";
-//    public static final String BASE_URL = "http://192.168.1.100:8090/";
-      public static final String BASE_URL = "http://120.27.12.205:9001/";
+    public static final String BASE_URL = "http://120.27.12.205:9001/";
+    /**
+     * 阿里云应用服务器地址
+     */
+    public static final String BASE_URLAL = "http://120.27.12.205:9001";
     /**
      * 微信支付appid
      */
-    public static final String APP_ID = "";
+    public static final String APP_ID = "wx24d5c4c32ab90b65";
     /**
      * 错误日志 标签 tag
      */
@@ -47,7 +50,8 @@ public class Constant {
     /**
      * //测试环境图片服务器域名
      */
-    public static String imageDomain = "http://lgf8953.oss-cn-beijing.aliyuncs.com/";
+//    public static String imageDomain = "http://lgf8953.oss-cn-beijing.aliyuncs.com/";
+    public static String imageDomain = "http://pasture-center.oss-cn-beijing.aliyuncs.com/";
     /**
      * //正式七牛获取token
      */

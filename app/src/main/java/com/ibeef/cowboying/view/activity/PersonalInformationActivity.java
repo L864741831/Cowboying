@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -21,12 +23,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.FeedbackBase;
+import com.ibeef.cowboying.base.GetOssImgBase;
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
@@ -34,6 +50,7 @@ import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
+import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
@@ -41,7 +58,9 @@ import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
+import com.ibeef.cowboying.presenter.GetOssImgPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
+import com.ibeef.cowboying.utils.Md5Utils;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
@@ -67,7 +86,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 个人信息界面
  */
-public class PersonalInformationActivity extends BaseActivity implements UserInfoBase.IView ,FeedbackBase.IView{
+public class PersonalInformationActivity extends BaseActivity implements UserInfoBase.IView ,GetOssImgBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -130,7 +149,11 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     @SuppressLint("SdCardPath")
     private static String path = "/storage/emulated/0/myHead/";
     private boolean isCheck=false,isBindPhone=false;
-    private FeedbackPresenter feedbackPresenter;
+    private GetOssImgPresenter getOssImgPresenter;
+    private ClientConfiguration conf = null;
+    private OSS oss = null;
+    private OssResultBean ossResultBean;
+    private List<String> stringList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +168,9 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         token= Hawk.get(HawkKey.TOKEN);
         userId= Hawk.get(HawkKey.userId);
         userInfoPresenter=new UserInfoPresenter(this);
-        feedbackPresenter=new FeedbackPresenter(this);
+        getOssImgPresenter=new GetOssImgPresenter(this);
+        getOssImgPresenter.getOssImg(getVersionCodes());
+        stringList=new ArrayList<>();
     }
 
     @Override
@@ -332,6 +357,120 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         startActivityForResult(intent2, 2);
     }
 
+    /**
+     * 调用这个方法之前必须先设置accessKeyId，accessKeySecret，securityToken;
+     */
+    public  void initOss( String accessKeyId,
+                          String accessKeySecret,
+                          String securityToken,String Endpoint){
+        conf = new ClientConfiguration();
+        conf.setConnectionTimeout(5*60*1000);
+        conf.setSocketTimeout(5*60*1000);
+        conf.setMaxConcurrentRequest(5);
+        conf.setMaxErrorRetry(2);
+        OSSLog.enableLog();
+
+        OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(
+                accessKeyId, accessKeySecret,
+                securityToken
+        );
+
+        oss = new OSSClient(PersonalInformationActivity.this,Endpoint,credentialProvider,conf);
+    }
+
+    /**
+     * 阿里云OSS上传（默认是异步多文件上传）
+     * @param urls
+     */
+    private void ossUpload(final List<String> urls, final String BucketName, final String Folder) {
+        if (urls.size() <= 0) {
+            handler.sendEmptyMessage(0);
+            // 文件全部上传完毕，这里编写上传结束的逻辑，如果要在主线程操作，最好用Handler或runOnUiThead做对应逻辑
+            return;// 这个return必须有，否则下面报越界异常，原因自己思考下哈
+        }
+        final String url = urls.get(0);
+        if (TextUtils.isEmpty(url)) {
+            urls.remove(0);
+            // url为空就没必要上传了，这里做的是跳过它继续上传的逻辑。
+            ossUpload(urls,BucketName,Folder);
+            return;
+        }
+
+        File file = new File(url);
+        if (null == file || !file.exists()) {
+            urls.remove(0);
+            // 文件为空或不存在就没必要上传了，这里做的是跳过它继续上传的逻辑。
+            ossUpload(urls,BucketName,Folder);
+            return;
+        }
+        // 文件后缀
+        String fileSuffix = "";
+        if (file.isFile()) {
+            // 获取文件后缀名
+            fileSuffix = file.getName().substring(file.getName().lastIndexOf("."));
+        }
+        // 文件标识符objectKey
+        final String objectKey = Folder + Md5Utils.stringToMD5(Md5Utils.getFileName(url)) + fileSuffix;
+        Log.e(Constant.TAG,objectKey+"?????????");
+        // 下面3个参数依次为bucket名，ObjectKey名，上传文件路径
+        PutObjectRequest put = new PutObjectRequest(BucketName, objectKey, url);
+
+        // 设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                // 进度逻辑
+            }
+        });
+        // 异步上传
+        oss.asyncPutObject(put,
+                new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                    @Override
+                    public void onSuccess(PutObjectRequest request, PutObjectResult result) { // 上传成功
+                        urls.remove(0);
+                        stringList.add(objectKey);
+                        // 递归同步效果
+                        ossUpload(urls,BucketName,Folder);
+                    }
+
+                    @Override
+                    public void onFailure(PutObjectRequest request, ClientException clientExcepion,
+                                          ServiceException serviceException) { // 上传失败
+                        // 请求异常
+                        if (clientExcepion != null) {
+                            // 本地异常如网络异常等
+                            clientExcepion.printStackTrace();
+                        }
+                        if (serviceException != null) {
+                            // 服务异常
+                            Log.e("ErrorCode", serviceException.getErrorCode());
+                            Log.e("RequestId", serviceException.getRequestId());
+                            Log.e("HostId", serviceException.getHostId());
+                            Log.e("RawMessage", serviceException.getRawMessage());
+                        }
+                    }
+                });
+    }
+    @SuppressLint("HandlerLeak")
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==0){
+                Toast.makeText(PersonalInformationActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
+
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
+                ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
+                modifyHeadParamBean.setImageUrl(stringList.get(0));
+                userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
+                dismissLoading();
+            }
+
+        }
+    };
+
     @Override
     public void showMsg(String msg) {
         if(!TextUtils.isEmpty(msg)){
@@ -345,14 +484,16 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     }
 
     @Override
-    public void getMyFeedback(MyFeedbackResultBean myFeedbackResultBean) {
-
+    public void getOssImg(OssResultBean ossResultBean) {
+        if("000000".equals(ossResultBean.getCode())){
+            this.ossResultBean=ossResultBean;
+            initOss(ossResultBean.getBizData().getAccessKeyId(),ossResultBean.getBizData().getAccessKeySecret(),ossResultBean.getBizData().getSecurityToken(),ossResultBean.getBizData().getEndpoint());
+        }else {
+            showToast(ossResultBean.getMessage());
+        }
     }
 
-    @Override
-    public void getSubmitFeedback(SubmitFeedbackResultBean submitFeedbackResultBean) {
 
-    }
 
     @Override
     public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
@@ -404,7 +545,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                     //跳过内存缓存
                     ;
             Hawk.put(HawkKey.userId, userInfoResultBean.getBizData().getUserId()+"");
-            Glide.with(this).load(userInfoResultBean.getBizData().getHeadImage()).apply(options).into(ivIcon);
+            Glide.with(this).load(Constant.imageDomain+userInfoResultBean.getBizData().getHeadImage()).apply(options).into(ivIcon);
             nicknameTxt.setText("");
             if("0".equals(userInfoResultBean.getBizData().getIsValidate())){
                 //未认证
@@ -442,19 +583,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     @Override
     public void isTakePhoeto(String msg) {
         imgPath=msg;
-        Log.e(Constant.TAG,imgPath+"??????????头像");
-        //文件上传图片
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        List<MultipartBody.Part> parts = new ArrayList<>(1);
-        File file = new File(imgPath);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData(file.getName(), file.getName(), requestBody);
-        parts.add(part);
-
-        Log.e(Constant.TAG,file.getName()+"??????????头像" + file);
-        feedbackPresenter.getUploadImg(reqData,parts);
+        showLoadings();
+        List<String> photos=new ArrayList<>();
+        photos.add(imgPath);
+        if(!SDCardUtil.isNullOrEmpty(ossResultBean)){
+            if(!SDCardUtil.isNullOrEmpty(ossResultBean.getBizData())){
+                ossUpload(photos,ossResultBean.getBizData().getBucketName(),ossResultBean.getBizData().getFolder());
+            }
+        }
     }
 
 
@@ -520,36 +656,11 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         }
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void getUploadImg(MdUploadImgBean mdUploadImgBean) {
-        if("000000".equals(mdUploadImgBean.getCode())){
-            Toast.makeText(PersonalInformationActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
-
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
-            ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
-            modifyHeadParamBean.setImageUrl(mdUploadImgBean.getBizData().get(0).getFilePath());
-            userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
-        }else {
-            Toast.makeText(PersonalInformationActivity.this,mdUploadImgBean.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onDestroy() {
-        if(feedbackPresenter!=null){
-            feedbackPresenter.detachView();
+        if(getOssImgPresenter!=null){
+            getOssImgPresenter.detachView();
         }
         super.onDestroy();
     }

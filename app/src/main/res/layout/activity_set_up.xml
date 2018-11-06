@@ -153,10 +153,10 @@
             style="@style/line2" android:layout_alignParentBottom="true"/>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="match_parent" android:id="@+id/unlogin_rv"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="match_parent" android:id="@+id/unlogin_rv"
             android:layout_height="50dp" android:background="@color/colorAccent"
             android:textColor="@color/colorGold" android:text="退出登录"
             android:layout_alignParentBottom="true" android:gravity="center"

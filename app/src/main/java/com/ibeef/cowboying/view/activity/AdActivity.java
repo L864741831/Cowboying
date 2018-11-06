@@ -17,6 +17,7 @@ import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.presenter.HomeAdPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -106,17 +107,24 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
     @Override
     public void getHomeAd(HomeAdResultBean homeAdResultBean) {
         if("000000".equals(homeAdResultBean.getCode())){
-            RequestOptions options = new RequestOptions()
-                    .error(R.mipmap.startup)
-                    //加载错误之后的错误图
-                    .skipMemoryCache(true)
-                    //跳过内存缓存
-                    ;
-            if(!TextUtils.isEmpty(homeAdResultBean.getBizData().getLinkUrl())){
-                isShow=true;
+            if(!SDCardUtil.isNullOrEmpty(homeAdResultBean.getBizData())){
+                RequestOptions options = new RequestOptions()
+                        .error(R.mipmap.startup)
+                        //加载错误之后的错误图
+                        .skipMemoryCache(true)
+                        //跳过内存缓存
+                        ;
+                if(!TextUtils.isEmpty(homeAdResultBean.getBizData().getLinkUrl())){
+                    isShow=true;
+                }
+                this.homeAdResultBean=homeAdResultBean;
+                Glide.with(this).load(Constant.imageDomain+homeAdResultBean.getBizData().getImageUrl()).apply(options).into(bgImg);
+            }else {
+                continueCount = false;
+                startActivity(new Intent(AdActivity.this, MainActivity.class));
+                finish();
             }
-            this.homeAdResultBean=homeAdResultBean;
-            Glide.with(this).load(Constant.imageDomain+homeAdResultBean.getBizData().getImageUrl()).apply(options).into(bgImg);
+
         }else {
             showToast(homeAdResultBean.getMessage());
         }

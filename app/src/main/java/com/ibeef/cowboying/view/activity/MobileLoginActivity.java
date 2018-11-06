@@ -137,9 +137,20 @@ public class MobileLoginActivity extends BaseActivity {
             stadusTitleId.setText("输入新的手机号");
             oldmobile = getIntent().getStringExtra("oldmobile");
         }
+        cancleTxtId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  第三方登录取消绑定手机号  跳转到主界面
+                Intent intent1 = new Intent(MobileLoginActivity.this, MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+                finish();
+            }
+        });
     }
 
-    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.cancle_txt_id, R.id.sure_txt_id, R.id.show_bind_rv, R.id.register_rule_id})
+    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.sure_txt_id, R.id.show_bind_rv, R.id.register_rule_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_img_id:
@@ -150,13 +161,6 @@ public class MobileLoginActivity extends BaseActivity {
                 break;
             case R.id.show_bind_rv:
                 showBindRv.setVisibility(View.GONE);
-                break;
-            case R.id.cancle_txt_id:
-                //  第三方登录取消绑定手机号  跳转到主界面
-                Intent intent1 = new Intent(MobileLoginActivity.this, MainActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent1);
                 break;
             case R.id.sure_txt_id:
                 //  第三方登录绑定手机号  继续绑定

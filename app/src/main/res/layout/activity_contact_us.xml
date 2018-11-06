@@ -1,15 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:orientation="vertical" android:background="@color/white"
     android:layout_height="match_parent"
-    android:background="@color/gray_8f"
     tools:context=".view.activity.SetUpActivity">
-    <include layout="@layout/include_title"/>
-    <WebView
-        android:id="@+id/web_id"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </WebView>
-</LinearLayout>
+        android:layout_height="match_parent" android:orientation="vertical">
+        <include layout="@layout/include_title"/>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp" android:src="@mipmap/cowicon"
+            android:layout_gravity="center_horizontal" android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="河南年青人科技有限公司"
+            android:layout_marginTop="40dp" android:textSize="15sp"
+            android:layout_gravity="center_horizontal"/>
+        <View style="@style/line1" android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp" android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="NIANQINGREN"
+            android:layout_marginTop="10dp" android:textSize="15sp"
+            android:layout_gravity="center_horizontal"/>
+        <View style="@style/line1" android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp" android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="免费客服电话：0371-8888888"
+            android:layout_marginTop="10dp" android:textSize="15sp"
+            android:layout_gravity="center_horizontal"/>
+        <View style="@style/line1" android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp" android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="中国办公室：0371-8888888"
+            android:layout_marginTop="10dp" android:textSize="15sp"
+            android:layout_gravity="center_horizontal"/>
+        <View style="@style/line1" android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp" android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="澳洲办公室：0371-8888888"
+            android:layout_marginTop="10dp" android:textSize="15sp"
+            android:layout_gravity="center_horizontal"/>
+        <View style="@style/line1" android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp" android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="联系邮箱：1124547896@126.com"
+            android:layout_marginTop="10dp" android:textSize="15sp"
+            android:layout_gravity="center_horizontal"/>
+        <View style="@style/line1" android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp" android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="其他问题请在\''口袋牧场\''微信公众号留言"
+            android:layout_marginTop="40dp" android:textSize="16sp"
+            android:layout_gravity="center_horizontal" android:textColor="@color/black"
+            android:layout_marginBottom="60dp"/>
+    </LinearLayout>
+
+</ScrollView>

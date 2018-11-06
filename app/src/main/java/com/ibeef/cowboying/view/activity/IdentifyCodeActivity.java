@@ -363,7 +363,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     public void getValidateSms(SmsCodeResultBean smsCodeResultBean) {
         if("000000".equals(smsCodeResultBean.getCode())){
             if("1".equals(stadus)||"5".equals(stadus)||"11".equals(stadus)){
-                //1来自忘记密码，跳到重置密码界面，  //5 设置<账号安全<设置登录密码
+                //1来自忘记密码，跳到重置密码界面，  //5 11设置<账号安全<设置登录密码  修改登录密码
                 Intent intent=new Intent(IdentifyCodeActivity.this,ResetPwdActivity.class);
                 if("1".equals(stadus)){
                     intent.putExtra("setPwd",false);

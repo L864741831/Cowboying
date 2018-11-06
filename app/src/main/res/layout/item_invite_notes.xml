@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:orientation="horizontal"
+    android:layout_height="50dp" android:background="@color/white"
+    tools:context=".view.activity.InviteFriendHistoryActivity">
+
+    <TextView
+        android:layout_width="wrap_content" android:id="@+id/code_txt_id"
+        android:layout_height="wrap_content" android:textSize="15sp"
+        android:text="1" android:textColor="@color/colorAccent"
+        android:layout_marginLeft="15dp" android:layout_gravity="center_vertical"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="30dp" android:id="@+id/head_img_id"
+        android:layout_height="30dp" android:layout_gravity="center_vertical"
+        android:src="@mipmap/cowicon" android:layout_marginLeft="15dp"/>
+    <TextView
+        android:layout_width="wrap_content" android:id="@+id/nickname_txt_id"
+        android:layout_height="wrap_content" android:textSize="15sp"
+        android:text="陌上花开" android:textColor="@color/colorAccent"
+        android:layout_marginLeft="15dp" android:layout_gravity="center_vertical"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/time_txt_id"
+            android:layout_height="wrap_content" android:text="2018-09-20"
+            android:textSize="15sp" android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" android:layout_marginRight="15dp"/>
+    </RelativeLayout>
+</LinearLayout>
