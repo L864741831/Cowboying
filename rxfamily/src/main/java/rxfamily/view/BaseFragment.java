@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.trello.rxlifecycle.components.support.RxFragment;
 
@@ -92,6 +93,14 @@ public abstract class BaseFragment extends RxFragment {
         return view;
     }
 
+
+    public void showToast(String txt) {
+        try {
+            Toast.makeText(getHoldingActivity(), txt, Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

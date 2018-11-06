@@ -44,6 +44,7 @@ public class PasturePresenter extends BasePresenter implements PastureBase.IPres
             @Override
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
+                mView.hideLoading();
                 mView.showMsg(msg);
             }
         }));

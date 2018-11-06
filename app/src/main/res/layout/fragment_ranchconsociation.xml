@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/white">
+    <include
+        layout="@layout/loading_layout"
+        android:id="@+id/loading_layout"  />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdge="vertical"
+        android:orientation="vertical"
+        android:scrollbars="vertical" >
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="vertical" android:scrollbars="vertical"
+            android:fadingEdge="vertical" android:id="@+id/nest_scroll_id">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_ranch_canosciation"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:src="@mipmap/vediostart"
+                        android:layout_gravity="center_horizontal" android:layout_marginTop="60dp"/>
+                </FrameLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/sign"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:text="牧场实拍"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_wenzi_black"
+                    />
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="153dp" app:image_scale_type="fit_xy"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ranch_consociation_icon_2"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:text="牧场直播"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_wenzi_black"
+                    android:layout_marginBottom="15dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_ranch_consociation_live"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ranch_consociation_banner_2" />
+
+                <jp.wasabeef.richeditor.RichEditor
+                    android:id="@+id/rich_editext_info_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="50dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ranch_consociation_icon_3"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:text="其他肉类制作"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_wenzi_black"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="vertical"
+                    android:visibility="gone">
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent" android:id="@+id/ry_id"
+                        android:layout_height="wrap_content" app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        android:scrollbars="none" android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="50dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
