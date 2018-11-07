@@ -144,7 +144,7 @@ public class CowsClaimActivity extends BaseActivity {
                 if(TextUtils.isEmpty(token)){
                     startActivity(LoginActivity.class);
                 }else {
-                    if(true){
+                    if(false){
                         //已实名认证
                         startActivity(ClaimCertificationActivity.class);
                     }else {
