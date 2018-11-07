@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -137,7 +139,6 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void showMsg(String msg) {
-        showToast(msg);
     }
 
     @Override

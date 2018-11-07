@@ -98,7 +98,7 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
         richEditextInfoTv.setEditorFontSize(16);
         richEditextInfoTv.setEditorFontColor(Color.BLACK);
         richEditextInfoTv.setInputEnabled(false);
-        richEditextInfoTv.setPadding(3, 5, 5, 5);
+        richEditextInfoTv.setPadding(0, 0, 0, 0);
         richEditextInfoTv.loadCSS("file:///android_asset/img.css");
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeLayout.setOnRefreshListener(this);

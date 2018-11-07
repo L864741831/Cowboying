@@ -17,7 +17,7 @@ public class CowClaimBuyWayFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_second;
+        return R.layout.fragment_cow_cliam_bugway;
     }
 
     @Override

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    tools:context=".view.activity.BuyCowsPlanActivity">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginBottom="12dp">
+            <ImageView
+                android:layout_width="match_parent" android:id="@+id/show_img_id"
+                android:layout_height="150dp" android:src="@color/grassgreen"
+                android:scaleType="fitXY"/>
+            <RelativeLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                android:gravity="right" android:layout_marginTop="100dp">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/parsture_addr_id"
+                    android:layout_height="wrap_content" android:text="阿拉斯加牧场"
+                    android:textSize="13sp" android:textColor="@color/white"
+                    android:drawableLeft="@mipmap/pastureaddr" android:drawablePadding="5dp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="300dp" android:layout_marginTop="120dp"
+                android:layout_height="160dp" android:orientation="vertical"
+                android:background="@drawable/shape_square_btn" android:layout_gravity="center_horizontal"
+                android:padding="15dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/periods_txt_id"
+                        android:layout_height="wrap_content" android:textColor="@color/white"
+                        android:text="122222期" android:textSize="13sp" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/vip_level_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="· VIP1 ·" android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_txt_id"
+                        android:layout_height="wrap_content" android:textColor="@color/colorGolds"
+                        android:text="9.0%" android:textSize="17sp" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_way_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="T+7" android:textColor="@color/colorGolds"
+                        android:textSize="17sp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/minlevle_txt_id"
+                        android:layout_height="wrap_content" android:textColor="@color/white"
+                        android:text="5000起投" android:textSize="13sp" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/minpercent_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="进度10%" android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_zero_txt_id"
+                        android:layout_height="wrap_content" android:textColor="@color/white"
+                        android:text="0%" android:textSize="13sp" />
+                    <SeekBar
+                        android:layout_width="match_parent" android:id="@+id/seekbar_id"
+                        android:layout_height="3dp" android:max="100"
+                        android:progressDrawable="@drawable/seekbar_bg" android:layout_toRightOf="@+id/percent_zero_txt_id"
+                        android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true"
+                        android:thumb="@null" android:progress="100" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_hundred_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="100%" android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/now_claim_btn_id"
+                    android:layout_height="wrap_content" android:text="立即认领"
+                    android:textColor="@color/black" android:background="@drawable/shape_oval_white2_btn"
+                    android:paddingLeft="30dp" android:paddingRight="30dp" android:paddingTop="5dp"
+                    android:paddingBottom="5dp" android:layout_gravity="center"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </FrameLayout>
+</LinearLayout>

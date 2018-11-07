@@ -1,10 +1,7 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.UserInfoBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
@@ -13,6 +10,7 @@ import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.net.ResponseHandler;
 
 import java.util.Map;
 
@@ -23,7 +21,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxfamily.net.HttpService;
 import rxfamily.net.ResponseCallback;
-import rxfamily.net.ResponseHandler;
 import rxfamily.net.RetryWithDelay;
 
 /**

@@ -65,7 +65,9 @@ public class InviteFriendHistoryActivity extends BaseActivity implements SwipeRe
             BaseBean baseBean=new BaseBean();
             beanList.add(baseBean);
         }
+        swipeLayout.setColorSchemeResources(R.color.colorAccent);
         swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setEnabled(true);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         inviteNotesAdapter=new InviteNotesAdapter(beanList,this,R.layout.item_invite_notes);
         ryId.setAdapter(inviteNotesAdapter);

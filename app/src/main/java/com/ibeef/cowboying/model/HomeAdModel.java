@@ -4,8 +4,8 @@ import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.LoginBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
-import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.net.ResponseHandler;
 
 import rx.Observable;
 import rx.Subscription;
@@ -14,7 +14,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxfamily.net.HttpService;
 import rxfamily.net.ResponseCallback;
-import rxfamily.net.ResponseHandler;
 import rxfamily.net.RetryWithDelay;
 
 /**

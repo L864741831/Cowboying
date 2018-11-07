@@ -1,14 +1,12 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.SmscodeBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.net.ResponseHandler;
 
 import rx.Observable;
 import rx.Subscription;
@@ -17,7 +15,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxfamily.net.HttpService;
 import rxfamily.net.ResponseCallback;
-import rxfamily.net.ResponseHandler;
 import rxfamily.net.RetryWithDelay;
 
 /**

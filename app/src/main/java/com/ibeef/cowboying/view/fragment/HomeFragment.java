@@ -311,6 +311,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
         beanList.addAll(homeAdResultBean.getBizData());
+
+        HomeVideoResultBean  homeVideoResultBean=new HomeVideoResultBean();
+        HomeVideoResultBean.BizDataBean bizDataBean=homeVideoResultBean.new BizDataBean();
+        bizDataBean.setCoverUrl("1");
+
+        beanList.add(bizDataBean);
         ranchDynamicsAdapter.setNewData(this.beanList);
         ranchDynamicsAdapter.loadMoreEnd();
     }

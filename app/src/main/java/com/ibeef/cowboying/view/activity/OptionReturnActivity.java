@@ -226,7 +226,9 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                 reqData.put("version",getVersionCodes());
                 SubmitFeedbackParamBean submitFeedbackParamBean=new SubmitFeedbackParamBean();
                 submitFeedbackParamBean.setContent(etOpinion.getText().toString().trim());
-                stringList.remove(0);
+                if(stringList.size()>0){
+                    stringList.remove(0);
+                }
                 submitFeedbackParamBean.setImageList(stringList);
                 if (!TextUtils.isEmpty(token)) {
                     feedbackPresenter.getSubmitFeedback(reqData,submitFeedbackParamBean);
@@ -243,6 +245,7 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
                 break;
         }
     }
+
 
     /**
      * 调用图库选择
@@ -403,7 +406,6 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     public void showMsg(String msg) {
-        showToast(msg);
     }
 
     @Override
