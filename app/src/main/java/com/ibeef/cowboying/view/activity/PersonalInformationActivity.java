@@ -237,6 +237,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
             case R.id.modify_btn:
                 if(isNickname){
                     // 昵称
+                    if(TextUtils.isEmpty(etWriteId.getText().toString().trim())){
+                        showToast("修改昵称不能为空~");
+                        return;
+                    }
+                    if(etWriteId.getText().toString().trim().length()>40){
+                        showToast("修改的昵称不能超过40个字哟~");
+                        return;
+                    }
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());
@@ -245,6 +253,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                     userInfoPresenter.getModifNick(reqData,modifyNickParamBean);
                 }else {
                     // 实名认证
+                    if(TextUtils.isEmpty(etWriteId.getText().toString().trim())){
+                        showToast("实名认证姓名不能为空~");
+                        return;
+                    }
+                    if(TextUtils.isEmpty(etWriteId1.getText().toString().trim())){
+                        showToast("实名认证身份证号不能为空~");
+                        return;
+                    }
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());

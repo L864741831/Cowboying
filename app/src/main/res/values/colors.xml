@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#1B1919</color>
     <color name="colorAccent">#1B1919</color>
     <color name="colorGold">#CEB891</color>
-    <color name="colorline">#E4E4E4</color>
+    <color name="colorline">#f3f3f3</color>
     <color name="colorhome">#F3F3F3</color>
     <color name="colorGold_1">#B7894E</color>
     <color name="colorGold_2">#8B5630</color>
@@ -18,4 +18,5 @@
     <color name="colormessegegray">#CCCCCC</color>
     <color name="seekbar_bg_first">#D9D0B1</color>
     <color name="seekbar_bg_last">#B0957A</color>
+    <color name="qian_red">#FA3F3F</color>
 </resources>

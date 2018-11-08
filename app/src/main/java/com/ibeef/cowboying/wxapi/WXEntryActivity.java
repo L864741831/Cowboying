@@ -91,17 +91,17 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
                 }
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
-                result = "发送取消";
+                result = "授权失败";
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                result = "发送被拒绝";
+                result = "授权失败";
                 break;
             case BaseResp.ErrCode.ERR_UNSUPPORT:
-                result = "不支持错误";
+                result = "授权失败";
                 break;
             default:
-                result = "发送返回";
+                result = "授权失败";
                 break;
         }
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();

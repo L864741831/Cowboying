@@ -122,11 +122,16 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" android:id="@+id/is_coupon_rv">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:id="@+id/quan_txt_id"
             android:layout_height="wrap_content" android:textColor="@color/black"
             android:text="优惠券" android:layout_marginLeft="20dp"
             android:textSize="14sp" android:layout_centerVertical="true"/>
-
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/coupon_num_id"
+            android:layout_height="wrap_content" android:text="5张可用"
+            android:layout_toRightOf="@+id/quan_txt_id"
+            android:gravity="center" android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" android:textColor="@color/red"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/is_use_id"
             android:layout_height="wrap_content" android:text="无可用"

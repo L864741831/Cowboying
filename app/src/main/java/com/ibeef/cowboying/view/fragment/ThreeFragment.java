@@ -132,6 +132,11 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
         if(TextUtils.isEmpty(token)){
             nameId.setText("全民养牛");
             headImg.setImageResource(R.mipmap.defaulthead);
+        }else {
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            userInfoPresenter.getUserInfo(reqData);
         }
     }
 

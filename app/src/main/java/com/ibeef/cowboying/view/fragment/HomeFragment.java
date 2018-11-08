@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -70,11 +71,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public static final String KEY_HISTORY_KEYWORD = "key_mPrefDailogtimes";
     public String history;
     private boolean isFirstAdDialog=true;
+    private RelativeLayout rv_show_id;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
+        rv_show_id=view.findViewById(R.id.rv_show_id);
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
@@ -105,9 +108,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 super.onScrolled(recyclerView, dx, dy);
                 if(!homeRyId.canScrollVertically(-1)){
                     swipeLy.setEnabled(true);
+                    rv_show_id.setVisibility(View.GONE);
                 }else {
                     swipeLy.setEnabled(false);
+                    rv_show_id.setVisibility(View.VISIBLE);
                 }
+
             }
         });
 

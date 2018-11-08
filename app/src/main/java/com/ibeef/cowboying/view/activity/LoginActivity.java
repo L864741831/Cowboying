@@ -163,7 +163,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                     } else {
                         // 其他状态值则为授权失败
                         Toast.makeText(LoginActivity.this,
-                                "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT).show();
+                                "授权失败", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -211,4 +211,14 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         }
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent1);
+
+    }
+
 }

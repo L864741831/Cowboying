@@ -28,8 +28,8 @@
                 android:inputType="text" android:singleLine="true"
                 android:maxLines="1"/>
             <ImageView
-                android:layout_width="21dp"
-                android:layout_height="21dp"  android:layout_alignParentRight="true"
+                android:layout_width="15dp"
+                android:layout_height="15dp"  android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" android:layout_marginRight="27dp"
                 android:id="@+id/cancle_img1" android:src="@mipmap/circle_delete" />
 

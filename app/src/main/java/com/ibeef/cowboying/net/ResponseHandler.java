@@ -32,7 +32,6 @@ public class ResponseHandler {
 
             if(code==401){
                 Hawk.put(HawkKey.TOKEN, "");
-                Toast.makeText(CowboyingApplication.getInstance(), "Authorization失效，请重新登录", Toast.LENGTH_SHORT).show();
                 CowboyingApplication.getInstance().startActivity(new Intent(CowboyingApplication.getInstance(), LoginActivity.class));
                 return "未登录";
             }

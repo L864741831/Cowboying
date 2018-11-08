@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ver="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/homef7"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.SureOderActivity">
+    <include layout="@layout/include_title" android:id="@+id/inclut_id"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"  android:layout_below="@+id/inclut_id"
+        android:layout_above="@+id/sure_pay_btn">
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent" android:layout_marginTop="10dp"
+                    android:layout_height="100dp" android:background="@color/white">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="65dp" android:id="@+id/head_img"
+                        android:layout_height="65dp" android:src="@mipmap/meheaddefalut"
+                        android:layout_margin="15dp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/nick_name_txt"
+                        android:layout_height="wrap_content" android:text="昵称：牛人10021"
+                        android:textColor="@color/black"
+                        android:layout_toRightOf="@+id/head_img" android:layout_marginTop="20dp"
+                        android:textSize="14sp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/order_code_txt"
+                        android:layout_height="wrap_content" android:textColor="@color/black"
+                        android:text="订单编号：20180033333333"
+                        android:layout_alignLeft="@+id/nick_name_txt" android:layout_below="@+id/nick_name_txt"
+                        android:layout_marginTop="10dp" android:textSize="14sp"
+                        android:maxLines="1" android:ellipsize="end"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="vertical"
+                    android:layout_marginTop="7dp" android:background="@color/white">
+                    <TextView
+                        android:layout_width="wrap_content" android:textColor="@color/black"
+                        android:layout_height="wrap_content" android:text="支付总额"
+                        android:layout_gravity="center_horizontal" android:textSize="14sp"
+                        android:layout_marginTop="15dp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/pay_money_id"
+                        android:layout_height="wrap_content" android:textSize="20sp"
+                        android:text="￥1" android:textStyle="bold"
+                        android:textColor="@color/black" android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/coupon_money_id"
+                        android:layout_height="wrap_content" android:text="已优惠￥4999"
+                        android:textSize="14sp" android:layout_gravity="center_horizontal"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp" android:layout_marginRight="15dp"
+                        android:layout_marginBottom="40dp">
+                        <TextView
+                            android:layout_width="match_parent" android:id="@+id/know_name_id"
+                            android:layout_height="wrap_content" android:text="认领人：陌上花开"
+                            android:textSize="14sp" android:textColor="@color/black"
+                            android:layout_toLeftOf="@+id/know_mobile_id" android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/know_mobile_id"
+                            android:layout_height="wrap_content" android:text="18900000000"
+                            android:textSize="14sp" android:textColor="@color/black"
+                            android:layout_alignParentRight="true"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/know_identifycode_id"
+                            android:layout_height="wrap_content" android:text="身份证号：410223100000000000"
+                            android:textSize="14sp" android:textColor="@color/black"
+                            android:layout_below="@+id/know_name_id" android:layout_marginTop="10dp"/>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="认领期数"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/know_code_id"
+                            android:layout_height="wrap_content" android:text="第201822222期"
+                            android:textSize="14sp" android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp" android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="认领牧场"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/know_pasture_id"
+                            android:layout_height="wrap_content" android:text="Ben Nevis"
+                            android:textSize="14sp" android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp" android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="认领只数"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/know_number_id"
+                            android:layout_height="wrap_content" android:text="1"
+                            android:textSize="14sp" android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp" android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="认领单价"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/know_one_price_id"
+                            android:layout_height="wrap_content" android:text="5000"
+                            android:textSize="14sp" android:layout_alignParentRight="true"
+                            android:layout_marginBottom="20dp"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textColor="@color/black"
+                        android:text="支付方式" android:drawableRight="@mipmap/paychoose"
+                        android:drawablePadding="10dp" android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true" android:textSize="14sp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:layout_toLeftOf="@+id/custom_txt_id"
+                        android:layout_height="wrap_content"   android:layout_centerVertical="true"
+                        android:text="如遇到任何问题请" android:layout_marginRight="3dp"
+                        android:textSize="11sp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/custom_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="联系客服" android:textColor="@color/colorGold"
+                        android:layout_centerVertical="true" android:textSize="11sp"
+                        android:layout_marginRight="10dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent" android:background="@color/white"
+                    android:layout_height="50dp" android:padding="10dp"
+                    android:id="@+id/zfb_check_rv">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="支付宝"
+                        android:textColor="@color/black" android:textSize="14sp"
+                        android:layout_centerVertical="true" android:layout_marginLeft="5dp"/>
+                    <CheckBox
+                        android:layout_width="19dp"
+                        android:layout_height="19dp" android:layout_alignParentRight="true"
+                        android:id="@+id/zfb_check" android:layout_centerVertical="true"
+                        android:checked="true" android:background="@drawable/hascheck"
+                        android:button="@null"  android:layout_marginRight="15dp"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" android:background="@color/colorline"/>
+                <RelativeLayout
+                    android:layout_width="match_parent" android:background="@color/white"
+                    android:layout_height="50dp" android:padding="10dp"
+                    android:id="@+id/weixin_check_rv">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="微信"
+                        android:textColor="@color/black"  android:textSize="14sp"
+                        android:layout_centerVertical="true" android:layout_marginLeft="5dp"/>
+                    <CheckBox
+                        android:layout_width="19dp"
+                        android:layout_height="19dp" android:layout_alignParentRight="true"
+                        android:id="@+id/weixin_check" android:layout_centerVertical="true"
+                        android:checked="true" android:background="@drawable/unhascheck"
+                        android:button="@null" android:layout_marginRight="15dp"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" android:background="@color/colorline"/>
+                <RelativeLayout
+                    android:layout_width="match_parent" android:background="@color/white"
+                    android:layout_height="50dp" android:padding="10dp"
+                    android:id="@+id/account_balance_rv">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="账户余额"
+                        android:textColor="@color/black"  android:textSize="14sp"
+                        android:layout_centerVertical="true"  android:layout_marginLeft="5dp"/>
+                    <CheckBox
+                        android:layout_width="19dp"
+                        android:layout_height="19dp" android:layout_alignParentRight="true"
+                        android:id="@+id/account_balance_ck" android:layout_centerVertical="true"
+                        android:checked="true" android:background="@drawable/unhascheck"
+                        android:button="@null"  android:layout_marginRight="15dp"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent" android:id="@+id/account_pay_show_rv"
+            android:layout_height="match_parent" android:background="@color/colordialog"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:layout_alignParentBottom="true" android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <ImageView
+                        android:layout_width="35dp" android:id="@+id/pay_back_id"
+                        android:layout_height="30dp" android:src="@mipmap/backgray"
+                        android:layout_centerVertical="true" android:scaleType="fitXY"
+                        android:layout_marginLeft="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textColor="@color/black"
+                        android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+                        android:text="请输入支付密码"  android:textSize="14sp"/>
+                </RelativeLayout>
+
+
+                <View
+                    style="@style/line1"/>
+
+                <com.ibeef.cowboying.utils.VerificationCodeInput
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    ver:box="6" android:layout_gravity="center"
+                    ver:child_h_padding="2dp"
+                    ver:child_width="45dp"
+                    ver:child_height="40dp" ver:inputType="number"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/verificationCodeInput_id"
+                    android:layout_marginTop="30dp" />
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/foret_pwd_id"
+                    android:layout_height="wrap_content" android:textColor="@color/red"
+                    android:text="忘记密码？" android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp" android:textSize="14sp"
+                    android:layout_marginBottom="150dp"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+
+    <TextView
+        android:layout_width="match_parent" android:id="@+id/sure_pay_btn"
+        android:layout_height="50dp" android:background="@color/colorAccent"
+        android:textColor="@color/white" android:text="确认去支付"
+        android:layout_alignParentBottom="true" android:gravity="center"
+        android:textSize="16sp"/>
+</RelativeLayout>

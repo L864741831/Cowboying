@@ -71,6 +71,8 @@ public class CowsClaimActivity extends BaseActivity {
     TextView allMoneyId;
     @Bind(R.id.now_claim_btn_id)
     TextView nowClaimBtnId;
+    @Bind(R.id.scroll_isShow_id)
+    TextView scrollIsShowId;
     private List<String> dataBeen = Arrays.asList(CHANNELS);
     private ArrayList<BaseFragment> fragmentList;
     private MainFragmentAdapter mainFragmentAdapter;
@@ -92,6 +94,8 @@ public class CowsClaimActivity extends BaseActivity {
         fragmentList = new ArrayList<>();
         token= Hawk.get(HawkKey.TOKEN);
         initMagicIndicator();
+        scrollIsShowId.setSelected(true);
+        scrollIsShowId.setText("您来晚了，当前养牛方案牛只已售罄，不过还有牧场主未付款，您还有机会哟~");
     }
 
     private void initMagicIndicator() {
@@ -144,7 +148,7 @@ public class CowsClaimActivity extends BaseActivity {
                 if(TextUtils.isEmpty(token)){
                     startActivity(LoginActivity.class);
                 }else {
-                    if(false){
+                    if(true){
                         //已实名认证
                         startActivity(ClaimCertificationActivity.class);
                     }else {

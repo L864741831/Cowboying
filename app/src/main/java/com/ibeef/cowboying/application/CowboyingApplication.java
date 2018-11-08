@@ -4,7 +4,6 @@ import android.os.StrictMode;
 import android.util.Log;
 
 
-import com.mob.MobSDK;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
@@ -29,7 +28,7 @@ public class CowboyingApplication extends RxApplication {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        MobSDK.init(this);
+//        MobSDK.init(this);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
         registrationId= JPushInterface.getRegistrationID(this);

@@ -134,6 +134,19 @@
     </com.ibeef.cowboying.view.customview.DragScrollDetailsLayout>
 
     <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/rv_middle_id"
+        android:layout_height="40dp" android:background="@color/colordialog"
+        android:layout_above="@+id/rv_bottom_id">
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/scroll_isShow_id"
+            android:layout_height="match_parent" android:textColor="@color/white"
+            android:gravity="center_vertical" android:text="开售时间 2018-12-12-08:00"
+            android:layout_marginLeft="10dp" android:textSize="14sp"
+            android:ellipsize="marquee" android:scrollHorizontally="true" android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"   android:focusable="true"
+            android:focusableInTouchMode="true"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/rv_bottom_id"
         android:layout_height="50dp" android:layout_alignParentBottom="true"
         android:background="@color/colorAccent">

@@ -2,6 +2,7 @@ package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -10,15 +11,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.config.HawkKey;
+import com.orhanobut.hawk.Hawk;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rxfamily.view.BaseActivity;
 
 /**
  * 立即认领未实名认证界面
  */
-public class ClaimUnCertificationActivity extends AppCompatActivity {
+public class ClaimUnCertificationActivity extends BaseActivity {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -42,7 +46,7 @@ public class ClaimUnCertificationActivity extends AppCompatActivity {
     RelativeLayout isCouponRv;
     @Bind(R.id.next_step_txt)
     TextView nextStepTxt;
-
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class ClaimUnCertificationActivity extends AppCompatActivity {
 
     private void init() {
         info.setText("认领");
+        token= Hawk.get(HawkKey.TOKEN);
     }
 
     @OnClick({R.id.back_id, R.id.is_coupon_rv, R.id.next_step_txt})
@@ -62,8 +67,20 @@ public class ClaimUnCertificationActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.is_coupon_rv:
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(UseCouponActivity.class);
+                }
+
                 break;
             case R.id.next_step_txt:
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(SureOderActivity.class);
+                    finish();
+                }
                 break;
             default:
                 break;
