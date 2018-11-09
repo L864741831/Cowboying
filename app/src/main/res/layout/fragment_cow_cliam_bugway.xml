@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:orientation="vertical"
+    android:layout_height="match_parent" android:background="@color/colorAccent"
+    tools:context=".view.fragment.CowClaimBuyWayFragment">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" android:background="@color/white"/>
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_marginTop="10dp"
+                android:layout_height="match_parent" android:orientation="vertical"
+                android:background="@color/white" android:layout_gravity="center_horizontal"
+                android:padding="15dp" android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/vip_level_txt_id"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="· 第3443222期 ·" android:textColor="@color/black"
+                    android:textSize="15sp" android:textStyle="bold"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/pocketranch"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_marginTop="19dp"
+                    android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.33" android:gravity="left"
+                        android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                        android:text="可认购等级" android:textSize="13sp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.33" android:gravity="center"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="回报收益" android:textColor="@color/colorAccent"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.33" android:gravity="right"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="收益起始日" android:textColor="@color/colorAccent"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent" android:orientation="horizontal"
+                    android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="0dp"  android:id="@+id/level_vip_txt_id"
+                        android:layout_weight="0.33" android:gravity="left"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="VIP1" android:textColor="@color/black"
+                        android:textSize="15sp" android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="0dp" android:id="@+id/percent_txt_id"
+                        android:layout_weight="0.33" android:gravity="center"
+                        android:layout_height="wrap_content" android:textColor="@color/black"
+                        android:text="9.0%" android:textSize="17sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="0dp" android:id="@+id/percent_way_txt_id"
+                        android:layout_weight="0.33"  android:gravity="right"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="T+1" android:textColor="@color/black"
+                        android:textSize="17sp" android:textStyle="bold"/>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_zero_txt_id"
+                        android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                        android:text="0%" android:textSize="13sp" />
+                    <SeekBar
+                        android:layout_width="match_parent" android:id="@+id/seekbar_id"
+                        android:layout_height="3dp" android:max="100"
+                        android:progressDrawable="@drawable/seekbar_bg" android:layout_toRightOf="@+id/percent_zero_txt_id"
+                        android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true"
+                        android:thumb="@null" android:progress="100" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_hundred_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="100%" android:textColor="@color/colorAccent"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/minlevle_txt_id"
+                        android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                        android:text="5000起投" android:textSize="13sp" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/minpercent_txt_id"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                        android:text="进度10%" android:textColor="@color/colorAccent"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="· 收益说明 ·" android:textColor="@color/black"
+                    android:textSize="15sp" android:textStyle="bold"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/incomestatement"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:textSize="13sp" android:layout_marginTop="10dp"
+                    android:gravity="center" android:layout_gravity="center"
+                    android:lineSpacingExtra="3dp"
+                    android:text="养牛满一年将获得附加选择权，可以兑换为价值14800元的120斤澳洲牛肉，自动存入牛肉仓库，随时提货到家，养牛未满一年获得现金牛肉回购回报。"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="· 风险提示 ·" android:textColor="@color/black"
+                    android:textSize="15sp" android:textStyle="bold"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="20dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/riskhints"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:textSize="13sp" android:layout_marginTop="10dp"
+                    android:gravity="center" android:layout_gravity="center"
+                    android:lineSpacingExtra="3dp" android:layout_marginBottom="50dp"
+                    android:text="您在投资过程中可能面临各种风险，包括但不限于市场风险，信用风险，利率风险，操作风险，流动性风险以及战争，自然灾害等不可抗力导致的收益不稳定性。"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -33,9 +34,11 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
     ImageView bgImg;
     @Bind(R.id.go_main_activity)
     RelativeLayout goMainActivity;
+    @Bind(R.id.go_txt_show)
+    TextView goTxtShow;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
-    int timeCount = 0;
+    int timeCount = 0,countTime=6;
     boolean continueCount = true;
     boolean isShow = false;
     private HomeAdPresenter homeAdPresenter;
@@ -48,6 +51,7 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
             super.handleMessage(msg);
             if (continueCount) {
                 countNum();
+                goTxtShow.setText("跳过("+countTime+"s)");
                 handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
             }
         }
@@ -90,6 +94,7 @@ public class AdActivity extends BaseActivity implements HomeAdBase.IView {
 
     private int countNum() {//数秒
         timeCount++;
+        countTime--;
         if(timeCount==5){
             continueCount = false;
             //超过三秒进入下个页面

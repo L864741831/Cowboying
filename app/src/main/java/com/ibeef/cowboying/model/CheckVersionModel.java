@@ -1,13 +1,11 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.CheckVersionBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.net.ResponseHandler;
 
 import rx.Observable;
 import rx.Subscription;
@@ -16,7 +14,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxfamily.net.HttpService;
 import rxfamily.net.ResponseCallback;
-import rxfamily.net.ResponseHandler;
 import rxfamily.net.RetryWithDelay;
 
 /**

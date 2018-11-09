@@ -5,18 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.CheckVersionBase;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CheckVersionPresenter;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.view.fragment.HomeFragment;
 import com.ibeef.cowboying.view.fragment.SecondFragment;
 import com.ibeef.cowboying.view.fragment.ThreeFragment;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 
@@ -36,6 +40,7 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
     ViewPager vp;
     private ArrayList<BaseFragment> fragments;
     private CheckVersionPresenter checkVersionPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,7 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
     }
 
     private void init(){
+        token= Hawk.get(HawkKey.TOKEN);
         bnve.enableAnimation(false);
         bnve.enableShiftingMode(false);
         bnve.enableItemShiftingMode(false);
@@ -78,10 +84,12 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
         bnve.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                if (item.getItemId() == R.id.i_second) {
-//                    Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
-//                    return false;
-//                }
+                if (item.getItemId() == R.id.i_three) {
+                    token= Hawk.get(HawkKey.TOKEN);
+                    if(TextUtils.isEmpty(token)){
+                        startActivity(LoginActivity.class);
+                    }
+                }
                 return true;
             }
         });

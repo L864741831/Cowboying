@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    tools:context=".view.activity.CowClaimPastRecordActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp" android:orientation="vertical" android:background="@drawable/shape_oval_white_btn"
+            android:layout_marginLeft="7dp" android:layout_marginRight="7dp"
+            android:layout_marginBottom="7dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="第201803030211期  Ben Navic牧场" android:layout_margin="7dp"
+                    android:textSize="13sp" android:layout_toLeftOf="@+id/img_end_id"
+                    android:maxLines="1" android:ellipsize="end"/>
+                <ImageView
+                    android:layout_width="wrap_content" android:id="@+id/img_end_id"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:src="@mipmap/pastrecordend"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal"
+            >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="0.33"
+                    android:orientation="vertical" android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/money_txt_id"
+                        android:layout_height="wrap_content" android:text="5000元"
+                        android:textColor="@color/colorGold" android:textSize="17sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/cow_type_id"
+                        android:layout_height="wrap_content" android:text="安格斯牛(只)"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="0.33"
+                    android:orientation="vertical" android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_txt_id"
+                        android:layout_height="wrap_content" android:text="10.00%"
+                        android:textColor="@color/colorGold" android:textSize="17sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/percent_type_txt_id"
+                        android:layout_height="wrap_content" android:text="预期养殖回报率"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                style="@style/line1" android:layout_marginTop="13dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal"
+                android:layout_marginLeft="10dp" android:layout_marginTop="7dp">
+                <ImageView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="@mipmap/pastrecordline" android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="参与人数"
+                    android:textColor="@color/colorhometxt"
+                    android:textSize="15sp" android:layout_marginLeft="10dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/see_people_num_rv">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/people_num_id"
+                        android:layout_height="wrap_content" android:text="10人"
+                        android:drawableRight="@mipmap/enterright" android:gravity="center_vertical"
+                        android:layout_alignParentRight="true" android:textSize="13sp"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+</LinearLayout>

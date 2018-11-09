@@ -9,6 +9,7 @@ import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.net.ResponseHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxfamily.net.HttpService;
 import rxfamily.net.ResponseCallback;
-import rxfamily.net.ResponseHandler;
 import rxfamily.net.RetryWithDelay;
 
 /**

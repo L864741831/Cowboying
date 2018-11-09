@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -52,11 +53,9 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
     ImageView messegeId;
     @Bind(R.id.setting_id)
     ImageView settingId;
-    @Bind(R.id.head_img)
     CircleImageView headImg;
     @Bind(R.id.level_id)
     ImageView levelId;
-    @Bind(R.id.name_id)
     TextView nameId;
     @Bind(R.id.pay_money_codeId)
     LinearLayout payMoneyCodeId;
@@ -88,6 +87,7 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
     RelativeLayout beefHouseRv;
     @Bind(R.id.write_money_id)
     TextView writeMoneyId;
+
     @Bind(R.id.write_money_rv)
     RelativeLayout writeMoneyRv;
     @Bind(R.id.coupon_num_id)
@@ -106,7 +106,14 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        nameId=view.findViewById(R.id.name_id);
+        headImg=view.findViewById(R.id.head_img);
         userInfoPresenter=new UserInfoPresenter(this);
+        token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        userInfoPresenter.getUserInfo(reqData);
     }
 
     @Override
@@ -124,10 +131,15 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
     public void onResume() {
         super.onResume();
         token= Hawk.get(HawkKey.TOKEN);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        userInfoPresenter.getUserInfo(reqData);
+        if(TextUtils.isEmpty(token)){
+            nameId.setText("全民养牛");
+            headImg.setImageResource(R.mipmap.defaulthead);
+        }else {
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            userInfoPresenter.getUserInfo(reqData);
+        }
     }
 
     @Override
@@ -140,7 +152,11 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.messege_id:
-                startActivity(MyMessegeActivity.class);
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(MyMessegeActivity.class);
+                }
                 break;
             case R.id.setting_id:
                 //设置界面
@@ -244,7 +260,6 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
 
     @Override
     public void showMsg(String msg) {
-
     }
 
     @Override
@@ -273,6 +288,11 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                     ;
             Hawk.put(HawkKey.userId, userInfoResultBean.getBizData().getUserId()+"");
             Glide.with(this).load(Constant.imageDomain+userInfoResultBean.getBizData().getHeadImage()).apply(options).into(headImg);
+            if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getNickName())){
+                nameId.setText("全民养牛");
+            }else {
+                nameId.setText(userInfoResultBean.getBizData().getNickName());
+            }
 
         }else {
             Toast.makeText(getHoldingActivity(),userInfoResultBean.getMessage(),Toast.LENGTH_LONG).show();

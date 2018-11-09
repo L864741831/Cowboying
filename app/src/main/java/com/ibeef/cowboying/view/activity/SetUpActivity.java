@@ -174,7 +174,6 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
 
     @Override
     public void showMsg(String msg) {
-
     }
 
     @Override

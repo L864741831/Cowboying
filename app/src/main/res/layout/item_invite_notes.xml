@@ -15,14 +15,17 @@
         android:layout_width="30dp" android:id="@+id/head_img_id"
         android:layout_height="30dp" android:layout_gravity="center_vertical"
         android:src="@mipmap/cowicon" android:layout_marginLeft="15dp"/>
-    <TextView
-        android:layout_width="wrap_content" android:id="@+id/nickname_txt_id"
-        android:layout_height="wrap_content" android:textSize="15sp"
-        android:text="陌上花开" android:textColor="@color/colorAccent"
-        android:layout_marginLeft="15dp" android:layout_gravity="center_vertical"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/nickname_txt_id"
+            android:layout_height="wrap_content" android:textSize="15sp"
+            android:text="陌上花开" android:textColor="@color/colorAccent"
+            android:layout_marginLeft="15dp" android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/time_txt_id" android:layout_marginRight="10dp"
+            android:maxLines="1" android:ellipsize="end"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/time_txt_id"
             android:layout_height="wrap_content" android:text="2018-09-20"

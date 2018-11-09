@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -37,11 +38,14 @@ public class RanchDynamicsAdapter extends BaseQuickAdapter<HomeVideoResultBean.B
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.show_img_id);
+        ImageView imgStatId= helper.getView(R.id.img_stat_id);
 
-        if(helper.getAdapterPosition()==beanList.size()-1){
+        if("1".equals(item.getCoverUrl())){
             imageView.setImageResource(R.mipmap.more);
+            imgStatId.setVisibility(View.GONE);
         }else {
             Glide.with(mContext).load(item.getCoverUrl()).apply(options).into(imageView);
+            imgStatId.setVisibility(View.VISIBLE);
         }
     }
 }

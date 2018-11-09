@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,6 +30,7 @@ import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
+import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
@@ -68,11 +70,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private SharedPreferences mPrefDailog;
     public static final String KEY_HISTORY_KEYWORD = "key_mPrefDailogtimes";
     public String history;
+    private boolean isFirstAdDialog=true;
+    private RelativeLayout rv_show_id;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
+        rv_show_id=view.findViewById(R.id.rv_show_id);
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
@@ -103,9 +108,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 super.onScrolled(recyclerView, dx, dy);
                 if(!homeRyId.canScrollVertically(-1)){
                     swipeLy.setEnabled(true);
+                    rv_show_id.setVisibility(View.GONE);
                 }else {
                     swipeLy.setEnabled(false);
+                    rv_show_id.setVisibility(View.VISIBLE);
                 }
+
             }
         });
 
@@ -212,7 +220,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buy_cow_fm:
-                //买牛
+                //买牛方案列表
+                startActivity(BuyCowsPlanActivity.class);
                 break;
             case R.id.together_cow_fm:
                 //拼牛
@@ -282,29 +291,38 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBannerResDto())){
             return;
         }
-        if(TextUtils.isEmpty(history)){
-            SharedPreferences.Editor editor = mPrefDailog.edit();
-            editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
-            editor.commit();
-            Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-            intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
-            startActivity(intent);
-        }else {
-            if(!DateUtils.getTime(new Date()).equals(history)){
+        if(isFirstAdDialog){
+            isFirstAdDialog=false;
+            if(TextUtils.isEmpty(history)){
                 SharedPreferences.Editor editor = mPrefDailog.edit();
                 editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                 editor.commit();
                 Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
                 intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
                 startActivity(intent);
+            }else {
+                if(!DateUtils.getTime(new Date()).equals(history)){
+                    SharedPreferences.Editor editor = mPrefDailog.edit();
+                    editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
+                    editor.commit();
+                    Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
+                    intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
+                    startActivity(intent);
+                }
             }
-
         }
+
     }
 
     @Override
     public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
         beanList.addAll(homeAdResultBean.getBizData());
+
+        HomeVideoResultBean  homeVideoResultBean=new HomeVideoResultBean();
+        HomeVideoResultBean.BizDataBean bizDataBean=homeVideoResultBean.new BizDataBean();
+        bizDataBean.setCoverUrl("1");
+
+        beanList.add(bizDataBean);
         ranchDynamicsAdapter.setNewData(this.beanList);
         ranchDynamicsAdapter.loadMoreEnd();
     }

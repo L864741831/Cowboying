@@ -252,14 +252,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
 
     @Override
     public void showMsg(String msg) {
-        if (!TextUtils.isEmpty(msg)) {
-            if (msg.contains("401")) {
-                Hawk.put(HawkKey.TOKEN, "");
-                Toast.makeText(this, "Authorization失效，请重新登录", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-            }
-        }
+
     }
 
     @Override

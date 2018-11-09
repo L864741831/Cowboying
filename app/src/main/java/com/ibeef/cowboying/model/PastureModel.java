@@ -3,10 +3,10 @@ package com.ibeef.cowboying.model;
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.PastureBase;
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.net.ResponseHandler;
 
 import rx.Observable;
 import rx.Subscription;
@@ -15,7 +15,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rxfamily.net.HttpService;
 import rxfamily.net.ResponseCallback;
-import rxfamily.net.ResponseHandler;
 import rxfamily.net.RetryWithDelay;
 
 /**

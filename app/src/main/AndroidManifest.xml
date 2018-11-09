@@ -144,6 +144,18 @@
         <activity android:name=".view.activity.MyContractActivity"></activity>
         <activity android:name=".view.activity.MyCowsActivity"/>
         <activity android:name=".view.activity.MyCowsDetailActivity"/>
+        <activity android:name=".view.activity.BuyCowsPlanActivity" />
+        <activity
+            android:name=".view.activity.CowsClaimActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.activity.ChooseParsterActivity" />
+        <activity android:name=".view.activity.CowClaimPastRecordActivity" />
+        <activity android:name=".view.activity.JionPeopleNumActivity" />
+        <activity android:name=".view.activity.CowsDesInfoActivity" />
+        <activity android:name=".view.activity.ClaimUnCertificationActivity" />
+        <activity android:name=".view.activity.ClaimCertificationActivity" />
+        <activity android:name=".view.activity.UseCouponActivity" />
+        <activity android:name=".view.activity.SureOderActivity"></activity>
     </application>
 
 </manifest>

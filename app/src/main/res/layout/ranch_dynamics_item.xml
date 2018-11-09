@@ -8,12 +8,12 @@
         android:layout_marginRight="4dp">
         <ImageView
             android:layout_width="140dp" android:id="@+id/show_img_id"
-            android:layout_height="180dp" android:src="@mipmap/feedcowvideo"
+            android:layout_height="180dp"
             android:scaleType="fitXY"/>
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:id="@+id/img_stat_id"
             android:layout_height="wrap_content" android:src="@mipmap/vediostart"
-            android:layout_marginTop="100dp" android:layout_gravity="center_horizontal" />
+            android:layout_marginTop="75dp" android:layout_gravity="center_horizontal" />
     </FrameLayout>
 
 </RelativeLayout>

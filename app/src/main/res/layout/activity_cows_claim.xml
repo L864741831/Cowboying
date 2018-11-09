@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.CowsClaimActivity" android:background="@color/white">
+    <include layout="@layout/include_title" android:id="@+id/inclut_id"/>
+
+    <com.ibeef.cowboying.view.customview.DragScrollDetailsLayout
+        android:layout_width="match_parent" android:layout_above="@+id/rv_bottom_id"
+        android:layout_height="wrap_content" android:layout_below="@+id/inclut_id">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent" android:id="@+id/isShows_lv_id"
+                    android:layout_height="wrap_content" android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="match_parent" android:id="@+id/banner_img_id"
+                        android:layout_height="170dp" android:scaleType="fitXY"
+                        android:src="@color/grassgreen"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:layout_marginLeft="10dp" android:layout_marginTop="10dp">
+                        <View
+                            android:layout_width="3dp" android:layout_height="17dp"
+                            android:background="@color/black" android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/parsture_name_id"
+                            android:layout_height="wrap_content" android:text="奥尔良牧场"
+                            android:textColor="@color/colorhometxt"
+                            android:textSize="15sp" android:layout_marginLeft="10dp"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/see_all_pasture_rv">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="查看牧场"
+                                android:drawableRight="@mipmap/enterright" android:gravity="center_vertical"
+                                android:layout_alignParentRight="true" android:textSize="13sp"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="0.33"
+                            android:orientation="vertical" android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content" android:id="@+id/target_txt_id"
+                                android:layout_height="wrap_content" android:text="300头"
+                                android:textColor="@color/black" android:textSize="15sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="目标"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="25dp"  android:background="@color/colorline"
+                            android:layout_gravity="center"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="0.33"
+                            android:orientation="vertical" android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content" android:id="@+id/hasidentify_txt_id"
+                                android:layout_height="wrap_content" android:text="30头"
+                                android:textColor="@color/black" android:textSize="15sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="已认证"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="25dp" android:background="@color/colorline"
+                            android:layout_gravity="center"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="0.33"
+                            android:orientation="vertical" android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content" android:id="@+id/price_txt_id"
+                                android:layout_height="wrap_content" android:text="5000元/头"
+                                android:textColor="@color/black" android:textSize="15sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="价格"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content" android:id="@+id/img_id"
+                    android:layout_height="wrap_content" android:src="@mipmap/sign"
+                    android:layout_gravity="center" android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+            <com.gigamole.navigationtabstrip.NavigationTabStrip
+                android:id="@+id/nts_top"
+                android:layout_width="wrap_content" android:layout_height="50dp"
+                android:background="@color/white" android:layout_gravity="center"
+                app:nts_active_color="@color/colorGold"
+                app:nts_color="@color/seekbar_bg_first"
+                app:nts_corners_radius="0dp"
+                app:nts_inactive_color="@color/black"
+                app:nts_size="15sp" app:nts_weight="2dp" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/content_vp"
+                android:layout_width="match_parent" android:background="@color/transparent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </com.ibeef.cowboying.view.customview.DragScrollDetailsLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/rv_middle_id"
+        android:layout_height="40dp" android:background="@color/colordialog"
+        android:layout_above="@+id/rv_bottom_id">
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/scroll_isShow_id"
+            android:layout_height="match_parent" android:textColor="@color/white"
+            android:gravity="center_vertical" android:text="开售时间 2018-12-12-08:00"
+            android:layout_marginLeft="10dp" android:textSize="14sp"
+            android:ellipsize="marquee" android:scrollHorizontally="true" android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"   android:focusable="true"
+            android:focusableInTouchMode="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/rv_bottom_id"
+        android:layout_height="50dp" android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:layout_width="wrap_content" android:id="@+id/custom_img_id"
+            android:layout_height="wrap_content" android:src="@mipmap/customimg"
+            android:layout_centerVertical="true" android:layout_marginLeft="10dp"/>
+        <com.ibeef.cowboying.view.customview.AmountView
+            android:layout_width="wrap_content" android:id="@+id/amout_num_id"
+            android:layout_height="30dp"    app:btnWidth="23dp"
+            app:tvWidth="30dp"
+            android:layout_centerVertical="true" android:layout_toRightOf="@+id/custom_img_id"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/all_money_id"
+            android:layout_height="wrap_content" android:text="总金额:￥5000"
+            android:textColor="@color/white" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/amout_num_id" android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/now_claim_btn_id" android:textSize="13sp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/now_claim_btn_id"
+            android:layout_height="wrap_content" android:text="立即认领"
+            android:textColor="@color/colorAccent" android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" android:background="@mipmap/nowclaim"
+            android:gravity="center" android:textSize="14sp"/>
+    </RelativeLayout>
+
+</RelativeLayout>
