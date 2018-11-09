@@ -25,6 +25,7 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
+import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
@@ -107,11 +108,6 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
         nameId=view.findViewById(R.id.name_id);
         headImg=view.findViewById(R.id.head_img);
         userInfoPresenter=new UserInfoPresenter(this);
-        token= Hawk.get(HawkKey.TOKEN);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        userInfoPresenter.getUserInfo(reqData);
     }
 
     @Override
@@ -212,7 +208,7 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                 break;
             case R.id.all_money_rv:
                 //总资产
-
+                startActivity(MyAllMoneyActivity.class);
                 break;
             case R.id.beef_house_rv:
                 //牛肉仓库

@@ -19,4 +19,7 @@
     <color name="seekbar_bg_first">#D9D0B1</color>
     <color name="seekbar_bg_last">#B0957A</color>
     <color name="qian_red">#FA3F3F</color>
+    <color name="color3c">#CCCCCC</color>
+    <color name="bule_7d">#7DB8F2</color>
+    <color name="bule_9e">#9EC8F0</color>
 </resources>

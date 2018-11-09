@@ -117,6 +117,26 @@
                 <View
                     style="@style/line2" android:layout_alignParentBottom="true"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp" android:id="@+id/add_pay_rv">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="设置支付密码" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text=""
+                    android:layout_alignParentRight="true" android:layout_marginRight="17dp"
+                    android:gravity="center_vertical" android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/enterright" android:drawablePadding="10dp" />
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent" android:id="@+id/show_bind_rv"

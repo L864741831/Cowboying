@@ -75,10 +75,6 @@ public class SureOderActivity extends BaseActivity {
     TextView surePayBtn;
     @Bind(R.id.account_pay_show_rv)
     RelativeLayout accountPayShowRv;
-    @Bind(R.id.weixin_check_rv)
-    RelativeLayout weixinCheckRv;
-    @Bind(R.id.zfb_check_rv)
-    RelativeLayout zfbCheckRv;
     @Bind(R.id.verificationCodeInput_id)
     VerificationCodeInput verificationCodeInputId;
     @Bind(R.id.foret_pwd_id)
@@ -147,25 +143,25 @@ public class SureOderActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.back_id, R.id.custom_txt_id, R.id.sure_pay_btn, R.id.pay_back_id, R.id.foret_pwd_id, R.id.account_pay_show_rv, R.id.weixin_check_rv, R.id.zfb_check_rv})
+    @OnClick({R.id.back_id, R.id.custom_txt_id, R.id.sure_pay_btn, R.id.pay_back_id, R.id.foret_pwd_id, R.id.account_balance_ck, R.id.weixin_check, R.id.zfb_check})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
                 break;
-            case R.id.account_pay_show_rv:
+            case R.id.account_balance_ck:
                 chooseType = 3;
                 weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
                 zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
                 accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.hascheck));
                 break;
-            case R.id.weixin_check_rv:
+            case R.id.weixin_check:
                 chooseType = 2;
                 weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.hascheck));
                 zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
                 accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
                 break;
-            case R.id.zfb_check_rv:
+            case R.id.zfb_check:
                 chooseType = 1;
                 weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
                 zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.hascheck));
@@ -176,10 +172,11 @@ public class SureOderActivity extends BaseActivity {
                 break;
             case R.id.pay_back_id:
                 accountPayShowRv.setVisibility(View.GONE);
+                surePayBtn.setVisibility(View.VISIBLE);
                 break;
             case R.id.foret_pwd_id:
                 //设置支付密码
-
+                startActivity(AddPayPwdActivity.class);
                 break;
             case R.id.sure_pay_btn:
                 if (chooseType == 1) {
@@ -188,6 +185,7 @@ public class SureOderActivity extends BaseActivity {
                     weixinPay();
                 } else if (chooseType == 3) {
                     accountPayShowRv.setVisibility(View.VISIBLE);
+                    surePayBtn.setVisibility(View.GONE);
                 }
                 break;
             default:

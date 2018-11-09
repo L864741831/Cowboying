@@ -39,6 +39,7 @@ import com.ibeef.cowboying.presenter.SmsCodePresenter;
 import com.ibeef.cowboying.presenter.UpdateMobilePresenter;
 import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
+import com.ibeef.cowboying.wxapi.WXEntryActivity;
 import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;
@@ -330,6 +331,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 startActivity(LoginActivity.class);
                 showToast("登陆手机号设置成功，请重新登陆~");
             }
+            finish();
         }else {
             showToast(updateMobileResultBean.getMessage());
         }
@@ -373,24 +375,30 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 intent.putExtra("mobile",mobile);
                 intent.putExtra("stadus",stadus);
                 startActivity(intent);
+                finish();
             }else   if("3".equals(stadus)){
                 //0 正常手机号登录完成  //3 第三方登录绑定手机号
-                Intent intent=new Intent(IdentifyCodeActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
+                BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
+                bindMobileParamBean.setMobile(mobile);
+                bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
+
             }else   if("4".equals(stadus)){
                 //2注册流程 4 //设置<账号安全<修改登录手机号
                 Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
                 intent.putExtra("stadus","6");
                 intent.putExtra("oldmobile",oldmobile);
                 startActivity(intent);
+                finish();
             }else if("8".equals(stadus)){
                  // 8 设置<账号安全<手机号换绑
                 Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
                 intent.putExtra("stadus","8");
                 intent.putExtra("oldmobile",oldmobile);
                 startActivity(intent);
+                finish();
             }else if("7".equals(stadus)){
                 //个人信息 绑定手机号
                 Map<String, String> reqData = new HashMap<>();
@@ -418,9 +426,12 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     @Override
     public void getAccoutRegister(AccountRegisterResultBean accountRegisterResultBean) {
         if("000000".equals(accountRegisterResultBean.getCode())){
-            Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
-            intent.putExtra("stadus","2");
-            startActivity(intent);
+            Hawk.put(HawkKey.TOKEN, accountRegisterResultBean.getBizData());
+            Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
+            finish();
         }else {
             showToast(accountRegisterResultBean.getMessage());
         }
@@ -432,7 +443,13 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     public void getBindMobile(BindMobileResultBean bindMobileResultBean) {
         if("000000".equals(bindMobileResultBean.getCode())){
             showToast("绑定手机号成功~");
-
+            if("3".equals(stadus)){
+                Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+            }
+            finish();
         }else {
             showToast(bindMobileResultBean.getMessage());
         }

@@ -12,7 +12,7 @@
         <com.youth.banner.Banner
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="260dp" app:image_scale_type="fit_xy" />
+            android:layout_height="320dp" app:image_scale_type="fit_xy" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"

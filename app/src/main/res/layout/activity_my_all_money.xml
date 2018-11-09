@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/colorAccent"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.MyAllMoneyActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent" android:orientation="vertical"
+                    android:layout_height="220dp" android:background="@mipmap/allmoneybg">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:layout_width="35dp" android:id="@+id/back_id"
+                            android:layout_height="30dp" android:src="@mipmap/back"
+                            android:layout_centerVertical="true" android:scaleType="fitXY"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:textColor="@color/white"
+                            android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+                            android:text="总资产"  android:textSize="@dimen/title"
+                            />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="总资产（元）"
+                        android:textColor="@color/color3c" android:textSize="14sp"
+                        android:layout_gravity="center_horizontal"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content" android:orientation="horizontal"
+                        android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="￥"
+                            android:textColor="@color/white" android:layout_gravity="bottom"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/all_money_id"
+                            android:layout_height="wrap_content" android:textStyle="bold"
+                            android:textColor="@color/white" android:textSize="20sp"
+                            android:text="5000>"
+                            android:layout_marginTop="5dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+                        <LinearLayout
+                            android:layout_width="0dp" android:layout_weight="0.5"
+                            android:layout_height="80dp" android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="昨日收益（元）>"
+                                android:layout_gravity="center" android:textColor="@color/color3c"
+                                android:textSize="14sp"  />
+                            <TextView
+                                android:layout_width="wrap_content" android:id="@+id/yesterday_money_id"
+                                android:layout_height="wrap_content" android:text="0.00"
+                                android:layout_gravity="center" android:textColor="@color/white"
+                                android:textSize="17sp" android:textStyle="bold"
+                                android:layout_marginTop="10dp"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="1dp" android:layout_height="28dp"
+                            android:background="@color/colorline" android:layout_gravity="center"/>
+                        <LinearLayout
+                            android:layout_width="0dp" android:layout_weight="0.5"
+                            android:layout_height="80dp" android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="累计收益（元）>"
+                                android:layout_gravity="center" android:textColor="@color/color3c"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="wrap_content" android:id="@+id/add_money_id"
+                                android:layout_height="wrap_content" android:text="0.00"
+                                android:layout_gravity="center" android:textColor="@color/white"
+                                android:textSize="17sp" android:textStyle="bold"
+                                android:layout_marginTop="10dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent" android:orientation="vertical"
+                    android:layout_height="220dp" android:layout_marginTop="190dp"
+                    android:background="@color/white" android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="七日收益曲线（元）"
+                        android:layout_margin="15dp"/>
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:layout_width="match_parent" android:id="@+id/char_id"
+                        android:layout_height="140dp"
+                        android:layout_marginLeft="25dp" android:layout_marginRight="25dp"
+                        android:layout_marginBottom="20dp"/>
+                </LinearLayout>
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:layout_marginTop="10dp" android:background="@color/white"
+                android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+                android:layout_marginBottom="50dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <LinearLayout
+                        android:layout_width="0dp" android:layout_weight="0.5"
+                        android:layout_height="80dp" android:orientation="vertical"
+                        android:gravity="center" android:paddingLeft="20dp">
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/my_wallet_show"
+                            android:layout_height="wrap_content" android:text="我的钱包 >"
+                            android:layout_gravity="left"
+                            android:textSize="14sp"  />
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/my_wallet_id"
+                            android:layout_height="wrap_content" android:text="￥0.00"
+                            android:layout_gravity="left" android:textColor="@color/black"
+                            android:textSize="17sp" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1dp" android:layout_height="28dp"
+                        android:background="@color/colorline" android:layout_gravity="center" />
+                    <LinearLayout
+                        android:layout_width="0dp" android:layout_weight="0.5"
+                        android:layout_height="80dp" android:orientation="vertical"
+                        android:gravity="center"  android:paddingLeft="20dp">
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/white_money_show"
+                            android:layout_height="wrap_content" android:text="白条额度 >"
+                            android:layout_gravity="left"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/white_money_id"
+                            android:layout_height="wrap_content" android:text="￥0.00"
+                            android:layout_gravity="left" android:textColor="@color/black"
+                            android:textSize="17sp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                   style="@style/line1"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/get_money_id"
+                        android:layout_height="wrap_content" android:textColor="@color/black"
+                        android:text="提现" android:layout_marginLeft="20dp"
+                        android:textSize="14sp" android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/moneygetimg" android:gravity="center"
+                        android:drawablePadding="3dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/get_money_record_id"
+                        android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                        android:gravity="center" android:layout_centerVertical="true"
+                        android:text="提现记录" android:textSize="12sp"/>
+                </RelativeLayout>
+        </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

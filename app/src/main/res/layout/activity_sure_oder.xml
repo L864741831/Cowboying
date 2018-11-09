@@ -155,8 +155,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent" android:background="@color/white"
-                    android:layout_height="50dp" android:padding="10dp"
-                    android:id="@+id/zfb_check_rv">
+                    android:layout_height="50dp" android:padding="10dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="支付宝"
@@ -175,8 +174,7 @@
                     android:layout_height="1dp" android:background="@color/colorline"/>
                 <RelativeLayout
                     android:layout_width="match_parent" android:background="@color/white"
-                    android:layout_height="50dp" android:padding="10dp"
-                    android:id="@+id/weixin_check_rv">
+                    android:layout_height="50dp" android:padding="10dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="微信"
@@ -195,7 +193,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent" android:background="@color/white"
                     android:layout_height="50dp" android:padding="10dp"
-                    android:id="@+id/account_balance_rv">
+                    android:layout_marginBottom="50dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="账户余额"
@@ -207,6 +205,7 @@
                         android:id="@+id/account_balance_ck" android:layout_centerVertical="true"
                         android:checked="true" android:background="@drawable/unhascheck"
                         android:button="@null"  android:layout_marginRight="15dp"/>
+
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -244,16 +243,17 @@
                     ver:box="6" android:layout_gravity="center"
                     ver:child_h_padding="2dp"
                     ver:child_width="45dp"
-                    ver:child_height="40dp" ver:inputType="number"
+                    ver:child_height="40dp" ver:inputType="password"
                     android:layout_centerInParent="true"
                     android:id="@+id/verificationCodeInput_id"
                     android:layout_marginTop="30dp" />
+
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/foret_pwd_id"
                     android:layout_height="wrap_content" android:textColor="@color/red"
                     android:text="忘记密码？" android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp" android:textSize="14sp"
-                    android:layout_marginBottom="150dp"/>
+                    android:layout_marginBottom="200dp"/>
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>

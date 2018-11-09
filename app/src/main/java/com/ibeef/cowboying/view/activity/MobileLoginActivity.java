@@ -187,6 +187,7 @@ public class MobileLoginActivity extends BaseActivity {
                     intent.putExtra("oldmobile", oldmobile);
                     intent.putExtra("mobile", etMobile.getText().toString().trim());
                     startActivity(intent);
+                    finish();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
@@ -198,6 +199,7 @@ public class MobileLoginActivity extends BaseActivity {
                                     intent.putExtra("stadus", stadus);
                                     intent.putExtra("mobile", etMobile.getText().toString().trim());
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
                                 }
@@ -208,6 +210,7 @@ public class MobileLoginActivity extends BaseActivity {
                         intent.putExtra("stadus", stadus);
                         intent.putExtra("mobile", etMobile.getText().toString().trim());
                         startActivity(intent);
+                        finish();
                     }
                 }
                 break;

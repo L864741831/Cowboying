@@ -153,7 +153,10 @@
         <activity android:name=".view.activity.ClaimUnCertificationActivity" />
         <activity android:name=".view.activity.ClaimCertificationActivity" />
         <activity android:name=".view.activity.UseCouponActivity" />
-        <activity android:name=".view.activity.SureOderActivity"></activity>
+        <activity android:name=".view.activity.SureOderActivity" />
+        <activity android:name=".view.activity.AddPayPwdActivity" />
+        <activity android:name=".view.activity.ModifyPayPwdActivity" />
+        <activity android:name=".view.activity.MyAllMoneyActivity"></activity>
     </application>
 
 </manifest>

@@ -14,21 +14,28 @@ import android.widget.Toast;
 import com.alipay.sdk.app.AuthTask;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
 import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.bean.AuthResult;
+import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.wxapi.WXEntryActivity;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -39,7 +46,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView ,InitThirdLoginBase.IView {
+public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView ,InitThirdLoginBase.IView ,AccountSecurityBase.IView{
 
     @Bind(R.id.aplily_login)
     ImageView aplilyLogin;
@@ -51,7 +58,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     ImageView registeBtn;
     private static final int SDK_AUTH_FLAG = 1000;
     private IWXAPI api;
-
+    private AccountSecurityPresenter accountSecurityPresenter;
     private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
     private InitThirdLoginPresenter initThirdLoginPresenter;
     @Override
@@ -67,6 +74,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         api.registerApp(Constant.WeixinAppId);
         thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
+        accountSecurityPresenter=new AccountSecurityPresenter(this);
     }
 
     @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
@@ -182,6 +190,35 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     }
 
     @Override
+    public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
+        if("000000".equals(safeInfoResultBean.getCode())){
+            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+                Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                intent2.putExtra("stadus","3");
+                startActivity(intent2);
+            }else {
+                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+            }
+        }else {
+            showToast(safeInfoResultBean.getMessage());
+        }
+
+    }
+
+    @Override
+    public void getBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
+
+    }
+
+    @Override
+    public void getUnBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
+
+    }
+
+    @Override
     public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
         if("000000".equals(thirdLoginResultBean.getCode())){
             aplilyLogin(thirdLoginResultBean.getBizData());
@@ -194,10 +231,11 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
             Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData());
-            Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
-            intent2.putExtra("stadus","3");
-            startActivity(intent2);
-            finish();
+
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",thirdCountLoginResultBean.getBizData());
+            reqData.put("version",getVersionCodes());
+            accountSecurityPresenter.getSafeInfo(reqData);
         }else {
             showToast(thirdCountLoginResultBean.getMessage());
         }

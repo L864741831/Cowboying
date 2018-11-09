@@ -241,8 +241,8 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                         showToast("修改昵称不能为空~");
                         return;
                     }
-                    if(etWriteId.getText().toString().trim().length()>40){
-                        showToast("修改的昵称不能超过40个字哟~");
+                    if(etWriteId.getText().toString().trim().length()>20){
+                        showToast("修改的昵称不能超过20个字哟~");
                         return;
                     }
                     Map<String, String> reqData = new HashMap<>();
