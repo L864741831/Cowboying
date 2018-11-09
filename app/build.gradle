@@ -31,7 +31,6 @@ MobSDK {
     }
 }
 android {
-
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.ibeef.cowboying"
@@ -72,10 +71,11 @@ android {
         debug {
             keyAlias 'cows'
             keyPassword 'liangniu888'
-            storeFile file('C:/Users/lwang/Desktop/cows.keystore')
+            storeFile file('C:/Users/Administrator/Desktop/cowboy/cows.keystore')
             storePassword 'liangniu888'
         }
     }
+    buildToolsVersion '28.0.3'
 }
 
 dependencies {

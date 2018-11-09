@@ -25,6 +25,8 @@ import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
+import com.ibeef.cowboying.view.activity.MyCowsActivity;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
@@ -158,10 +160,15 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                 break;
             case R.id.pay_money_codeId:
                 //付款码
+                    startActivity(MyCowsDetailActivity.class);
                 break;
             case R.id.please_codeId:
                 //邀请码
-                startActivity(InviteFriendActivity.class);
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(InviteFriendActivity.class);
+                }
                 break;
             case R.id.get_goods_codeId:
                 //取货码
@@ -188,7 +195,7 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                 break;
             case R.id.me_cattle_rv:
                 //我的牛只
-
+                startActivity(MyCowsActivity.class);
                 break;
             case R.id.cattle_oder_rv:
                 //拼牛订单
@@ -220,7 +227,11 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                 break;
             case R.id.invite_friend_id_rv:
                 //邀请好友
-                startActivity(InviteFriendActivity.class);
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(InviteFriendActivity.class);
+                }
                 break;
             case R.id.tell_us_id_rv:
                 //联系我们

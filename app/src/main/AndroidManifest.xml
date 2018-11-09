@@ -142,6 +142,8 @@
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.activity.MyContractActivity"></activity>
+        <activity android:name=".view.activity.MyCowsActivity"/>
+        <activity android:name=".view.activity.MyCowsDetailActivity"/>
     </application>
 
 </manifest>
