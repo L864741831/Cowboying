@@ -46,7 +46,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView ,InitThirdLoginBase.IView ,AccountSecurityBase.IView{
+public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView ,InitThirdLoginBase.IView {
 
     @Bind(R.id.aplily_login)
     ImageView aplilyLogin;
@@ -58,7 +58,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     ImageView registeBtn;
     private static final int SDK_AUTH_FLAG = 1000;
     private IWXAPI api;
-    private AccountSecurityPresenter accountSecurityPresenter;
     private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
     private InitThirdLoginPresenter initThirdLoginPresenter;
     @Override
@@ -74,7 +73,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         api.registerApp(Constant.WeixinAppId);
         thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
-        accountSecurityPresenter=new AccountSecurityPresenter(this);
+
     }
 
     @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
@@ -84,6 +83,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                 initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"4");
                 break;
             case R.id.weixin_login:
+                Constant.isBindWeiXin=false;
                 weixinLogin();
                 break;
             case R.id.registe_btn:
@@ -189,34 +189,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     }
 
-    @Override
-    public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
-        if("000000".equals(safeInfoResultBean.getCode())){
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
-                Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
-                intent2.putExtra("stadus","3");
-                startActivity(intent2);
-            }else {
-                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent1);
-            }
-        }else {
-            showToast(safeInfoResultBean.getMessage());
-        }
-
-    }
-
-    @Override
-    public void getBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
-
-    }
-
-    @Override
-    public void getUnBindThidCount(BindThirdCountResultBean bindThirdCountResultBean) {
-
-    }
 
     @Override
     public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
@@ -230,12 +202,18 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData());
+            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
 
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",thirdCountLoginResultBean.getBizData());
-            reqData.put("version",getVersionCodes());
-            accountSecurityPresenter.getSafeInfo(reqData);
+            if(SDCardUtil.isNullOrEmpty(thirdCountLoginResultBean.getBizData().getMobile())){
+                Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                intent2.putExtra("stadus","3");
+                startActivity(intent2);
+            }else {
+                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+            }
         }else {
             showToast(thirdCountLoginResultBean.getMessage());
         }
@@ -256,6 +234,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent1);
+        finish();
 
     }
 

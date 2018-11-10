@@ -128,23 +128,9 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData());
+            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
 
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",thirdCountLoginResultBean.getBizData());
-            reqData.put("version",getVersionCodes());
-            accountSecurityPresenter.getSafeInfo(reqData);
-        }else {
-            Toast.makeText(this, thirdCountLoginResultBean.getMessage() , Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    @Override
-    public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
-
-        if("000000".equals(safeInfoResultBean.getCode())){
-            if(SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())){
+            if(SDCardUtil.isNullOrEmpty(thirdCountLoginResultBean.getBizData().getMobile())){
                 Intent intent2=new Intent(WXEntryActivity.this,MobileLoginActivity.class);
                 intent2.putExtra("stadus","3");
                 startActivity(intent2);
@@ -158,8 +144,14 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
             }
 
         }else {
-            showToast(safeInfoResultBean.getMessage());
+            Toast.makeText(this, thirdCountLoginResultBean.getMessage() , Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    @Override
+    public void getSafeInfo(SafeInfoResultBean safeInfoResultBean) {
+
     }
 
     @Override

@@ -22,6 +22,7 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.BeefStoreHouseActivity;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
@@ -208,11 +209,19 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                 break;
             case R.id.all_money_rv:
                 //总资产
-                startActivity(MyAllMoneyActivity.class);
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(MyAllMoneyActivity.class);
+                }
                 break;
             case R.id.beef_house_rv:
                 //牛肉仓库
-
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(BeefStoreHouseActivity.class);
+                }
                 break;
             case R.id.write_money_rv:
                 //白条额度

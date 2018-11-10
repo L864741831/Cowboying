@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -22,7 +22,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.ibeef.cowboying.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -53,9 +52,15 @@ public class MyAllMoneyActivity extends BaseActivity {
     TextView getMoneyRecordId;
     @Bind(R.id.char_id)
     LineChart chart;
-    private final int fillColor = Color.argb(150, 51, 181, 229);
+    @Bind(R.id.yesterday_money_rv)
+    TextView yesterdayMoneyRv;
+    @Bind(R.id.yesterday_money_id)
+    TextView yesterdayMoneyId;
+    @Bind(R.id.add_money_rv)
+    TextView addMoneyRv;
 
     private List<Integer> integery;
+    private final int fillColor = Color.argb(150, 51, 181, 229);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +71,7 @@ public class MyAllMoneyActivity extends BaseActivity {
 
     private void init() {
 
-        integery=new ArrayList<>();
+        integery = new ArrayList<>();
         //不显示边界
         chart.setDrawBorders(false);
         chart.getDescription().setEnabled(false);
@@ -87,14 +92,12 @@ public class MyAllMoneyActivity extends BaseActivity {
         // 标签倾斜
         xAxis.setLabelRotationAngle(45);
         //设置X轴值为字符串
-        xAxis.setValueFormatter(new IAxisValueFormatter()
-        {
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
-            public String getFormattedValue(float value, AxisBase axis)
-            {
+            public String getFormattedValue(float value, AxisBase axis) {
                 int IValue = (int) value;
                 CharSequence format = DateFormat.format("MM/dd",
-                        System.currentTimeMillis()-24*60*60*1000);
+                        System.currentTimeMillis() - 24 * 60 * 60 * 1000);
                 return format.toString();
             }
         });
@@ -111,10 +114,10 @@ public class MyAllMoneyActivity extends BaseActivity {
         yAxis.setGranularity(30);
         //设置y轴的刻度数量
         //+2：最大值n就有n+1个刻度，在加上y轴多一个单位长度，为了好看，so+2
-        int min=10;
-        int max=99;
+        int min = 10;
+        int max = 99;
         Random random = new Random();
-        int num = random.nextInt(max)%(max-min+1) + min;
+        int num = random.nextInt(max) % (max - min + 1) + min;
         yAxis.setLabelCount(num, false);
         //设置从Y轴值
         yAxis.setAxisMinimum(0f);
@@ -122,11 +125,9 @@ public class MyAllMoneyActivity extends BaseActivity {
         yAxis.setAxisMaximum(120);
 
         //y轴
-        yAxis.setValueFormatter(new IAxisValueFormatter()
-        {
+        yAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
-            public String getFormattedValue(float value, AxisBase axis)
-            {
+            public String getFormattedValue(float value, AxisBase axis) {
                 int IValue = (int) value;
                 return String.valueOf(IValue);
             }
@@ -190,23 +191,41 @@ public class MyAllMoneyActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.back_id,R.id.all_money_id, R.id.add_money_id, R.id.my_wallet_show, R.id.white_money_show, R.id.get_money_id, R.id.get_money_record_id})
+    @OnClick({R.id.back_id, R.id.all_money_id, R.id.yesterday_money_rv,R.id.add_money_rv, R.id.my_wallet_show, R.id.white_money_show, R.id.get_money_id, R.id.get_money_record_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
                 break;
             case R.id.all_money_id:
+                //总资产
+               startActivity(AssetDetailActivity.class);
                 break;
-            case R.id.add_money_id:
+            case R.id.add_money_rv:
+                //累计收益
+                Intent intent1=new Intent(MyAllMoneyActivity.this,YesterdayIncomeActivity.class);
+                intent1.putExtra("isYesterday",false);
+                startActivity(intent1);
+                break;
+            case R.id.yesterday_money_rv:
+                //昨日收益
+                Intent intent=new Intent(MyAllMoneyActivity.this,YesterdayIncomeActivity.class);
+                intent.putExtra("isYesterday",true);
+                startActivity(intent);
                 break;
             case R.id.my_wallet_show:
+                //我的钱包
+                startActivity(WalletDetailActivity.class);
                 break;
             case R.id.white_money_show:
                 break;
             case R.id.get_money_id:
+                //钱包提现
+                startActivity(CashWithdrawActivity.class);
                 break;
             case R.id.get_money_record_id:
+                //提现记录
+                startActivity(CashDepositActivity.class);
                 break;
             default:
                 break;

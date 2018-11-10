@@ -156,7 +156,15 @@
         <activity android:name=".view.activity.SureOderActivity" />
         <activity android:name=".view.activity.AddPayPwdActivity" />
         <activity android:name=".view.activity.ModifyPayPwdActivity" />
-        <activity android:name=".view.activity.MyAllMoneyActivity"></activity>
+        <activity android:name=".view.activity.MyAllMoneyActivity" />
+        <activity android:name=".view.activity.AssetDetailActivity" />
+        <activity android:name=".view.activity.WalletDetailActivity" />
+        <activity android:name=".view.activity.CashDepositActivity" />
+        <activity android:name=".view.activity.YesterdayIncomeActivity" />
+        <activity android:name=".view.activity.CashWithdrawActivity" />
+        <activity android:name=".view.activity.AddAccountZfbActivity" />
+        <activity android:name=".view.activity.BeefStoreHouseActivity" />
+        <activity android:name=".view.activity.GetGoodsRecordActivity"></activity>
     </application>
 
 </manifest>

@@ -62,10 +62,10 @@
                             android:layout_height="80dp" android:orientation="vertical"
                             android:gravity="center">
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="wrap_content" android:id="@+id/yesterday_money_rv"
                                 android:layout_height="wrap_content" android:text="昨日收益（元）>"
                                 android:layout_gravity="center" android:textColor="@color/color3c"
-                                android:textSize="14sp"  />
+                                android:textSize="15sp"  />
                             <TextView
                                 android:layout_width="wrap_content" android:id="@+id/yesterday_money_id"
                                 android:layout_height="wrap_content" android:text="0.00"
@@ -81,10 +81,10 @@
                             android:layout_height="80dp" android:orientation="vertical"
                             android:gravity="center">
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="wrap_content" android:id="@+id/add_money_rv"
                                 android:layout_height="wrap_content" android:text="累计收益（元）>"
                                 android:layout_gravity="center" android:textColor="@color/color3c"
-                                android:textSize="14sp" />
+                                android:textSize="15sp" />
                             <TextView
                                 android:layout_width="wrap_content" android:id="@+id/add_money_id"
                                 android:layout_height="wrap_content" android:text="0.00"
@@ -133,7 +133,7 @@
                             android:layout_width="wrap_content" android:id="@+id/my_wallet_show"
                             android:layout_height="wrap_content" android:text="我的钱包 >"
                             android:layout_gravity="left"
-                            android:textSize="14sp"  />
+                            android:textSize="15sp"  />
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/my_wallet_id"
                             android:layout_height="wrap_content" android:text="￥0.00"
@@ -151,7 +151,7 @@
                             android:layout_width="wrap_content" android:id="@+id/white_money_show"
                             android:layout_height="wrap_content" android:text="白条额度 >"
                             android:layout_gravity="left"
-                            android:textSize="14sp" />
+                            android:textSize="15sp" />
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/white_money_id"
                             android:layout_height="wrap_content" android:text="￥0.00"

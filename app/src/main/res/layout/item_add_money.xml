@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"  android:background="@color/white"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    tools:context=".view.activity.CowClaimPastRecordActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp" android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/time_txt_id"
+                android:layout_height="wrap_content" android:text="2018-10-2"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp" android:layout_marginLeft="20dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/cows_identify_rv"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/add_money_id"
+                    android:layout_height="wrap_content" android:text="+10"
+                    android:gravity="center_vertical" android:layout_marginRight="40dp"
+                    android:layout_alignParentRight="true" android:textSize="15sp"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+        </LinearLayout>
+    <View
+      style="@style/line1"/>
+</LinearLayout>

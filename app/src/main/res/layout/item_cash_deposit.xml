@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    tools:context=".view.activity.OptionReturnActivity" android:background="@color/homef7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_marginTop="15dp" android:background="@drawable/shape_oval_white_btn"
+        android:layout_marginLeft="12dp" android:layout_marginRight="12dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/title_stadus_id"
+            android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+            android:text="审核中" android:layout_marginTop="15dp"
+             android:textSize="16sp" android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp" android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textSize="12sp"
+            android:text="提现金额" android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="4dp"  />
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/cash_money_id"
+            android:layout_height="wrap_content"  android:layout_marginTop="5dp"
+            android:text="￥100" android:textStyle="bold"
+            android:textColor="@color/black" android:textSize="20sp"
+           android:layout_gravity="center_horizontal" />
+        <View
+           style="@style/line" android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"  android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="申请时间:"
+                android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/applay_time_id"
+                android:layout_height="wrap_content" android:text="2018-10-04 14:35:30"
+                android:textColor="@color/colorAccent" android:layout_marginLeft="10dp"
+                android:textSize="15sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"  android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="提现进度:"
+                android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/cash_progress_id"
+                android:layout_height="wrap_content" android:text="已到账"
+                android:textColor="@color/colorAccent" android:layout_marginLeft="10dp"
+                android:textSize="15sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content" android:id="@+id/transfer_money_rv"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_marginTop="10dp"  android:layout_marginLeft="20dp">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/transfer_money_stadus"
+                android:layout_height="wrap_content" android:text="到账时间:"
+                android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/transfer_money_id"
+                android:layout_height="wrap_content" android:text="2018-10-03 13:23:30"
+                android:textColor="@color/colorAccent" android:layout_marginLeft="10dp"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:orientation="horizontal"
+    android:layout_height="wrap_content" android:background="@color/homef7"
+    tools:context=".view.activity.InviteFriendHistoryActivity">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" android:orientation="vertical"
+      android:layout_marginTop="10dp"  android:layout_marginLeft="15dp"
+      android:background="@drawable/shape_oval_white_btn" android:layout_marginRight="15dp">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/time_txt_id"
+                android:layout_height="wrap_content" android:text="2018-08-10"
+                android:layout_marginLeft="15dp" android:textColor="@color/colorGolds"
+                android:textSize="15sp" android:layout_centerVertical="true"/>
+          <TextView
+              android:layout_width="wrap_content" android:id="@+id/beef_stadus_id"
+              android:layout_height="wrap_content" android:text="牛肉提货"
+              android:layout_alignParentRight="true" android:layout_centerVertical="true"
+              android:textColor="@color/colorGold" android:layout_marginRight="15dp"
+              android:textSize="14sp"/>
+      </RelativeLayout>
+      <View
+        style="@style/line"/>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" android:layout_marginTop="10dp">
+          <TextView
+              android:layout_width="wrap_content" android:id="@+id/stadus_beef"
+              android:layout_height="wrap_content" android:text="品种"
+              android:textSize="14sp" android:layout_marginLeft="15dp"
+              android:textColor="@color/colorAccent"/>
+          <TextView
+              android:layout_width="wrap_content" android:id="@+id/cows_stadus_id"
+              android:layout_height="wrap_content" android:text="安格斯牛"
+              android:textSize="14sp"  android:layout_toRightOf="@+id/stadus_beef"
+              android:layout_marginLeft="10dp" android:gravity="right"
+              android:maxLines="1" android:ellipsize="end"
+              android:layout_alignParentRight="true" android:layout_marginRight="15dp"
+              android:textColor="@color/colorAccent"/>
+      </RelativeLayout>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" android:layout_marginTop="10dp"
+          android:layout_marginBottom="20dp">
+          <TextView
+              android:layout_width="wrap_content" android:id="@+id/choose_beef_stadus_id"
+              android:layout_height="wrap_content" android:text="充值重量"
+              android:textSize="14sp" android:layout_marginLeft="15dp"
+              android:textColor="@color/colorAccent"/>
+          <TextView
+              android:layout_width="wrap_content" android:id="@+id/weight_txt_id"
+              android:layout_height="wrap_content" android:text="0.5kg"
+              android:textSize="14sp"  android:textColor="@color/colorAccent"
+              android:layout_alignParentRight="true" android:layout_marginRight="15dp"/>
+      </RelativeLayout>
+
+  </LinearLayout>
+</LinearLayout>

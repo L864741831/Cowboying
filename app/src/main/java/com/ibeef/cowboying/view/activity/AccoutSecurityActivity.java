@@ -437,6 +437,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         if (accountSecurityPresenter != null) {
             accountSecurityPresenter.detachView();
         }
+        Constant.isBindWeiXin=false;
         super.onDestroy();
     }
 }

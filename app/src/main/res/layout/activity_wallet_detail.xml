@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/white"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.WalletDetailActivity">
+    <include layout="@layout/include_title"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdge="vertical"
+        android:orientation="vertical"
+        android:scrollbars="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="vertical">
+            <include
+                layout="@layout/loading_layout"
+                android:id="@+id/loading_layout"  />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent" android:id="@+id/message_ry"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
