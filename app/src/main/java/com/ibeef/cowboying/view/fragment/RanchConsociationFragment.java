@@ -22,17 +22,21 @@ import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.PasturePresenter;
 import com.ibeef.cowboying.presenter.RanchBottomVideoPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
+import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -57,6 +61,7 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
     private PastureDetelResultBean pastureDetelResultBean;
     private RanchBottomVideoPresenter ranchBottomVideoPresenter;
     private int ids;
+    private String token;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         banner=view.findViewById(R.id.banner);
@@ -115,7 +120,11 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
                 startActivity(intent);
             }
         });
-        pasturePresenter.getPastureDetelVideo(getVersionCodes(),ids);
+        token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureDetelVideo(reqData,ids);
     }
 
     public static RanchConsociationFragment newInstance(int id) {
@@ -232,7 +241,10 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
         beanList.clear();
         //底部图片集合
         pastureDetelBottomImgAdapter.notifyDataSetChanged();
-        pasturePresenter.getPastureDetelVideo(getVersionCodes(),ids);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureDetelVideo(reqData,ids);
 
         mSwipeLayout.setRefreshing(false);
     }

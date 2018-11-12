@@ -3,6 +3,9 @@ package com.ibeef.cowboying.base;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 
+import java.util.Map;
+
+import retrofit2.http.HeaderMap;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -22,10 +25,10 @@ public class HomeAdBase {
     }
 
     public interface IPresenter {
-        void getHomeAd(String version);
+        void getHomeAd(@HeaderMap Map<String, String> headers);
     }
 
     public interface IModel {
-        Subscription getHomeAd(String version, ResponseCallback<HomeAdResultBean> callback);
+        Subscription getHomeAd(@HeaderMap Map<String, String> headers, ResponseCallback<HomeAdResultBean> callback);
     }
 }

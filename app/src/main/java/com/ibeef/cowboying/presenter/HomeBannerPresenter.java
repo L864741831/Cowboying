@@ -11,6 +11,9 @@ import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.model.HomeAdModel;
 import com.ibeef.cowboying.model.HomeBanerModel;
 
+import java.util.Map;
+
+import retrofit2.http.HeaderMap;
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -31,8 +34,8 @@ public class HomeBannerPresenter extends BasePresenter implements HomeBannerBase
     }
 
     @Override
-    public void getHomeBanner(String version) {
-        addSubscription(mModel.getHomeBanner(version,new ResponseCallback<HomeBannerResultBean>() {
+    public void getHomeBanner(Map<String, String> headers) {
+        addSubscription(mModel.getHomeBanner(headers,new ResponseCallback<HomeBannerResultBean>() {
             @Override
             public void onSuccess(HomeBannerResultBean result) {
                 mView.getHomeBanner(result);
@@ -48,8 +51,8 @@ public class HomeBannerPresenter extends BasePresenter implements HomeBannerBase
     }
 
     @Override
-    public void getHomeVideo(String version) {
-        addSubscription(mModel.getHomeVideo(version,new ResponseCallback<HomeVideoResultBean>() {
+    public void getHomeVideo(Map<String, String> headers) {
+        addSubscription(mModel.getHomeVideo(headers,new ResponseCallback<HomeVideoResultBean>() {
             @Override
             public void onSuccess(HomeVideoResultBean result) {
                 mView.getHomeVideo(result);
@@ -65,9 +68,9 @@ public class HomeBannerPresenter extends BasePresenter implements HomeBannerBase
     }
 
     @Override
-    public void getAllVideo(String version,int currentPage) {
+    public void getAllVideo(Map<String, String> headers,int currentPage) {
         mView.showLoading();
-        addSubscription(mModel.getAllVideo(version,currentPage,new ResponseCallback<HomeAllVideoResultBean>() {
+        addSubscription(mModel.getAllVideo(headers,currentPage,new ResponseCallback<HomeAllVideoResultBean>() {
             @Override
             public void onSuccess(HomeAllVideoResultBean result) {
                 mView.hideLoading();

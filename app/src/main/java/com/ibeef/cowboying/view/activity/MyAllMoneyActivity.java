@@ -20,9 +20,17 @@ import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.IncomeInfoBase;
+import com.ibeef.cowboying.bean.IncomeInfoResultBean;
+import com.ibeef.cowboying.bean.WalletRecordResultBean;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.IncomeInfoPresenter;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -30,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-public class MyAllMoneyActivity extends BaseActivity {
+public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -60,7 +68,8 @@ public class MyAllMoneyActivity extends BaseActivity {
     TextView addMoneyRv;
 
     private List<Integer> integery;
-    private final int fillColor = Color.argb(150, 51, 181, 229);
+    private IncomeInfoPresenter incomeInfoPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +79,12 @@ public class MyAllMoneyActivity extends BaseActivity {
     }
 
     private void init() {
+        token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        incomeInfoPresenter=new IncomeInfoPresenter(this);
+        incomeInfoPresenter.getMoneyInfo(reqData);
 
         integery = new ArrayList<>();
         //不显示边界
@@ -230,5 +245,30 @@ public class MyAllMoneyActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getMoneyInfo(IncomeInfoResultBean incomeInfeResultBean) {
+
+    }
+
+    @Override
+    public void getWalletRecord(WalletRecordResultBean walletRecordResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

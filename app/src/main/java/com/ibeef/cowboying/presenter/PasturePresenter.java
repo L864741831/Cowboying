@@ -10,6 +10,8 @@ import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.model.HomeAdModel;
 import com.ibeef.cowboying.model.PastureModel;
 
+import java.util.Map;
+
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -31,9 +33,9 @@ public class PasturePresenter extends BasePresenter implements PastureBase.IPres
 
 
     @Override
-    public void getPastureAllVideo(String version) {
+    public void getPastureAllVideo(Map<String, String> headers) {
         mView.showLoading();
-        addSubscription(mModel.getPastureAllVideo(version,new ResponseCallback<PastureAllResultBean>() {
+        addSubscription(mModel.getPastureAllVideo(headers,new ResponseCallback<PastureAllResultBean>() {
             @Override
             public void onSuccess(PastureAllResultBean result) {
                 mView.hideLoading();
@@ -51,9 +53,9 @@ public class PasturePresenter extends BasePresenter implements PastureBase.IPres
     }
 
     @Override
-    public void getPastureDetelVideo(String version,int pastureId) {
+    public void getPastureDetelVideo(Map<String, String> headers,int pastureId) {
         mView.showLoading();
-        addSubscription(mModel.getPastureDetelVideo(version,pastureId,new ResponseCallback<PastureDetelResultBean>() {
+        addSubscription(mModel.getPastureDetelVideo(headers,pastureId,new ResponseCallback<PastureDetelResultBean>() {
             @Override
             public void onSuccess(PastureDetelResultBean result) {
                 mView.hideLoading();

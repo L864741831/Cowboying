@@ -6,6 +6,8 @@ import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,8 +33,8 @@ public class RanchBottomVideoModel implements RanchBottomVideoBase.IModel {
     }
 
     @Override
-    public Subscription getRanchBottomVideo(String version,final ResponseCallback<RanchBottomVideoResultBean> callback) {
-        Observable<RanchBottomVideoResultBean> observable = service.getRanchBottomVideo(version);
+    public Subscription getRanchBottomVideo(Map<String, String> headers, final ResponseCallback<RanchBottomVideoResultBean> callback) {
+        Observable<RanchBottomVideoResultBean> observable = service.getRanchBottomVideo(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

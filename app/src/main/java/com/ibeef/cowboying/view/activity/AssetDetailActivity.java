@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,11 +14,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.AssetDetailListAdapter;
 import com.ibeef.cowboying.adapter.MyMessegeListAdapter;
+import com.ibeef.cowboying.base.IncomeInfoBase;
+import com.ibeef.cowboying.bean.IncomeInfoResultBean;
+import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.IncomeInfoPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +36,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 资产明细
  */
-public class AssetDetailActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class AssetDetailActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,IncomeInfoBase.IView {
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -39,9 +47,15 @@ public class AssetDetailActivity extends BaseActivity implements SwipeRefreshLay
     SwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
+    @Bind(R.id.rv_order)
+    RelativeLayout rvOrder;
     private AssetDetailListAdapter assetDetailListAdapter;
-    private List<BaseBean> beanList;
+    private List<WalletRecordResultBean.BizDataBean> beanList;
     private String token;
+    private IncomeInfoPresenter incomeInfoPresenter;
+    private int page=1;
+    private boolean isFirst=true;
+    private boolean isMoreLoad=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +68,6 @@ public class AssetDetailActivity extends BaseActivity implements SwipeRefreshLay
         info.setText("资产明细");
         messageRy.setLayoutManager(new LinearLayoutManager(this));
         beanList=new ArrayList<>();
-        for (int i=0;i<10;i++){
-            BaseBean baseBean=new BaseBean();
-            beanList.add(baseBean);
-        }
         assetDetailListAdapter=new AssetDetailListAdapter(beanList,this,R.layout.item_assetdetail_notes);
         assetDetailListAdapter.setOnLoadMoreListener(this, messageRy);
         messageRy.setAdapter(assetDetailListAdapter);
@@ -81,6 +91,11 @@ public class AssetDetailActivity extends BaseActivity implements SwipeRefreshLay
                 }
             }
         });
+        incomeInfoPresenter=new IncomeInfoPresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        incomeInfoPresenter.getWalletRecord(reqData,page,"3");
     }
 
     @OnClick(R.id.back_id)
@@ -90,11 +105,82 @@ public class AssetDetailActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
+        page=1;
+        isFirst = true;
+        beanList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        incomeInfoPresenter.getWalletRecord(reqData,page,"3");
         swipeLy.setRefreshing(false);
     }
 
     @Override
     public void onLoadMoreRequested() {
+        isMoreLoad = true;
+        page += 1;
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        incomeInfoPresenter.getWalletRecord(reqData,page,"3");
+    }
 
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getMoneyInfo(IncomeInfoResultBean incomeInfeResultBean) {
+
+    }
+
+    @Override
+    public void getWalletRecord(WalletRecordResultBean walletRecordResultBean) {
+        if ("000000".equals(walletRecordResultBean.getCode())) {
+            if (SDCardUtil.isNullOrEmpty(walletRecordResultBean.getBizData())) {
+                if (isFirst) {
+                    rvOrder.setVisibility(View.VISIBLE);
+                    messageRy.setVisibility(View.GONE);
+                } else {
+                    rvOrder.setVisibility(View.GONE);
+                    messageRy.setVisibility(View.VISIBLE);
+                }
+                assetDetailListAdapter.loadMoreEnd();
+            } else {
+                isFirst = false;
+                beanList.addAll(walletRecordResultBean.getBizData());
+                assetDetailListAdapter.setNewData(this.beanList);
+                assetDetailListAdapter.loadMoreComplete();
+            }
+        } else {
+            showToast(walletRecordResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (isMoreLoad) {
+            loadingLayout.setVisibility(View.GONE);
+            messageRy.setVisibility(View.VISIBLE);
+            isMoreLoad = false;
+        } else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            messageRy.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        messageRy.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(incomeInfoPresenter!=null){
+            incomeInfoPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

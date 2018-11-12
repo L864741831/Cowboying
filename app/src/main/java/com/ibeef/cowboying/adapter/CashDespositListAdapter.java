@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class CashDespositListAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class CashDespositListAdapter extends BaseQuickAdapter<CashMoneyRecordResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public CashDespositListAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -24,7 +25,7 @@ public class CashDespositListAdapter extends BaseQuickAdapter<Object,BaseViewHol
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
+    protected void convert(BaseViewHolder helper, CashMoneyRecordResultBean.BizDataBean item) {
         helper.setText(R.id.cash_money_id,"￥1000");
         TextView title_stadus_id=helper.getView(R.id.title_stadus_id);
 

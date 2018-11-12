@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.WalletRecordResultBean;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class WalletDetailListAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class WalletDetailListAdapter extends BaseQuickAdapter<WalletRecordResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public WalletDetailListAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -23,7 +24,7 @@ public class WalletDetailListAdapter extends BaseQuickAdapter<Object,BaseViewHol
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
+    protected void convert(BaseViewHolder helper, WalletRecordResultBean.BizDataBean item) {
 
         helper.setText(R.id.show_reson_id,"认领牛只")
                 .setText(R.id.show_time_id,"2018-08-25 13:00")

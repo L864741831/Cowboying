@@ -10,6 +10,8 @@ import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.RanchBottomVideoModel;
 
+import java.util.Map;
+
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -30,8 +32,8 @@ public class RanchBottomVideoPresenter extends BasePresenter implements RanchBot
     }
 
     @Override
-    public void getRanchBottomVideo(String version) {
-        addSubscription(mModel.getRanchBottomVideo(version,new ResponseCallback<RanchBottomVideoResultBean>() {
+    public void getRanchBottomVideo(Map<String, String> headers) {
+        addSubscription(mModel.getRanchBottomVideo(headers,new ResponseCallback<RanchBottomVideoResultBean>() {
             @Override
             public void onSuccess(RanchBottomVideoResultBean result) {
                 mView.getRanchBottomVideo(result);

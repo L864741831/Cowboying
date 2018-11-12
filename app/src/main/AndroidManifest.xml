@@ -85,7 +85,8 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".view.activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBarWithBackGround" />
+            android:theme="@style/AppTheme.NoActionBarWithBackGrounds"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ToPayActivity" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -148,7 +149,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.activity.ChooseParsterActivity" />
         <activity android:name=".view.activity.CowClaimPastRecordActivity" />
-        <activity android:name=".view.activity.JionPeopleNumActivity" />
+        <activity android:name=".view.activity.JionPeopleNumActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.CowsDesInfoActivity" />
         <activity android:name=".view.activity.ClaimUnCertificationActivity" />
         <activity android:name=".view.activity.ClaimCertificationActivity" />
@@ -159,12 +161,16 @@
         <activity android:name=".view.activity.MyAllMoneyActivity" />
         <activity android:name=".view.activity.AssetDetailActivity" />
         <activity android:name=".view.activity.WalletDetailActivity" />
-        <activity android:name=".view.activity.CashDepositActivity" />
+        <activity android:name=".view.activity.CashDepositActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.YesterdayIncomeActivity" />
         <activity android:name=".view.activity.CashWithdrawActivity" />
         <activity android:name=".view.activity.AddAccountZfbActivity" />
-        <activity android:name=".view.activity.BeefStoreHouseActivity" />
-        <activity android:name=".view.activity.GetGoodsRecordActivity"></activity>
+        <activity android:name=".view.activity.BeefStoreHouseActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".view.activity.GetGoodsRecordActivity" />
+        <activity android:name=".view.activity.BeefHourseDialog"
+            android:theme="@style/myTransparent" />
     </application>
 
 </manifest>

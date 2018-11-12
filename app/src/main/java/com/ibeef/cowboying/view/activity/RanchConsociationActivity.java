@@ -13,9 +13,11 @@ import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.base.PastureBase;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.PasturePresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.fragment.RanchConsociationFragment;
+import com.orhanobut.hawk.Hawk;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -29,7 +31,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,6 +62,7 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
     private ArrayList<BaseFragment> fragmentList;
     private MainFragmentAdapter mainFragmentAdapter;
     private RanchConsociationFragment ranchConsociationFragment;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +77,11 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
         fragmentList=new ArrayList<>();
         pasturePresenter = new PasturePresenter(this);
         mainFragmentAdapter=new MainFragmentAdapter(getSupportFragmentManager(),fragmentList);
-        pasturePresenter.getPastureAllVideo(getVersionCodes());
+        token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureAllVideo(reqData);
     }
     private void initMagicIndicator() {
         for (int i=0;i<dataBeen.size();i++){

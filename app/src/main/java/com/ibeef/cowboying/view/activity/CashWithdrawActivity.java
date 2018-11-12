@@ -10,8 +10,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.CashMoneyBase;
+import com.ibeef.cowboying.bean.CashMoneyParamBean;
+import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
+import com.ibeef.cowboying.bean.CashMoneyResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.CashMoneyPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
+import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +31,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 钱包提现
  */
-public class CashWithdrawActivity extends BaseActivity {
+public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -48,6 +58,8 @@ public class CashWithdrawActivity extends BaseActivity {
     @Bind(R.id.foret_pwd_id)
     TextView foretPwdId;
     private String contents;
+    private CashMoneyPresenter cashMoneyPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +69,7 @@ public class CashWithdrawActivity extends BaseActivity {
     }
 
     private void init() {
+        token= Hawk.get(HawkKey.TOKEN);
         info.setText("钱包提现");
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
@@ -66,6 +79,13 @@ public class CashWithdrawActivity extends BaseActivity {
                 Log.e(Constant.TAG, "完成输入：" + content);
             }
         });
+        cashMoneyPresenter=new CashMoneyPresenter(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @OnClick({R.id.back_id, R.id.add_accountzfb_rv, R.id.sure_out_money_btn,R.id.foret_pwd_id,R.id.pay_back_id})
@@ -83,7 +103,12 @@ public class CashWithdrawActivity extends BaseActivity {
                 }else {
                     showToast("请选择提现支付宝");
                 }
-
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
+                CashMoneyParamBean cashMoneyParamBean=new CashMoneyParamBean();
+//                cashMoneyParamBean.setAccount();
+                cashMoneyPresenter.getCashMoney(reqData,cashMoneyParamBean);
                 break;
             case R.id.pay_back_id:
                 accountPayShowRv.setVisibility(View.GONE);
@@ -95,5 +120,30 @@ public class CashWithdrawActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getCashMoney(CashMoneyResultBean cashMoneyResultBean) {
+
+    }
+
+    @Override
+    public void getCashMoneyRecord(CashMoneyRecordResultBean cashMoneyRecordResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

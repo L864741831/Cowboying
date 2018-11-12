@@ -23,17 +23,21 @@ import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.PasturePresenter;
 import com.ibeef.cowboying.presenter.RanchBottomVideoPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.orhanobut.hawk.Hawk;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,6 +78,7 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
     private PastureDetelBottomImgAdapter pastureDetelBottomImgAdapter;
     private PastureDetelResultBean pastureDetelResultBean;
     private RanchBottomVideoPresenter ranchBottomVideoPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +131,11 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
                 startActivity(intent);
             }
         });
-        pasturePresenter.getPastureDetelVideo(getVersionCodes(),id);
+        token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureDetelVideo(reqData,id);
     }
 
 
@@ -172,7 +181,10 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
         beanList.clear();
         //底部图片集合
         pastureDetelBottomImgAdapter.notifyDataSetChanged();
-        pasturePresenter.getPastureDetelVideo(getVersionCodes(),id);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureDetelVideo(reqData,id);
         swipeLy.setRefreshing(false);
     }
 

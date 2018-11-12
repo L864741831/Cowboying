@@ -25,6 +25,7 @@ import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
@@ -35,6 +36,7 @@ import com.ibeef.cowboying.view.activity.GivePoursActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
+import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -42,7 +44,9 @@ import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,6 +76,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public String history;
     private boolean isFirstAdDialog=true;
     private RelativeLayout rv_show_id;
+    private String token;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -91,9 +96,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeProductListAdapter.addHeaderView(headView);
         homeRyId.setAdapter(homeProductListAdapter);
 
+        token= Hawk.get(HawkKey.TOKEN);
         homeBannerPresenter=new HomeBannerPresenter(this);
-        homeBannerPresenter.getHomeBanner(getVersionCodes());
-        homeBannerPresenter.getHomeVideo(getVersionCodes());
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getHomeBanner(reqData);
+        homeBannerPresenter.getHomeVideo(reqData);
         mPrefDailog = getHoldingActivity().getSharedPreferences("firstopenDailogs", Activity.MODE_PRIVATE);
         history= mPrefDailog.getString(KEY_HISTORY_KEYWORD, "");
 
@@ -209,8 +218,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         beanList.clear();
-        homeBannerPresenter.getHomeBanner(getVersionCodes());
-        homeBannerPresenter.getHomeVideo(getVersionCodes());
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getHomeBanner(reqData);
+        homeBannerPresenter.getHomeVideo(reqData);
         swipeLy.setRefreshing(false);
     }
 

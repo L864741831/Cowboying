@@ -32,7 +32,7 @@
                 <ImageView
                     android:id="@+id/tv_text_null"
                     android:layout_centerInParent="true"
-                    android:layout_width="wrap_content" android:background="@mipmap/invitenotes"
+                    android:layout_width="wrap_content" android:background="@mipmap/getgoodwhiterecord"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
 

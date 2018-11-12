@@ -1,23 +1,35 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.adapter.BeefHourseAdapter;
+import com.ibeef.cowboying.adapter.GetGoodsRecordAdapter;
+import com.ibeef.cowboying.config.HawkKey;
+import com.orhanobut.hawk.Hawk;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
 /**
  * 牛肉仓库
  */
-public class BeefStoreHouseActivity extends BaseActivity {
+public class BeefStoreHouseActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -39,7 +51,11 @@ public class BeefStoreHouseActivity extends BaseActivity {
     TextView getGoodsBtn;
     @Bind(R.id.rv_bottom_id)
     RelativeLayout rvBottomId;
-
+    @Bind(R.id.swipe_layout)
+    SwipeRefreshLayout swipeLayout;
+    private List<BaseBean> beanList;
+    private BeefHourseAdapter beefHourseAdapter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +65,21 @@ public class BeefStoreHouseActivity extends BaseActivity {
     }
 
     private void init() {
+        token= Hawk.get(HawkKey.TOKEN);
+        beanList=new ArrayList<>();
+        for (int i=0;i<14;i++){
+            BaseBean baseBean=new BaseBean();
+            beanList.add(baseBean);
+        }
+        ryId.setLayoutManager(new LinearLayoutManager(this));
+        ryId.setHasFixedSize(true);
+        ryId.setNestedScrollingEnabled(false);
+        swipeLayout.setOnRefreshListener(this);
+        beefHourseAdapter=new BeefHourseAdapter(beanList,this,R.layout.item_beef_hourse);
+        beefHourseAdapter.setOnLoadMoreListener(this, ryId);
+        ryId.setAdapter(beefHourseAdapter);
+        beefHourseAdapter.setNewData(this.beanList);
+        beefHourseAdapter.loadMoreEnd();
 
     }
 
@@ -62,11 +93,22 @@ public class BeefStoreHouseActivity extends BaseActivity {
                 startActivity(GetGoodsRecordActivity.class);
                 break;
             case R.id.question_show_id:
+                startActivity(BeefHourseDialog.class);
                 break;
             case R.id.get_goods_btn:
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeLayout.setRefreshing(false);
     }
 }

@@ -49,13 +49,15 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
     private void init(){
         info.setText("参与人数");
         objectList=new ArrayList<>();
-        for (int i=0;i<10;i++){
+        for (int i=0;i<30;i++){
             objectList.add(new Object());
         }
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
         ryId.setLayoutManager(new LinearLayoutManager(this));
+        ryId.setHasFixedSize(true);
+        ryId.setNestedScrollingEnabled(false);
         joinPeopleNumListAdapter=new JoinPeopleNumListAdapter(objectList,this,R.layout.item_join_people_num);
         joinPeopleNumListAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(joinPeopleNumListAdapter);

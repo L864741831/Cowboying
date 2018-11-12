@@ -4,6 +4,8 @@ import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 
+import java.util.Map;
+
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -24,12 +26,12 @@ public class PastureBase {
     }
 
     public interface IPresenter {
-        void getPastureAllVideo(String version);
-        void getPastureDetelVideo(String version,int pastureId);
+        void getPastureAllVideo(Map<String, String> headers);
+        void getPastureDetelVideo(Map<String, String> headers,int pastureId);
     }
 
     public interface IModel {
-        Subscription getPastureAllVideo(String version,ResponseCallback<PastureAllResultBean> callback);
-        Subscription getPastureDetelVideo(String version,int pastureId,ResponseCallback<PastureDetelResultBean> callback);
+        Subscription getPastureAllVideo(Map<String, String> headers,ResponseCallback<PastureAllResultBean> callback);
+        Subscription getPastureDetelVideo(Map<String, String> headers, int pastureId, ResponseCallback<PastureDetelResultBean> callback);
     }
 }

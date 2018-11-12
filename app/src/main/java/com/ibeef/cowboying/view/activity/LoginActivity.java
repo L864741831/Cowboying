@@ -60,6 +60,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     private IWXAPI api;
     private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
     private InitThirdLoginPresenter initThirdLoginPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         api.registerApp(Constant.WeixinAppId);
         thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
-
+        token= Hawk.get(HawkKey.TOKEN);
     }
 
     @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
@@ -230,11 +231,16 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     @Override
     public void onBackPressed() {
-        Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent1);
-        finish();
+        if(TextUtils.isEmpty(token)){
+            finish();
+        }else {
+            Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
+            finish();
+        }
+
 
     }
 

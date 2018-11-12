@@ -16,7 +16,13 @@
         <item name="windowActionBar">false</item>//取消Actionbar
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>//设置全屏
-        <!--<item name="android:windowBackground">@mipmap/startup</item>//设置背景-->
+        <item name="android:windowBackground">@mipmap/startup</item>//设置背景
+    </style>
+    <style name="AppTheme.NoActionBarWithBackGrounds">
+        <item name="windowActionBar">false</item>//取消Actionbar
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>//设置全屏
+        <item name="android:windowBackground">@mipmap/loginbg</item>//设置背景
     </style>
     <style name="myTransparent"  parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@color/transparent</item>

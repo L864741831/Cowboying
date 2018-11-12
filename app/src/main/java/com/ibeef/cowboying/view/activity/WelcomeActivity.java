@@ -14,8 +14,13 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeAdPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import rxfamily.view.BaseActivity;
 
@@ -27,6 +32,7 @@ public class WelcomeActivity extends BaseActivity implements HomeAdBase.IView {
     //使用SharedPreferences记录是否第一次打开app
     public static final String KEY_HISTORY_KEYWORD = "key_welcome_keyword";
     private HomeAdPresenter homeAdPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,28 +42,34 @@ public class WelcomeActivity extends BaseActivity implements HomeAdBase.IView {
 
     public void init(){
         homeAdPresenter=new HomeAdPresenter(this);
-
+        token= Hawk.get(HawkKey.TOKEN);
         mPref = getSharedPreferences("isfirstopen", Activity.MODE_PRIVATE);
         final String history = mPref.getString(KEY_HISTORY_KEYWORD, "");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //第一次启动进入引导页
-                if(TextUtils.isEmpty(history)){
-                    startActivity(new Intent(WelcomeActivity.this,GuideActivity.class));
-                    SharedPreferences.Editor editor = mPref.edit();
-                    editor.putString(KEY_HISTORY_KEYWORD, "firstopen");
-                    editor.commit();
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
                     finish();
                 }else {
-                    homeAdPresenter.getHomeAd(getVersionCodes());
+                    //第一次启动进入引导页
+                    if (TextUtils.isEmpty(history)) {
+                        startActivity(new Intent(WelcomeActivity.this, GuideActivity.class));
+                        SharedPreferences.Editor editor = mPref.edit();
+                        editor.putString(KEY_HISTORY_KEYWORD, "firstopen");
+                        editor.commit();
+                        finish();
+                    } else {
+                        Map<String, String> reqData = new HashMap<>();
+                        reqData.put("Authorization", token);
+                        reqData.put("version", getVersionCodes());
+                        homeAdPresenter.getHomeAd(reqData);
 
+                    }
                 }
 
             }
         },1000);
-
-
     }
     @Override
     public void onBackPressed() {

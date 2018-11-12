@@ -3,18 +3,24 @@ package com.ibeef.cowboying.api;
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
+import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.CashMoneyParamBean;
+import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
+import com.ibeef.cowboying.bean.CashMoneyResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
+import com.ibeef.cowboying.bean.IncomeInfoResultBean;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
@@ -43,6 +49,7 @@ import com.ibeef.cowboying.bean.UpdateMobileResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
+import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.bean.WeixinAuthSecondeBean;
 
@@ -88,42 +95,42 @@ public interface ApiService {
      * @return
      */
     @GET("banner/start")
-    Observable<HomeAdResultBean> getHomeAd(@Header("version") String version);
+    Observable<HomeAdResultBean> getHomeAd(@HeaderMap Map<String, String> headers);
 
     /**
      *首页banner
      * @return
      */
     @GET("banner/home")
-    Observable<HomeBannerResultBean> getHomeBanner(@Header("version") String version);
+    Observable<HomeBannerResultBean> getHomeBanner(@HeaderMap Map<String, String> headers);
 
     /**
      *首页视频
      * @return
      */
     @GET("pasture/video/home")
-    Observable<HomeVideoResultBean> getHomeVideo(@Header("version") String version);
+    Observable<HomeVideoResultBean> getHomeVideo(@HeaderMap Map<String, String> headers);
 
     /**
      *全部视频
      * @return
      */
     @GET("pasture/video/all")
-    Observable<HomeAllVideoResultBean> getAllVideo(@Header("version") String version, @Query("currentPage") int currentPage);
+    Observable<HomeAllVideoResultBean> getAllVideo(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
 
     /**
      *牧场列表
      * @return
      */
     @GET("pasture/all")
-    Observable<PastureAllResultBean> getPastureAllVideo(@Header("version") String version);
+    Observable<PastureAllResultBean> getPastureAllVideo(@HeaderMap Map<String, String> headers);
 
     /**
      *牧场详情
      * @return
      */
     @GET("pasture/detail")
-    Observable<PastureDetelResultBean> getPastureDetelVideo(@Header("version") String version,@Query("pastureId") int pastureId);
+    Observable<PastureDetelResultBean> getPastureDetelVideo(@HeaderMap Map<String, String> headers,@Query("pastureId") int pastureId);
 
     /**
      *提交反馈
@@ -285,7 +292,7 @@ public interface ApiService {
      * @return
      */
     @GET("pasture/video/recommend")
-    Observable<RanchBottomVideoResultBean> getRanchBottomVideo(@Header("version") String version);
+    Observable<RanchBottomVideoResultBean> getRanchBottomVideo(@HeaderMap Map<String, String> headers);
 
     /**
      * oss图片上传
@@ -293,4 +300,46 @@ public interface ApiService {
      */
     @GET("file/appUploadInit")
     Observable<OssResultBean> getOssImg(@Header("version") String version);
+
+    /**
+     * 个人中心数据
+     * @return
+     */
+    @GET("assets/home/data")
+    Observable<CowManInfosResultBean> getCowManInfos(@HeaderMap Map<String, String> headers);
+
+    /**
+     * 资产详细数据
+     * @return
+     */
+    @GET("assets/detail")
+    Observable<IncomeInfoResultBean> getMoneyInfo(@HeaderMap Map<String, String> headers);
+
+    /**
+     * 钱包流水
+     * @return
+     */
+    @GET("assets/wallet/logs")
+    Observable<WalletRecordResultBean> getWalletRecord(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage, @Query("amountType") String amountType);
+
+    /**
+     * 累计收益
+     * @return
+     */
+    @GET("assets/cumulative/income")
+    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers);
+
+    /**
+     * 提现
+     * @return
+     */
+    @POST("assets/cash")
+    Observable<CashMoneyResultBean> getCashMoney(@HeaderMap Map<String, String> headers, @Body CashMoneyParamBean cashMoneyParamBean);
+
+    /**
+     * 提现记录
+     * @return
+     */
+    @GET("assets/cash/logs")
+    Observable<CashMoneyRecordResultBean> getCashMoneyRecord(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
 }

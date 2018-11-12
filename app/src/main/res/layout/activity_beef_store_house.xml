@@ -5,61 +5,77 @@
     android:layout_width="match_parent"  android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".view.activity.BeefStoreHouseActivity">
-
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:orientation="vertical"
-        android:layout_above="@+id/rv_bottom_id">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp" android:background="@color/colorAccent">
-            <ImageView
-                android:layout_width="35dp" android:id="@+id/back_id"
-                android:layout_height="30dp" android:src="@mipmap/back"
-                android:layout_centerVertical="true" android:scaleType="fitXY"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textColor="@color/white"
-                android:layout_centerHorizontal="true" android:layout_centerVertical="true"
-                android:text="牛肉仓库"  android:textSize="@dimen/title"/>
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_layout"
+        android:orientation="vertical"
+        android:scrollbars="vertical"  android:layout_above="@+id/rv_bottom_id"
+        android:fadingEdge="vertical">
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"  android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:fadingEdge="vertical"
+            android:layout_height="match_parent"  >
 
-            <ImageView
-                android:id="@+id/get_goods_record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" android:src="@mipmap/getgoodsrecordimg"
-                android:layout_marginRight="20dp"/>
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" android:background="@color/colorAccent">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.1dp" android:background="@null"/>
+                    <ImageView
+                        android:layout_width="35dp" android:id="@+id/back_id"
+                        android:layout_height="30dp" android:src="@mipmap/back"
+                        android:layout_centerVertical="true" android:scaleType="fitXY"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textColor="@color/white"
+                        android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+                        android:text="牛肉仓库"  android:textSize="@dimen/title"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="130dp" android:background="@color/colorAccent"
-            android:paddingTop="30dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/beefmoneyimg"
-                android:layout_marginLeft="25dp"/>
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/beef_money_id"
-                android:layout_height="wrap_content" android:textColor="@color/colorGold"
-                android:text="50000kg" android:textSize="20sp"
-                android:layout_marginTop="50dp" android:layout_marginLeft="25dp"/>
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/question_show_id"
-                android:layout_height="wrap_content" android:textColor="@color/colorGold"
-                android:text="2kg起发货" android:drawableRight="@mipmap/beefhourseimg"
-                android:layout_alignParentRight="true" android:layout_marginRight="20dp"
-                android:gravity="center" android:drawablePadding="5dp"/>
-        </RelativeLayout>
-        <include
-            layout="@layout/loading_layout"
-            android:id="@+id/loading_layout"  />
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent" android:id="@+id/ry_id"
-            android:layout_height="match_parent" android:layout_marginTop="5dp" />
-    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/get_goods_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true" android:src="@mipmap/getgoodsrecordimg"
+                        android:layout_marginRight="20dp"/>
+                </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp" android:background="@color/colorAccent"
+                    android:paddingTop="30dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/beefmoneyimg"
+                        android:layout_marginLeft="25dp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/beef_money_id"
+                        android:layout_height="wrap_content" android:textColor="@color/colorGold"
+                        android:text="50000kg" android:textSize="20sp"
+                        android:layout_marginTop="50dp" android:layout_marginLeft="25dp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/question_show_id"
+                        android:layout_height="wrap_content" android:textColor="@color/colorGold"
+                        android:text="2kg起发货" android:drawableRight="@mipmap/beefhourseimg"
+                        android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+                        android:gravity="center" android:drawablePadding="5dp"/>
+                </RelativeLayout>
+                <include
+                    layout="@layout/loading_layout"
+                    android:id="@+id/loading_layout"  />
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent" android:id="@+id/ry_id"
+                    android:layout_height="match_parent" android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/rv_bottom_id"
         android:layout_height="55dp" android:layout_alignParentBottom="true">

@@ -10,6 +10,8 @@ import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,8 +38,8 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
 
 
     @Override
-    public Subscription getHomeBanner(String version,final ResponseCallback<HomeBannerResultBean> callback) {
-        Observable<HomeBannerResultBean> observable = service.getHomeBanner(version);
+    public Subscription getHomeBanner(Map<String, String> headers, final ResponseCallback<HomeBannerResultBean> callback) {
+        Observable<HomeBannerResultBean> observable = service.getHomeBanner(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,8 +60,8 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
     }
 
     @Override
-    public Subscription getHomeVideo(String version,final ResponseCallback<HomeVideoResultBean> callback) {
-        Observable<HomeVideoResultBean> observable = service.getHomeVideo(version);
+    public Subscription getHomeVideo(Map<String, String> headers,final ResponseCallback<HomeVideoResultBean> callback) {
+        Observable<HomeVideoResultBean> observable = service.getHomeVideo(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,8 +82,8 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
     }
 
     @Override
-    public Subscription getAllVideo(String version,int currentPage,final ResponseCallback<HomeAllVideoResultBean> callback) {
-        Observable<HomeAllVideoResultBean> observable = service.getAllVideo(version,currentPage);
+    public Subscription getAllVideo(Map<String, String> headers,int currentPage,final ResponseCallback<HomeAllVideoResultBean> callback) {
+        Observable<HomeAllVideoResultBean> observable = service.getAllVideo(headers,currentPage);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
