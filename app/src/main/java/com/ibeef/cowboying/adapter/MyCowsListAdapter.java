@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyCowsListBean;
+import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 import rxfamily.bean.BaseBean;
 
 
-public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsListBean.DataBean, BaseViewHolder> {
+public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDataBean, BaseViewHolder> {
     private Context context;
     public MyCowsListAdapter(List data, Context context) {
         super(R.layout.my_cows_list_item, data);
@@ -27,7 +28,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsListBean.DataBean,
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final MyCowsListBean.DataBean item) {
+    protected void convert(BaseViewHolder helper, final MyCowsOrderListBean.BizDataBean item) {
 
 //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3

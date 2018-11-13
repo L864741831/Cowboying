@@ -13,11 +13,20 @@ import android.widget.RelativeLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyCowsListAdapter;
+import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.bean.MyCowsListBean;
+import com.ibeef.cowboying.bean.MyCowsOrderListBean;
+import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.HomeBannerPresenter;
+import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rxfamily.view.BaseFragment;
@@ -28,7 +37,7 @@ import rxfamily.view.BaseFragment;
  *
  * @author lalala
  */
-public class MyCowsListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     @Bind(R.id.video_list_rv)
     RecyclerView mRView;
@@ -41,15 +50,17 @@ public class MyCowsListFragment extends BaseFragment implements SwipeRefreshLayo
     private String token;
     private String stadus;
     private RelativeLayout loadingLayout;
-    private List<MyCowsListBean.DataBean> listData;
+    private List<MyCowsOrderListBean.BizDataBean> listData;
     private MyCowsListAdapter myCowsListAdapter;
     private String cancelReson = "";
     private int page = 1;
     private boolean isMoreLoad = false;
     private String groupId;
+    private MyCowsOrderPresenter myCowsOrderPresenter;
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
         mSwipeLayout.setOnRefreshListener(this);
@@ -81,6 +92,10 @@ public class MyCowsListFragment extends BaseFragment implements SwipeRefreshLayo
 
     }
 
+    /**
+     * （1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
+     *   空：全部
+     */
     public static MyCowsListFragment newInstance(String stadus) {
         MyCowsListFragment newFragment = new MyCowsListFragment();
         Bundle bundle = new Bundle();
@@ -93,11 +108,15 @@ public class MyCowsListFragment extends BaseFragment implements SwipeRefreshLayo
     @Override
     public void onResume() {
         super.onResume();
-        page=1;
-        token= Hawk.get(HawkKey.TOKEN);
+        page = 1;
+        token = Hawk.get(HawkKey.TOKEN);
         listData.clear();
-        if(!TextUtils.isEmpty(token)){
-//            orderListPresenter.setList(token,stadus,page);
+        if (!TextUtils.isEmpty(token)) {
+            myCowsOrderPresenter = new MyCowsOrderPresenter(this);
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
         }
 
     }
@@ -120,9 +139,7 @@ public class MyCowsListFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -139,6 +156,59 @@ public class MyCowsListFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void onLoadMoreRequested() {
+
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+        if(isMoreLoad){
+            loadingLayout.setVisibility(View.GONE);
+            mRView.setVisibility(View.VISIBLE);
+            isMoreLoad=false;
+        }else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            mRView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        mRView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void geMyCowsOrderList(MyCowsOrderListBean myCowsOrderListBean) {
+//        if(myCowsOrderListBean.==1&&SDCardUtil.isNullOrEmpty(myCowsOrderListBean.getBizData())){
+//            rv_order.setVisibility(View.VISIBLE);
+//            mRView.setVisibility(View.GONE);
+//            return;
+//        }else {
+//            if(SDCardUtil.isNullOrEmpty(myCollectBean.getData())){
+//                myOrderListAdapter.loadMoreEnd();
+//                return;
+//            }
+//        }
+//        this.listData.addAll(myCollectBean.getData());
+//
+//        rv_order.setVisibility(View.GONE);
+//        mRView.setVisibility(View.VISIBLE);
+//
+//        if(SDCardUtil.isNullOrEmpty(myCollectBean.getData())){
+//            myOrderListAdapter.loadMoreEnd();
+//        }else {
+//            myOrderListAdapter.setNewData(this.listData);
+//            myOrderListAdapter.loadMoreComplete();
+//        }
+    }
+
+    @Override
+    public void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean) {
 
     }
 }
