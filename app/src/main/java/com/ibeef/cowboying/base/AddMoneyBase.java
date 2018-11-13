@@ -3,6 +3,7 @@ package com.ibeef.cowboying.base;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
 
 import java.util.Map;
 
@@ -20,15 +21,18 @@ public class AddMoneyBase {
     public interface IView extends BaseView {
         void showMsg(String msg);
         void getAddMoney(AddMoneyResultBean accountRegisterResultBean);
+        void getYesterdayIncome(YesterdayIncomeResultBean yesterdayIncomeResultBean);
         void showLoading();
         void hideLoading();
     }
 
     public interface IPresenter {
-        void getAddMoney(Map<String, String> headers);
+        void getAddMoney(Map<String, String> headers,int currentPage);
+        void getYesterdayIncome(Map<String, String> headers,String incomeType);
     }
 
     public interface IModel {
-        Subscription getAddMoney(Map<String, String> headers, ResponseCallback<AddMoneyResultBean> callback);
+        Subscription getAddMoney(Map<String, String> headers,int currentPage, ResponseCallback<AddMoneyResultBean> callback);
+        Subscription getYesterdayIncome(Map<String, String> headers,String incomeType, ResponseCallback<YesterdayIncomeResultBean> callback);
     }
 }

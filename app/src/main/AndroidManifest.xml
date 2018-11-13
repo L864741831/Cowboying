@@ -164,7 +164,8 @@
         <activity android:name=".view.activity.CashDepositActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.YesterdayIncomeActivity" />
-        <activity android:name=".view.activity.CashWithdrawActivity" />
+        <activity android:name=".view.activity.CashWithdrawActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.AddAccountZfbActivity" />
         <activity android:name=".view.activity.BeefStoreHouseActivity"
             android:windowSoftInputMode="adjustPan"/>

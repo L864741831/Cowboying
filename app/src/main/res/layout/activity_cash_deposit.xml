@@ -10,7 +10,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fadingEdge="vertical"
         android:orientation="vertical"
         android:scrollbars="vertical">
@@ -27,13 +27,15 @@
                     android:layout_height="wrap_content" android:text="提现申请结束后，我们会在7个工作日内为您审核，审核通过后，一个工作日内到账。请实时查看信息。"
                     android:layout_marginTop="13dp" android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp" android:lineSpacingExtra="5dp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="0.1dp" android:background="@null"/>
+
                 <include
                     layout="@layout/loading_layout"
-                    android:id="@+id/loading_layout"  />
+                    android:id="@+id/loading_layout" />
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent" android:id="@+id/message_ry"
                     android:layout_height="match_parent" />

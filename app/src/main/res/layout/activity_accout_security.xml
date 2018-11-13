@@ -122,7 +122,7 @@
                 android:layout_height="57dp" android:id="@+id/add_pay_rv">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="wrap_content" android:id="@+id/set_pay_txt_id"
                     android:layout_height="wrap_content" android:textColor="@color/black"
                     android:text="设置支付密码" android:layout_marginLeft="20dp"
                     android:textSize="14sp" android:layout_centerVertical="true"

@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ver="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:background="@color/homef7"
-    android:layout_height="match_parent" android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:context=".view.activity.CashWithdrawActivity">
-    <include layout="@layout/include_title"/>
+    <include layout="@layout/include_title" android:id="@+id/title_show"/>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" android:layout_below="@+id/title_show"
+        android:layout_above="@+id/sure_out_money_btn">
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:orientation="vertical">
-                <LinearLayout
+                android:layout_height="match_parent" android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@color/white" android:paddingLeft="15dp">
                     <LinearLayout
-                        android:layout_width="wrap_content" android:orientation="vertical"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent" android:orientation="vertical"
+                        android:layout_height="wrap_content" android:layout_toLeftOf="@+id/mini_money_show"
                         android:layout_gravity="center">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="提现金额（元）"
                             android:textSize="15sp" android:layout_marginTop="15dp"/>
-                        <TextView
-                            android:layout_width="wrap_content" android:id="@+id/money_txt_id"
+                        <EditText
+                            android:layout_width="match_parent" android:id="@+id/money_txt_id"
                             android:layout_height="wrap_content" android:text="0"
                             android:textSize="25sp" android:layout_marginTop="15dp"
-                            android:textStyle="bold" android:layout_marginLeft="30dp"/>
+                            android:textStyle="bold" android:maxLines="1"
+                            android:layout_marginRight="10dp" android:background="@null"
+                            android:inputType="numberDecimal"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/withdraw_money_id"
                             android:layout_height="wrap_content" android:text="钱包余额：0"
@@ -41,11 +45,12 @@
 
                     </LinearLayout>
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content" android:id="@+id/mini_money_show"
                         android:layout_height="wrap_content" android:text="10元起可提现"
-                        android:layout_gravity="center_vertical" android:gravity="right"
-                        android:layout_marginRight="20dp" android:textSize="13sp"/>
-                </LinearLayout>
+                        android:layout_gravity="center_vertical" android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp" android:textSize="13sp"
+                        android:layout_marginTop="70dp"/>
+                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent" android:id="@+id/has_bindzfb_rv"
                     android:layout_height="57dp" android:background="@color/white"
@@ -75,7 +80,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:textColor="@color/black"
-                        android:text="添加支付宝号" android:layout_marginLeft="20dp"
+                        android:text="前往绑定支付宝" android:layout_marginLeft="20dp"
                         android:textSize="14sp" android:layout_centerVertical="true"
                         android:drawableLeft="@mipmap/addaccountzfbimg" android:gravity="center_vertical"
                         android:drawablePadding="10dp"/>
@@ -88,15 +93,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="钱包资金最低10元起才可以提现，提现无手续费。在工作日内提现采用T+1打款模式。即预计第二日打款"
-                    android:lineSpacingExtra="3dp" android:textSize="13sp"
+                    android:lineSpacingExtra="5dp" android:textSize="13sp"
                     android:layout_marginLeft="30dp" android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="注：提现资金到银行卡的具体时间，请以银行为准；如遇节假日申请，则隔周第一个工作日内打款。"
-                    android:lineSpacingExtra="3dp" android:textSize="13sp"
+                    android:layout_height="wrap_content" android:text="注：1.提现资金到银行卡的具体时间，请以银行为准；如遇节假日申请，则隔周第一个工作日内打款。\n2.如果想要更改支付宝账号，请前往设置-账号安全处更换绑定支付宝"
+                    android:lineSpacingExtra="5dp" android:textSize="13sp"
                     android:layout_marginLeft="30dp" android:layout_marginRight="20dp"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"  android:lineSpacingExtra="5dp" android:textSize="13sp"
+                    android:layout_marginLeft="30dp" android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp" android:textColor="@color/colorAccent"
+                    android:text="请注意保管好自己的支付密码，以防造成金额损失"/>
 
             </LinearLayout>
 
@@ -150,14 +161,12 @@
         </RelativeLayout>
     </FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
         <TextView
             android:layout_width="match_parent" android:id="@+id/sure_out_money_btn"
             android:layout_height="50dp" android:background="@color/colorAccent"
             android:textColor="@color/white" android:text="确认转出"
             android:layout_alignParentBottom="true" android:gravity="center"
             android:textSize="17sp"/>
-    </RelativeLayout>
-</LinearLayout>
+
+</RelativeLayout>

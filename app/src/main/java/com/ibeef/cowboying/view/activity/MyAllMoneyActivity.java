@@ -25,9 +25,12 @@ import com.ibeef.cowboying.bean.IncomeInfoResultBean;
 import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.IncomeInfoPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +73,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     private List<Integer> integery;
     private IncomeInfoPresenter incomeInfoPresenter;
     private String token;
+    private IncomeInfoResultBean incomeInfeResultBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,17 +84,40 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
 
     private void init() {
         token= Hawk.get(HawkKey.TOKEN);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
         incomeInfoPresenter=new IncomeInfoPresenter(this);
-        incomeInfoPresenter.getMoneyInfo(reqData);
-
         integery = new ArrayList<>();
         //不显示边界
         chart.setDrawBorders(false);
         chart.getDescription().setEnabled(false);
 
+        chart.getLegend().setEnabled(false);
+
+        chart.animateXY(2000, 2000);
+
+        // don't forget to refresh the drawing
+        chart.invalidate();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        incomeInfoPresenter.getMoneyInfo(reqData);
+    }
+
+    private void setData(final IncomeInfoResultBean incomeInfeResultBean) {
+
+        //设置数据
+        ArrayList<Entry> values = new ArrayList<>();
+        List<BigDecimal> doubleList=new ArrayList<>();
+
+        for (int i = 0; i < incomeInfeResultBean.getBizData().getNearSevenDaysIncome().size(); i++) {
+            values.add(new Entry(i, incomeInfeResultBean.getBizData().getNearSevenDaysIncome().get(i).getAmount().floatValue()));
+            doubleList.add(incomeInfeResultBean.getBizData().getNearSevenDaysIncome().get(i).getAmount());
+        }
 
         //得到X轴
         XAxis xAxis = chart.getXAxis();
@@ -111,11 +138,11 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 int IValue = (int) value;
-                CharSequence format = DateFormat.format("MM/dd",
-                        System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+                CharSequence format = incomeInfeResultBean.getBizData().getNearSevenDaysIncome().get(IValue).getDate();
                 return format.toString();
             }
         });
+        xAxis.setTextSize(8);
 
         //得到Y轴
         YAxis yAxis = chart.getAxisLeft();
@@ -126,18 +153,18 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
         //不显示网格线
         yAxis.setDrawGridLines(false);
         //设置Y轴坐标之间的最小间隔
-        yAxis.setGranularity(30);
+        yAxis.setGranularity(1);
         //设置y轴的刻度数量
-        //+2：最大值n就有n+1个刻度，在加上y轴多一个单位长度，为了好看，so+2
-        int min = 10;
-        int max = 99;
-        Random random = new Random();
-        int num = random.nextInt(max) % (max - min + 1) + min;
-        yAxis.setLabelCount(num, false);
+//        yAxis.setLabelCount(num, false);
         //设置从Y轴值
         yAxis.setAxisMinimum(0f);
         //+1:y轴多一个单位长度，为了好看
-        yAxis.setAxisMaximum(120);
+        if(Collections.max(doubleList).floatValue()==0){
+            yAxis.setAxisMaximum(1);
+        }else {
+            yAxis.setAxisMaximum(Collections.max(doubleList).floatValue());
+        }
+
 
         //y轴
         yAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -147,25 +174,6 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
                 return String.valueOf(IValue);
             }
         });
-
-        chart.getLegend().setEnabled(false);
-
-        chart.animateXY(2000, 2000);
-
-        // don't forget to refresh the drawing
-        chart.invalidate();
-        setData(45, 100);
-    }
-
-    private void setData(int count, float range) {
-
-        //设置数据
-        ArrayList<Entry> values = new ArrayList<>();
-
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * (range + 1)) + 20;
-            values.add(new Entry(i, val));
-        }
         //一个LineDataSet就是一条线
         LineDataSet set1;
 
@@ -236,7 +244,11 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
                 break;
             case R.id.get_money_id:
                 //钱包提现
-                startActivity(CashWithdrawActivity.class);
+                if(!SDCardUtil.isNullOrEmpty(incomeInfeResultBean)){
+                    Intent intent2=new Intent(MyAllMoneyActivity.this,CashWithdrawActivity.class);
+                    intent2.putExtra("withdrawmoney","钱包余额："+incomeInfeResultBean.getBizData().getWalletBalance());
+                    startActivity(intent2);
+                }
                 break;
             case R.id.get_money_record_id:
                 //提现记录
@@ -255,6 +267,19 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     @Override
     public void getMoneyInfo(IncomeInfoResultBean incomeInfeResultBean) {
 
+        if("000000".equals(incomeInfeResultBean.getCode())){
+            this.incomeInfeResultBean=incomeInfeResultBean;
+            allMoneyId.setText(incomeInfeResultBean.getBizData().getTotalAssets()+">");
+            yesterdayMoneyId.setText(incomeInfeResultBean.getBizData().getYesterdayIncome()+"");
+            addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
+            myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());
+            if(!SDCardUtil.isNullOrEmpty(incomeInfeResultBean.getBizData().getCridetBalance())){
+                whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getCridetBalance());
+            }
+            setData(incomeInfeResultBean);
+        }else {
+            showToast(incomeInfeResultBean.getMessage());
+        }
     }
 
     @Override
@@ -270,5 +295,13 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (incomeInfoPresenter!=null){
+            incomeInfoPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

@@ -264,7 +264,38 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
 
     @Override
     public void getCowManInfos(CowManInfosResultBean cowManInfosResultBean) {
+        if("000000".equals(cowManInfosResultBean.getCode())){
+            if(cowManInfosResultBean.getBizData().getMyCattleCount()>0){
+                cattleNumId.setVisibility(View.VISIBLE);
+                cattleNumId.setText(cowManInfosResultBean.getBizData().getMyCattleCount()+"只");
+            }else {
+                cattleNumId.setVisibility(View.GONE);
+            }
 
+            if(cowManInfosResultBean.getBizData().getMyTotalAssets().floatValue()>0){
+                allMoneyId.setVisibility(View.VISIBLE);
+                allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
+            }else {
+                allMoneyId.setVisibility(View.GONE);
+            }
+
+            if(cowManInfosResultBean.getBizData().getMyCreditAmount().floatValue()>0){
+                writeMoneyId.setVisibility(View.VISIBLE);
+                writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount()+"元");
+            }else {
+                writeMoneyId.setVisibility(View.GONE);
+            }
+
+            if(cowManInfosResultBean.getBizData().getMyCouponCount()>0){
+                couponNumId.setVisibility(View.VISIBLE);
+                couponNumId.setText(cowManInfosResultBean.getBizData().getMyCouponCount()+"张");
+            }else {
+                couponNumId.setVisibility(View.GONE);
+            }
+
+        }else {
+            showToast(cowManInfosResultBean.getMessage());
+        }
     }
 
     @Override

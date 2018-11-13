@@ -3,6 +3,7 @@ package com.ibeef.cowboying.api;
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
+import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
@@ -11,11 +12,13 @@ import com.ibeef.cowboying.bean.BindThirdCountResultBean;
 import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
+import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
+import com.ibeef.cowboying.bean.HistorySchemeResultBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
@@ -35,9 +38,13 @@ import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
+import com.ibeef.cowboying.bean.ResetPayPwdParamBean;
+import com.ibeef.cowboying.bean.ResetPayPwdResultBean;
 import com.ibeef.cowboying.bean.RestLoginParamBean;
 import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
+import com.ibeef.cowboying.bean.SetPayPwdParamBean;
+import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
@@ -52,6 +59,7 @@ import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.bean.WeixinAuthSecondeBean;
+import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
 
 import java.util.List;
 import java.util.Map;
@@ -323,11 +331,18 @@ public interface ApiService {
     Observable<WalletRecordResultBean> getWalletRecord(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage, @Query("amountType") String amountType);
 
     /**
-     * 累计收益
+     * 累计收益记录
      * @return
      */
-    @GET("assets/cumulative/income")
-    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers);
+    @GET("assets/income/log")
+    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 昨日收益
+     * @return
+     */
+    @GET("assets/income/data")
+    Observable<YesterdayIncomeResultBean> getYesterdayIncome(@HeaderMap Map<String, String> headers, @Query("incomeType") String incomeType);
 
     /**
      * 提现
@@ -337,9 +352,44 @@ public interface ApiService {
     Observable<CashMoneyResultBean> getCashMoney(@HeaderMap Map<String, String> headers, @Body CashMoneyParamBean cashMoneyParamBean);
 
     /**
+     * 用户支付宝昵称
+     * @return
+     */
+    @GET("account/alipayName")
+    Observable<CashMoneyUserInfoResultBean> getCashMoneyUserInfo(@HeaderMap Map<String, String> headers);
+
+    /**
      * 提现记录
      * @return
      */
     @GET("assets/cash/logs")
     Observable<CashMoneyRecordResultBean> getCashMoneyRecord(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 设置钱包密码
+     * @return
+     */
+    @POST("wallet/setPayPassWord")
+    Observable<SetPayPwdResultBean> getSetPayPwd(@HeaderMap Map<String, String> headers, @Body SetPayPwdParamBean setPayPwdParamBean);
+
+    /**
+     *重置支付密码
+     * @return
+     */
+    @POST("wallet/reSetPayPassWord")
+    Observable<ResetPayPwdResultBean> getResetPayPwd(@HeaderMap Map<String, String> headers, @Body ResetPayPwdParamBean resetPayPwdParamBean);
+
+    /**
+     * 查询进行中的方案列表
+     * @return
+     */
+    @GET("adopt/scheme/activeSchemeInfo")
+    Observable<ActiveSchemeResultBean> getActiveSchemeInfo(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 查询往期方案信息
+     * @return
+     */
+    @GET("adopt/scheme/historySchemeInfo")
+    Observable<HistorySchemeResultBean> getHistorySchemeInfo(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
 }

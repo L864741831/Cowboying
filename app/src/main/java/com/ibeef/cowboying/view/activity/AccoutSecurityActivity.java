@@ -67,6 +67,8 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     TextView modifyPwdId;
     @Bind(R.id.sure_txt_id)
     TextView sureTxtId;
+    @Bind(R.id.set_pay_txt_id)
+    TextView setPayTxtId;
     @Bind(R.id.set_login_pwd_rv)
     RelativeLayout setLoginPwdRv;
     @Bind(R.id.modify_mobile_rv)
@@ -79,7 +81,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     private String stadus;
     private String token;
     private static final int SDK_AUTH_FLAG = 1000;
-    private boolean isSetPwd=false,isMobie=false;
+    private boolean isSetPwd=false,isMobie=false,isSetPayPwd=false;
     private AccountSecurityPresenter accountSecurityPresenter;
     private SafeInfoResultBean safeInfoResultBean;
     private InitThirdLoginPresenter initThirdLoginPresenter;
@@ -118,7 +120,11 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 finish();
                 break;
             case R.id.add_pay_rv:
-                startActivity(ModifyPayPwdActivity.class);
+                if(isSetPayPwd){
+                    startActivity(ModifyPayPwdActivity.class);
+                }else {
+                    startActivity(AddPayPwdActivity.class);
+                }
                 break;
             case R.id.phone_txt_id:
                 if(!isMobie){
@@ -144,6 +150,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                         nameTxtId.setText("确认解除微信账号的绑定吗？");
                         showBindRv.setVisibility(View.VISIBLE);
                     }else {
+                        //绑定微信
                         Constant.isBindWeiXin=true;
                         weixinLogin();
                     }
@@ -164,6 +171,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                         nameTxtId.setText("确认解除支付宝账号的绑定吗？");
                         showBindRv.setVisibility(View.VISIBLE);
                     } else {
+                        //绑定支付宝
                         initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"4");
                     }
                 }
@@ -349,6 +357,13 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
             } else {
                 isSetPwd = false;
                 modifyPwdId.setText("设置登录密码");
+            }
+            if("1".equals(safeInfoResultBean.getBizData().getIsPayPassWord())){
+                isSetPayPwd=true;
+                setPayTxtId.setText("修改支付密码");
+            } else {
+                isSetPayPwd = false;
+                setPayTxtId.setText("设置支付密码");
             }
             if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())) {
                 phoneTxtId.setText("暂无绑定手机号");

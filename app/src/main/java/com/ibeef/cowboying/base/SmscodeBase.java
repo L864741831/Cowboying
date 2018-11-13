@@ -22,6 +22,8 @@ public class SmscodeBase {
         void showMsg(String msg);
         void getSms(SmsCodeResultBean smsCodeResultBean);
         void getValidateSms(SmsCodeResultBean smsCodeResultBean);
+        void countNumber(String msg);
+        void setClickable(boolean clickable);
     }
 
     public interface IPresenter {
