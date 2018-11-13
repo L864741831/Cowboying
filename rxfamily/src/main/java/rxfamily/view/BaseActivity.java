@@ -24,7 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import rxfamily.R;
 import rxfamily.utils.StatusBarUtils;
-public class BaseActivity extends RxAppCompatActivity{
+public class    BaseActivity extends RxAppCompatActivity{
 
     /**
      * 是否沉浸状态栏

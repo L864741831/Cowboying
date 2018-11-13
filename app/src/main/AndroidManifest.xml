@@ -172,6 +172,8 @@
         <activity android:name=".view.activity.GetGoodsRecordActivity" />
         <activity android:name=".view.activity.BeefHourseDialog"
             android:theme="@style/myTransparent" />
+        <activity android:name=".view.activity.MyCowsActivity"/>
+        <activity android:name=".view.activity.MyCowsDetailActivity"/>
     </application>
 
 </manifest>
