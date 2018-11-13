@@ -141,9 +141,7 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.MyContractActivity"></activity>
-        <activity android:name=".view.activity.MyCowsActivity"/>
-        <activity android:name=".view.activity.MyCowsDetailActivity"/>
+        <activity android:name=".view.activity.MyContractActivity" />
         <activity android:name=".view.activity.BuyCowsPlanActivity" />
         <activity
             android:name=".view.activity.CowsClaimActivity"
@@ -156,6 +154,8 @@
         <activity android:name=".view.activity.ClaimCertificationActivity" />
         <activity android:name=".view.activity.UseCouponActivity" />
         <activity android:name=".view.activity.SureOderActivity"></activity>
+        <activity android:name=".view.activity.MyCowsActivity"/>
+        <activity android:name=".view.activity.MyCowsDetailActivity"/>
     </application>
 
 </manifest>
