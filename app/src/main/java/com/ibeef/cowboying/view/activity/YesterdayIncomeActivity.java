@@ -10,6 +10,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AddMoneyPresenter;
 import com.ibeef.cowboying.view.fragment.AddIncomeFragment;
@@ -46,13 +47,13 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
     @Bind(R.id.content_vp)
     ViewPager contentVp;
     private boolean isYesterday;
-    private static final String[] CHANNELS = new String[]{"0.00", "0.00", "0.00"};
+    private  String[] CHANNELS;
     private MainFragmentAdapter mainFragmentAdapter;
     private AddIncomeFragment addIncomeFragment;
     private AddIncomeFragment addIncomeFragment2;
     private AddIncomeFragment addIncomeFragment3;
     private ArrayList<BaseFragment> fragmentList;
-    private String token;
+    private String token,incomeType;
     private AddMoneyPresenter addMoneyPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,31 +69,27 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
         if(isYesterday){
             info.setText("昨日收益");
             incomeMoneyStadus.setText("昨日收益（元）");
+            incomeType="1";
         }else {
             info.setText("累计收益");
             incomeMoneyStadus.setText("累计收益（元）");
+            incomeType="2";
         }
         fragmentList=new ArrayList<>();
-        addIncomeFragment = AddIncomeFragment.newInstance("1");
-        addIncomeFragment2 = AddIncomeFragment.newInstance("1");
-        addIncomeFragment3 = AddIncomeFragment.newInstance("1");
+        addIncomeFragment = AddIncomeFragment.newInstance(incomeType);
+        addIncomeFragment2 = AddIncomeFragment.newInstance(incomeType);
+        addIncomeFragment3 = AddIncomeFragment.newInstance(incomeType);
         fragmentList.add(addIncomeFragment);
         fragmentList.add(addIncomeFragment2);
         fragmentList.add(addIncomeFragment3);
         mainFragmentAdapter = new MainFragmentAdapter(getSupportFragmentManager(), fragmentList);
         contentVp.setAdapter(mainFragmentAdapter);
 
-        ntsTop.setViewPager(contentVp, 0);
-        ntsTop.setTitles(CHANNELS);
-        ntsTop.setStripType(NavigationTabStrip.StripType.LINE);
-        ntsTop.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
-        ntsTop.setTabIndex(0, true);
-
         addMoneyPresenter=new AddMoneyPresenter(this);
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        addMoneyPresenter.getAddMoney(reqData);
+        addMoneyPresenter.getYesterdayIncome(reqData,incomeType);
     }
 
     @OnClick(R.id.back_id)
@@ -108,6 +105,22 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
     @Override
     public void getAddMoney(AddMoneyResultBean accountRegisterResultBean) {
 
+    }
+
+    @Override
+    public void getYesterdayIncome(YesterdayIncomeResultBean yesterdayIncomeResultBean) {
+
+        if("000000".equals(yesterdayIncomeResultBean.getCode())){
+            incomeMoneyId.setText(yesterdayIncomeResultBean.getBizData().getCumulativeIncome()+"");
+            CHANNELS= new String[]{""+yesterdayIncomeResultBean.getBizData().getAdoptCattleIncome(), ""+yesterdayIncomeResultBean.getBizData().getGroupCattleIncome(), ""+yesterdayIncomeResultBean.getBizData().getRecommendIncome()};
+            ntsTop.setViewPager(contentVp, 0);
+            ntsTop.setTitles(CHANNELS);
+            ntsTop.setStripType(NavigationTabStrip.StripType.LINE);
+            ntsTop.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
+            ntsTop.setTabIndex(0, true);
+        }else {
+            showToast(yesterdayIncomeResultBean.getMessage());
+        }
     }
 
     @Override

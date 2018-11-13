@@ -7,6 +7,7 @@ import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.AddMoneyModel;
 
@@ -31,11 +32,31 @@ public class AddMoneyPresenter extends BasePresenter implements AddMoneyBase.IPr
         mModel = new AddMoneyModel();
     }
     @Override
-    public void getAddMoney(Map<String, String> headers) {
-        addSubscription(mModel.getAddMoney(headers,new ResponseCallback<AddMoneyResultBean>() {
+    public void getAddMoney(Map<String, String> headers,int currentPage) {
+        mView.showLoading();
+        addSubscription(mModel.getAddMoney(headers,currentPage,new ResponseCallback<AddMoneyResultBean>() {
             @Override
             public void onSuccess(AddMoneyResultBean result) {
+                mView.hideLoading();
                 mView.getAddMoney(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getYesterdayIncome(Map<String, String> headers, String incomeType) {
+        addSubscription(mModel.getYesterdayIncome(headers,incomeType,new ResponseCallback<YesterdayIncomeResultBean>() {
+            @Override
+            public void onSuccess(YesterdayIncomeResultBean result) {
+                mView.getYesterdayIncome(result);
 
             }
 

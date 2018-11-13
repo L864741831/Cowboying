@@ -8,6 +8,7 @@ import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
+import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -70,6 +71,28 @@ public class CashMoneyModel implements CashMoneyBase.IModel {
                 .subscribe(new Action1<CashMoneyRecordResultBean>() {
                     @Override
                     public void call(CashMoneyRecordResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getCashMoneyUserInfo(Map<String, String> headers,final ResponseCallback<CashMoneyUserInfoResultBean> callback) {
+        Observable<CashMoneyUserInfoResultBean> observable = service.getCashMoneyUserInfo(headers);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<CashMoneyUserInfoResultBean>() {
+                    @Override
+                    public void call(CashMoneyUserInfoResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

@@ -18,6 +18,7 @@ import com.ibeef.cowboying.base.CashMoneyBase;
 import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
+import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CashMoneyPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
@@ -166,14 +167,21 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
     }
 
     @Override
+    public void getCashMoneyUserInfo(CashMoneyUserInfoResultBean cashMoneyUserInfoResultBean) {
+
+    }
+
+    @Override
     public void showLoading() {
         if (isMoreLoad) {
             loadingLayout.setVisibility(View.GONE);
             messageRy.setVisibility(View.VISIBLE);
+            titleShowId.setVisibility(View.VISIBLE);
             isMoreLoad = false;
         } else {
             loadingLayout.setVisibility(View.VISIBLE);
             messageRy.setVisibility(View.GONE);
+            titleShowId.setVisibility(View.GONE);
 
         }
     }
@@ -182,6 +190,7 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         messageRy.setVisibility(View.VISIBLE);
+        titleShowId.setVisibility(View.VISIBLE);
     }
 
     @Override

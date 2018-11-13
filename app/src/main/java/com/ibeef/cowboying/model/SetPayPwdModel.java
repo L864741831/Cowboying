@@ -2,11 +2,13 @@ package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.AccountRegisterBase;
-import com.ibeef.cowboying.base.AddMoneyBase;
+import com.ibeef.cowboying.base.SetPayPwdBase;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
-import com.ibeef.cowboying.bean.AddMoneyResultBean;
-import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
+import com.ibeef.cowboying.bean.ResetPayPwdParamBean;
+import com.ibeef.cowboying.bean.ResetPayPwdResultBean;
+import com.ibeef.cowboying.bean.SetPayPwdParamBean;
+import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -24,29 +26,29 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 累计收益
+ * @describe 设置支付密码
  * @package com.ranhan.cowboying.model
  **/
-public class AddMoneyModel implements AddMoneyBase.IModel {
+public class SetPayPwdModel implements SetPayPwdBase.IModel {
     private HttpService httpService;
     private ApiService service;
 
-    public AddMoneyModel() {
+    public SetPayPwdModel() {
         httpService = HttpService.getInstance(Constant.BASE_URL,false);
         service = httpService.getHttpService().create(ApiService.class);
     }
 
     @Override
-    public Subscription getAddMoney(Map<String, String> headers,int currentPage, final ResponseCallback<AddMoneyResultBean> callback) {
-        Observable<AddMoneyResultBean> observable = service.getAddMoney(headers,currentPage);
+    public Subscription getSetPayPwd(Map<String, String> headers, SetPayPwdParamBean setPayPwdParamBean, final ResponseCallback<SetPayPwdResultBean> callback) {
+        Observable<SetPayPwdResultBean> observable = service.getSetPayPwd(headers,setPayPwdParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<AddMoneyResultBean>() {
+                .subscribe(new Action1<SetPayPwdResultBean>() {
                     @Override
-                    public void call(AddMoneyResultBean result) {
+                    public void call(SetPayPwdResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {
@@ -59,16 +61,16 @@ public class AddMoneyModel implements AddMoneyBase.IModel {
     }
 
     @Override
-    public Subscription getYesterdayIncome(Map<String, String> headers, String incomeType,final ResponseCallback<YesterdayIncomeResultBean> callback) {
-        Observable<YesterdayIncomeResultBean> observable = service.getYesterdayIncome(headers,incomeType);
+    public Subscription getResetPayPwd(Map<String, String> headers, ResetPayPwdParamBean resetPayPwdParamBean,final ResponseCallback<ResetPayPwdResultBean> callback) {
+        Observable<ResetPayPwdResultBean> observable = service.getResetPayPwd(headers,resetPayPwdParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<YesterdayIncomeResultBean>() {
+                .subscribe(new Action1<ResetPayPwdResultBean>() {
                     @Override
-                    public void call(YesterdayIncomeResultBean result) {
+                    public void call(ResetPayPwdResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

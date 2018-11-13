@@ -108,9 +108,8 @@
                         android:layout_margin="15dp"/>
                     <com.github.mikephil.charting.charts.LineChart
                         android:layout_width="match_parent" android:id="@+id/char_id"
-                        android:layout_height="140dp"
-                        android:layout_marginLeft="25dp" android:layout_marginRight="25dp"
-                        android:layout_marginBottom="20dp"/>
+                        android:layout_height="160dp"
+                        android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
                 </LinearLayout>
             </FrameLayout>
 

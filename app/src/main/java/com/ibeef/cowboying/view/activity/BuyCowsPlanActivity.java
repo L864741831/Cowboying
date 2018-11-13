@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.BuyCowListAdapter;
+import com.ibeef.cowboying.base.BuyCowSchemeBase;
+import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
+import com.ibeef.cowboying.bean.HistorySchemeResultBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 买牛方案列表
  */
-public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -115,6 +118,31 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void onLoadMoreRequested() {
+
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getActiveSchemeInfo(ActiveSchemeResultBean activeSchemeResultBean) {
+
+    }
+
+    @Override
+    public void getHistorySchemeInfo(HistorySchemeResultBean historySchemeResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
 
     }
 }

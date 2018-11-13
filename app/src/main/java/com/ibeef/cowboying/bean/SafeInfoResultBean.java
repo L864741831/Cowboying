@@ -61,6 +61,15 @@ public class SafeInfoResultBean {
         private String wxName;
         private Integer wxId;
         private String isPassWord;
+        private String isPayPassWord;
+
+        public String getIsPayPassWord() {
+            return isPayPassWord;
+        }
+
+        public void setIsPayPassWord(String isPayPassWord) {
+            this.isPayPassWord = isPayPassWord;
+        }
 
         public Integer getId() {
             return id;

@@ -42,11 +42,20 @@ public class CashMoneyRecordResultBean {
         private String orderCode;
         private String status;
         private String createTime;
+        private String successTime;
         private String reason;
         private double amount;
 
         public String getOrderCode() {
             return orderCode;
+        }
+
+        public String getSuccessTime() {
+            return successTime;
+        }
+
+        public void setSuccessTime(String successTime) {
+            this.successTime = successTime;
         }
 
         public void setOrderCode(String orderCode) {

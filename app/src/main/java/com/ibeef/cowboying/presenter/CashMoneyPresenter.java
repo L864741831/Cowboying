@@ -9,6 +9,7 @@ import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
+import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.CashMoneyModel;
 
@@ -65,6 +66,23 @@ public class CashMoneyPresenter extends BasePresenter implements CashMoneyBase.I
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
                 mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getCashMoneyUserInfo(Map<String, String> headers) {
+        addSubscription(mModel.getCashMoneyUserInfo(headers,new ResponseCallback<CashMoneyUserInfoResultBean>() {
+            @Override
+            public void onSuccess(CashMoneyUserInfoResultBean result) {
+                mView.getCashMoneyUserInfo(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
                 mView.showMsg(msg);
             }
         }));

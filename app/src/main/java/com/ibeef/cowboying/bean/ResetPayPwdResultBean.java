@@ -2,22 +2,14 @@ package com.ibeef.cowboying.bean;
 
 /**
  * @author ls
- * @date on 2018/11/12 15:43
+ * @date on 2018/11/13 15:45
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class CashMoneyResultBean {
-
-
-    /**
-     * code : 000000
-     * message :
-     * bizData : null
-     */
-
+public class ResetPayPwdResultBean {
     private String code;
     private String message;
-    private Object bizData;
+    private String bizData;
 
     public String getCode() {
         return code;
@@ -35,11 +27,11 @@ public class CashMoneyResultBean {
         this.message = message;
     }
 
-    public Object getBizData() {
+    public String getBizData() {
         return bizData;
     }
 
-    public void setBizData(Object bizData) {
+    public void setBizData(String bizData) {
         this.bizData = bizData;
     }
 }

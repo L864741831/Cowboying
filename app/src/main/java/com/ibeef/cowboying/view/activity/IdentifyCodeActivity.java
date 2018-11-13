@@ -424,6 +424,16 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     }
 
     @Override
+    public void countNumber(String msg) {
+
+    }
+
+    @Override
+    public void setClickable(boolean clickable) {
+
+    }
+
+    @Override
     public void getAccoutRegister(AccountRegisterResultBean accountRegisterResultBean) {
         if("000000".equals(accountRegisterResultBean.getCode())){
             Hawk.put(HawkKey.TOKEN, accountRegisterResultBean.getBizData());

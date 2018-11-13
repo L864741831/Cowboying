@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.bean;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class WalletRecordResultBean {
 
         private String changeType;
         private String changeTime;
-        private double changeAmount;
+        private BigDecimal changeAmount;
 
         public String getChangeType() {
             return changeType;
@@ -59,11 +60,11 @@ public class WalletRecordResultBean {
             this.changeTime = changeTime;
         }
 
-        public double getChangeAmount() {
+        public BigDecimal getChangeAmount() {
             return changeAmount;
         }
 
-        public void setChangeAmount(double changeAmount) {
+        public void setChangeAmount(BigDecimal changeAmount) {
             this.changeAmount = changeAmount;
         }
     }

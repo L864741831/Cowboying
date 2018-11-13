@@ -5,6 +5,7 @@ import android.content.Context;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.AddMoneyResultBean;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class AddMoneyAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class AddMoneyAdapter extends BaseQuickAdapter<AddMoneyResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public AddMoneyAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -22,7 +23,12 @@ public class AddMoneyAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
-
+    protected void convert(BaseViewHolder helper, AddMoneyResultBean.BizDataBean item) {
+        helper.setText(R.id.time_txt_id,item.getDate());
+        if(item.getAmount().floatValue()>=0){
+            helper.setText(R.id.add_money_id,"+"+item.getAmount());
+        }else {
+            helper.setText(R.id.add_money_id,""+item.getAmount());
+        }
     }
 }
