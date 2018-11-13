@@ -88,6 +88,7 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
                     token= Hawk.get(HawkKey.TOKEN);
                     if(TextUtils.isEmpty(token)){
                         startActivity(LoginActivity.class);
+                        finish();
                     }
                 }
                 return true;

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.InviteNotesAdapter;
 import com.ibeef.cowboying.adapter.MyContractAdapter;
@@ -26,7 +27,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 我的合同
  */
-public class MyContractActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class MyContractActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -62,6 +63,7 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
         swipeLayout.setOnRefreshListener(this);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         myContractAdapter=new MyContractAdapter(beanList,this,R.layout.item_my_contract);
+        myContractAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(myContractAdapter);
         myContractAdapter.setNewData(this.beanList);
         myContractAdapter.loadMoreEnd();
@@ -91,5 +93,10 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         swipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+
     }
 }

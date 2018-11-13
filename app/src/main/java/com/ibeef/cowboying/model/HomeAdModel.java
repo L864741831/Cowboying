@@ -7,6 +7,9 @@ import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
+import java.util.Map;
+
+import retrofit2.http.HeaderMap;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,8 +35,8 @@ public class HomeAdModel implements HomeAdBase.IModel {
     }
 
     @Override
-    public Subscription getHomeAd(String version,final ResponseCallback<HomeAdResultBean> callback) {
-        Observable<HomeAdResultBean> observable = service.getHomeAd(version);
+    public Subscription getHomeAd(@HeaderMap Map<String, String> headers, final ResponseCallback<HomeAdResultBean> callback) {
+        Observable<HomeAdResultBean> observable = service.getHomeAd(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

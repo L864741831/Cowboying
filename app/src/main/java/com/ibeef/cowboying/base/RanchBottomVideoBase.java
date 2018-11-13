@@ -4,6 +4,8 @@ import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 
+import java.util.Map;
+
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -21,10 +23,10 @@ public class RanchBottomVideoBase {
     }
 
     public interface IPresenter {
-        void getRanchBottomVideo(String version);
+        void getRanchBottomVideo(Map<String, String> headers);
     }
 
     public interface IModel {
-        Subscription getRanchBottomVideo(String version, ResponseCallback<RanchBottomVideoResultBean> callback);
+        Subscription getRanchBottomVideo(Map<String, String> headers, ResponseCallback<RanchBottomVideoResultBean> callback);
     }
 }

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content" android:id="@+id/go_main_activity">
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/go_txt_show"
-                android:layout_height="wrap_content" android:text="跳过(5s)"
+                android:layout_height="wrap_content" android:text="跳过(6s)"
                 android:layout_alignParentRight="true" android:layout_margin="20dp"
                 android:background="@drawable/oval_black_bg" android:textColor="@color/white"/>
 

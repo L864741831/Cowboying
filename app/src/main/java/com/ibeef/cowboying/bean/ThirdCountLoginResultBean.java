@@ -12,12 +12,12 @@ public class ThirdCountLoginResultBean {
     /**
      * code : 000000
      * message : null
-     * bizData : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1NDA5NzE4NzEsImxvZ2luVHlwZSI6IjQiLCJpc3MiOiJ3d3cueWFiZWkuc2hvcCIsImV4cCI6MTU0MzU2Mzg3MSwiaWF0IjoxNTQwOTcxODcxLCJ1c2VySWQiOjIyfQ.KTebhKhxVenc-rkNqd1qTLnhvgdbIQ-r6MOp6CwY_EE
+     * bizData : {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1NDE4MTg1MjEsImxvZ2luVHlwZSI6IjMiLCJpc3MiOiJ3d3cueWFiZWkuc2hvcCIsImV4cCI6MTU0NDQxMDUyMSwiaWF0IjoxNTQxODE4NTIxLCJ1c2VySWQiOjQyfQ.Yzc_uaP9DLd9LF9RitmPWQqstD4f_10-cisDnxtXNu0","mobile":null}
      */
 
     private String code;
     private String message;
-    private String bizData;
+    private BizDataBean bizData;
 
     public String getCode() {
         return code;
@@ -35,11 +35,37 @@ public class ThirdCountLoginResultBean {
         this.message = message;
     }
 
-    public String getBizData() {
+    public BizDataBean getBizData() {
         return bizData;
     }
 
-    public void setBizData(String bizData) {
+    public void setBizData(BizDataBean bizData) {
         this.bizData = bizData;
+    }
+
+    public  class BizDataBean {
+        /**
+         * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1NDE4MTg1MjEsImxvZ2luVHlwZSI6IjMiLCJpc3MiOiJ3d3cueWFiZWkuc2hvcCIsImV4cCI6MTU0NDQxMDUyMSwiaWF0IjoxNTQxODE4NTIxLCJ1c2VySWQiOjQyfQ.Yzc_uaP9DLd9LF9RitmPWQqstD4f_10-cisDnxtXNu0
+         * mobile : null
+         */
+
+        private String token;
+        private String mobile;
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
     }
 }

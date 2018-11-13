@@ -1,12 +1,14 @@
 package com.ibeef.cowboying.bean;
 
+import java.io.Serializable;
+
 /**
  * @author ls
  * @date on 2018/10/27 17:57
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class HomeAdResultBean {
+public class HomeAdResultBean implements Serializable {
 
     /**
      * code : 000000
@@ -42,7 +44,7 @@ public class HomeAdResultBean {
         this.bizData = bizData;
     }
 
-    public  class BizDataBean {
+    public  class BizDataBean implements Serializable{
         /**
          * id : 6
          * position : 3

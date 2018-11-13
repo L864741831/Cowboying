@@ -241,8 +241,8 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                         showToast("修改昵称不能为空~");
                         return;
                     }
-                    if(etWriteId.getText().toString().trim().length()>40){
-                        showToast("修改的昵称不能超过40个字哟~");
+                    if(etWriteId.getText().toString().trim().length()>12){
+                        showToast("修改的昵称不能超过12个字哟~");
                         return;
                     }
                     Map<String, String> reqData = new HashMap<>();
@@ -573,7 +573,8 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 isBindPhone=false;
             }else {
                 bindPhoneStadus.setText("手机号");
-                bindPhoneTxt.setText(userInfoResultBean.getBizData().getMobile());
+                String phoneNumber = userInfoResultBean.getBizData().getMobile().substring(0, 3) + "****" + userInfoResultBean.getBizData().getMobile().substring(7, userInfoResultBean.getBizData().getMobile().length());
+                bindPhoneTxt.setText(phoneNumber);
                 isBindPhone=true;
             }
 

@@ -5,6 +5,9 @@ import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 
+import java.util.Map;
+
+import retrofit2.http.HeaderMap;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -26,14 +29,14 @@ public class HomeBannerBase {
     }
 
     public interface IPresenter {
-        void getHomeBanner(String version);
-        void getHomeVideo(String version);
-        void getAllVideo(String version,int currentPage);
+        void getHomeBanner(Map<String, String> headers);
+        void getHomeVideo(Map<String, String> headers);
+        void getAllVideo(Map<String, String> headers,int currentPage);
     }
 
     public interface IModel {
-        Subscription getHomeBanner(String version,ResponseCallback<HomeBannerResultBean> callback);
-        Subscription getHomeVideo(String version,ResponseCallback<HomeVideoResultBean> callback);
-        Subscription getAllVideo(String version,int currentPage,ResponseCallback<HomeAllVideoResultBean> callback);
+        Subscription getHomeBanner(Map<String, String> headers,ResponseCallback<HomeBannerResultBean> callback);
+        Subscription getHomeVideo(Map<String, String> headers,ResponseCallback<HomeVideoResultBean> callback);
+        Subscription getAllVideo(Map<String, String> headers, int currentPage, ResponseCallback<HomeAllVideoResultBean> callback);
     }
 }

@@ -150,7 +150,7 @@ public class MobileLoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.sure_txt_id, R.id.show_bind_rv, R.id.register_rule_id})
+    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.sure_txt_id, R.id.register_rule_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_img_id:
@@ -158,9 +158,6 @@ public class MobileLoginActivity extends BaseActivity {
                 break;
             case R.id.action_right_tv:
                 showBindRv.setVisibility(View.VISIBLE);
-                break;
-            case R.id.show_bind_rv:
-                showBindRv.setVisibility(View.GONE);
                 break;
             case R.id.sure_txt_id:
                 //  第三方登录绑定手机号  继续绑定
@@ -187,6 +184,7 @@ public class MobileLoginActivity extends BaseActivity {
                     intent.putExtra("oldmobile", oldmobile);
                     intent.putExtra("mobile", etMobile.getText().toString().trim());
                     startActivity(intent);
+                    finish();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         rx.Observable<Boolean> grantObservable = PermissionsUtils.getPhoneCode(MobileLoginActivity.this);
@@ -198,6 +196,7 @@ public class MobileLoginActivity extends BaseActivity {
                                     intent.putExtra("stadus", stadus);
                                     intent.putExtra("mobile", etMobile.getText().toString().trim());
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     PermissionsUtils.showPermissionDeniedDialog(MobileLoginActivity.this, false);
                                 }
@@ -208,6 +207,7 @@ public class MobileLoginActivity extends BaseActivity {
                         intent.putExtra("stadus", stadus);
                         intent.putExtra("mobile", etMobile.getText().toString().trim());
                         startActivity(intent);
+                        finish();
                     }
                 }
                 break;

@@ -8,6 +8,8 @@ import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,8 +35,8 @@ public class PastureModel implements PastureBase.IModel {
     }
 
     @Override
-    public Subscription getPastureAllVideo(String version,final ResponseCallback<PastureAllResultBean> callback) {
-        Observable<PastureAllResultBean> observable = service.getPastureAllVideo(version);
+    public Subscription getPastureAllVideo(Map<String, String> headers, final ResponseCallback<PastureAllResultBean> callback) {
+        Observable<PastureAllResultBean> observable = service.getPastureAllVideo(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,8 +57,8 @@ public class PastureModel implements PastureBase.IModel {
     }
 
     @Override
-    public Subscription getPastureDetelVideo(String version,int pastureId,final ResponseCallback<PastureDetelResultBean> callback) {
-        Observable<PastureDetelResultBean> observable = service.getPastureDetelVideo(version,pastureId);
+    public Subscription getPastureDetelVideo(Map<String, String> headers,int pastureId,final ResponseCallback<PastureDetelResultBean> callback) {
+        Observable<PastureDetelResultBean> observable = service.getPastureDetelVideo(headers,pastureId);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

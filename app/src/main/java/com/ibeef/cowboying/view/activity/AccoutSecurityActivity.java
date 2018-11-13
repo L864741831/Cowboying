@@ -2,14 +2,11 @@ package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Telephony;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,29 +19,21 @@ import com.alipay.sdk.app.AuthTask;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
-import com.ibeef.cowboying.base.SmscodeBase;
 import com.ibeef.cowboying.bean.AuthResult;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
-import com.ibeef.cowboying.bean.SmsCodeParamBean;
-import com.ibeef.cowboying.bean.SmsCodeResultBean;
-import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
-import com.ibeef.cowboying.presenter.SmsCodePresenter;
-import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,6 +73,8 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     RelativeLayout modifyMobileRv;
     @Bind(R.id.show_bind_rv)
     RelativeLayout showBindRv;
+    @Bind(R.id.add_pay_rv)
+    RelativeLayout addPayRv;
 
     private String stadus;
     private String token;
@@ -120,11 +111,14 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         accountSecurityPresenter.getSafeInfo(reqData);
     }
 
-    @OnClick({R.id.back_id, R.id.phone_txt_id, R.id.weixin_stadus_id, R.id.zfb_stadus_id, R.id.set_login_pwd_rv, R.id.modify_mobile_rv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv})
+    @OnClick({R.id.back_id, R.id.phone_txt_id, R.id.weixin_stadus_id, R.id.zfb_stadus_id, R.id.set_login_pwd_rv, R.id.modify_mobile_rv,R.id.cancle_txt_id,R.id.sure_txt_id,R.id.show_bind_rv,R.id.add_pay_rv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
+                break;
+            case R.id.add_pay_rv:
+                startActivity(ModifyPayPwdActivity.class);
                 break;
             case R.id.phone_txt_id:
                 if(!isMobie){
@@ -334,7 +328,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                     } else {
                         // 其他状态值则为授权失败
                         Toast.makeText(AccoutSecurityActivity.this,
-                                "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT).show();
+                                "授权失败" , Toast.LENGTH_SHORT).show();
 
                     }
                     Log.e(Constant.TAG, "支付宝结果" + authResult + "????????" + resultStatus);
@@ -357,7 +351,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 modifyPwdId.setText("设置登录密码");
             }
             if (SDCardUtil.isNullOrEmpty(safeInfoResultBean.getBizData().getMobile())) {
-                phoneTxtId.setText("");
+                phoneTxtId.setText("暂无绑定手机号");
                 isMobie = false;
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.binds);
@@ -365,7 +359,8 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                         null, drawableRight, null);
                 phoneTxtId.setCompoundDrawablePadding(4);
             } else {
-                phoneTxtId.setText(safeInfoResultBean.getBizData().getMobile());
+                String phoneNumber = safeInfoResultBean.getBizData().getMobile().substring(0, 3) + "****" + safeInfoResultBean.getBizData().getMobile().substring(7, safeInfoResultBean.getBizData().getMobile().length());
+                phoneTxtId.setText(phoneNumber);
                 isMobie = true;
                 Drawable drawableRight = getResources().getDrawable(
                         R.mipmap.replacebinds);
@@ -442,6 +437,7 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
         if (accountSecurityPresenter != null) {
             accountSecurityPresenter.detachView();
         }
+        Constant.isBindWeiXin=false;
         super.onDestroy();
     }
 }

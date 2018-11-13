@@ -14,21 +14,28 @@ import android.widget.Toast;
 import com.alipay.sdk.app.AuthTask;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
 import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.bean.AuthResult;
+import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.wxapi.WXEntryActivity;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -51,9 +58,9 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     ImageView registeBtn;
     private static final int SDK_AUTH_FLAG = 1000;
     private IWXAPI api;
-
     private ThirdAccountLoginPresenter thirdAccountLoginPresenter;
     private InitThirdLoginPresenter initThirdLoginPresenter;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +74,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         api.registerApp(Constant.WeixinAppId);
         thirdAccountLoginPresenter=new ThirdAccountLoginPresenter(this);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
+        token= Hawk.get(HawkKey.TOKEN);
     }
 
     @OnClick({R.id.aplily_login, R.id.weixin_login,R.id.registe_btn,R.id.login_btn})
@@ -76,6 +84,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                 initThirdLoginPresenter.getInitThirdLogin(getVersionCodes(),"4");
                 break;
             case R.id.weixin_login:
+                Constant.isBindWeiXin=false;
                 weixinLogin();
                 break;
             case R.id.registe_btn:
@@ -181,6 +190,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     }
 
+
     @Override
     public void getInitThirdLogin(ThirdLoginResultBean thirdLoginResultBean) {
         if("000000".equals(thirdLoginResultBean.getCode())){
@@ -193,11 +203,18 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData());
-            Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
-            intent2.putExtra("stadus","3");
-            startActivity(intent2);
-            finish();
+            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
+
+            if(SDCardUtil.isNullOrEmpty(thirdCountLoginResultBean.getBizData().getMobile())){
+                Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
+                intent2.putExtra("stadus","3");
+                startActivity(intent2);
+            }else {
+                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+            }
         }else {
             showToast(thirdCountLoginResultBean.getMessage());
         }
@@ -214,10 +231,16 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     @Override
     public void onBackPressed() {
-        Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent1);
+        if(TextUtils.isEmpty(token)){
+            finish();
+        }else {
+            Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
+            finish();
+        }
+
 
     }
 

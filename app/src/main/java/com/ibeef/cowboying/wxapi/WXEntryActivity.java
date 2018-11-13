@@ -22,7 +22,9 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
 import com.ibeef.cowboying.presenter.WeixinAuthPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.LoginActivity;
+import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MobileLoginActivity;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -75,7 +77,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
                 Log.e("WXTest", "onResp code = " + code);
 //                weixinAuthPresenter.getWeixinAuthFirst(Constant.WeixinAppId,Constant.appappSecret,code,"authorization_code");
                 if(Constant.isBindWeiXin){
-                    //账号安全 绑定手机号
+                    //账号安全 绑定微信
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("version",getVersionCodes());
                     reqData.put("Authorization",token);
@@ -126,14 +128,25 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData());
-            Intent intent2=new Intent(WXEntryActivity.this,MobileLoginActivity.class);
-            intent2.putExtra("stadus","3");
-            startActivity(intent2);
+            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
+
+            if(SDCardUtil.isNullOrEmpty(thirdCountLoginResultBean.getBizData().getMobile())){
+                Intent intent2=new Intent(WXEntryActivity.this,MobileLoginActivity.class);
+                intent2.putExtra("stadus","3");
+                startActivity(intent2);
+                finish();
+            }else {
+                Intent intent1=new Intent(WXEntryActivity.this,MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+                finish();
+            }
+
         }else {
             Toast.makeText(this, thirdCountLoginResultBean.getMessage() , Toast.LENGTH_SHORT).show();
         }
-        finish();
+
     }
 
     @Override

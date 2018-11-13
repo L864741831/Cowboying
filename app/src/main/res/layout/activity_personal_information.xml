@@ -37,7 +37,7 @@
             android:layout_height="45dp" android:id="@+id/nickname_rv"
             android:background="@color/white">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="wrap_content" android:id="@+id/nick_show_txt"
                 android:layout_height="wrap_content" android:textColor="@color/black"
                 android:text="昵称" android:layout_marginLeft="20dp"
                 android:textSize="14sp" android:layout_centerVertical="true"/>
@@ -45,10 +45,12 @@
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/nickname_txt"
                 android:layout_height="wrap_content" android:text=""
-                android:textSize="14sp"
+                android:textSize="14sp" android:layout_toRightOf="@+id/nick_show_txt"
                 android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-                android:gravity="center" android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"/>
+                android:gravity="right|center_vertical" android:layout_centerVertical="true"
+                android:layout_marginRight="10dp" android:layout_marginLeft="10dp"
+                android:singleLine="true" android:maxLines="1"
+                android:ellipsize="end" />
             <View
                 style="@style/line1" android:layout_alignParentBottom="true"/>
         </RelativeLayout>

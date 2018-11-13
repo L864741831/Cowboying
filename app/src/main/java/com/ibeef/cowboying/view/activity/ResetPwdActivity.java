@@ -144,8 +144,8 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
                     Toast.makeText(ResetPwdActivity.this, "密码不能少于六位！", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (etNewPwd.getText().toString().trim().length() >20) {
-                    Toast.makeText(ResetPwdActivity.this, "密码不能多于20位！", Toast.LENGTH_SHORT).show();
+                if (etNewPwd.getText().toString().trim().length() >=16) {
+                    Toast.makeText(ResetPwdActivity.this, "密码不能多于16位！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(setPwd){

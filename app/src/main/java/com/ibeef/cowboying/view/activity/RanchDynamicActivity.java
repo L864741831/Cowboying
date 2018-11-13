@@ -18,11 +18,15 @@ import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
+import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,6 +58,7 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +69,7 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
 
     private void init() {
         info.setText("牧场动态");
+        token= Hawk.get(HawkKey.TOKEN);
         listData=new ArrayList<>();
         swipeLayout.setColorSchemeResources(R.color.colorAccent);
         swipeLayout.setOnRefreshListener(this);
@@ -73,7 +79,10 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         ranchDynamicdapter.setOnLoadMoreListener(this, videoListRv);
         videoListRv.setAdapter(ranchDynamicdapter);
         homeBannerPresenter=new HomeBannerPresenter(this);
-        homeBannerPresenter.getAllVideo(getVersionCodes(),currentPage);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getAllVideo(reqData,currentPage);
         videoListRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -113,7 +122,10 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         currentPage=1;
         isFirst=true;
         listData.clear();
-        homeBannerPresenter.getAllVideo(getVersionCodes(),currentPage);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getAllVideo(reqData,currentPage);
         swipeLayout.setRefreshing(false);
     }
 
@@ -121,7 +133,10 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
     public void onLoadMoreRequested() {
         isMoreLoad=true;
         currentPage+=1;
-        homeBannerPresenter.getAllVideo(getVersionCodes(),currentPage);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getAllVideo(reqData,currentPage);
     }
 
     @Override

@@ -13,18 +13,23 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.CowManInfoBase;
 import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.CowManInfoPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.BeefStoreHouseActivity;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
+import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
@@ -47,7 +52,7 @@ import rxfamily.view.BaseFragment;
 /**
  * 牛人界面
  */
-public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
+public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,CowManInfoBase.IView {
 
     @Bind(R.id.messege_id)
     ImageView messegeId;
@@ -103,17 +108,14 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
 
     private String token;
     private UserInfoPresenter userInfoPresenter;
+    private CowManInfoPresenter cowManInfoPresenter;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         nameId=view.findViewById(R.id.name_id);
         headImg=view.findViewById(R.id.head_img);
         userInfoPresenter=new UserInfoPresenter(this);
-        token= Hawk.get(HawkKey.TOKEN);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        userInfoPresenter.getUserInfo(reqData);
+        cowManInfoPresenter=new CowManInfoPresenter(this);
     }
 
     @Override
@@ -139,6 +141,7 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
             reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
             userInfoPresenter.getUserInfo(reqData);
+            cowManInfoPresenter.getCowManInfos(reqData);
         }
     }
 
@@ -219,11 +222,19 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
                 break;
             case R.id.all_money_rv:
                 //总资产
-
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(MyAllMoneyActivity.class);
+                }
                 break;
             case R.id.beef_house_rv:
                 //牛肉仓库
-
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(BeefStoreHouseActivity.class);
+                }
                 break;
             case R.id.write_money_rv:
                 //白条额度
@@ -260,6 +271,11 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView{
 
     @Override
     public void showMsg(String msg) {
+    }
+
+    @Override
+    public void getCowManInfos(CowManInfosResultBean cowManInfosResultBean) {
+
     }
 
     @Override

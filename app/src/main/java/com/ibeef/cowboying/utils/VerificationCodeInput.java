@@ -130,6 +130,8 @@ public class VerificationCodeInput extends ViewGroup {
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             } else if (TYPE_PASSWORD.equals(inputType)){
                 editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                editText.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
+                editText.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
             } else if (TYPE_TEXT.equals(inputType)){
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
             } else if (TYPE_PHONE.equals(inputType)){

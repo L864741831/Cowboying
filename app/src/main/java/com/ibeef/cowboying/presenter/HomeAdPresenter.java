@@ -9,6 +9,9 @@ import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.model.HomeAdModel;
 import com.ibeef.cowboying.model.LoginModel;
 
+import java.util.Map;
+
+import retrofit2.http.HeaderMap;
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -29,9 +32,9 @@ public class HomeAdPresenter extends BasePresenter implements HomeAdBase.IPresen
     }
 
     @Override
-    public void getHomeAd(String version) {
+    public void getHomeAd(@HeaderMap Map<String, String> headers) {
         mView.showLoading();
-        addSubscription(mModel.getHomeAd(version,new ResponseCallback<HomeAdResultBean>() {
+        addSubscription(mModel.getHomeAd(headers,new ResponseCallback<HomeAdResultBean>() {
             @Override
             public void onSuccess(HomeAdResultBean result) {
                 mView.hideLoading();

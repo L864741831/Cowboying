@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:orientation="vertical"
+    android:layout_height="wrap_content" android:background="@color/white"
+    tools:context=".view.activity.InviteFriendHistoryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal"
+        android:layout_marginTop="13dp" android:gravity="center">
+        <View
+            android:layout_width="15dp"
+            android:layout_height="1dp" android:background="@color/colorGold" />
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/txt_area_id"
+            android:layout_height="wrap_content" android:text="1.：8专区"
+            android:textColor="@color/colorGold" android:textSize="15sp"
+            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+        <View
+            android:layout_width="15dp"
+            android:layout_height="1dp" android:background="@color/colorGold" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="90dp" android:id="@+id/beef_img_id"
+            android:layout_height="90dp" android:layout_margin="10dp"
+            android:src="@color/grassgreen"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/beef_name_id"
+            android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+            android:text="澳洲和牛眼肉M7500克 " android:lineSpacingExtra="3dp"
+            android:layout_toRightOf="@+id/beef_img_id" android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp" android:layout_marginRight="30dp"
+            android:maxLines="2" android:ellipsize="end" android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/beef_des_id"
+            android:layout_height="wrap_content" android:text="星尊之选"
+            android:layout_marginTop="80dp" android:layout_toRightOf="@+id/beef_img_id"
+            android:layout_alignLeft="@+id/beef_name_id" android:textSize="13sp"
+            android:layout_marginRight="5dp"/>
+        <com.ibeef.cowboying.view.customview.AmountViewBeef
+            android:layout_width="wrap_content" android:id="@+id/amout_num_id"
+            android:layout_height="30dp"    app:btnWidth="20dp"
+            app:tvWidth="30dp" android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp" android:layout_alignBottom="@+id/beef_des_id" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" android:background="@color/seekbar_bg_first"/>
+
+</LinearLayout>
