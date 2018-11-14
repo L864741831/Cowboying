@@ -6,6 +6,8 @@ import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,8 +33,8 @@ public class GetOssImgModel implements GetOssImgBase.IModel {
     }
 
     @Override
-    public Subscription getOssImg(String version, final ResponseCallback<OssResultBean> callback) {
-        Observable<OssResultBean> observable = service.getOssImg(version);
+    public Subscription getOssImg(Map<String, String> headers, final ResponseCallback<OssResultBean> callback) {
+        Observable<OssResultBean> observable = service.getOssImg(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

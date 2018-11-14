@@ -5,6 +5,7 @@ import android.content.Context;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.AdoptInfosResultBean;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class CowClaimSelectAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class CowClaimSelectAdapter extends BaseQuickAdapter<AdoptInfosResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public CowClaimSelectAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -22,8 +23,9 @@ public class CowClaimSelectAdapter extends BaseQuickAdapter<Object,BaseViewHolde
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
+    protected void convert(BaseViewHolder helper, AdoptInfosResultBean.BizDataBean item) {
 
+        helper.setText(R.id.cows_identify_id,item.getCode());
         helper.addOnClickListener(R.id.cows_identify_rv);
 
     }

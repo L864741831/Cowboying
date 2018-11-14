@@ -5,9 +5,6 @@
     android:layout_height="match_parent" android:background="@color/homef7"
     tools:context=".view.fragment.CowClaimSelectFragment">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:orientation="vertical">
@@ -41,8 +38,15 @@
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent" android:id="@+id/ry_id"
                 android:layout_height="match_parent" android:layout_marginTop="5dp" />
+            <RelativeLayout
+                android:layout_width="match_parent" android:id="@+id/rv_order"
+                android:layout_height="match_parent" android:visibility="gone">
+                <ImageView
+                    android:id="@+id/tv_text_null"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/cowselectwhitebg"/>
+            </RelativeLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
 
 </RelativeLayout>

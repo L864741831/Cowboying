@@ -25,14 +25,14 @@
                         android:layout_margin="15dp"/>
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/nick_name_txt"
-                        android:layout_height="wrap_content" android:text="昵称：牛人10021"
+                        android:layout_height="wrap_content" android:text="昵称： "
                         android:textColor="@color/black"
                         android:layout_toRightOf="@+id/head_img" android:layout_marginTop="20dp"
                         android:textSize="14sp"/>
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/order_code_txt"
                         android:layout_height="wrap_content" android:textColor="@color/black"
-                        android:text="订单编号：20180033333333"
+                        android:text="订单编号： "
                         android:layout_alignLeft="@+id/nick_name_txt" android:layout_below="@+id/nick_name_txt"
                         android:layout_marginTop="10dp" android:textSize="14sp"
                         android:maxLines="1" android:ellipsize="end"/>
@@ -49,12 +49,12 @@
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/pay_money_id"
                         android:layout_height="wrap_content" android:textSize="20sp"
-                        android:text="￥1" android:textStyle="bold"
+                        android:text="￥" android:textStyle="bold"
                         android:textColor="@color/black" android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"/>
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/coupon_money_id"
-                        android:layout_height="wrap_content" android:text="已优惠￥4999"
+                        android:layout_height="wrap_content" android:text="已优惠￥0"
                         android:textSize="14sp" android:layout_gravity="center_horizontal"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -63,17 +63,17 @@
                         android:layout_marginBottom="40dp">
                         <TextView
                             android:layout_width="match_parent" android:id="@+id/know_name_id"
-                            android:layout_height="wrap_content" android:text="认领人：陌上花开"
+                            android:layout_height="wrap_content" android:text="认领人： "
                             android:textSize="14sp" android:textColor="@color/black"
                             android:layout_toLeftOf="@+id/know_mobile_id" android:layout_marginRight="10dp"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/know_mobile_id"
-                            android:layout_height="wrap_content" android:text="18900000000"
+                            android:layout_height="wrap_content" android:text=""
                             android:textSize="14sp" android:textColor="@color/black"
                             android:layout_alignParentRight="true"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/know_identifycode_id"
-                            android:layout_height="wrap_content" android:text="身份证号：410223100000000000"
+                            android:layout_height="wrap_content" android:text="身份证号："
                             android:textSize="14sp" android:textColor="@color/black"
                             android:layout_below="@+id/know_name_id" android:layout_marginTop="10dp"/>
 
@@ -88,7 +88,7 @@
                             android:textSize="14sp"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/know_code_id"
-                            android:layout_height="wrap_content" android:text="第201822222期"
+                            android:layout_height="wrap_content" android:text="第期"
                             android:textSize="14sp" android:layout_alignParentRight="true"/>
                     </RelativeLayout>
                     <RelativeLayout
@@ -101,7 +101,7 @@
                             android:textSize="14sp"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/know_pasture_id"
-                            android:layout_height="wrap_content" android:text="Ben Nevis"
+                            android:layout_height="wrap_content"
                             android:textSize="14sp" android:layout_alignParentRight="true"/>
                     </RelativeLayout>
                     <RelativeLayout
@@ -114,7 +114,7 @@
                             android:textSize="14sp"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/know_number_id"
-                            android:layout_height="wrap_content" android:text="1"
+                            android:layout_height="wrap_content" android:text=""
                             android:textSize="14sp" android:layout_alignParentRight="true"/>
                     </RelativeLayout>
                     <RelativeLayout
@@ -127,7 +127,7 @@
                             android:textSize="14sp"/>
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/know_one_price_id"
-                            android:layout_height="wrap_content" android:text="5000"
+                            android:layout_height="wrap_content" android:text=""
                             android:textSize="14sp" android:layout_alignParentRight="true"
                             android:layout_marginBottom="20dp"/>
                     </RelativeLayout>

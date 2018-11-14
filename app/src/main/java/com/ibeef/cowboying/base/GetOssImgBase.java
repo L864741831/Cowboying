@@ -4,6 +4,8 @@ import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 
+import java.util.Map;
+
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -21,10 +23,10 @@ public class GetOssImgBase {
     }
 
     public interface IPresenter {
-        void getOssImg(String version);
+        void getOssImg(Map<String, String> headers);
     }
 
     public interface IModel {
-        Subscription getOssImg(String version, ResponseCallback<OssResultBean> callback);
+        Subscription getOssImg(Map<String, String> headers, ResponseCallback<OssResultBean> callback);
     }
 }

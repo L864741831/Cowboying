@@ -153,8 +153,8 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
             smsCodeParamBean.setUniqueCode(Md5Util.getIMEI(AddPayPwdActivity.this));
 
             Map<String, String> reqData = new HashMap<>();
-            smsCodeParamBean.setSmsType("findPwd");
-            reqData.put("smsType", "findPwd");
+            smsCodeParamBean.setSmsType("setPayPassWord");
+            reqData.put("smsType", "setPayPassWord");
             reqData.put("phone", etMobile.getText().toString().trim());
             reqData.put("uniqueCode", Md5Util.getIMEI(AddPayPwdActivity.this));
             reqData.put("platform", "2");
@@ -171,7 +171,7 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
         ValidateSmsCodeParamBean validateSmsCodeParamBean=new ValidateSmsCodeParamBean();
         validateSmsCodeParamBean.setPhone(etMobile.getText().toString().trim());
         validateSmsCodeParamBean.setSmsCode(etCode.getText().toString().trim());
-        validateSmsCodeParamBean.setSmsType("findPwd");
+        validateSmsCodeParamBean.setSmsType("setPayPassWord");
         smsCodePresenter.getValidateSms(getVersionCodes(),validateSmsCodeParamBean);
     }
     @Override

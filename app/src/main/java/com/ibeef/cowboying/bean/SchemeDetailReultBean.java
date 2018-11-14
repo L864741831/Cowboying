@@ -1,34 +1,24 @@
 package com.ibeef.cowboying.bean;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author ls
- * @date on 2018/11/13 17:47
+ * @date on 2018/11/14 10:56
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class HistorySchemeResultBean implements Serializable {
+public class SchemeDetailReultBean {
 
     /**
      * code : 000000
      * message :
-     * bizData : [{"schemeId":8,"pastureId":35,"pastureName":"撒","type":"2","expectRate":"8%-9%","realRate":8,"price":500000,"vipLevel":"1","totalStock":1000,"stock":0,"startTime":1541572915000,"endTime":1541572915000,"status":"9","code":"20181109004","imageUrl":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","createTime":1541749923000,"updateTime":null,"lockMonths":6,"projectDescribe":"","curStatus":""},{"schemeId":7,"pastureId":35,"pastureName":"撒","type":"2","expectRate":"8%-9%","realRate":8,"price":500000,"vipLevel":"1","totalStock":1000,"stock":50,"startTime":1541572915000,"endTime":1541572915000,"status":"2","code":"20181109003","imageUrl":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","createTime":1541747027000,"updateTime":null,"lockMonths":6,"projectDescribe":"","curStatus":""},{"schemeId":4,"pastureId":35,"pastureName":"撒","type":"2","expectRate":"8%-9%","realRate":8,"price":500000,"vipLevel":"1","totalStock":1000,"stock":50,"startTime":1541572915000,"endTime":1541659315000,"status":"1","code":"20181108007","imageUrl":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","createTime":1541673677000,"updateTime":null,"lockMonths":6,"projectDescribe":"","curStatus":""},{"schemeId":3,"pastureId":35,"pastureName":"撒","type":"1","expectRate":"8%-9%","realRate":8,"price":500000,"vipLevel":"1","totalStock":1000,"stock":50,"startTime":1541572915000,"endTime":1541918515000,"status":"1","code":"20181108006","imageUrl":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","createTime":1541673413000,"updateTime":null,"lockMonths":null,"projectDescribe":null,"curStatus":null},{"schemeId":2,"pastureId":35,"pastureName":"撒","type":"2","expectRate":"8%-9%","realRate":8,"price":500000,"vipLevel":"1","totalStock":1000,"stock":50,"startTime":1541572915000,"endTime":1541745715000,"status":"1","code":"11","imageUrl":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","createTime":1541673088000,"updateTime":1542001833000,"lockMonths":3,"projectDescribe":"","curStatus":""}]
-     * pageNo : 1
-     * pageSize : 10
-     * totalRows : 1
-     * totalPages : 1
+     * bizData : {"schemeId":28,"pastureId":60,"pastureName":"","type":"2","expectRate":"8%","realRate":8,"price":5000,"vipLevel":"1","totalStock":1,"stock":1,"startTime":"2018-11-11","endTime":"2018-11-21","status":"1","code":"20181114013","imageUrl":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","createTime":"1542168083000","updateTime":"","lockMonths":6,"projectDescribe":"项目介绍","curStatus":""}
      */
 
     private String code;
     private String message;
-    private int pageNo;
-    private int pageSize;
-    private int totalRows;
-    private int totalPages;
-    private List<BizDataBean> bizData;
+    private BizDataBean bizData;
 
     public String getCode() {
         return code;
@@ -46,67 +36,35 @@ public class HistorySchemeResultBean implements Serializable {
         this.message = message;
     }
 
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getTotalRows() {
-        return totalRows;
-    }
-
-    public void setTotalRows(int totalRows) {
-        this.totalRows = totalRows;
-    }
-
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
-
-    public List<BizDataBean> getBizData() {
+    public BizDataBean getBizData() {
         return bizData;
     }
 
-    public void setBizData(List<BizDataBean> bizData) {
+    public void setBizData(BizDataBean bizData) {
         this.bizData = bizData;
     }
 
-    public  class BizDataBean implements Serializable{
+    public  class BizDataBean {
         /**
-         * schemeId : 8
-         * pastureId : 35
-         * pastureName : 撒
+         * schemeId : 28
+         * pastureId : 60
+         * pastureName :
          * type : 2
-         * expectRate : 8%-9%
+         * expectRate : 8%
          * realRate : 8.0
-         * price : 500000.0
+         * price : 5000.0
          * vipLevel : 1
-         * totalStock : 1000
-         * stock : 0
-         * startTime : 1541572915000
-         * endTime : 1541572915000
-         * status : 9
-         * code : 20181109004
+         * totalStock : 1
+         * stock : 1
+         * startTime : 2018-11-11
+         * endTime : 2018-11-21
+         * status : 1
+         * code : 20181114013
          * imageUrl : images/2ff889ef4d454c15a237d43c144c00ae.jpg
-         * createTime : 1541749923000
-         * updateTime : null
+         * createTime : 1542168083000
+         * updateTime :
          * lockMonths : 6
-         * projectDescribe :
+         * projectDescribe : 项目介绍
          * curStatus :
          */
 
@@ -227,22 +185,6 @@ public class HistorySchemeResultBean implements Serializable {
             this.endTime = endTime;
         }
 
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getUpdateTime() {
-            return updateTime;
-        }
-
-        public void setUpdateTime(String updateTime) {
-            this.updateTime = updateTime;
-        }
-
         public String getStatus() {
             return status;
         }
@@ -267,6 +209,21 @@ public class HistorySchemeResultBean implements Serializable {
             this.imageUrl = imageUrl;
         }
 
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
 
         public int getLockMonths() {
             return lockMonths;

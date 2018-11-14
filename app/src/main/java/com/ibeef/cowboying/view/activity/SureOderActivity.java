@@ -16,16 +16,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.OrderInitBase;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
+import com.ibeef.cowboying.bean.PayInitParamBean;
+import com.ibeef.cowboying.bean.PayInitResultBean;
 import com.ibeef.cowboying.bean.PayResult;
+import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -37,7 +47,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 买牛确认订单界面
  */
-public class SureOderActivity extends BaseActivity {
+public class SureOderActivity extends BaseActivity implements OrderInitBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -90,6 +100,10 @@ public class SureOderActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     private IWXAPI api;
     private String token, contents;
+
+    private CreatOderResultBean infos;
+    private OrderInitPresenter orderInitPresenter;
+    private boolean isComplet=true;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -133,14 +147,47 @@ public class SureOderActivity extends BaseActivity {
         api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
         token = Hawk.get(HawkKey.TOKEN);
 
+        infos= (CreatOderResultBean) getIntent().getSerializableExtra("infos");
+        RequestOptions options = new RequestOptions()
+                .error(R.mipmap.meheaddefalut)
+                //加载错误之后的错误图
+                .skipMemoryCache(true)
+                //跳过内存缓存
+                ;
+        Glide.with(this).load(Constant.imageDomain+infos.getBizData()).apply(options).into(headImg);
+        nickNameTxt.setText("昵称："+infos.getBizData().getRealName());
+        knowNameId.setText("认领人："+infos.getBizData().getRealName());
+        orderCodeTxt.setText("订单编号："+infos.getBizData().getOrderId());
+        payMoneyId.setText("￥"+infos.getBizData().getPayAmount());
+        knowMobileId.setText(infos.getBizData().getMobile());
+        knowIdentifycodeId.setText("身份证号："+infos.getBizData().getCardNo());
+        couponMoneyId.setText("已优惠￥0");
+        knowCodeId.setText("第"+infos.getBizData().getCode()+"期");
+        knowPastureId.setText("牧场名");
+        knowNumberId.setText(infos.getBizData().getQuantity()+"");
+        knowOnePriceId.setText(infos.getBizData().getQuantity()+"单价");
+
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
             public void onComplete(String content) {
                 contents = content;
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                if(isComplet){
+                    isComplet=false;
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    PayInitParamBean payInitParamBean=new PayInitParamBean();
+                    payInitParamBean.setOrderId(infos.getBizData().getOrderId());
+                    payInitParamBean.setPayType(chooseType+"");
+                    payInitParamBean.setSecret(contents);
+                    orderInitPresenter.getPayInit(reqData,payInitParamBean);
+                }
                 Log.e(Constant.TAG, "完成输入：" + content);
             }
         });
+
+        orderInitPresenter=new OrderInitPresenter(this);
     }
 
     @OnClick({R.id.back_id, R.id.custom_txt_id, R.id.sure_pay_btn, R.id.pay_back_id, R.id.foret_pwd_id, R.id.account_balance_ck, R.id.weixin_check, R.id.zfb_check})
@@ -179,14 +226,13 @@ public class SureOderActivity extends BaseActivity {
                 startActivity(AddPayPwdActivity.class);
                 break;
             case R.id.sure_pay_btn:
-                if (chooseType == 1) {
-                    aplilyPayResult();
-                } else if (chooseType == 2) {
-                    weixinPay();
-                } else if (chooseType == 3) {
-                    accountPayShowRv.setVisibility(View.VISIBLE);
-                    surePayBtn.setVisibility(View.GONE);
-                }
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
+                PayInitParamBean payInitParamBean=new PayInitParamBean();
+                payInitParamBean.setOrderId(infos.getBizData().getOrderId());
+                payInitParamBean.setPayType(chooseType+"");
+                orderInitPresenter.getPayInit(reqData,payInitParamBean);
                 break;
             default:
                 break;
@@ -194,43 +240,68 @@ public class SureOderActivity extends BaseActivity {
     }
 
 
-    /**
-     * 支付宝支付
-     */
-    private void aplilyPayResult() {
-        Runnable payRunnable = new Runnable() {
+    @Override
+    public void showMsg(String msg) {
 
-            @Override
-            public void run() {
-                PayTask alipay = new PayTask(SureOderActivity.this);
-                Map<String, String> result = alipay.payV2(Constant.ALIPAYINFO, true);
-                Log.i("msp", result.toString());
+    }
 
-                Message msg = new Message();
-                msg.what = SDK_PAY_FLAG;
-                msg.obj = result;
-                mHandler.sendMessage(msg);
+    @Override
+    public void getCreatOder(CreatOderResultBean creatOderResultBean) {
+
+    }
+
+    @Override
+    public void getPayInit(final PayInitResultBean payInitResultBean) {
+
+        if("000000".equals(payInitResultBean.toString())){
+            if (chooseType == 1) {
+                //异步处理
+                Runnable payRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //新建任务
+                        PayTask alipay = new PayTask(SureOderActivity.this);
+                        //获取支付结果
+                        Map<String, String> result = alipay.payV2(payInitResultBean.getBizData(), true);
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+                // 必须异步调用
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+            } else if (chooseType == 2) {
+                Gson gs = new Gson();
+                WeinXinBean weinXinBean=gs.fromJson(payInitResultBean.getBizData(), WeinXinBean.class);
+                //把JSON字符串转为对象
+                PayReq request = new PayReq();
+                request.appId = weinXinBean.getAppid();
+                request.partnerId = weinXinBean.getPartnerid();
+                request.prepayId= weinXinBean.getPrepayid();
+                request.packageValue = weinXinBean.getPackageX();
+                request.nonceStr= weinXinBean.getNoncestr();
+                request.timeStamp= weinXinBean.getTimestamp();
+                request.sign= weinXinBean.getSign();
+                Toast.makeText(SureOderActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
+                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                api.sendReq(request);
+            } else if (chooseType == 3) {
+                accountPayShowRv.setVisibility(View.VISIBLE);
+                surePayBtn.setVisibility(View.GONE);
             }
-        };
-
-        Thread payThread = new Thread(payRunnable);
-        payThread.start();
+        }else {
+            showToast(payInitResultBean.getMessage());
+        }
     }
 
-    /**
-     * 微信支付
-     */
-    private void weixinPay() {
-        PayReq request = new PayReq();
-        request.appId = "wxd930ea5d5a258f4f";
-        request.partnerId = "1900000109";
-        request.prepayId = "1101000000140415649af9fc314aa427";
-        request.packageValue = "Sign=WXPay";
-        request.nonceStr = "1101000000140429eb40476f8896f4c9";
-        request.timeStamp = "1398746574";
-        request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
-        api.sendReq(request);
+    @Override
+    protected void onDestroy() {
+        if(orderInitPresenter!=null){
+            orderInitPresenter.detachView();
+        }
+        super.onDestroy();
     }
-
-
 }

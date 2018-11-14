@@ -3,11 +3,16 @@ package com.ibeef.cowboying.adapter;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.HistorySchemeResultBean;
+import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
 
@@ -17,7 +22,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class CowClaimPastRecordAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class CowClaimPastRecordAdapter extends BaseQuickAdapter<HistorySchemeResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public CowClaimPastRecordAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -25,9 +30,14 @@ public class CowClaimPastRecordAdapter extends BaseQuickAdapter<Object,BaseViewH
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
+    protected void convert(BaseViewHolder helper, HistorySchemeResultBean.BizDataBean item) {
 
+        helper.setText(R.id.cows_name_id,"第"+item.getCode()+"期 "+item.getPastureName())
+                .setText(R.id.money_txt_id,item.getPrice()+"元")
+                .setText(R.id.percent_txt_id,item.getExpectRate())
+                .setText(R.id.people_num_id,(item.getTotalStock()-item.getStock())+"人");
         helper.addOnClickListener(R.id.see_people_num_rv);
+
 
     }
 }

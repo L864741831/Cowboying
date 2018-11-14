@@ -33,6 +33,7 @@ public class MyFeedbackImgAdapter extends BaseQuickAdapter<String,BaseViewHolder
 
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
+                .error(R.mipmap.jzsb)
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.upload_img);

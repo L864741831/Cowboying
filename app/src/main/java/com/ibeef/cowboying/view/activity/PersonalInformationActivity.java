@@ -169,7 +169,10 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         userId= Hawk.get(HawkKey.userId);
         userInfoPresenter=new UserInfoPresenter(this);
         getOssImgPresenter=new GetOssImgPresenter(this);
-        getOssImgPresenter.getOssImg(getVersionCodes());
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        getOssImgPresenter.getOssImg(reqData);
         stringList=new ArrayList<>();
     }
 
