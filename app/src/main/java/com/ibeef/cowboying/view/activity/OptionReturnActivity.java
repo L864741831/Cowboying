@@ -206,7 +206,10 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
         });
         feedbackPresenter=new FeedbackPresenter(this);
         getOssImgPresenter=new GetOssImgPresenter(this);
-        getOssImgPresenter.getOssImg(getVersionCodes());
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        getOssImgPresenter.getOssImg(reqData);
 
     }
 

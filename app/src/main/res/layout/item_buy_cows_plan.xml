@@ -10,8 +10,8 @@
             android:layout_height="wrap_content" android:layout_marginBottom="12dp">
             <ImageView
                 android:layout_width="match_parent" android:id="@+id/show_img_id"
-                android:layout_height="150dp" android:src="@color/grassgreen"
-                android:scaleType="fitCenter"/>
+                android:layout_height="150dp"
+                android:scaleType="fitXY"/>
             <RelativeLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content" android:layout_gravity="center_horizontal"

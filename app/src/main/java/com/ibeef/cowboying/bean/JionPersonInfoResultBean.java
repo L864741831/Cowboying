@@ -1,24 +1,24 @@
 package com.ibeef.cowboying.bean;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author ls
- * @date on 2018/10/29 9:59
+ * @date on 2018/11/14 10:55
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class UserInfoResultBean implements Serializable {
+public class JionPersonInfoResultBean {
 
     /**
      * code : 000000
      * message : null
-     * bizData : {"userId":13,"mobile":"18703643373","nickName":null,"headImage":null,"vipLevel":"0","inviterId":null,"inviteCode":"FJXWHFZ1","realName":null,"realCardNo":null,"isValidate":"0"}
+     * bizData : [{"userId":48,"mobile":"18503876318","nickName":"PPY4Q370ZQ","headImage":"images/db8e41fbb42527811b4760be0698f957.jpg","vipLevel":"0","inviterId":1,"inviteCode":"13E0IU09","realName":"","realCardNo":"","isValidate":""}]
      */
 
     private String code;
     private String message;
-    private BizDataBean bizData;
+    private List<BizDataBean> bizData;
 
     public String getCode() {
         return code;
@@ -36,26 +36,26 @@ public class UserInfoResultBean implements Serializable {
         this.message = message;
     }
 
-    public BizDataBean getBizData() {
+    public List<BizDataBean> getBizData() {
         return bizData;
     }
 
-    public void setBizData(BizDataBean bizData) {
+    public void setBizData(List<BizDataBean> bizData) {
         this.bizData = bizData;
     }
 
-    public  class BizDataBean implements Serializable{
+    public  class BizDataBean {
         /**
-         * userId : 13
-         * mobile : 18703643373
-         * nickName : null
-         * headImage : null
+         * userId : 48
+         * mobile : 18503876318
+         * nickName : PPY4Q370ZQ
+         * headImage : images/db8e41fbb42527811b4760be0698f957.jpg
          * vipLevel : 0
-         * inviterId : null
-         * inviteCode : FJXWHFZ1
-         * realName : null
-         * realCardNo : null
-         * isValidate : 0
+         * inviterId : 1
+         * inviteCode : 13E0IU09
+         * realName :
+         * realCardNo :
+         * isValidate :
          */
 
         private int userId;
@@ -101,12 +101,28 @@ public class UserInfoResultBean implements Serializable {
             this.headImage = headImage;
         }
 
+        public String getVipLevel() {
+            return vipLevel;
+        }
+
+        public void setVipLevel(String vipLevel) {
+            this.vipLevel = vipLevel;
+        }
+
         public int getInviterId() {
             return inviterId;
         }
 
         public void setInviterId(int inviterId) {
             this.inviterId = inviterId;
+        }
+
+        public String getInviteCode() {
+            return inviteCode;
+        }
+
+        public void setInviteCode(String inviteCode) {
+            this.inviteCode = inviteCode;
         }
 
         public String getRealName() {
@@ -123,23 +139,6 @@ public class UserInfoResultBean implements Serializable {
 
         public void setRealCardNo(String realCardNo) {
             this.realCardNo = realCardNo;
-        }
-
-        public String getVipLevel() {
-            return vipLevel;
-        }
-
-        public void setVipLevel(String vipLevel) {
-            this.vipLevel = vipLevel;
-        }
-
-
-        public String getInviteCode() {
-            return inviteCode;
-        }
-
-        public void setInviteCode(String inviteCode) {
-            this.inviteCode = inviteCode;
         }
 
         public String getIsValidate() {

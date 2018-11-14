@@ -5,6 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.CattleDetailBase;
+import com.ibeef.cowboying.bean.AdoptInfosResultBean;
+import com.ibeef.cowboying.bean.CattleDetailResultBean;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.CattleDetailPresenter;
+import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import jp.wasabeef.richeditor.RichEditor;
 import rxfamily.view.BaseFragment;
@@ -13,8 +22,10 @@ public class CowClaimDesFragment extends BaseFragment {
 
     private String des;
     private RichEditor rich_edit_id;
+    private String token;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        token= Hawk.get(HawkKey.TOKEN);
         rich_edit_id=view.findViewById(R.id.rich_edit_id);
         rich_edit_id.setEditorFontSize(0);
         rich_edit_id.setEditorFontColor(Color.BLACK);

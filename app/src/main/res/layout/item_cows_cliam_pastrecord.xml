@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="match_parent" android:id="@+id/cows_name_id"
                     android:layout_height="wrap_content" android:textColor="@color/black"
                     android:text="第201803030211期  Ben Navic牧场" android:layout_margin="7dp"
                     android:textSize="13sp" android:layout_toLeftOf="@+id/img_end_id"

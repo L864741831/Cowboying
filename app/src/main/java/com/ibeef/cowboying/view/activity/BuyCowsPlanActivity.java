@@ -1,9 +1,11 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,9 +19,15 @@ import com.ibeef.cowboying.adapter.BuyCowListAdapter;
 import com.ibeef.cowboying.base.BuyCowSchemeBase;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.BuyCowsSchemePresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,8 +52,18 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
     RelativeLayout loadingLayout;
     @Bind(R.id.ry_id)
     RecyclerView ryId;
+    @Bind(R.id.rv_order)
+    RelativeLayout rvOrder;
     private BuyCowListAdapter buyCowListAdapter;
-    private List<Object> objectList;
+    private List<ActiveSchemeResultBean.BizDataBean> objectList;
+    private BuyCowsSchemePresenter buyCowsSchemePresenter;
+
+    private String token;
+
+    private int currentPage=1;
+    private boolean isFirst=true;
+    private boolean isMoreLoad=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +73,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
     }
 
     private void init() {
+        token = Hawk.get(HawkKey.TOKEN);
         info.setText("买牛方案列表");
         actionNewQuestionTv.setText("往期记录");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
@@ -62,9 +81,6 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
         objectList=new ArrayList<>();
-        for (int i=0;i<10;i++){
-            objectList.add(new Object());
-        }
         ryId.setLayoutManager(new LinearLayoutManager(this));
         buyCowListAdapter=new BuyCowListAdapter(objectList,this,R.layout.item_buy_cows_plan);
         buyCowListAdapter.setOnLoadMoreListener(this, ryId);
@@ -90,11 +106,19 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if(view.getId()==R.id.now_claim_btn_id){
-                    startActivity(CowsClaimActivity.class);
+                    ActiveSchemeResultBean.BizDataBean item=buyCowListAdapter.getItem(position);
+                    Intent intent=new Intent(BuyCowsPlanActivity.this,CowsClaimActivity.class);
+                    intent.putExtra("infos",item);
+                    startActivity(intent);
                 }
             }
         });
 
+        buyCowsSchemePresenter=new BuyCowsSchemePresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        buyCowsSchemePresenter.getActiveSchemeInfo(reqData,currentPage);
     }
 
     @OnClick({R.id.back_id,R.id.action_new_question_tv})
@@ -113,12 +137,24 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
+        currentPage = 1;
+        isFirst = true;
+        objectList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        buyCowsSchemePresenter.getActiveSchemeInfo(reqData,currentPage);
         swipeLy.setRefreshing(false);
     }
 
     @Override
     public void onLoadMoreRequested() {
-
+        isMoreLoad = true;
+        currentPage += 1;
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        buyCowsSchemePresenter.getActiveSchemeInfo(reqData,currentPage);
     }
 
     @Override
@@ -128,7 +164,25 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void getActiveSchemeInfo(ActiveSchemeResultBean activeSchemeResultBean) {
-
+        if ("000000".equals(activeSchemeResultBean.getCode())) {
+            if (SDCardUtil.isNullOrEmpty(activeSchemeResultBean.getBizData())) {
+                if (isFirst) {
+                    rvOrder.setVisibility(View.VISIBLE);
+                    ryId.setVisibility(View.GONE);
+                } else {
+                    rvOrder.setVisibility(View.GONE);
+                    ryId.setVisibility(View.VISIBLE);
+                }
+                buyCowListAdapter.loadMoreEnd();
+            } else {
+                isFirst = false;
+                objectList.addAll(activeSchemeResultBean.getBizData());
+                buyCowListAdapter.setNewData(this.objectList);
+                buyCowListAdapter.loadMoreComplete();
+            }
+        } else {
+            showToast(activeSchemeResultBean.getMessage());
+        }
     }
 
     @Override
@@ -138,11 +192,27 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void showLoading() {
-
+        if (isMoreLoad) {
+            loadingLayout.setVisibility(View.GONE);
+            ryId.setVisibility(View.VISIBLE);
+            isMoreLoad = false;
+        } else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            ryId.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        ryId.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    protected void onDestroy() {
+        if (buyCowsSchemePresenter != null) {
+            buyCowsSchemePresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

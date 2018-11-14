@@ -1,10 +1,13 @@
 package com.ibeef.cowboying.api;
 
+import android.content.Intent;
+
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.AdoptInfosResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
@@ -13,9 +16,12 @@ import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
 import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
+import com.ibeef.cowboying.bean.CattleDetailResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.bean.CowManInfosResultBean;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
+import com.ibeef.cowboying.bean.CreatOrderParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
@@ -24,6 +30,7 @@ import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.bean.IncomeInfoResultBean;
+import com.ibeef.cowboying.bean.JionPersonInfoResultBean;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
@@ -34,6 +41,8 @@ import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
+import com.ibeef.cowboying.bean.PayInitParamBean;
+import com.ibeef.cowboying.bean.PayInitResultBean;
 import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
@@ -43,6 +52,7 @@ import com.ibeef.cowboying.bean.ResetPayPwdResultBean;
 import com.ibeef.cowboying.bean.RestLoginParamBean;
 import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
+import com.ibeef.cowboying.bean.SchemeDetailReultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
@@ -307,7 +317,7 @@ public interface ApiService {
      * @return
      */
     @GET("file/appUploadInit")
-    Observable<OssResultBean> getOssImg(@Header("version") String version);
+    Observable<OssResultBean> getOssImg(@HeaderMap Map<String, String> headers);
 
     /**
      * 个人中心数据
@@ -392,4 +402,48 @@ public interface ApiService {
      */
     @GET("adopt/scheme/historySchemeInfo")
     Observable<HistorySchemeResultBean> getHistorySchemeInfo(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 获取方案参与者信息
+     * @return
+     */
+    @GET("adopt/scheme/getParticipatorInfo")
+    Observable<JionPersonInfoResultBean> getJionPersonInfo(@HeaderMap Map<String, String> headers, @Query("schemeId") int schemeId, @Query("currentPage") int currentPage);
+
+    /**
+     * 查询买牛方案详情
+     * @return
+     */
+    @GET("adopt/scheme/schemeDetail")
+    Observable<SchemeDetailReultBean> getSchemeDetail(@HeaderMap Map<String, String> headers, @Query("schemeId") int schemeId);
+
+    /**
+     * 获取牛只详情
+     * @return
+     */
+    @GET("cattle/detail")
+    Observable<CattleDetailResultBean> getCattleDetail(@HeaderMap Map<String, String> headers, @Query("cattleId") int cattleId);
+
+    /**
+     * 获取方案关联的牛只信息
+     * @return
+     */
+    @GET("cattle/adopt/infos")
+    Observable<AdoptInfosResultBean> getAdoptInfos(@HeaderMap Map<String, String> headers, @Query("code") String code, @Query("schemeId") Integer schemeId, @Query("currentPage") Integer currentPage);
+
+
+    /**
+     *生成养牛订单
+     * @return
+     */
+    @POST("adopt/order/create")
+    Observable<CreatOderResultBean> getCreatOder(@HeaderMap Map<String, String> headers, @Body CreatOrderParamBean creatOrderParamBean);
+
+    /**
+     *买牛订单支付
+     * @return
+     */
+    @POST("adopt/order/payInit")
+    Observable<PayInitResultBean> getPayInit(@HeaderMap Map<String, String> headers, @Body PayInitParamBean payInitParamBean);
+
 }

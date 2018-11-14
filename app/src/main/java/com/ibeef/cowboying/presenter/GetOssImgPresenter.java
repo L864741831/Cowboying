@@ -10,6 +10,8 @@ import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.GetOssImgModel;
 
+import java.util.Map;
+
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 
@@ -30,8 +32,8 @@ public class GetOssImgPresenter extends BasePresenter implements GetOssImgBase.I
     }
 
     @Override
-    public void getOssImg(String version) {
-        addSubscription(mModel.getOssImg(version,new ResponseCallback<OssResultBean>() {
+    public void getOssImg(Map<String, String> headers) {
+        addSubscription(mModel.getOssImg(headers,new ResponseCallback<OssResultBean>() {
             @Override
             public void onSuccess(OssResultBean result) {
                 mView.getOssImg(result);
