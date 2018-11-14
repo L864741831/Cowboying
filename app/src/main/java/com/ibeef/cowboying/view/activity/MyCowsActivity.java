@@ -60,11 +60,16 @@ public class MyCowsActivity extends BaseActivity {
         actionNewQuestionTv.setText("我要卖牛");
 
         fragmentList = new ArrayList<>();
+        /**
+         * （1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
+         *   空：全部
+         */
+
         fragment_0 = MyCowsListFragment.newInstance("");
-        fragment_1 = MyCowsListFragment.newInstance("0");
-        fragment_2 = MyCowsListFragment.newInstance("1");
-        fragment_3 = MyCowsListFragment.newInstance("2");
-        fragment_4 = MyCowsListFragment.newInstance("3");
+        fragment_1 = MyCowsListFragment.newInstance("1");
+        fragment_2 = MyCowsListFragment.newInstance("2");
+        fragment_3 = MyCowsListFragment.newInstance("3");
+        fragment_4 = MyCowsListFragment.newInstance("5");
 
         fragmentList.add(fragment_0);
         fragmentList.add(fragment_1);

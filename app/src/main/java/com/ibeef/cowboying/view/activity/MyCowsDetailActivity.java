@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyCowsDetailListAdapter;
+import com.ibeef.cowboying.base.MyCowsOrderBase;
+import com.ibeef.cowboying.bean.MyCowsOrderListBean;
+import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.orhanobut.hawk.Hawk;
 
@@ -22,7 +25,7 @@ import butterknife.OnClick;
 import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
-public class MyCowsDetailActivity extends BaseActivity {
+public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBase.IView{
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -144,79 +147,100 @@ public class MyCowsDetailActivity extends BaseActivity {
         }
     }
 
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void geMyCowsOrderList(MyCowsOrderListBean myCowsOrderListBean) {
+
+    }
+
+    @Override
+    public void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean) {
 //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
-    public void getStatus() {
-        //前几个为共同都有的
-        tvPeriodNumber.setText("买牛期数");
-        tvMode.setText("养牛的模式");
-        tvPrice.setText("牛的单价");
-        tvCreateTime.setText("单子创建的时间");
-        if ("1".equals("1")) {
-            //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
-            btnCancleOrder.setVisibility(View.VISIBLE);
-            btnToPay.setVisibility(View.VISIBLE);
-        } else if ("2".equals("2")) {
-            btnSeeOrderProgress.setVisibility(View.VISIBLE);
-            //已付款未分配（比待付款多了一个支付时间和支付时间）
-            rlPayTime.setVisibility(View.VISIBLE);
-            rlPayWay.setVisibility(View.VISIBLE);
-            tvPayTime.setText("支付的时间");
-            tvPayWay.setText("支付方式");
-        } else if ("3".equals("3")) {
-            btnSeeOrderProgress.setVisibility(View.VISIBLE);
-            btnSellWant.setVisibility(View.VISIBLE);
-            //已分配（这里只有活期养牛这一种）
-            rlPayTime.setVisibility(View.VISIBLE);
-            rlPayWay.setVisibility(View.VISIBLE);
-            rlAssignTime.setVisibility(View.VISIBLE);
-            tvPayTime.setText("支付的时间");
-            tvPayWay.setText("支付方式");
-            tvAssignTime.setText("牛只分配时间");
-        } else if ("4".equals("4")) {
-            btnSeeOrderProgress.setVisibility(View.VISIBLE);
-            //已分配锁定期中（只有定期养牛才会有这个状态）
-            rlPayTime.setVisibility(View.VISIBLE);
-            rlPayWay.setVisibility(View.VISIBLE);
-            rlAssignTime.setVisibility(View.VISIBLE);
-            tvPayTime.setText("支付的时间");
-            tvPayWay.setText("支付方式");
-            tvAssignTime.setText("牛只分配时间");
-            rlLockDay.setVisibility(View.VISIBLE);
-            rlLockEndTime.setVisibility(View.VISIBLE);
-            tvLockDay.setText("锁定期天数");
-            tvLockEndTime.setText("锁定期结束时间");
-        } else if ("5".equals("5")) {
-            btnSeeOrderProgress.setVisibility(View.VISIBLE);
-            //出售中（不分活期和定期。。定期到期后会自动转为活期的）
-            rlPayTime.setVisibility(View.VISIBLE);
-            rlPayWay.setVisibility(View.VISIBLE);
-            rlAssignTime.setVisibility(View.VISIBLE);
-            tvPayTime.setText("支付的时间");
-            tvPayWay.setText("支付方式");
-            tvAssignTime.setText("牛只分配时间");
-            rlSellTime.setVisibility(View.VISIBLE);
-            tvSellTime.setText("牛只出售时间");
-        } else if ("6".equals("6")) {
-            btnSeeOrderProgress.setVisibility(View.VISIBLE);
-            btnDeletOrder.setVisibility(View.VISIBLE);
-            //交易完成（比交易完成多一个出售成功时间）
-            rlPayTime.setVisibility(View.VISIBLE);
-            rlPayWay.setVisibility(View.VISIBLE);
-            rlAssignTime.setVisibility(View.VISIBLE);
-            tvPayTime.setText("支付的时间");
-            tvPayWay.setText("支付方式");
-            tvAssignTime.setText("牛只分配时间");
-            rlSellTime.setVisibility(View.VISIBLE);
-            tvSellTime.setText("牛只出售时间");
-            rlSellDoneTime.setVisibility(View.VISIBLE);
-            tvSellDoneTime.setText("成功售出时间");
-        }else if ("9".equals("9")) {
-            btnDeletOrder.setVisibility(View.VISIBLE);
-            //交易关闭
-            rlTransactionEndTime.setVisibility(View.VISIBLE);
-            tvTransactionEndTime.setText("交易关闭时间");
-        }
-
+            //前几个为共同都有的
+            tvPeriodNumber.setText("买牛期数");
+            tvMode.setText("养牛的模式");
+            tvPrice.setText("牛的单价");
+            tvCreateTime.setText("单子创建的时间");
+            if ("1".equals("1")) {
+                //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
+                btnCancleOrder.setVisibility(View.VISIBLE);
+                btnToPay.setVisibility(View.VISIBLE);
+            } else if ("2".equals("2")) {
+                btnSeeOrderProgress.setVisibility(View.VISIBLE);
+                //已付款未分配（比待付款多了一个支付时间和支付时间）
+                rlPayTime.setVisibility(View.VISIBLE);
+                rlPayWay.setVisibility(View.VISIBLE);
+                tvPayTime.setText("支付的时间");
+                tvPayWay.setText("支付方式");
+            } else if ("3".equals("3")) {
+                btnSeeOrderProgress.setVisibility(View.VISIBLE);
+                btnSellWant.setVisibility(View.VISIBLE);
+                //已分配（这里只有活期养牛这一种）
+                rlPayTime.setVisibility(View.VISIBLE);
+                rlPayWay.setVisibility(View.VISIBLE);
+                rlAssignTime.setVisibility(View.VISIBLE);
+                tvPayTime.setText("支付的时间");
+                tvPayWay.setText("支付方式");
+                tvAssignTime.setText("牛只分配时间");
+            } else if ("4".equals("4")) {
+                btnSeeOrderProgress.setVisibility(View.VISIBLE);
+                //已分配锁定期中（只有定期养牛才会有这个状态）
+                rlPayTime.setVisibility(View.VISIBLE);
+                rlPayWay.setVisibility(View.VISIBLE);
+                rlAssignTime.setVisibility(View.VISIBLE);
+                tvPayTime.setText("支付的时间");
+                tvPayWay.setText("支付方式");
+                tvAssignTime.setText("牛只分配时间");
+                rlLockDay.setVisibility(View.VISIBLE);
+                rlLockEndTime.setVisibility(View.VISIBLE);
+                tvLockDay.setText("锁定期天数");
+                tvLockEndTime.setText("锁定期结束时间");
+            } else if ("5".equals("5")) {
+                btnSeeOrderProgress.setVisibility(View.VISIBLE);
+                //出售中（不分活期和定期。。定期到期后会自动转为活期的）
+                rlPayTime.setVisibility(View.VISIBLE);
+                rlPayWay.setVisibility(View.VISIBLE);
+                rlAssignTime.setVisibility(View.VISIBLE);
+                tvPayTime.setText("支付的时间");
+                tvPayWay.setText("支付方式");
+                tvAssignTime.setText("牛只分配时间");
+                rlSellTime.setVisibility(View.VISIBLE);
+                tvSellTime.setText("牛只出售时间");
+            } else if ("6".equals("6")) {
+                btnSeeOrderProgress.setVisibility(View.VISIBLE);
+                btnDeletOrder.setVisibility(View.VISIBLE);
+                //交易完成（比交易完成多一个出售成功时间）
+                rlPayTime.setVisibility(View.VISIBLE);
+                rlPayWay.setVisibility(View.VISIBLE);
+                rlAssignTime.setVisibility(View.VISIBLE);
+                tvPayTime.setText("支付的时间");
+                tvPayWay.setText("支付方式");
+                tvAssignTime.setText("牛只分配时间");
+                rlSellTime.setVisibility(View.VISIBLE);
+                tvSellTime.setText("牛只出售时间");
+                rlSellDoneTime.setVisibility(View.VISIBLE);
+                tvSellDoneTime.setText("成功售出时间");
+            }else if ("9".equals("9")) {
+                btnDeletOrder.setVisibility(View.VISIBLE);
+                //交易关闭
+                rlTransactionEndTime.setVisibility(View.VISIBLE);
+                tvTransactionEndTime.setText("交易关闭时间");
+            }
     }
 }

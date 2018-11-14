@@ -37,6 +37,8 @@ import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.MyCowsOrderListBean;
+import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
@@ -374,6 +376,22 @@ public interface ApiService {
      */
     @GET("assets/cash/logs")
     Observable<CashMoneyRecordResultBean> getCashMoneyRecord(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 我的牛只订单列表
+     * @return
+     */
+    @GET("adopt/order/list")
+    Observable<MyCowsOrderListBean> geMyCowsOrderList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage, @Query("status") String status);
+
+    /**
+     * 我的牛只订单详情
+     * @return
+     */
+    @GET("adopt/order/detail")
+    Observable<MyCowsOrderListDetailBean> geMyCowsOrderListDetail(@HeaderMap Map<String, String> headers, @Query("orderCode") String orderCode);
+
+
 
     /**
      * 设置钱包密码
