@@ -24,8 +24,8 @@ public class MyCowsOrderBase {
     }
 
     public interface IPresenter {
-        void geMyCowsOrderList(Map<String, String> headers,int currentPage,String status);
-        void geMyCowsOrderListDetail(Map<String, String> headers,String orderCode);
+        void geMyCowsOrderList(Map<String,String> headers,int currentPage,String status);
+        void geMyCowsOrderListDetail(Map<String,String> headers,String orderCode);
     }
 
     public interface IModel {

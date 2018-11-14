@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.orhanobut.hawk.Hawk;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +89,14 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                 }else {
                     mSwipeLayout.setEnabled(false);
                 }
+            }
+        });
+        myCowsListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
+                intent.putExtra("orderCode",listData.get(position).getOrderCode());
+                startActivity(intent);
             }
         });
 
@@ -184,27 +194,27 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
 
     @Override
     public void geMyCowsOrderList(MyCowsOrderListBean myCowsOrderListBean) {
-//        if(myCowsOrderListBean.==1&&SDCardUtil.isNullOrEmpty(myCowsOrderListBean.getBizData())){
-//            rv_order.setVisibility(View.VISIBLE);
-//            mRView.setVisibility(View.GONE);
-//            return;
-//        }else {
-//            if(SDCardUtil.isNullOrEmpty(myCollectBean.getData())){
-//                myOrderListAdapter.loadMoreEnd();
-//                return;
-//            }
-//        }
-//        this.listData.addAll(myCollectBean.getData());
-//
-//        rv_order.setVisibility(View.GONE);
-//        mRView.setVisibility(View.VISIBLE);
-//
-//        if(SDCardUtil.isNullOrEmpty(myCollectBean.getData())){
-//            myOrderListAdapter.loadMoreEnd();
-//        }else {
-//            myOrderListAdapter.setNewData(this.listData);
-//            myOrderListAdapter.loadMoreComplete();
-//        }
+        if(myCowsOrderListBean.getPageNo()==1&&SDCardUtil.isNullOrEmpty(myCowsOrderListBean.getBizData())){
+            rv_order.setVisibility(View.VISIBLE);
+            mRView.setVisibility(View.GONE);
+            return;
+        }else {
+            if(SDCardUtil.isNullOrEmpty(myCowsOrderListBean.getBizData())){
+                myCowsListAdapter.loadMoreEnd();
+                return;
+            }
+        }
+        this.listData.addAll(myCowsOrderListBean.getBizData());
+
+        rv_order.setVisibility(View.GONE);
+        mRView.setVisibility(View.VISIBLE);
+
+        if(SDCardUtil.isNullOrEmpty(myCowsOrderListBean.getBizData())){
+            myCowsListAdapter.loadMoreEnd();
+        }else {
+            myCowsListAdapter.setNewData(this.listData);
+            myCowsListAdapter.loadMoreComplete();
+        }
     }
 
     @Override

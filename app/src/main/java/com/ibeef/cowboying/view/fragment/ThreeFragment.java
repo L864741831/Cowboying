@@ -179,7 +179,6 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
                 break;
             case R.id.pay_money_codeId:
                 //付款码
-                    startActivity(MyCowsDetailActivity.class);
                 break;
             case R.id.please_codeId:
                 //邀请码

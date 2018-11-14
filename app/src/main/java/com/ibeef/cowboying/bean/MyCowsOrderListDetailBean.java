@@ -4,16 +4,15 @@ import java.util.List;
 
 public class MyCowsOrderListDetailBean {
 
-
     /**
      * code : 000000
-     * message : null
-     * bizData : [{"orderCode":"123457","status":"3","cattleCount":2,"orderAmount":5000,"pastureName":"撒","pastureImage":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","cattleList":[{"cattleCode":"zjll653.9439865162196","cattleImage":"images/31fa1235cce759035cf3ca3996a33b55.png","cattleWeight":244.3},{"cattleCode":"zjll338.83437160107354","cattleImage":"images/31fa1235cce759035cf3ca3996a33b55.png","cattleWeight":344.4}],"adoptType":"2","unlockTime":"2019-01-30","lockMonths":3}]
+     * message : “”
+     * bizData : {"orderCode":"112335466422400","status":"2","cattleCount":1,"orderAmount":5000,"pastureName":"撒","pastureImage":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","cattleList":[{"cattleCode":"2222222","cattleImage":"images/ca09570497f14175b29cc0be930be12c.png","cattleWeight":100}],"adoptType":"1","unlockTime":"\u201c\u201d","lockMonths":3,"schemeCode":"11111111","price":5000,"payType":"1","createTime":"2018-11-14 10:14:11","payTime":"2018-11-14 14:38:44","distributeTime":""}
      */
 
     private String code;
-    private Object message;
-    private List<BizDataBean> bizData;
+    private String message;
+    private BizDataBean bizData;
 
     public String getCode() {
         return code;
@@ -23,34 +22,40 @@ public class MyCowsOrderListDetailBean {
         this.code = code;
     }
 
-    public Object getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Object message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 
-    public List<BizDataBean> getBizData() {
+    public BizDataBean getBizData() {
         return bizData;
     }
 
-    public void setBizData(List<BizDataBean> bizData) {
+    public void setBizData(BizDataBean bizData) {
         this.bizData = bizData;
     }
 
     public static class BizDataBean {
         /**
-         * orderCode : 123457
-         * status : 3
-         * cattleCount : 2
-         * orderAmount : 5000
+         * orderCode : 112335466422400
+         * status : 2
+         * cattleCount : 1
+         * orderAmount : 5000.0
          * pastureName : 撒
          * pastureImage : images/2ff889ef4d454c15a237d43c144c00ae.jpg
-         * cattleList : [{"cattleCode":"zjll653.9439865162196","cattleImage":"images/31fa1235cce759035cf3ca3996a33b55.png","cattleWeight":244.3},{"cattleCode":"zjll338.83437160107354","cattleImage":"images/31fa1235cce759035cf3ca3996a33b55.png","cattleWeight":344.4}]
-         * adoptType : 2
-         * unlockTime : 2019-01-30
-         * lockMonths : 3
+         * cattleList : [{"cattleCode":"2222222","cattleImage":"images/ca09570497f14175b29cc0be930be12c.png","cattleWeight":100}]
+         * adoptType : 1
+         * unlockTime : “”
+         * lockMonths : 3.0
+         * schemeCode : 11111111
+         * price : 5000
+         * payType : 1
+         * createTime : 2018-11-14 10:14:11
+         * payTime : 2018-11-14 14:38:44
+         * distributeTime :
          */
 
         private String orderCode;
@@ -61,7 +66,13 @@ public class MyCowsOrderListDetailBean {
         private String pastureImage;
         private String adoptType;
         private String unlockTime;
-        private int lockMonths;
+        private double lockMonths;
+        private String schemeCode;
+        private int price;
+        private String payType;
+        private String createTime;
+        private String payTime;
+        private String distributeTime;
         private List<CattleListBean> cattleList;
 
         public String getOrderCode() {
@@ -128,12 +139,60 @@ public class MyCowsOrderListDetailBean {
             this.unlockTime = unlockTime;
         }
 
-        public int getLockMonths() {
+        public double getLockMonths() {
             return lockMonths;
         }
 
-        public void setLockMonths(int lockMonths) {
+        public void setLockMonths(double lockMonths) {
             this.lockMonths = lockMonths;
+        }
+
+        public String getSchemeCode() {
+            return schemeCode;
+        }
+
+        public void setSchemeCode(String schemeCode) {
+            this.schemeCode = schemeCode;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
+        public void setPrice(int price) {
+            this.price = price;
+        }
+
+        public String getPayType() {
+            return payType;
+        }
+
+        public void setPayType(String payType) {
+            this.payType = payType;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getPayTime() {
+            return payTime;
+        }
+
+        public void setPayTime(String payTime) {
+            this.payTime = payTime;
+        }
+
+        public String getDistributeTime() {
+            return distributeTime;
+        }
+
+        public void setDistributeTime(String distributeTime) {
+            this.distributeTime = distributeTime;
         }
 
         public List<CattleListBean> getCattleList() {
@@ -146,9 +205,9 @@ public class MyCowsOrderListDetailBean {
 
         public static class CattleListBean {
             /**
-             * cattleCode : zjll653.9439865162196
-             * cattleImage : images/31fa1235cce759035cf3ca3996a33b55.png
-             * cattleWeight : 244.3
+             * cattleCode : 2222222
+             * cattleImage : images/ca09570497f14175b29cc0be930be12c.png
+             * cattleWeight : 100.0
              */
 
             private String cattleCode;

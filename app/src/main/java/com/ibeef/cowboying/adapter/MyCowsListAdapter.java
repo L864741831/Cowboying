@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,23 +31,55 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
 
     @Override
     protected void convert(BaseViewHolder helper, final MyCowsOrderListBean.BizDataBean item) {
-
+        helper.setText(R.id.order_id,"订单编号："+item.getOrderCode())
+              .setText(R.id.tv_total,"共"+item.getCattleCount()+"头，合计：￥"+item.getOrderAmount());
+        TextView delet_order =helper.getView(R.id.delet_order);
+        TextView see_order_progress =helper.getView(R.id.see_order_progress);
+        TextView sell_want =helper.getView(R.id.sell_want);
+        TextView cancle_order =helper.getView(R.id.cancle_order);
+        TextView to_pay =helper.getView(R.id.to_pay);
+        RelativeLayout rlEmeng=helper.getView(R.id.rl_emeng);
+        RecyclerView ry_id=helper.getView(R.id.ry_id);
+        ry_id.setLayoutManager(new LinearLayoutManager(context));
+        ry_id.setHasFixedSize(true);
+        ry_id.setNestedScrollingEnabled(false);
+        MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),context);
+        ry_id.setAdapter(sureOrderChirdListAdapter);
 //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
-            if ("1".equals("1")) {
+            if ("1".equals(item.getStatus())) {
                 //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
-            } else if ("2".equals("2")) {
+                helper.setText(R.id.stadus_id,"等待用户付款");
+                to_pay.setVisibility(View.VISIBLE);
+                cancle_order.setVisibility(View.VISIBLE);
+                rlEmeng.setVisibility(View.VISIBLE);
+            } else if ("2".equals(item.getStatus())) {
                 //已付款未分配（比待付款多了一个支付时间和支付时间）
-            } else if ("3".equals("3")) {
+                helper.setText(R.id.stadus_id,"已付款，待分配牛只");
+                see_order_progress.setVisibility(View.VISIBLE);
+                rlEmeng.setVisibility(View.VISIBLE);
+            } else if ("3".equals(item.getStatus())) {
                 //已分配（这里只有活期养牛这一种）
-            } else if ("4".equals("4")) {
+                helper.setText(R.id.stadus_id,"已分配牛只");
+                see_order_progress.setVisibility(View.VISIBLE);
+                sell_want.setVisibility(View.VISIBLE);
+            } else if ("4".equals(item.getStatus())) {
                 //已分配锁定期中（只有定期养牛才会有这个状态）
-            } else if ("5".equals("5")) {
+                helper.setText(R.id.stadus_id,"已分配牛只");
+                see_order_progress.setVisibility(View.VISIBLE);
+            } else if ("5".equals(item.getStatus())) {
                 //出售中（不分活期和定期。。定期到期后会自动转为活期的）
-            } else if ("6".equals("6")) {
+                helper.setText(R.id.stadus_id,"牛只出售中");
+                see_order_progress.setVisibility(View.VISIBLE);
+            } else if ("6".equals(item.getStatus())) {
                 //交易完成（比交易完成多一个出售成功时间）
-            }else if ("9".equals("9")) {
+                helper.setText(R.id.stadus_id,"交易完成");
+                delet_order.setVisibility(View.VISIBLE);
+                see_order_progress.setVisibility(View.VISIBLE);
+            }else if ("9".equals(item.getStatus())) {
                 //交易关闭
+                helper.setText(R.id.stadus_id,"交易关闭");
+                delet_order.setVisibility(View.VISIBLE);
             }
 
 

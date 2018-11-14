@@ -4,14 +4,16 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/shape_white_cicle_2">
 
     <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/yb_zy_dian"
         android:layout_height="35dp"  android:background="@color/white">
         <TextView
             android:layout_width="wrap_content" android:id="@+id/order_id"
-            android:layout_height="wrap_content" android:text="订单编号：123456789123456"
+            android:layout_height="wrap_content" android:text=""
             android:textColor="@color/txthui" android:layout_centerVertical="true"
             android:textSize="13sp"
             android:layout_marginLeft="15dp"/>
@@ -28,6 +30,52 @@
         android:layout_height="wrap_content"
         android:scrollbars="none" android:id="@+id/ry_id"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    <RelativeLayout
+        android:id="@+id/rl_emeng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/homef7"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_centerVertical="true"
+            android:src="@mipmap/cowicon"
+            android:layout_marginLeft="5dp"
+            android:layout_width="100dp" android:id="@+id/store_img"
+            android:layout_height="100dp" android:scaleType="centerCrop"/>
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/store_name"
+            android:layout_height="wrap_content" android:text="耳标号或者分配状态"
+            android:textColor="@color/black" android:layout_toRightOf="@+id/store_img"
+            android:layout_marginLeft="15dp" android:lines="1"
+            android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end" android:paddingRight="20dp"
+            android:lineSpacingExtra="5dp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/tv_ranch_id"
+            android:layout_height="wrap_content" android:textSize="10sp"
+            android:text="牧场名字" android:textColor="@color/black"
+            android:layout_below="@+id/store_name" android:layout_alignLeft="@+id/store_name"
+            android:layout_marginTop="25dp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/money_id"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="安格拉斯牛" android:layout_below="@+id/tv_ranch_id"
+            android:layout_alignLeft="@+id/tv_ranch_id" android:layout_marginTop="25dp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/num_id"
+            android:layout_height="wrap_content" android:text="x1"
+            android:layout_alignBottom="@+id/money_id" android:textColor="@color/black"
+            android:layout_alignParentRight="true" android:layout_marginRight="20dp"/>
+        <View
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@+id/money_id"
+            android:background="@color/white"/>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -35,6 +83,7 @@
         android:gravity="right|center_vertical"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="共2头，合计：￥10000"
@@ -62,9 +111,11 @@
             android:paddingRight="10dp"
             android:background="@drawable/shape_white_cicle"
             android:text="删除订单"
+            android:visibility="gone"
             android:textSize="13sp" />
 
         <TextView
+            android:visibility="gone"
             android:textColor="@color/colorhometxt"
             android:id="@+id/see_order_progress"
             android:layout_width="wrap_content"
@@ -79,6 +130,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:visibility="gone"
             android:textColor="@color/colorhometxt"
             android:id="@+id/sell_want"
             android:background="@drawable/shape_white_cicle"
@@ -92,6 +144,7 @@
             android:text="我要卖牛"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/colorhometxt"
             android:id="@+id/cancle_order"
             android:background="@drawable/shape_white_cicle"
@@ -106,6 +159,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:visibility="gone"
             android:textColor="@color/colorhometxt"
             android:id="@+id/to_pay"
             android:background="@drawable/shape_white_cicle"

@@ -47,6 +47,52 @@
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
             <RelativeLayout
+                android:id="@+id/rl_emeng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/homef7"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="gone"
+               >
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/cowicon"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="100dp" android:id="@+id/store_img"
+                    android:layout_height="100dp" android:scaleType="centerCrop"/>
+                <TextView
+                    android:layout_width="match_parent" android:id="@+id/store_name"
+                    android:layout_height="wrap_content" android:text="耳标号或者分配状态"
+                    android:textColor="@color/black" android:layout_toRightOf="@+id/store_img"
+                    android:layout_marginLeft="15dp" android:lines="1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:ellipsize="end" android:paddingRight="20dp"
+                    android:lineSpacingExtra="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/tv_ranch_id"
+                    android:layout_height="wrap_content" android:textSize="10sp"
+                    android:text="牧场名字" android:textColor="@color/black"
+                    android:layout_below="@+id/store_name" android:layout_alignLeft="@+id/store_name"
+                    android:layout_marginTop="25dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/money_id"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="安格拉斯牛" android:layout_below="@+id/tv_ranch_id"
+                    android:layout_alignLeft="@+id/tv_ranch_id" android:layout_marginTop="25dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/num_id"
+                    android:layout_height="wrap_content" android:text="x1"
+                    android:layout_alignBottom="@+id/money_id" android:textColor="@color/black"
+                    android:layout_alignParentRight="true" android:layout_marginRight="20dp"/>
+                <View
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@+id/money_id"
+                    android:background="@color/white"/>
+            </RelativeLayout>
+            <RelativeLayout
                 android:id="@+id/rl_period_number"
                 android:layout_width="match_parent"
                 android:layout_height="30dp">
