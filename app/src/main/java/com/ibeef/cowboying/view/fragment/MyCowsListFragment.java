@@ -41,13 +41,9 @@ import rxfamily.view.BaseFragment;
  */
 public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
-    @Bind(R.id.video_list_rv)
     RecyclerView mRView;
-    @Bind(R.id.tv_text_null)
     ImageView tvTextNull;
-    @Bind(R.id.rv_order)
     RelativeLayout rv_order;
-    @Bind(R.id.swipe_layout)
     SwipeRefreshLayout mSwipeLayout;
     private String token;
     private String stadus;
@@ -62,17 +58,21 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
-        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
+        mRView=view.findViewById(R.id.video_list_rv);
+        tvTextNull=view.findViewById(R.id.tv_text_null);
+        rv_order=view.findViewById(R.id.rv_order);
+        mSwipeLayout=view.findViewById(R.id.swipe_layout);
+
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setEnabled(true);
         listData=new ArrayList<>();
         listData.clear();
         loadingLayout = view.findViewById(R.id.loading_layout);
         mRView.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
-        mRView.setHasFixedSize(true);
-        mRView.setNestedScrollingEnabled(false);
+//        mRView.setHasFixedSize(true);
+//        mRView.setNestedScrollingEnabled(false);
         myCowsListAdapter = new MyCowsListAdapter(listData,getHoldingActivity());
         myCowsListAdapter.setOnLoadMoreListener(this, mRView);
         mRView.setAdapter(myCowsListAdapter);
@@ -95,11 +95,12 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-                intent.putExtra("orderCode",listData.get(position).getOrderCode());
+                intent.putExtra("orderCode",myCowsListAdapter.getItem(position).getOrderCode());
                 startActivity(intent);
             }
         });
 
+        myCowsOrderPresenter = new MyCowsOrderPresenter(this);
     }
 
     /**
@@ -122,7 +123,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
         token = Hawk.get(HawkKey.TOKEN);
         listData.clear();
         if (!TextUtils.isEmpty(token)) {
-            myCowsOrderPresenter = new MyCowsOrderPresenter(this);
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
@@ -161,12 +161,23 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
 
     @Override
     public void onRefresh() {
-
+        page = 1;
+        listData.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
+        mSwipeLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoadMoreRequested() {
-
+        isMoreLoad = true;
+        page += 1;
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
     }
 
     @Override
@@ -220,5 +231,13 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
     @Override
     public void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        if(myCowsOrderPresenter!=null){
+            myCowsOrderPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

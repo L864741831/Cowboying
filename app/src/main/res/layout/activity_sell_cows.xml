@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.SellCowsActivity">
+    <include layout="@layout/include_title" android:id="@+id/title_show_id"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdge="vertical"
+        android:orientation="vertical" android:layout_above="@+id/rv_bottom_id"
+        android:scrollbars="vertical" android:layout_below="@+id/title_show_id">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent" android:id="@+id/ry_id"
+                android:layout_height="match_parent" />
+            <include
+                layout="@layout/loading_layout"
+                android:id="@+id/loading_layout"  />
+
+            <RelativeLayout
+                android:layout_width="match_parent" android:id="@+id/rv_order"
+                android:layout_height="match_parent" android:visibility="gone">
+                <ImageView
+                    android:id="@+id/tv_text_null"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@mipmap/sellcowwhitebg"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/rv_bottom_id"
+        android:layout_height="50dp" android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent">
+
+        <CheckBox
+            android:layout_width="19dp"
+            android:layout_height="19dp"   android:layout_marginLeft="15dp"
+            android:id="@+id/all_ck_id" android:layout_centerVertical="true"
+            android:checked="false" android:background="@drawable/checkbox_white_bg"
+            android:button="@null"  android:layout_marginRight="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/txt_ck_id"
+            android:layout_height="wrap_content"     android:text="全选"
+            android:textColor="@color/white" android:layout_toRightOf="@+id/all_ck_id"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/all_cownum_id"
+            android:layout_height="wrap_content" android:text="合计牛只数：3"
+            android:textColor="@color/white" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/txt_ck_id" android:layout_marginLeft="30dp"
+            android:layout_toLeftOf="@+id/now_claim_btn_id" android:textSize="13sp"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:layout_width="100dp" android:id="@+id/now_claim_btn_id"
+            android:layout_height="match_parent" android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" android:background="@color/hui_33"
+            android:gravity="center" android:textColor="@color/colorGold"
+            android:text="我要卖牛"/>
+    </RelativeLayout>
+
+</RelativeLayout>

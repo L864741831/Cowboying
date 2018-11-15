@@ -7,10 +7,11 @@ package com.ibeef.cowboying.bean;
  * @package com.ibeef.cowboying.bean
  **/
 public class PayInitResultBean {
+
     /**
-     * status : 000000
-     * message :
-     * data : alipay_sdk=alipay-sdk-java-dynamicVersionNo&app_id=2017082708412835&biz_content=%7B%22out_trade_no%22%3A%22201804030060%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%25E9%259F%25A9%25E7%2589%2588%25E6%25B8%2585%25E6%2596%25B0%25E5%25A4%25A9%25E7%2584%25B6%25E8%25B4%259D%25E5%25A3%25B3%25E6%2589%2593%25E7%25A3%25A8%25E5%25B0%258F%25E9%259B%258F%25E8%258F%258A%25E8%258A%25B1%25E7%2593%25A3%25E7%2594%259C%25E7%25BE%258E%25E8%258A%25B1%25E6%259C%25B5%25E9%2595%2580%25E9%2593%25B6%25E9%2592%2588%25E8%2580%25B3%25E9%2592%2589%25E8%2580%25B3%25E9%25A5%25B0%25E5%25A5%25B3%25E9%2585%258D%25E9%25A5%25B0%25E5%2593%2581%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%2212.50%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2F120.27.12.205%3A9090%2Frest%2Forder%2Fpay%2Falipay%2Fnotify&sign=OG%2BRbmAl7LNUplo%2FssBA86L2e%2Fe6iSGcUp0TBPdum3IM7Oy%2BhHVjLcI3BRLqTTQq3k26gvnEqFnilRgEM%2FybHWyzu4QCig6KSOc61dcSSODXOAOHVkjy95FvRq70kG3pLttQ6WcyLhyTq9J4jvM6gqx1xD0EtTH9FJUfTVtFW7Q%3D&sign_type=RSA&timestamp=2018-04-03+11%3A37%3A48&version=1.0
+     * code : 000000
+     * message : ""
+     * bizData : alipay_sdk=alipay-sdk-java-3.4.27.ALL&app_id=2018102761793917&biz_content=%7B%22disable_pay_channels%22%3A%22pcredit%2CpcreditpayInstallment%22%2C%22out_trade_no%22%3A%22112684210651264%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E8%B4%AD%E4%B9%B0%E7%89%9B%E5%8F%AA%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%225000.00%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2F181j970a19.imwork.net%3A23558%2Ftryout%2Falipay%2Fnotify&sign=DCz48etmzTUS2zSTADeTQFzvDXfW1icp3GurFi1TRuOgM5bHEvkmcIF1PKFRazTIxuvGu6i%2FaEYCljiTdU61wRY5wLC%2BEVICBWtgjgbe6AAXT9VeyKHhnoMFHAvi%2FRUTkJYG9vbKebVSo%2FqaetgM7PGL8oxxr%2FV8%2BEr52gU6a9A7ci2KuOLinE5DN6C4roORdfzQBh9a4%2FhgdURByHn%2Fyp54al7M8h1cQL0iA7MEBVmcl%2BhsF%2BE9hA8fq4R4W4sKE%2FAQ16UoGfe4Vz3eeqH0QxODxvxWRDEgKcDkZR5HQvnligVmhv%2FJNnyS1OBw1alGAxd8aWTsDkPeYQTdTU%2BS0Q%3D%3D&sign_type=RSA2&timestamp=2018-11-15+09%3A53%3A14&version=1.0
      */
 
     private String code;

@@ -11,10 +11,11 @@ import java.math.BigDecimal;
  **/
 public class CreatOderResultBean implements Serializable {
 
+
     /**
      * code : 000000
-     * message : “”
-     * bizData : {"orderId":21,"code":"112445580996736","schemeId":29,"userId":45,"payType":"\u201c\u201d","payAmount":500000,"payTime":"\u201c\u201d","payStatus":"0","orderAmount":500000,"discountAmount":0,"orderStatus":"1","quantity":1,"realName":"ggg","cardNo":"15558999","mobile":"18703643373","distributeTime":null,"unlockDate":"\u201c\u201d","deleteStatus":"0","updateTime":"\u201c\u201d","createTime":1542188534425,"tradeno":"\u201c\u201d"}
+     * message : null
+     * bizData : {"orderId":39,"code":"112685899219072","schemeId":63,"userId":45,"payType":null,"payAmount":5000,"payTime":null,"payStatus":"0","orderAmount":500000,"discountAmount":0,"orderStatus":"1","quantity":1,"realName":"李闪闪","cardNo":"410223199005143549","mobile":"18703643373","distributeTime":null,"unlockDate":null,"deleteStatus":"0","updateTime":null,"createTime":1542247205864,"tradeno":null,"nickName":"PP70PDHRWO","headImage":"images/4be2caa5391dfff1f1c0e206a84e285e.jpg","schemeCode":"20181114048","pastureName":"答复","price":5000}
      */
 
     private String code;
@@ -47,27 +48,32 @@ public class CreatOderResultBean implements Serializable {
 
     public  class BizDataBean implements Serializable{
         /**
-         * orderId : 21
-         * code : 112445580996736
-         * schemeId : 29
+         * orderId : 39
+         * code : 112685899219072
+         * schemeId : 63
          * userId : 45
-         * payType : “”
-         * payAmount : 500000.0
-         * payTime : “”
+         * payType : null
+         * payAmount : 5000.0
+         * payTime : null
          * payStatus : 0
          * orderAmount : 500000.0
          * discountAmount : 0
          * orderStatus : 1
          * quantity : 1
-         * realName : ggg
-         * cardNo : 15558999
+         * realName : 李闪闪
+         * cardNo : 410223199005143549
          * mobile : 18703643373
          * distributeTime : null
-         * unlockDate : “”
+         * unlockDate : null
          * deleteStatus : 0
-         * updateTime : “”
-         * createTime : 1542188534425
-         * tradeno : “”
+         * updateTime : null
+         * createTime : 1542247205864
+         * tradeno : null
+         * nickName : PP70PDHRWO
+         * headImage : images/4be2caa5391dfff1f1c0e206a84e285e.jpg
+         * schemeCode : 20181114048
+         * pastureName : 答复
+         * price : 5000.0
          */
 
         private int orderId;
@@ -89,8 +95,13 @@ public class CreatOderResultBean implements Serializable {
         private String unlockDate;
         private String deleteStatus;
         private String updateTime;
-        private long createTime;
+        private String createTime;
         private String tradeno;
+        private String nickName;
+        private String headImage;
+        private String schemeCode;
+        private String pastureName;
+        private BigDecimal price;
 
         public int getOrderId() {
             return orderId;
@@ -124,23 +135,6 @@ public class CreatOderResultBean implements Serializable {
             this.userId = userId;
         }
 
-        public String getPayType() {
-            return payType;
-        }
-
-        public void setPayType(String payType) {
-            this.payType = payType;
-        }
-
-
-
-        public String getPayTime() {
-            return payTime;
-        }
-
-        public void setPayTime(String payTime) {
-            this.payTime = payTime;
-        }
 
         public String getPayStatus() {
             return payStatus;
@@ -150,37 +144,7 @@ public class CreatOderResultBean implements Serializable {
             this.payStatus = payStatus;
         }
 
-        public BigDecimal getPayAmount() {
-            return payAmount;
-        }
 
-        public void setPayAmount(BigDecimal payAmount) {
-            this.payAmount = payAmount;
-        }
-
-        public BigDecimal getOrderAmount() {
-            return orderAmount;
-        }
-
-        public void setOrderAmount(BigDecimal orderAmount) {
-            this.orderAmount = orderAmount;
-        }
-
-        public BigDecimal getDiscountAmount() {
-            return discountAmount;
-        }
-
-        public void setDiscountAmount(BigDecimal discountAmount) {
-            this.discountAmount = discountAmount;
-        }
-
-        public String getDistributeTime() {
-            return distributeTime;
-        }
-
-        public void setDistributeTime(String distributeTime) {
-            this.distributeTime = distributeTime;
-        }
 
         public String getOrderStatus() {
             return orderStatus;
@@ -223,20 +187,101 @@ public class CreatOderResultBean implements Serializable {
         }
 
 
-        public String getUnlockDate() {
-            return unlockDate;
-        }
-
-        public void setUnlockDate(String unlockDate) {
-            this.unlockDate = unlockDate;
-        }
-
         public String getDeleteStatus() {
             return deleteStatus;
         }
 
         public void setDeleteStatus(String deleteStatus) {
             this.deleteStatus = deleteStatus;
+        }
+
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getHeadImage() {
+            return headImage;
+        }
+
+        public void setHeadImage(String headImage) {
+            this.headImage = headImage;
+        }
+
+        public String getSchemeCode() {
+            return schemeCode;
+        }
+
+        public void setSchemeCode(String schemeCode) {
+            this.schemeCode = schemeCode;
+        }
+
+        public String getPastureName() {
+            return pastureName;
+        }
+
+        public void setPastureName(String pastureName) {
+            this.pastureName = pastureName;
+        }
+
+        public String getPayType() {
+            return payType;
+        }
+
+        public void setPayType(String payType) {
+            this.payType = payType;
+        }
+
+        public BigDecimal getPayAmount() {
+            return payAmount;
+        }
+
+        public void setPayAmount(BigDecimal payAmount) {
+            this.payAmount = payAmount;
+        }
+
+        public String getPayTime() {
+            return payTime;
+        }
+
+        public void setPayTime(String payTime) {
+            this.payTime = payTime;
+        }
+
+        public BigDecimal getOrderAmount() {
+            return orderAmount;
+        }
+
+        public void setOrderAmount(BigDecimal orderAmount) {
+            this.orderAmount = orderAmount;
+        }
+
+        public BigDecimal getDiscountAmount() {
+            return discountAmount;
+        }
+
+        public void setDiscountAmount(BigDecimal discountAmount) {
+            this.discountAmount = discountAmount;
+        }
+
+        public String getDistributeTime() {
+            return distributeTime;
+        }
+
+        public void setDistributeTime(String distributeTime) {
+            this.distributeTime = distributeTime;
+        }
+
+        public String getUnlockDate() {
+            return unlockDate;
+        }
+
+        public void setUnlockDate(String unlockDate) {
+            this.unlockDate = unlockDate;
         }
 
         public String getUpdateTime() {
@@ -247,11 +292,11 @@ public class CreatOderResultBean implements Serializable {
             this.updateTime = updateTime;
         }
 
-        public long getCreateTime() {
+        public String getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(long createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
 
@@ -261,6 +306,14 @@ public class CreatOderResultBean implements Serializable {
 
         public void setTradeno(String tradeno) {
             this.tradeno = tradeno;
+        }
+
+        public BigDecimal getPrice() {
+            return price;
+        }
+
+        public void setPrice(BigDecimal price) {
+            this.price = price;
         }
     }
 }

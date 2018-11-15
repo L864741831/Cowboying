@@ -15,6 +15,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyCowsListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
+import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 
 
 import java.util.List;
@@ -43,8 +45,22 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
         ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
-        MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),context);
-        ry_id.setAdapter(sureOrderChirdListAdapter);
+        if(item.getCattleList().size()>0&&!SDCardUtil.isNullOrEmpty(item.getCattleList())){
+            ry_id.setVisibility(View.VISIBLE);
+            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),context);
+            ry_id.setAdapter(sureOrderChirdListAdapter);
+            sureOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Intent intent = new Intent(context, MyCowsDetailActivity.class);
+                    intent.putExtra("orderCode",item.getOrderCode());
+                    context.startActivity(intent);
+                }
+            });
+        }else {
+            ry_id.setVisibility(View.GONE);
+        }
+
 //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
             if ("1".equals(item.getStatus())) {
@@ -53,37 +69,64 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 to_pay.setVisibility(View.VISIBLE);
                 cancle_order.setVisibility(View.VISIBLE);
                 rlEmeng.setVisibility(View.VISIBLE);
+                see_order_progress.setVisibility(View.GONE);
+                sell_want.setVisibility(View.GONE);
+                delet_order.setVisibility(View.GONE);
             } else if ("2".equals(item.getStatus())) {
                 //已付款未分配（比待付款多了一个支付时间和支付时间）
                 helper.setText(R.id.stadus_id,"已付款，待分配牛只");
                 see_order_progress.setVisibility(View.VISIBLE);
                 rlEmeng.setVisibility(View.VISIBLE);
+                to_pay.setVisibility(View.GONE);
+                cancle_order.setVisibility(View.GONE);
+                sell_want.setVisibility(View.GONE);
+                delet_order.setVisibility(View.GONE);
             } else if ("3".equals(item.getStatus())) {
                 //已分配（这里只有活期养牛这一种）
                 helper.setText(R.id.stadus_id,"已分配牛只");
+                to_pay.setVisibility(View.GONE);
+                cancle_order.setVisibility(View.GONE);
+                rlEmeng.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.VISIBLE);
                 sell_want.setVisibility(View.VISIBLE);
+                delet_order.setVisibility(View.GONE);
             } else if ("4".equals(item.getStatus())) {
                 //已分配锁定期中（只有定期养牛才会有这个状态）
                 helper.setText(R.id.stadus_id,"已分配牛只");
+                to_pay.setVisibility(View.GONE);
+                cancle_order.setVisibility(View.GONE);
+                rlEmeng.setVisibility(View.GONE);
+                sell_want.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.VISIBLE);
+                delet_order.setVisibility(View.GONE);
             } else if ("5".equals(item.getStatus())) {
                 //出售中（不分活期和定期。。定期到期后会自动转为活期的）
                 helper.setText(R.id.stadus_id,"牛只出售中");
+                to_pay.setVisibility(View.GONE);
+                cancle_order.setVisibility(View.GONE);
+                rlEmeng.setVisibility(View.GONE);
+                sell_want.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.VISIBLE);
+                delet_order.setVisibility(View.GONE);
             } else if ("6".equals(item.getStatus())) {
                 //交易完成（比交易完成多一个出售成功时间）
                 helper.setText(R.id.stadus_id,"交易完成");
+                to_pay.setVisibility(View.GONE);
+                cancle_order.setVisibility(View.GONE);
+                rlEmeng.setVisibility(View.GONE);
+                sell_want.setVisibility(View.GONE);
                 delet_order.setVisibility(View.VISIBLE);
                 see_order_progress.setVisibility(View.VISIBLE);
             }else if ("9".equals(item.getStatus())) {
                 //交易关闭
                 helper.setText(R.id.stadus_id,"交易关闭");
+                to_pay.setVisibility(View.GONE);
+                cancle_order.setVisibility(View.GONE);
+                rlEmeng.setVisibility(View.GONE);
+                sell_want.setVisibility(View.GONE);
+                see_order_progress.setVisibility(View.GONE);
                 delet_order.setVisibility(View.VISIBLE);
             }
-
-
-
     }
 }
 

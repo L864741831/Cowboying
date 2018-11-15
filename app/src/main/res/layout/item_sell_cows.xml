@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:orientation="horizontal"
+    android:layout_height="wrap_content" android:background="@color/white"
+    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+    android:layout_marginTop="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical"
+        android:background="@drawable/shape_white_cicle_2" android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/order_code_txt"
+            android:layout_height="wrap_content" android:text="订单编号："
+            android:textSize="13sp"/>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent" android:id="@+id/ry_id"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/cow_num_id"
+                android:layout_height="wrap_content" android:text="共2头，合计认领金额："
+                android:layout_toLeftOf="@+id/all_money_id"
+                android:textSize="13sp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/all_money_id"
+                android:layout_height="wrap_content" android:text="￥10000"
+                android:textColor="@color/colorAccent" android:layout_alignParentRight="true"
+                android:textSize="13sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

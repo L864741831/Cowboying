@@ -154,8 +154,8 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
-        Glide.with(this).load(Constant.imageDomain+infos.getBizData()).apply(options).into(headImg);
-        nickNameTxt.setText("昵称："+infos.getBizData().getRealName());
+        Glide.with(this).load(Constant.imageDomain+infos.getBizData().getHeadImage()).apply(options).into(headImg);
+        nickNameTxt.setText("昵称："+infos.getBizData().getNickName());
         knowNameId.setText("认领人："+infos.getBizData().getRealName());
         orderCodeTxt.setText("订单编号："+infos.getBizData().getOrderId());
         payMoneyId.setText("￥"+infos.getBizData().getPayAmount());
@@ -163,9 +163,9 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         knowIdentifycodeId.setText("身份证号："+infos.getBizData().getCardNo());
         couponMoneyId.setText("已优惠￥0");
         knowCodeId.setText("第"+infos.getBizData().getCode()+"期");
-        knowPastureId.setText("牧场名");
+        knowPastureId.setText(infos.getBizData().getPastureName());
         knowNumberId.setText(infos.getBizData().getQuantity()+"");
-        knowOnePriceId.setText(infos.getBizData().getQuantity()+"单价");
+        knowOnePriceId.setText(infos.getBizData().getPrice()+"");
 
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
@@ -253,7 +253,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     @Override
     public void getPayInit(final PayInitResultBean payInitResultBean) {
 
-        if("000000".equals(payInitResultBean.toString())){
+        if("000000".equals(payInitResultBean.getCode())){
             if (chooseType == 1) {
                 //异步处理
                 Runnable payRunnable = new Runnable() {

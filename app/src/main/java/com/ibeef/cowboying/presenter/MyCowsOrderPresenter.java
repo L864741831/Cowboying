@@ -30,9 +30,11 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
 
     @Override
     public void geMyCowsOrderList(Map<String, String> headers, int currentPage, String status) {
+        mView.showLoading();
         addSubscription(mModel.geMyCowsOrderList(headers,currentPage,status,new ResponseCallback<MyCowsOrderListBean>() {
             @Override
             public void onSuccess(MyCowsOrderListBean result) {
+                mView.hideLoading();
                 mView.geMyCowsOrderList(result);
 
             }
@@ -40,6 +42,7 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
             @Override
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
+                mView.hideLoading();
                 mView.showMsg(msg);
             }
         }));
@@ -47,9 +50,11 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
 
     @Override
     public void geMyCowsOrderListDetail(Map<String, String> headers, String orderCode) {
+        mView.showLoading();
         addSubscription(mModel.geMyCowsOrderListDetail(headers,orderCode,new ResponseCallback<MyCowsOrderListDetailBean>() {
             @Override
             public void onSuccess(MyCowsOrderListDetailBean result) {
+                mView.hideLoading();
                 mView.geMyCowsOrderListDetail(result);
 
             }
@@ -57,6 +62,7 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
             @Override
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
+                mView.hideLoading();
                 mView.showMsg(msg);
             }
         }));

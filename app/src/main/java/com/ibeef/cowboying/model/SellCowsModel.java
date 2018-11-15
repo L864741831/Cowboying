@@ -2,13 +2,12 @@ package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.AccountRegisterBase;
-import com.ibeef.cowboying.base.OrderInitBase;
+import com.ibeef.cowboying.base.SellCowsBase;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
-import com.ibeef.cowboying.bean.CreatOderResultBean;
-import com.ibeef.cowboying.bean.CreatOrderParamBean;
-import com.ibeef.cowboying.bean.PayInitParamBean;
-import com.ibeef.cowboying.bean.PayInitResultBean;
+import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
+import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
+import com.ibeef.cowboying.bean.SellCowsResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -26,28 +25,29 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 买牛订单
+ * @describe 卖牛
  * @package com.ranhan.cowboying.model
  **/
-public class OrderInitModel implements OrderInitBase.IModel {
+public class SellCowsModel implements SellCowsBase.IModel {
     private HttpService httpService;
     private ApiService service;
 
-    public OrderInitModel() {
+    public SellCowsModel() {
         httpService = HttpService.getInstance(Constant.BASE_URL,false);
         service = httpService.getHttpService().create(ApiService.class);
     }
+
     @Override
-    public Subscription getCreatOder(Map<String, String> headers, CreatOrderParamBean creatOrderParamBean, final ResponseCallback<CreatOderResultBean> callback) {
-        Observable<CreatOderResultBean> observable = service.getCreatOder(headers,creatOrderParamBean);
+    public Subscription getSellCows(Map<String, String> headers, String orderId, final ResponseCallback<SellCowsResultBean> callback) {
+        Observable<SellCowsResultBean> observable = service.getSellCows(headers,orderId);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(0, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<CreatOderResultBean>() {
+                .subscribe(new Action1<SellCowsResultBean>() {
                     @Override
-                    public void call(CreatOderResultBean result) {
+                    public void call(SellCowsResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {
@@ -60,16 +60,16 @@ public class OrderInitModel implements OrderInitBase.IModel {
     }
 
     @Override
-    public Subscription getPayInit(Map<String, String> headers, PayInitParamBean payInitParamBean,final ResponseCallback<PayInitResultBean> callback) {
-        Observable<PayInitResultBean> observable = service.getPayInit(headers,payInitParamBean);
+    public Subscription getCreatSellCows(Map<String, String> headers, CreatSellCowsParamBean creatSellCowsParamBean, final ResponseCallback<CreatSellCowsResultBean> callback) {
+        Observable<CreatSellCowsResultBean> observable = service.getCreatSellCows(headers,creatSellCowsParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(0, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<PayInitResultBean>() {
+                .subscribe(new Action1<CreatSellCowsResultBean>() {
                     @Override
-                    public void call(PayInitResultBean result) {
+                    public void call(CreatSellCowsResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

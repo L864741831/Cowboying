@@ -19,13 +19,9 @@
         app:nts_inactive_color="#ff1a1e23"
         app:nts_size="13sp" app:nts_weight="1dp"
        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp" android:background="@color/homef7"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/content_vp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" android:layout_marginTop="5dp"/>
 
 </LinearLayout>

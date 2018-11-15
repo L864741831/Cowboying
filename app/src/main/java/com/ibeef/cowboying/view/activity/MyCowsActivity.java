@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -93,6 +94,11 @@ public class MyCowsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.action_new_question_tv:
+                Intent intent=new Intent(MyCowsActivity.this,SellCowsActivity.class);
+                intent.putExtra("orderId","");
+                startActivity(intent);
+                break;
+            default:
                 break;
         }
     }

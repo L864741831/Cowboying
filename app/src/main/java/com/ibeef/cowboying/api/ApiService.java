@@ -1,7 +1,5 @@
 package com.ibeef.cowboying.api;
 
-import android.content.Intent;
-
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
@@ -22,6 +20,8 @@ import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatOrderParamBean;
+import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
+import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
@@ -55,6 +55,7 @@ import com.ibeef.cowboying.bean.RestLoginParamBean;
 import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.SchemeDetailReultBean;
+import com.ibeef.cowboying.bean.SellCowsResultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
@@ -77,7 +78,6 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -463,5 +463,19 @@ public interface ApiService {
      */
     @POST("adopt/order/payInit")
     Observable<PayInitResultBean> getPayInit(@HeaderMap Map<String, String> headers, @Body PayInitParamBean payInitParamBean);
+
+    /**
+     *获取卖牛信息
+     * @return
+     */
+    @GET("sell/getSellInfo")
+    Observable<SellCowsResultBean> getSellCows(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
+    /**
+     *生成卖牛信息
+     * @return
+     */
+    @POST("sell/pasture")
+    Observable<CreatSellCowsResultBean> getCreatSellCows(@HeaderMap Map<String, String> headers, @Body CreatSellCowsParamBean creatSellCowsParamBean);
 
 }
