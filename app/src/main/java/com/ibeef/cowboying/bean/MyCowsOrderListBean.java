@@ -98,7 +98,7 @@ public class MyCowsOrderListBean {
         private String orderId;
         private String status;
         private int cattleCount;
-        private int orderId;
+
         private double orderAmount;
         private String pastureName;
         private String pastureImage;
@@ -107,13 +107,6 @@ public class MyCowsOrderListBean {
         private double lockMonths;
         private List<CattleListBean> cattleList;
 
-        public int getOrderId() {
-            return orderId;
-        }
-
-        public void setOrderId(int orderId) {
-            this.orderId = orderId;
-        }
 
         public String getOrderCode() {
             return orderCode;

@@ -111,21 +111,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
             }
         });
 
-        myCowsListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()){
-                    case R.id.sell_want:
-                        Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
-                        intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
         myCowsOrderPresenter = new MyCowsOrderPresenter(this);
     }
 
@@ -270,12 +255,15 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                         break;
                     case  R.id.sell_want:
                         //我要卖牛
+                        Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
+                        intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
+                        startActivity(intent);
                         break;
                     case  R.id.cancle_order:
                         //取消订单
-                        Intent intent = new Intent(getHoldingActivity(),SureOrderBackDialog.class);
-                        intent.putExtra("orderCode",dataBean.getOrderId());
-                        startActivity(intent);
+                        Intent intent2 = new Intent(getHoldingActivity(),SureOrderBackDialog.class);
+                        intent2.putExtra("orderCode",dataBean.getOrderId());
+                        startActivity(intent2);
                         break;
                     case  R.id.to_pay:
                         //去支付
