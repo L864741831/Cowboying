@@ -7,6 +7,11 @@ import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.view.activity.MyCowsActivity;
+import com.ibeef.cowboying.view.activity.SureOderActivity;
+import com.orhanobut.hawk.Hawk;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -47,22 +52,26 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         //支付结果回调 resp.errCode 0成功 -1 错误 -2 用户取消
         //baseresp.getType 1:第三方授权， 2:分享,5:支付
         Log.e(Constant.TAG, "onPayFinish, errCode = " + resp.errCode);
-            switch (resp.errCode) {
-                case BaseResp.ErrCode.ERR_OK:
-                    Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
-                    break;
-                case BaseResp.ErrCode.ERR_COMM:
-                    Toast.makeText(this, "支付错误", Toast.LENGTH_SHORT).show();
-                    //发送取消
-                    break;
-                case BaseResp.ErrCode.ERR_USER_CANCEL:
-                    Toast.makeText(this, "用户取消", Toast.LENGTH_SHORT).show();
-                    //发送取消
-                    break;
-                default:
-                    Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
-                    break;
+        if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            // resp.errCode == -1 原因：支付错误,可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等
+            // resp.errCode == -2 原因 用户取消,无需处理。发生场景：用户不支付了，点击取消，返回APP
+            Log.e("--main--", resp.errCode + "??????????????????啥情况");
+            if (resp.errCode == 0)
+            // 支付成功
+            {
+                Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(WXPayEntryActivity.this,MyCowsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("from",true);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "支付失败！", Toast.LENGTH_SHORT).show();
+
+                finish();
             }
+        }
     }
 
 

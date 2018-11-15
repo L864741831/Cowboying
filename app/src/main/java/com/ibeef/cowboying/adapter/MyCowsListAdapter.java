@@ -127,6 +127,8 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 see_order_progress.setVisibility(View.GONE);
                 delet_order.setVisibility(View.VISIBLE);
             }
+
+            helper.addOnClickListener(R.id.sell_want);
     }
 }
 

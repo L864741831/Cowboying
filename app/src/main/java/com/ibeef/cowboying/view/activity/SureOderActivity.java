@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,6 +31,7 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
+import com.ibeef.cowboying.wxapi.WXPayEntryActivity;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -123,6 +125,12 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(SureOderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(SureOderActivity.this,MyCowsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("from",true);
+                        startActivity(intent);
+                        finish();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(SureOderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -226,13 +234,19 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 startActivity(AddPayPwdActivity.class);
                 break;
             case R.id.sure_pay_btn:
-                Map<String, String> reqData = new HashMap<>();
-                reqData.put("Authorization",token);
-                reqData.put("version",getVersionCodes());
-                PayInitParamBean payInitParamBean=new PayInitParamBean();
-                payInitParamBean.setOrderId(infos.getBizData().getOrderId());
-                payInitParamBean.setPayType(chooseType+"");
-                orderInitPresenter.getPayInit(reqData,payInitParamBean);
+                if (chooseType==3){
+                    accountPayShowRv.setVisibility(View.VISIBLE);
+                    surePayBtn.setVisibility(View.GONE);
+                    isComplet=true;
+                }else {
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    PayInitParamBean payInitParamBean=new PayInitParamBean();
+                    payInitParamBean.setOrderId(infos.getBizData().getOrderId());
+                    payInitParamBean.setPayType(chooseType+"");
+                    orderInitPresenter.getPayInit(reqData,payInitParamBean);
+                }
                 break;
             default:
                 break;
@@ -289,10 +303,17 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
                 api.sendReq(request);
             } else if (chooseType == 3) {
-                accountPayShowRv.setVisibility(View.VISIBLE);
-                surePayBtn.setVisibility(View.GONE);
+                Intent intent=new Intent(SureOderActivity.this,MyCowsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("from",true);
+                startActivity(intent);
+                accountPayShowRv.setVisibility(View.GONE);
+                surePayBtn.setVisibility(View.VISIBLE);
             }
         }else {
+            accountPayShowRv.setVisibility(View.GONE);
+            surePayBtn.setVisibility(View.VISIBLE);
             showToast(payInitResultBean.getMessage());
         }
     }

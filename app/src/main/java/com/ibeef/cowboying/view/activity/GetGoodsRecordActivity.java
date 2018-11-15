@@ -39,11 +39,9 @@ public class GetGoodsRecordActivity extends BaseActivity implements SwipeRefresh
     @Bind(R.id.ry_id)
     RecyclerView ryId;
     @Bind(R.id.rv_bg)
-    RelativeLayout rvBg;
+    RelativeLayout rvOrder;
     @Bind(R.id.swipe_layout)
     SwipeRefreshLayout swipeLayout;
-    @Bind(R.id.rv_order)
-    RelativeLayout rvOrder;
     private String token;
     private List<BaseBean> beanList;
     private GetGoodsRecordAdapter getGoodsRecordAdapter;

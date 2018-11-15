@@ -43,7 +43,7 @@ public class OrderInitModel implements OrderInitBase.IModel {
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(0, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
                 .subscribe(new Action1<CreatOderResultBean>() {
                     @Override
@@ -65,7 +65,7 @@ public class OrderInitModel implements OrderInitBase.IModel {
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(new RetryWithDelay(0, 3000))
+                .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
                 .subscribe(new Action1<PayInitResultBean>() {
                     @Override

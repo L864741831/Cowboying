@@ -45,6 +45,7 @@ public class MyCowsActivity extends BaseActivity {
     private MyCowsListFragment fragment_3;
     private MyCowsListFragment fragment_4;
     private MainFragmentAdapter mAdpter;
+    private boolean from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MyCowsActivity extends BaseActivity {
     }
 
     private void init() {
+        from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我的牛只");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
@@ -91,7 +93,14 @@ public class MyCowsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                finish();
+                if(from){
+                    Intent intent1=new Intent(MyCowsActivity.this,MainActivity.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent1);
+                }else {
+                    finish();
+                }
                 break;
             case R.id.action_new_question_tv:
                 Intent intent=new Intent(MyCowsActivity.this,SellCowsActivity.class);
@@ -100,6 +109,16 @@ public class MyCowsActivity extends BaseActivity {
                 break;
             default:
                 break;
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (from){
+            Intent intent1=new Intent(MyCowsActivity.this,MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
         }
     }
 }
