@@ -31,6 +31,7 @@ import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
+import com.ibeef.cowboying.view.activity.SellCowsFirstActivity;
 import com.ibeef.cowboying.view.activity.MyCowsProgressDialog;
 import com.ibeef.cowboying.view.activity.SureOrderBackDialog;
 import com.orhanobut.hawk.Hawk;
@@ -107,6 +108,21 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                 Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
                 intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId());
                 startActivity(intent);
+            }
+        });
+
+        myCowsListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.sell_want:
+                        Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
+                        intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 

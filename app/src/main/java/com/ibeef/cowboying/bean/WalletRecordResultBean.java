@@ -12,7 +12,43 @@ import java.util.List;
 public class WalletRecordResultBean {
     private String code;
     private String message;
+    private int pageNo;
+    private Object pageSize;
+    private Object totalRows;
+    private Object totalPages;
     private List<BizDataBean> bizData;
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public Object getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Object pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Object getTotalRows() {
+        return totalRows;
+    }
+
+    public void setTotalRows(Object totalRows) {
+        this.totalRows = totalRows;
+    }
+
+    public Object getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Object totalPages) {
+        this.totalPages = totalPages;
+    }
 
     public String getCode() {
         return code;

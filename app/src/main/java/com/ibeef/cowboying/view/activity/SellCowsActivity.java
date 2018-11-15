@@ -80,7 +80,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
         info.setText("我要卖牛");
         baseBeans = new ArrayList<>();
         ryId.setLayoutManager(new LinearLayoutManager(this));
-        sellCowsAdapter = new SellCowsAdapter( baseBeans,this, R.layout.my_feedback_item);
+        sellCowsAdapter = new SellCowsAdapter( baseBeans,this, R.layout.item_sell_cows);
         sellCowsAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(sellCowsAdapter);
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
@@ -112,13 +112,23 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
         });
     }
 
-    @OnClick(R.id.back_id)
-    public void onViewClicked() {
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization", token);
-        reqData.put("version", getVersionCodes());
-        sellCowsPresenter.getSellCows(reqData, orderId);
-        finish();
+    @OnClick({R.id.back_id, R.id.now_claim_btn_id})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back_id:
+                finish();
+                break;
+            case R.id.now_claim_btn_id:
+//                Map<String, String> reqData = new HashMap<>();
+//                reqData.put("Authorization", token);
+//                reqData.put("version", getVersionCodes());
+//                sellCowsPresenter.getSellCows(reqData, orderId);
+                showToast("暂不支持批量买牛！");
+                finish();
+                break;
+            default:
+                break;
+        }
     }
     @Override
     public void onRefresh() {

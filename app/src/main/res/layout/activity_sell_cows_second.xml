@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"  android:background="@color/homef7"
+    tools:context=".view.activity.SellCowsSecondActivity">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_above="@+id/sure_btn">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical"
+          >
+            <include layout="@layout/include_title"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp" android:orientation="vertical"
+                android:background="@mipmap/sellcowsbg">
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/question_show_id"
+                    android:layout_height="wrap_content" android:text="卖牛金额（元）"
+                    android:drawableRight="@mipmap/sellcowsquestion" android:textColor="@color/white"
+                    android:drawablePadding="10dp" android:layout_marginTop="80dp" android:layout_marginLeft="30dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/show_money_id"
+                    android:layout_height="wrap_content" android:text="5000"
+                    android:textColor="@color/colorGold" android:textSize="25sp"
+                    android:textStyle="bold" android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="卖牛提现至"
+                android:layout_marginLeft="20dp" android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" android:background="@drawable/shape_oval_white_btn">
+                <ImageView
+                    android:layout_width="wrap_content" android:id="@+id/img1_id"
+                    android:layout_height="wrap_content" android:src="@mipmap/sellcowwallet"
+                    android:layout_margin="20dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_toRightOf="@+id/img1_id"
+                    android:layout_height="wrap_content" android:orientation="vertical"
+                    android:layout_marginTop="20dp" android:layout_toLeftOf="@+id/wallet_ck_id">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="钱包资金"
+                        android:textColor="@color/colorAccent" android:textSize="15sp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content" android:lineSpacingExtra="5dp"
+                        android:text="卖牛申请提现至钱包采用T+7到账，钱包余额提现至银行卡T+1到账。钱包余额可买APP内所有产品以及商品不受任何限制"
+                        android:layout_marginBottom="30dp" android:textSize="13sp"/>
+                </LinearLayout>
+                <CheckBox
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"   android:layout_marginLeft="15dp"
+                    android:id="@+id/wallet_ck_id" android:layout_centerVertical="true"
+                    android:checked="true" android:background="@drawable/checkbox_bg"
+                    android:button="@null"  android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent" android:layout_marginTop="7dp"
+                android:layout_height="match_parent" android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" android:background="@drawable/shape_oval_white_btn">
+                <ImageView
+                    android:layout_width="wrap_content" android:id="@+id/img2_id"
+                    android:layout_height="wrap_content" android:src="@mipmap/sellcowothemoney"
+                    android:layout_margin="20dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_toRightOf="@+id/img2_id"
+                    android:layout_height="wrap_content" android:orientation="vertical"
+                    android:layout_marginTop="20dp" android:layout_toLeftOf="@+id/othemoney_ck_id">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="复购加息1%"
+                        android:textColor="@color/colorAccent" android:textSize="15sp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content" android:lineSpacingExtra="5dp"
+                        android:layout_marginBottom="30dp" android:textSize="13sp"
+                        android:text="一键本息复购1个月锁定期牛只，加息1%收益率；原有收益提现至钱包"/>
+                </LinearLayout>
+                <CheckBox
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"   android:layout_marginLeft="15dp"
+                    android:id="@+id/othemoney_ck_id" android:layout_centerVertical="true"
+                    android:checked="false" android:background="@drawable/checkbox_bg"
+                    android:button="@null"  android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent" android:layout_marginTop="7dp"
+                android:layout_height="match_parent" android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" android:background="@drawable/shape_oval_white_btn">
+                <ImageView
+                    android:layout_width="wrap_content" android:id="@+id/img3_id"
+                    android:layout_height="wrap_content" android:src="@mipmap/sellcoebeef"
+                    android:layout_margin="20dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_toRightOf="@+id/img3_id"
+                    android:layout_height="wrap_content" android:orientation="vertical"
+                    android:layout_marginTop="20dp" android:layout_toLeftOf="@+id/beefhourse_ck_id">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="牛肉仓库"
+                        android:textColor="@color/colorAccent" android:textSize="15sp"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content" android:lineSpacingExtra="5dp"
+                        android:layout_marginBottom="30dp" android:textSize="13sp"
+                        android:text="认领牛只已养满12个月，可兑换为价值14800元的120斤澳洲牛肉，自动存放到牛肉仓库随时提货到家"/>
+                </LinearLayout>
+                <CheckBox
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"   android:layout_marginLeft="15dp"
+                    android:id="@+id/beefhourse_ck_id" android:layout_centerVertical="true"
+                    android:checked="false" android:background="@drawable/checkbox_bg"
+                    android:button="@null"  android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:layout_width="match_parent" android:id="@+id/sure_btn"
+        android:layout_height="50dp" android:background="@color/colorAccent"
+        android:textColor="@color/white" android:text="确认卖牛"
+        android:layout_alignParentBottom="true" android:gravity="center"
+        android:textSize="17sp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/fm_show_id"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"  android:background="#70000000">
+
+            <LinearLayout
+                android:layout_width="match_parent" android:orientation="vertical"
+                android:layout_height="wrap_content"   android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" android:text="实际卖牛金额说明"
+                    android:textColor="@color/colorAccent" android:gravity="center"
+                    android:background="@color/colorGold" android:textSize="16sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent" android:id="@+id/home_honegivepour"
+                    android:layout_height="wrap_content" android:background="@drawable/shape_oval_white_btn"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="0dp" android:layout_weight="0.25"
+                            android:layout_height="wrap_content" android:text="卖牛收入"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="0dp" android:layout_weight="0.25"
+                            android:layout_height="wrap_content" android:text="偿还白条"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="0dp" android:layout_weight="0.25"
+                            android:layout_height="wrap_content" android:text="手续费"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" android:orientation="horizontal"
+                        android:layout_marginLeft="10dp" android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="0dp" android:id="@+id/get_sell_cows_money"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content" android:text="5000"
+                            android:paddingTop="7dp" android:paddingBottom="7dp"
+                            android:paddingLeft="8dp" android:paddingRight="8dp"
+                            android:background="@drawable/shape_oval_hui_btn"
+                            android:gravity="center"/>
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content" android:src="@mipmap/sellcowone"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="0dp"  android:id="@+id/return_monry_id"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content" android:text="0"
+                            android:paddingTop="7dp" android:paddingBottom="7dp"
+                            android:paddingLeft="8dp" android:paddingRight="8dp"
+                            android:background="@drawable/shape_oval_hui_btn"
+                            android:gravity="center"/>
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content" android:src="@mipmap/sellcowone"
+                            android:layout_gravity="center_vertical"/>
+                        <TextView
+                            android:layout_width="0dp" android:id="@+id/other_money_id"
+                            android:layout_weight="0.3" android:gravity="center"
+                            android:layout_height="wrap_content" android:text="0"
+                            android:paddingTop="7dp" android:paddingBottom="7dp"
+                            android:paddingLeft="8dp" android:paddingRight="8dp"
+                            android:background="@drawable/shape_oval_hui_btn"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" android:background="@color/txthui"
+                        android:layout_marginTop="10dp" android:layout_marginLeft="20dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp" android:layout_weight="0.7"
+                            android:layout_height="wrap_content" android:gravity="center"
+                            android:text="取出推荐奖励" android:layout_marginTop="10dp" />
+                        <TextView
+                            android:layout_width="0dp" android:layout_weight="0.3"
+                            android:layout_height="wrap_content" android:gravity="right"
+                            android:text="实际卖牛金额" android:layout_marginTop="10dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent" android:gravity="right"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:layout_width="0dp" android:textColor="@color/colorAccent"
+                            android:layout_weight="0.25" android:textSize="30sp"
+                            android:layout_height="wrap_content" android:text="+"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="0dp" android:id="@+id/give_money_id"
+                            android:layout_weight="0.25" android:layout_gravity="center"
+                            android:layout_height="wrap_content" android:text="0"
+                            android:paddingTop="7dp" android:paddingBottom="7dp"
+                            android:paddingLeft="8dp" android:paddingRight="8dp"
+                            android:background="@drawable/shape_oval_hui_btn"
+                            android:gravity="center"/>
+                        <ImageView
+                            android:layout_width="0dp" android:layout_gravity="center"
+                            android:layout_height="wrap_content" android:src="@mipmap/sellcowstwo"
+                            android:layout_marginRight="10dp" android:layout_weight="0.25"
+                            android:layout_marginLeft="10dp"/>
+                        <TextView
+                            android:layout_width="70dp"
+                            android:gravity="center" android:id="@+id/real_money_id"
+                            android:layout_height="wrap_content" android:text="0"
+                            android:paddingTop="7dp" android:paddingBottom="7dp"
+                            android:paddingLeft="8dp" android:paddingRight="8dp"
+                            android:background="@drawable/shape_oval_hui_btn"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="25dp" android:id="@+id/img_close_id"
+                    android:layout_height="25dp" android:src="@mipmap/updateclose"
+                    android:layout_centerHorizontal="true" android:layout_gravity="center"
+                    android:layout_marginTop="20dp"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+</RelativeLayout>

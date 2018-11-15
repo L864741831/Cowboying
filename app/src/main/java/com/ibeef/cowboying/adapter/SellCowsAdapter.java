@@ -3,6 +3,8 @@ package com.ibeef.cowboying.adapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -26,7 +28,7 @@ public class SellCowsAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDat
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MyCowsOrderListBean.BizDataBean item) {
+    protected void convert(BaseViewHolder helper, final MyCowsOrderListBean.BizDataBean item) {
 
         helper.setText(R.id.order_code_txt,"订单编号："+item.getOrderCode())
                 .setText(R.id.cow_num_id,"共"+item.getCattleCount()+"头，合计认领金额：")
@@ -35,7 +37,26 @@ public class SellCowsAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDat
         ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
-        SellCowsChirdAdapter sellCowsChirdAdapter=new SellCowsChirdAdapter(item.getCattleList(),context,item.getPastureName());
+
+        final SellCowsChirdAdapter sellCowsChirdAdapter=new SellCowsChirdAdapter(item.getCattleList(),context,item.getPastureName());
+        sellCowsChirdAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.all_ck_id:
+                        CheckBox cks=view.findViewById(R.id.all_ck_id);
+                        MyCowsOrderListBean.BizDataBean.CattleListBean items=sellCowsChirdAdapter.getItem(position);
+                        if(cks.isChecked()){
+                            items.setDefautChoose(1);
+                        }else {
+                            items.setDefautChoose(0);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         ry_id.setAdapter(sellCowsChirdAdapter);
     }
 }

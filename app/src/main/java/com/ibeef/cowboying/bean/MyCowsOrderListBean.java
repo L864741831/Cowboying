@@ -98,13 +98,22 @@ public class MyCowsOrderListBean {
         private String orderId;
         private String status;
         private int cattleCount;
+        private int orderId;
         private double orderAmount;
         private String pastureName;
         private String pastureImage;
         private String adoptType;
         private String unlockTime;
-        private int lockMonths;
+        private double lockMonths;
         private List<CattleListBean> cattleList;
+
+        public int getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(int orderId) {
+            this.orderId = orderId;
+        }
 
         public String getOrderCode() {
             return orderCode;
@@ -146,7 +155,11 @@ public class MyCowsOrderListBean {
             this.orderAmount = orderAmount;
         }
 
-        public void setLockMonths(int lockMonths) {
+        public double getLockMonths() {
+            return lockMonths;
+        }
+
+        public void setLockMonths(double lockMonths) {
             this.lockMonths = lockMonths;
         }
 
@@ -182,9 +195,7 @@ public class MyCowsOrderListBean {
             this.unlockTime = unlockTime;
         }
 
-        public int getLockMonths() {
-            return lockMonths;
-        }
+
 
         public List<CattleListBean> getCattleList() {
             return cattleList;
@@ -204,6 +215,15 @@ public class MyCowsOrderListBean {
             private String cattleCode;
             private String cattleImage;
             private double cattleWeight;
+            private int defautChoose;
+
+            public int getDefautChoose() {
+                return defautChoose;
+            }
+
+            public void setDefautChoose(int defautChoose) {
+                this.defautChoose = defautChoose;
+            }
 
             public String getCattleCode() {
                 return cattleCode;
