@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
+import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
 
@@ -32,16 +34,15 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
     protected void convert(BaseViewHolder helper, MyCowsOrderListDetailBean.BizDataBean.CattleListBean item) {
 
         helper .setText(R.id.tv_ranch_id,pastureName)
-                .setText(R.id.money_id,"安格拉斯牛")
-                .setText(R.id.num_id,"×2");
+               .setText(R.id.num_id,"初始重量："+item.getCattleWeight()+"kg");
 
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.store_img);
-//        Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
-        //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
+        Glide.with(context).load(Constant.imageDomain+item.getCattleImage()).apply(options).into(imageView);
+ //   订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
         if ("1".equals(status)) {
             //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)

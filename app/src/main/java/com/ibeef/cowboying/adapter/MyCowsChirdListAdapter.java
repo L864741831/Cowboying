@@ -28,7 +28,7 @@ public class MyCowsChirdListAdapter extends BaseQuickAdapter<MyCowsOrderListBean
 
     @Override
     protected void convert(BaseViewHolder helper, final MyCowsOrderListBean.BizDataBean.CattleListBean item) {
-        helper.setText(R.id.store_name,"牛只编号"+item.getCattleCode())
+        helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode())
                 .setText(R.id.tv_ranch_id,""+ranch_id).
                 setText(R.id.num_id,"初始重量："+item.getCattleWeight()+"kg");
 

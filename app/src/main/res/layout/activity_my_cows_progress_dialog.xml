@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rvs_id"
+    android:layout_width="match_parent"  android:orientation="vertical"
+    android:layout_height="match_parent"  android:background="#70000000"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="300dp" android:background="@drawable/cicle_write_bg"
+        android:layout_height="400dp" android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="15dp">
+            <TextView
+                android:layout_width="match_parent" android:id="@+id/show_title_id"
+                android:layout_height="wrap_content" android:text="认领进度查询"
+                android:textSize="15sp"
+                android:textColor="#9a7341" android:gravity="center_horizontal"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"   android:layout_marginTop="1dp"
+            android:layout_height="1dp" android:background="#9a7341"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="horizontal">
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

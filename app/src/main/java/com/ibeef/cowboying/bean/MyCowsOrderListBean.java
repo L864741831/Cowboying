@@ -95,6 +95,7 @@ public class MyCowsOrderListBean {
          */
 
         private String orderCode;
+        private String orderId;
         private String status;
         private int cattleCount;
         private double orderAmount;
@@ -111,6 +112,14 @@ public class MyCowsOrderListBean {
 
         public void setOrderCode(String orderCode) {
             this.orderCode = orderCode;
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
         }
 
         public String getStatus() {

@@ -21,15 +21,21 @@ public class MyCowsOrderBase {
         void hideLoading();
         void geMyCowsOrderList(MyCowsOrderListBean myCowsOrderListBean);
         void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean);
+        void getMyCowsOrderDelete(MyCowsOrderDeleteBean myCowsOrderDeleteBean);
+        void getMyCowsOrderCancel(MyCowsOrderDeleteBean myCowsOrderDeleteBean);
     }
 
     public interface IPresenter {
         void geMyCowsOrderList(Map<String,String> headers,int currentPage,String status);
         void geMyCowsOrderListDetail(Map<String,String> headers,String orderCode);
+        void getMyCowsOrderDelete(Map<String,String> headers,String orderCode);
+        void getMyCowsOrderCancel(Map<String,String> headers,String orderCode);
     }
 
     public interface IModel {
         Subscription geMyCowsOrderList(Map<String, String> headers,int currentPage,String status, ResponseCallback<MyCowsOrderListBean> callback);
         Subscription geMyCowsOrderListDetail(Map<String, String> headers,String orderCode, ResponseCallback<MyCowsOrderListDetailBean> callback);
+        Subscription getMyCowsOrderDelete(Map<String, String> headers,String orderCode, ResponseCallback<MyCowsOrderDeleteBean> callback);
+        Subscription getMyCowsOrderCancel(Map<String, String> headers,String orderCode, ResponseCallback<MyCowsOrderDeleteBean> callback);
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
+import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
@@ -56,6 +57,46 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
             public void onSuccess(MyCowsOrderListDetailBean result) {
                 mView.hideLoading();
                 mView.geMyCowsOrderListDetail(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getMyCowsOrderDelete(Map<String, String> headers, String orderCode) {
+        mView.showLoading();
+        addSubscription(mModel.getMyCowsOrderDelete(headers,orderCode,new ResponseCallback<MyCowsOrderDeleteBean>() {
+            @Override
+            public void onSuccess(MyCowsOrderDeleteBean result) {
+                mView.hideLoading();
+                mView.getMyCowsOrderDelete(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getMyCowsOrderCancel(Map<String, String> headers, String orderCode) {
+        mView.showLoading();
+        addSubscription(mModel.getMyCowsOrderCancel(headers,orderCode,new ResponseCallback<MyCowsOrderDeleteBean>() {
+            @Override
+            public void onSuccess(MyCowsOrderDeleteBean result) {
+                mView.hideLoading();
+                mView.getMyCowsOrderDelete(result);
 
             }
 

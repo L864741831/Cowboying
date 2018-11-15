@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.api;
 
 import com.ibeef.cowboying.base.MdUploadImgBean;
+import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
@@ -389,7 +390,7 @@ public interface ApiService {
      * @return
      */
     @GET("adopt/order/detail")
-    Observable<MyCowsOrderListDetailBean> geMyCowsOrderListDetail(@HeaderMap Map<String, String> headers, @Query("orderCode") String orderCode);
+    Observable<MyCowsOrderListDetailBean> geMyCowsOrderListDetail(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
 
 
 
@@ -477,5 +478,19 @@ public interface ApiService {
      */
     @POST("sell/pasture")
     Observable<CreatSellCowsResultBean> getCreatSellCows(@HeaderMap Map<String, String> headers, @Body CreatSellCowsParamBean creatSellCowsParamBean);
+
+    /**
+     * 我的牛只订单>删除订单
+     * @return
+     */
+    @GET("adopt/order/delete")
+    Observable<MyCowsOrderDeleteBean> getMyCowsOrderDelete(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
+
+    /**
+     * 我的牛只订单>删除订单
+     * @return
+     */
+    @GET("adopt/order/cancel")
+    Observable<MyCowsOrderDeleteBean> getMyCowsOrderCancel(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
 
 }

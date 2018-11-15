@@ -38,7 +38,7 @@ public class MyCowsOrderListDetailBean {
         this.bizData = bizData;
     }
 
-    public static class BizDataBean {
+    public  class BizDataBean {
         /**
          * orderCode : 112335466422400
          * status : 2
@@ -68,12 +68,39 @@ public class MyCowsOrderListDetailBean {
         private String unlockTime;
         private double lockMonths;
         private String schemeCode;
-        private int price;
+        private double price;
         private String payType;
         private String createTime;
         private String payTime;
         private String distributeTime;
+        private String sellTime;
+        private String sellSuccessTime;
+        private String closeTime;
         private List<CattleListBean> cattleList;
+
+        public String getCloseTime() {
+            return closeTime;
+        }
+
+        public void setCloseTime(String closeTime) {
+            this.closeTime = closeTime;
+        }
+
+        public String getSellTime() {
+            return sellTime;
+        }
+
+        public void setSellTime(String sellTime) {
+            this.sellTime = sellTime;
+        }
+
+        public String getSellSuccessTime() {
+            return sellSuccessTime;
+        }
+
+        public void setSellSuccessTime(String sellSuccessTime) {
+            this.sellSuccessTime = sellSuccessTime;
+        }
 
         public String getOrderCode() {
             return orderCode;
@@ -155,11 +182,11 @@ public class MyCowsOrderListDetailBean {
             this.schemeCode = schemeCode;
         }
 
-        public int getPrice() {
+        public double getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(double price) {
             this.price = price;
         }
 
@@ -203,7 +230,7 @@ public class MyCowsOrderListDetailBean {
             this.cattleList = cattleList;
         }
 
-        public static class CattleListBean {
+        public  class CattleListBean {
             /**
              * cattleCode : 2222222
              * cattleImage : images/ca09570497f14175b29cc0be930be12c.png

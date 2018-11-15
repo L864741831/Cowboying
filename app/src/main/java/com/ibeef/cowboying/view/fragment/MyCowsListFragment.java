@@ -1,20 +1,28 @@
 package com.ibeef.cowboying.view.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyCowsListAdapter;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
+import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.MyCowsListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
@@ -23,6 +31,8 @@ import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
+import com.ibeef.cowboying.view.activity.MyCowsProgressDialog;
+import com.ibeef.cowboying.view.activity.SureOrderBackDialog;
 import com.orhanobut.hawk.Hawk;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,7 +105,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-                intent.putExtra("orderCode",myCowsListAdapter.getItem(position).getOrderCode());
+                intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId());
                 startActivity(intent);
             }
         });
@@ -226,11 +236,107 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
             myCowsListAdapter.setNewData(this.listData);
             myCowsListAdapter.loadMoreComplete();
         }
+
+        myCowsListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                MyCowsOrderListBean.BizDataBean dataBean= myCowsListAdapter.getItem(position);
+                switch (view.getId()){
+                    case R.id.delet_order:
+                        //删除订单
+                        showDeleteOrder(dataBean.getOrderId());
+                        break;
+                    case R.id.see_order_progress:
+                        //查看进度
+                        Intent intent1 = new Intent(getHoldingActivity(),MyCowsProgressDialog.class);
+                        intent1.putExtra("orderCode",dataBean.getOrderId());
+                        startActivity(intent1);
+                        break;
+                    case  R.id.sell_want:
+                        //我要卖牛
+                        break;
+                    case  R.id.cancle_order:
+                        //取消订单
+                        Intent intent = new Intent(getHoldingActivity(),SureOrderBackDialog.class);
+                        intent.putExtra("orderCode",dataBean.getOrderId());
+                        startActivity(intent);
+                        break;
+                    case  R.id.to_pay:
+                        //去支付
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    public  void showDeleteOrder(final String orderId){
+        final NormalDialog dialog = new NormalDialog(getHoldingActivity());
+        dialog.isTitleShow(false)
+                .content("确定删除订单？")
+                .titleTextSize(18)
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(Color.parseColor("#808080"))
+                .dividerColor(Color.parseColor("#f3f3f3"))
+                .btnTextSize(15.5f, 15.5f)
+                .btnTextColor(Color.parseColor("#000000"), Color.parseColor("#2899ff"))
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        if (!TextUtils.isEmpty(token)) {
+                            Map<String, String> reqData = new HashMap<>();
+                            reqData.put("Authorization", token);
+                            reqData.put("version", getVersionCodes());
+                            myCowsOrderPresenter.getMyCowsOrderDelete(reqData, orderId);
+                        }
+                        dialog.dismiss();
+                    }
+                });
     }
 
     @Override
     public void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean) {
 
+    }
+
+    @Override
+    public void getMyCowsOrderDelete(MyCowsOrderDeleteBean msg) {
+        if("000000".equals(msg.getCode())){
+            page = 1;
+            listData.clear();
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
+            Toast.makeText(getHoldingActivity(),"删除订单成功", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getMyCowsOrderCancel(MyCowsOrderDeleteBean msg) {
+        if("000000".equals(msg.getCode())){
+            page = 1;
+            listData.clear();
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
+            Toast.makeText(getHoldingActivity(),"取消订单成功", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
