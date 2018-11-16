@@ -76,9 +76,9 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
             incomeType="2";
         }
         fragmentList=new ArrayList<>();
-        addIncomeFragment = AddIncomeFragment.newInstance(incomeType);
-        addIncomeFragment2 = AddIncomeFragment.newInstance(incomeType);
-        addIncomeFragment3 = AddIncomeFragment.newInstance(incomeType);
+        addIncomeFragment = AddIncomeFragment.newInstance("1",incomeType);
+        addIncomeFragment2 = AddIncomeFragment.newInstance("2",incomeType);
+        addIncomeFragment3 = AddIncomeFragment.newInstance("3",incomeType);
         fragmentList.add(addIncomeFragment);
         fragmentList.add(addIncomeFragment2);
         fragmentList.add(addIncomeFragment3);

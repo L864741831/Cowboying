@@ -32,9 +32,9 @@ public class AddMoneyPresenter extends BasePresenter implements AddMoneyBase.IPr
         mModel = new AddMoneyModel();
     }
     @Override
-    public void getAddMoney(Map<String, String> headers,int currentPage) {
+    public void getAddMoney(Map<String, String> headers,int currentPage,String interestType) {
         mView.showLoading();
-        addSubscription(mModel.getAddMoney(headers,currentPage,new ResponseCallback<AddMoneyResultBean>() {
+        addSubscription(mModel.getAddMoney(headers,currentPage,interestType,new ResponseCallback<AddMoneyResultBean>() {
             @Override
             public void onSuccess(AddMoneyResultBean result) {
                 mView.hideLoading();

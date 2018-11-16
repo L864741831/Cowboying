@@ -28,7 +28,7 @@ import rxfamily.view.BaseFragment;
 
 public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener , AddMoneyBase.IView {
 
-    private String des;
+    private String interestType,incomeType;
     RelativeLayout loadingLayout;
     RecyclerView ryId;
     private List<AddMoneyResultBean.BizDataBean> objectList;
@@ -58,16 +58,16 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
         token= Hawk.get(HawkKey.TOKEN);
 
         addMoneyPresenter=new AddMoneyPresenter(this);
-        if("1".equals(des)){
+        if("1".equals(incomeType)){
             rvShowId.setVisibility(View.GONE);
             ryId.setVisibility(View.GONE);
-        }else  if("2".equals(des)){
+        }else  if("2".equals(incomeType)){
             rvShowId.setVisibility(View.VISIBLE);
             ryId.setVisibility(View.VISIBLE);
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
-            addMoneyPresenter.getAddMoney(reqData,currentPage);
+            addMoneyPresenter.getAddMoney(reqData,currentPage,interestType);
         }
 
     }
@@ -82,14 +82,16 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            des = args.getString("des");
+            interestType = args.getString("interestType");
+            incomeType = args.getString("incomeType");
         }
     }
-    public static AddIncomeFragment newInstance(String  des) {
+    public static AddIncomeFragment newInstance(String  interestType,String incomeType) {
 
         AddIncomeFragment newFragment = new AddIncomeFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("des", des);
+        bundle.putString("interestType", interestType);
+        bundle.putString("incomeType", incomeType);
         newFragment.setArguments(bundle);
         return newFragment;
     }
@@ -97,13 +99,13 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
 
     @Override
     public void onLoadMoreRequested() {
-        if("2".equals(des)){
+        if("2".equals(incomeType)){
             isMoreLoad = true;
             currentPage += 1;
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            addMoneyPresenter.getAddMoney(reqData,currentPage);
+            addMoneyPresenter.getAddMoney(reqData,currentPage,interestType);
         }
     }
 
