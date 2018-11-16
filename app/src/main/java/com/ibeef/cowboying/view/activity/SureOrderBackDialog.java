@@ -101,9 +101,11 @@ public class SureOrderBackDialog extends BaseActivity implements View.OnClickLis
 
     @Override
     public void getMyCowsOrderCancel(MyCowsOrderDeleteBean msg) {
+        Log.i("/adopt/order/cancel", "取消订单成功:::::1: "+msg.getCode());
         if("000000".equals(msg.getCode())){
-            finish();
+            Log.i("/adopt/order/cancel", "取消订单成功:::2::: "+msg.getCode());
             Toast.makeText(this,"取消订单成功", Toast.LENGTH_SHORT).show();
+            finish();
         }else {
             Toast.makeText(this, msg.getMessage(), Toast.LENGTH_SHORT).show();
             Log.i("/adopt/order/cancel", "msg.getMessage()"+msg.getMessage());

@@ -96,7 +96,7 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
             @Override
             public void onSuccess(MyCowsOrderDeleteBean result) {
                 mView.hideLoading();
-                mView.getMyCowsOrderDelete(result);
+                mView.getMyCowsOrderCancel(result);
 
             }
 

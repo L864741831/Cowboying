@@ -256,7 +256,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                     case  R.id.sell_want:
                         //我要卖牛
                         Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
-                        intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
+                        intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId());
                         startActivity(intent);
                         break;
                     case  R.id.cancle_order:
