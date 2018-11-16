@@ -493,4 +493,11 @@ public interface ApiService {
     @GET("adopt/order/cancel")
     Observable<MyCowsOrderDeleteBean> getMyCowsOrderCancel(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
 
+    /**
+     * 我的牛只订单>去支付》获取确认订单的界面详情信息
+     * @return
+     */
+    @GET("adopt/order/nopay/detail")
+    Observable<CreatOderResultBean> getMyCowsToPay(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
+
 }

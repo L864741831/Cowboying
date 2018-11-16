@@ -5,6 +5,7 @@ import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.Constant;
@@ -106,6 +107,27 @@ public class MyCowsOrderModel implements MyCowsOrderBase.IModel {
                 .subscribe(new Action1<MyCowsOrderDeleteBean>() {
                     @Override
                     public void call(MyCowsOrderDeleteBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getMyCowsToPay(Map<String, String> headers, String orderCode, final ResponseCallback<CreatOderResultBean> callback) {
+        Observable<CreatOderResultBean> observable = service.getMyCowsToPay(headers,orderCode);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<CreatOderResultBean>() {
+                    @Override
+                    public void call(CreatOderResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

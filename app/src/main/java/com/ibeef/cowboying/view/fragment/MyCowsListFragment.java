@@ -23,6 +23,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyCowsListAdapter;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
@@ -33,6 +34,7 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.SellCowsFirstActivity;
 import com.ibeef.cowboying.view.activity.MyCowsProgressDialog;
+import com.ibeef.cowboying.view.activity.SureOderActivity;
 import com.ibeef.cowboying.view.activity.SureOrderBackDialog;
 import com.orhanobut.hawk.Hawk;
 import java.util.ArrayList;
@@ -251,7 +253,9 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                     case R.id.see_order_progress:
                         //查看进度
                         Intent intent1 = new Intent(getHoldingActivity(),MyCowsProgressDialog.class);
-                        intent1.putExtra("orderCode",dataBean.getOrderId());
+                        intent1.putExtra("status",myCowsListAdapter.getItem(position).getStatus());
+                        intent1.putExtra("LockMonths",myCowsListAdapter.getItem(position).getLockMonths());
+                        intent1.putExtra("UnlockTime",myCowsListAdapter.getItem(position).getUnlockTime());
                         startActivity(intent1);
                         break;
                     case  R.id.sell_want:
@@ -284,6 +288,12 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                         break;
                     case  R.id.to_pay:
                         //去支付
+                        if (!TextUtils.isEmpty(token)) {
+                            Map<String, String> reqData = new HashMap<>();
+                            reqData.put("Authorization", token);
+                            reqData.put("version", getVersionCodes());
+                            myCowsOrderPresenter.getMyCowsToPay(reqData, dataBean.getOrderId());
+                        }
                         break;
                     default:
                         break;
@@ -388,6 +398,17 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
             Toast.makeText(getHoldingActivity(),"取消订单成功", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
+        if("000000".equals(creatOderResultBean.getCode())){
+            Intent intent=new Intent(getHoldingActivity(),SureOderActivity.class);
+            intent.putExtra("infos",creatOderResultBean);
+            startActivity(intent);
+        }else {
+            showToast(creatOderResultBean.getMessage());
         }
     }
 

@@ -22,6 +22,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyCowsDetailListAdapter;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.Constant;
@@ -29,6 +30,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.orhanobut.hawk.Hawk;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -131,6 +133,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     private String pastureName;
     private MyCowsOrderListDetailBean myCowsOrderListDetailBean;
     private String orderCode;
+    private double LockMonths;
+    private String unlockTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +149,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
         orderCode = getIntent().getStringExtra("orderId");
         info.setText("我的牛只");
         rvCowsList.setLayoutManager(new LinearLayoutManager(this));
+        rvCowsList.setHasFixedSize(true);
+        rvCowsList.setNestedScrollingEnabled(false);
         beanList = new ArrayList<>();
         myCowsDetailListAdapter = new MyCowsDetailListAdapter(beanList, status, pastureName, this, R.layout.my_cows_chird_item);
         rvCowsList.setAdapter(myCowsDetailListAdapter);
@@ -170,7 +176,9 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             case R.id.btn_see_order_progress:
                 //产看进度
                 Intent intent1 = new Intent(this,MyCowsProgressDialog.class);
-                intent1.putExtra("orderCode",orderCode);
+                intent1.putExtra("status",status);
+                intent1.putExtra("LockMonths",LockMonths+"");
+                intent1.putExtra("UnlockTime",unlockTime);
                 startActivity(intent1);
                 break;
             case R.id.btn_sell_want:
@@ -203,6 +211,12 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 break;
             case R.id.btn_to_pay:
                 //去支付
+                if (!TextUtils.isEmpty(token)) {
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization", token);
+                    reqData.put("version", getVersionCodes());
+                    myCowsOrderPresenter.getMyCowsToPay(reqData, orderCode);
+                }
                 break;
             default:
                 break;
@@ -297,6 +311,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             this.myCowsOrderListDetailBean = myCowsOrderListDetailBean;
             status = myCowsOrderListDetailBean.getBizData().getStatus();
             pastureName = myCowsOrderListDetailBean.getBizData().getPastureName();
+            LockMonths = myCowsOrderListDetailBean.getBizData().getLockMonths();
+            unlockTime = myCowsOrderListDetailBean.getBizData().getUnlockTime();
             if (myCowsOrderListDetailBean.getBizData().getCattleList().size()>0){
                 beanList.clear();
                 this.beanList.addAll(myCowsOrderListDetailBean.getBizData().getCattleList());
@@ -408,7 +424,24 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     }
 
     @Override
-    public void getMyCowsOrderCancel(MyCowsOrderDeleteBean myCowsOrderDeleteBean) {
+    public void getMyCowsOrderCancel(MyCowsOrderDeleteBean msg) {
+        if("000000".equals(msg.getCode())){
+            Toast.makeText(this,"取消订单成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            Toast.makeText(this, msg.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    @Override
+    public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
+        if("000000".equals(creatOderResultBean.getCode())){
+            Intent intent=new Intent(this,SureOderActivity.class);
+            intent.putExtra("infos",creatOderResultBean);
+            startActivity(intent);
+            finish();
+        }else {
+            showToast(creatOderResultBean.getMessage());
+        }
     }
 }

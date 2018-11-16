@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
@@ -110,5 +111,10 @@ public class SureOrderBackDialog extends BaseActivity implements View.OnClickLis
             Toast.makeText(this, msg.getMessage(), Toast.LENGTH_SHORT).show();
             Log.i("/adopt/order/cancel", "msg.getMessage()"+msg.getMessage());
         }
+    }
+
+    @Override
+    public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
+
     }
 }

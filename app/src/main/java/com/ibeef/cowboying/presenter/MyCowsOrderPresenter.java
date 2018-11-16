@@ -6,6 +6,7 @@ import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.model.AddMoneyModel;
@@ -97,6 +98,26 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
             public void onSuccess(MyCowsOrderDeleteBean result) {
                 mView.hideLoading();
                 mView.getMyCowsOrderCancel(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getMyCowsToPay(Map<String, String> headers, String orderCode) {
+        mView.showLoading();
+        addSubscription(mModel.getMyCowsToPay(headers,orderCode,new ResponseCallback<CreatOderResultBean>() {
+            @Override
+            public void onSuccess(CreatOderResultBean result) {
+                mView.hideLoading();
+                mView.getMyCowsToPay(result);
 
             }
 

@@ -19,6 +19,7 @@ import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.base.SellCowsBase;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
@@ -222,6 +223,11 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
 
     @Override
     public void getMyCowsOrderCancel(MyCowsOrderDeleteBean myCowsOrderDeleteBean) {
+
+    }
+
+    @Override
+    public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
 
     }
 
