@@ -1,8 +1,10 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
@@ -13,8 +15,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.view.activity.SureOderActivity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author ls
@@ -25,23 +31,33 @@ import java.util.List;
 public class SellCowsChirdAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDataBean.CattleListBean,BaseViewHolder> {
     private Context context;
     private String pastureName;
+
     public SellCowsChirdAdapter(List data, Context context, String pastureName) {
         super(R.layout.item_sell_cows_chird, data);
         this.context=context;
         this.pastureName=pastureName;
+
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MyCowsOrderListBean.BizDataBean.CattleListBean item) {
+    protected void convert(final BaseViewHolder helper, MyCowsOrderListBean.BizDataBean.CattleListBean item) {
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
+                .error(R.mipmap.jzsb)
                 //跳过内存缓存
                 ;
         Glide.with(mContext).load(Constant.imageDomain+item.getCattleImage()).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
+        CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
+        if(0==item.getDefautChoose()){
+            all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.unhascheck));
+        }else {
+            all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.hascheck));
+        }
         helper.setText(R.id.pasture_name_id,pastureName)
                 .setText(R.id.cows_name_id,"安格拉斯牛")
                 .setText(R.id.get_money_id,"已领取收益合计："+item.getCattleCode());
-
         helper.addOnClickListener(R.id.all_ck_id);
+
     }
+
 }

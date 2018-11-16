@@ -152,7 +152,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
 
     private void initMagicIndicator(SchemeDetailReultBean schemeDetailReultBean) {
         cowClaimDesFragment = CowClaimDesFragment.newInstance(schemeDetailReultBean.getBizData().getProjectDescribe());
-        cowClaimBuyWayFragment = CowClaimBuyWayFragment.newInstance(dataBeen.get(1));
+        cowClaimBuyWayFragment = CowClaimBuyWayFragment.newInstance(schemeDetailReultBean);
         cowClaimSelectFragment = CowClaimSelectFragment.newInstance(schemeDetailReultBean.getBizData().getCode(),schemeDetailReultBean.getBizData().getSchemeId());
         fragmentList.add(cowClaimDesFragment);
         fragmentList.add(cowClaimBuyWayFragment);
