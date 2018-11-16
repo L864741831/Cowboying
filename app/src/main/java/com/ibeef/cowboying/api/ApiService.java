@@ -348,7 +348,7 @@ public interface ApiService {
      * @return
      */
     @GET("assets/income/log")
-    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage,@Query("interestType") String interestType);
 
     /**
      * 昨日收益

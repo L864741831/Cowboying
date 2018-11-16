@@ -37,8 +37,8 @@ public class AddMoneyModel implements AddMoneyBase.IModel {
     }
 
     @Override
-    public Subscription getAddMoney(Map<String, String> headers,int currentPage, final ResponseCallback<AddMoneyResultBean> callback) {
-        Observable<AddMoneyResultBean> observable = service.getAddMoney(headers,currentPage);
+    public Subscription getAddMoney(Map<String, String> headers,int currentPage,String interestType, final ResponseCallback<AddMoneyResultBean> callback) {
+        Observable<AddMoneyResultBean> observable = service.getAddMoney(headers,currentPage,interestType);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
