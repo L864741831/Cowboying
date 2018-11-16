@@ -30,6 +30,7 @@ import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,6 +175,25 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 break;
             case R.id.btn_sell_want:
                 //我想卖牛
+                Calendar cal = Calendar.getInstance();
+                int i = cal.get(Calendar.DAY_OF_WEEK);
+                int hour = cal.get(Calendar.HOUR_OF_DAY);// 获取小时
+                int minute = cal.get(Calendar.MINUTE);// 获取分钟
+                int minuteOfDay = hour * 60 + minute;// 从0:00分开是到目前为止的分钟数
+                final int start = 10* 60;// 起始时间 10:00的分钟数
+                final int end = 22 * 60;// 结束时间 22:00的分钟数
+                if (i==2){
+                    if (minuteOfDay >= start && minuteOfDay <= end) {
+                        System.out.println("在外围内");
+                        Intent intent = new Intent(this, SellCowsFirstActivity.class);
+                        intent.putExtra("orderId",orderCode);
+                        startActivity(intent);
+                    } else {
+                        showWantShellOrder();
+                    }
+                }else{
+                    showWantShellOrder();
+                }
                 break;
             case R.id.btn_cancle_order:
                 //取消订单
@@ -217,6 +237,35 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                             reqData.put("version", getVersionCodes());
                             myCowsOrderPresenter.getMyCowsOrderDelete(reqData, orderCode);
                         }
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    public  void showWantShellOrder(){
+        final NormalDialog dialog = new NormalDialog(this);
+        dialog.isTitleShow(true)
+                .title("卖牛提示")
+                .content("亲爱的牛主人，还未到交易日哦，我们的交易日为每周一的10:00-22:00，到时候可别忘了来哦~")
+                .titleTextSize(18)
+                .titleTextColor(Color.parseColor("#101010"))
+                .titleLineColor(Color.parseColor("#B0957A"))
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(Color.parseColor("#808080"))
+                .dividerColor(Color.parseColor("#B0957A"))
+                .btnTextSize(15.5f, 15.5f)
+                .btnTextColor(Color.parseColor("#000000"), Color.parseColor("#B0957A"))
+                .show();
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
                         dialog.dismiss();
                     }
                 });
