@@ -61,7 +61,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     Intent intent = new Intent(context, MyCowsDetailActivity.class);
-                    intent.putExtra("orderCode",item.getOrderCode());
+                    intent.putExtra("orderId",item.getOrderId());
                     context.startActivity(intent);
                 }
             });
@@ -141,7 +141,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"交易关闭");
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
-                rlEmeng.setVisibility(View.GONE);
+                rlEmeng.setVisibility(View.VISIBLE);
                 sell_want.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.GONE);
                 delet_order.setVisibility(View.VISIBLE);
