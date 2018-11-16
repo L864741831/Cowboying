@@ -1,5 +1,9 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,MyCowsOrderBase.IView ,SellCowsBase.IView {
+public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,MyCowsOrderBase.IView{
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -56,16 +60,19 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
     RelativeLayout loadingLayout;
     @Bind(R.id.rv_order)
     RelativeLayout rvOrder;
+    @Bind(R.id.all_cownum_id)
+    TextView allCownumId;
     private SellCowsAdapter sellCowsAdapter;
     private List<MyCowsOrderListBean.BizDataBean> baseBeans;
-    private SellCowsPresenter sellCowsPresenter;
     private String token;
 
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
     private MyCowsOrderPresenter myCowsOrderPresenter;
-    private String orderId;
+    private BroadcastReceiver receiver;
+    private MyCowsOrderListBean myCowsOrderListBean;
+    private String  orderId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +82,6 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
     }
 
     private void init() {
-        orderId=getIntent().getStringExtra("orderId");
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我要卖牛");
         baseBeans = new ArrayList<>();
@@ -87,13 +93,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setEnabled(true);
 
-        sellCowsPresenter = new SellCowsPresenter(this);
         myCowsOrderPresenter = new MyCowsOrderPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization", token);
-        reqData.put("version", getVersionCodes());
-        myCowsOrderPresenter.geMyCowsOrderList(reqData, currentPage,"3");
-
         ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -110,6 +110,47 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
                 }
             }
         });
+
+        IntentFilter intentFilter = new IntentFilter("com.ibeef.cowboying");
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+               int num=intent.getIntExtra("num",0);
+                allCownumId.setText("合计牛只数："+num);
+               int position=intent.getIntExtra("position",0);
+               int outposition=intent.getIntExtra("outposition",0);
+               orderId=intent.getStringExtra("orderId");
+               for (int i=0;i<myCowsOrderListBean.getBizData().size();i++){
+                   for (int j=0;j<myCowsOrderListBean.getBizData().get(i).getCattleList().size();j++){
+                       if(outposition==i&&position==j){
+                           myCowsOrderListBean.getBizData().get(i).getCattleList().get(j).setDefautChoose(1);
+                       }else {
+                           myCowsOrderListBean.getBizData().get(i).getCattleList().get(j).setDefautChoose(0);
+                       }
+
+                   }
+               }
+                sellCowsAdapter.notifyDataSetChanged();
+            }
+        };
+        registerReceiver(receiver, intentFilter);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentPage=1;
+        isFirst=true;
+        isMoreLoad=false;
+        baseBeans.clear();
+        allCownumId.setText("合计牛只数：0");
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        myCowsOrderPresenter.geMyCowsOrderList(reqData, currentPage,"3");
+
+
     }
 
     @OnClick({R.id.back_id, R.id.now_claim_btn_id})
@@ -119,12 +160,13 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
                 finish();
                 break;
             case R.id.now_claim_btn_id:
-//                Map<String, String> reqData = new HashMap<>();
-//                reqData.put("Authorization", token);
-//                reqData.put("version", getVersionCodes());
-//                sellCowsPresenter.getSellCows(reqData, orderId);
-                showToast("暂不支持批量买牛！");
-                finish();
+                if(TextUtils.isEmpty(orderId)){
+                    showToast("请先选择一头您要卖的牛！");
+                }else {
+                    Intent intent=new Intent(SellCowsActivity.this,SellCowsFirstActivity.class);
+                    intent.putExtra("orderId",orderId);
+                    startActivity(intent);
+                }
                 break;
             default:
                 break;
@@ -156,16 +198,6 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
 
     @Override
     public void showMsg(String msg) {
-
-    }
-
-    @Override
-    public void getSellCows(SellCowsResultBean sellCowsResultBean) {
-
-    }
-
-    @Override
-    public void getCreatSellCows(CreatSellCowsResultBean creatSellCowsResultBean) {
 
     }
 
@@ -202,6 +234,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
             } else {
                 isFirst = false;
                 baseBeans.addAll(myCowsOrderListBean.getBizData());
+                this.myCowsOrderListBean=myCowsOrderListBean;
                 sellCowsAdapter.setNewData(this.baseBeans);
                 sellCowsAdapter.loadMoreComplete();
             }
@@ -227,12 +260,12 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
 
     @Override
     protected void onDestroy() {
-        if(sellCowsPresenter!=null){
-            sellCowsPresenter.detachView();
-        }
         if(myCowsOrderPresenter!=null){
             myCowsOrderPresenter.detachView();
         }
         super.onDestroy();
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+        }
     }
 }

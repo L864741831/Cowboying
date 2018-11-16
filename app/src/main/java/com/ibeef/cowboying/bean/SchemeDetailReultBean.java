@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -8,7 +9,7 @@ import java.math.BigDecimal;
  * @describe
  * @package com.ibeef.cowboying.bean
  **/
-public class SchemeDetailReultBean {
+public class SchemeDetailReultBean implements Serializable {
 
     /**
      * code : 000000
@@ -44,7 +45,7 @@ public class SchemeDetailReultBean {
         this.bizData = bizData;
     }
 
-    public  class BizDataBean {
+    public  class BizDataBean implements Serializable{
         /**
          * schemeId : 28
          * pastureId : 60
@@ -85,7 +86,7 @@ public class SchemeDetailReultBean {
         private String imageUrl;
         private String createTime;
         private String updateTime;
-        private int lockMonths;
+        private BigDecimal lockMonths;
         private String projectDescribe;
         private String curStatus;
 
@@ -225,11 +226,11 @@ public class SchemeDetailReultBean {
             this.updateTime = updateTime;
         }
 
-        public int getLockMonths() {
+        public BigDecimal getLockMonths() {
             return lockMonths;
         }
 
-        public void setLockMonths(int lockMonths) {
+        public void setLockMonths(BigDecimal lockMonths) {
             this.lockMonths = lockMonths;
         }
 

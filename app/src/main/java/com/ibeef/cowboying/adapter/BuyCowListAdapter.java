@@ -23,6 +23,7 @@ import com.ibeef.cowboying.view.activity.CowsClaimActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.ibeef.cowboying.view.activity.MobileLoginActivity;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -51,11 +52,17 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
         }else   if("2".equals(item.getType())){
             helper.setText(R.id.percent_way_txt_id,item.getLockMonths()+"月");
         }
-
-        int persents=(item.getTotalStock()-item.getStock())/item.getTotalStock();
-        helper.setText(R.id.minpercent_txt_id,"进度"+(persents*100)+"%");
+        int num1=item.getTotalStock()-item.getStock();
+        int num2=item.getTotalStock();
+        // 创建一个数值格式化对象
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        // 设置精确到小数点后2位
+        numberFormat.setMaximumFractionDigits(2);
+        String result = numberFormat.format((float) num1 / (float) num2 * 100);
+        helper.setText(R.id.minpercent_txt_id,"进度"+result+"%");
         SeekBar seekbarId=helper.getView(R.id.seekbar_id);
-        seekbarId.setProgress(persents*100);
+        seekbarId.setProgress(Integer.parseInt(result));
+
         helper.addOnClickListener(R.id.now_claim_btn_id);
         seekbarId.setOnTouchListener(new View.OnTouchListener() {
             @Override

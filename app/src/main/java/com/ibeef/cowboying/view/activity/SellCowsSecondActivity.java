@@ -42,6 +42,8 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
     TextView sureBtn;
     @Bind(R.id.fm_show_id)
     FrameLayout fmShowId;
+    @Bind(R.id.sure_dialog_show)
+    FrameLayout sureDialogShow;
     @Bind(R.id.img_close_id)
     ImageView imgCloseId;
     @Bind(R.id.get_sell_cows_money)
@@ -56,6 +58,8 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
     TextView giveMoneyId;
     @Bind(R.id.show_money_id)
     TextView showMoneyId;
+    @Bind(R.id.sure_id)
+    TextView sureId;
     private SellCowsPresenter sellCowsPresenter;
     private String token, orderId;
     private int chooseType=1;
@@ -102,8 +106,7 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
     @Override
     public void getCreatSellCows(CreatSellCowsResultBean creatSellCowsResultBean) {
         if("000000".equals(creatSellCowsResultBean.getCode())){
-            showToast("卖牛成功！");
-            finish();
+            sureDialogShow.setVisibility(View.VISIBLE);
         }else {
             showToast(creatSellCowsResultBean.getMessage());
         }
@@ -119,11 +122,17 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
 
     }
 
-    @OnClick({R.id.back_id, R.id.sure_btn,R.id.wallet_ck_id,R.id.othemoney_ck_id,R.id.beefhourse_ck_id,R.id.question_show_id,R.id.img_close_id,R.id.fm_show_id})
+    @OnClick({R.id.back_id, R.id.sure_btn,R.id.wallet_ck_id,R.id.othemoney_ck_id,R.id.beefhourse_ck_id,R.id.question_show_id,R.id.img_close_id,R.id.fm_show_id,R.id.sure_id,R.id.sure_dialog_show})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
+                break;
+            case R.id.sure_id:
+                finish();
+                break;
+            case R.id.sure_dialog_show:
+               //抵消 事件分发机制
                 break;
             case R.id.question_show_id:
                 fmShowId.setVisibility(View.VISIBLE);

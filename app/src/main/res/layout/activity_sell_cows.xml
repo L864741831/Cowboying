@@ -45,13 +45,13 @@
             android:layout_height="19dp"   android:layout_marginLeft="15dp"
             android:id="@+id/all_ck_id" android:layout_centerVertical="true"
             android:checked="false" android:background="@drawable/checkbox_white_bg"
-            android:button="@null"  android:layout_marginRight="5dp" />
+            android:button="@null"  android:layout_marginRight="5dp" android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content" android:id="@+id/txt_ck_id"
             android:layout_height="wrap_content"     android:text="全选"
             android:textColor="@color/white" android:layout_toRightOf="@+id/all_ck_id"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" android:visibility="gone"/>
         <TextView
             android:layout_width="match_parent" android:id="@+id/all_cownum_id"
             android:layout_height="wrap_content" android:text="合计牛只数：0"
