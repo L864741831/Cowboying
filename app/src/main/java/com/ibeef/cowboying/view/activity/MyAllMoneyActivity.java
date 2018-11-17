@@ -266,7 +266,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
 
         if("000000".equals(incomeInfeResultBean.getCode())){
             this.incomeInfeResultBean=incomeInfeResultBean;
-            allMoneyId.setText(incomeInfeResultBean.getBizData().getTotalAssets()+">");
+            allMoneyId.setText(incomeInfeResultBean.getBizData().getTotalAssets()+"");
             yesterdayMoneyId.setText(incomeInfeResultBean.getBizData().getYesterdayIncome()+"");
             addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
             myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());
