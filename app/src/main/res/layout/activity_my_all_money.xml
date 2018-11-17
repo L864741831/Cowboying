@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent" android:orientation="vertical"
-                    android:layout_height="220dp" android:background="@mipmap/allmoneybg">
+                    android:layout_height="230dp" android:background="@mipmap/allmoneybg">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -102,7 +102,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent" android:orientation="vertical"
-                    android:layout_height="240dp" android:layout_marginTop="190dp"
+                    android:layout_height="240dp" android:layout_marginTop="205dp"
                     android:background="@color/white" android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
