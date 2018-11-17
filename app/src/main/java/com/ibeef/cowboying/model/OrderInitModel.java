@@ -1,10 +1,7 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.OrderInitBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatOrderParamBean;
 import com.ibeef.cowboying.bean.PayInitParamBean;

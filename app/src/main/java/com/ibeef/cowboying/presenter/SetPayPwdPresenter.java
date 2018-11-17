@@ -2,15 +2,11 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.SetPayPwdBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ResetPayPwdParamBean;
 import com.ibeef.cowboying.bean.ResetPayPwdResultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.SetPayPwdModel;
 
 import java.util.Map;

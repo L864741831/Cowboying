@@ -1,6 +1,5 @@
 package com.ibeef.cowboying.bean;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class MyCowsOrderListBean {

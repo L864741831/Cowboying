@@ -1,8 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,8 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.LoginBase;

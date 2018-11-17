@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.AddMoneyAdapter;
-import com.ibeef.cowboying.adapter.CowClaimSelectAdapter;
 import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
@@ -23,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
 import rxfamily.view.BaseFragment;
 
 public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener , AddMoneyBase.IView {

@@ -14,9 +14,6 @@ import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AddMoneyPresenter;
 import com.ibeef.cowboying.view.fragment.AddIncomeFragment;
-import com.ibeef.cowboying.view.fragment.CowClaimBuyWayFragment;
-import com.ibeef.cowboying.view.fragment.CowClaimDesFragment;
-import com.ibeef.cowboying.view.fragment.CowClaimSelectFragment;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;

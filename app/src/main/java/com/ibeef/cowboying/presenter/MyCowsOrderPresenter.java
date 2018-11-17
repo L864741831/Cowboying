@@ -2,14 +2,11 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AddMoneyBase;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
-import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
-import com.ibeef.cowboying.model.AddMoneyModel;
 import com.ibeef.cowboying.model.MyCowsOrderModel;
 
 import java.util.Map;

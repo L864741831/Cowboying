@@ -1,8 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.GetGoodsRecordAdapter;
-import com.ibeef.cowboying.adapter.MyContractAdapter;
 import com.ibeef.cowboying.config.HawkKey;
 import com.orhanobut.hawk.Hawk;
 

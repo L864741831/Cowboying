@@ -1,10 +1,6 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.SeekBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;

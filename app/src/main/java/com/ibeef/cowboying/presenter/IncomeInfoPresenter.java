@@ -2,12 +2,9 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.CowManInfoBase;
 import com.ibeef.cowboying.base.IncomeInfoBase;
-import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.IncomeInfoResultBean;
 import com.ibeef.cowboying.bean.WalletRecordResultBean;
-import com.ibeef.cowboying.model.CowManInfoModel;
 import com.ibeef.cowboying.model.IncomeInfoModel;
 
 import java.util.Map;

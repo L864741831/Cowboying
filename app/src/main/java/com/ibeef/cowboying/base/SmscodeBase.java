@@ -1,12 +1,9 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
 
-import retrofit2.http.Body;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

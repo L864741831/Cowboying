@@ -2,11 +2,7 @@ package com.ibeef.cowboying.base;
 
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
-import com.ibeef.cowboying.bean.MyFeedbackResultBean;
-import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
-import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 
-import retrofit2.http.Body;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

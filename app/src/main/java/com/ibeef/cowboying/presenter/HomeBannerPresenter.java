@@ -2,18 +2,14 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
-import com.ibeef.cowboying.model.HomeAdModel;
 import com.ibeef.cowboying.model.HomeBanerModel;
 
 import java.util.Map;
 
-import retrofit2.http.HeaderMap;
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 

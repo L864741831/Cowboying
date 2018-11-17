@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -25,7 +24,6 @@ import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
@@ -191,6 +189,16 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
 
     @Override
     public void isTakePhoeto(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
 
     }
 

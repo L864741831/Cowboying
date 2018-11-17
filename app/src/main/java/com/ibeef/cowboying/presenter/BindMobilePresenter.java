@@ -2,13 +2,9 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.BindMobileBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.BindMobileModel;
 
 import java.util.Map;

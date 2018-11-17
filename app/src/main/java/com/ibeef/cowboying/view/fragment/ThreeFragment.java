@@ -1,6 +1,5 @@
 package com.ibeef.cowboying.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -32,11 +31,8 @@ import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
-import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
-import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
-import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
 import com.orhanobut.hawk.Hawk;
 
@@ -348,6 +344,16 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
 
     @Override
     public void isTakePhoeto(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
 
     }
 

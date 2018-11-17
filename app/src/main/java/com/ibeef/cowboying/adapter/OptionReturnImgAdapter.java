@@ -10,10 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.config.Constant;
 
-
 import java.util.List;
-
-import rxfamily.bean.BaseBean;
 
 /**
  * @author ls

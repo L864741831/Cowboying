@@ -1,9 +1,8 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.BuyCowListAdapter;
 import com.ibeef.cowboying.adapter.CowClaimPastRecordAdapter;
 import com.ibeef.cowboying.base.BuyCowSchemeBase;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;

@@ -1,9 +1,7 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;

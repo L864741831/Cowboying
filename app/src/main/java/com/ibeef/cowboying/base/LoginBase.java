@@ -1,10 +1,8 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
 
-import retrofit2.http.Body;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

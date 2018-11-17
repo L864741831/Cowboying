@@ -8,7 +8,6 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.ibeef.cowboying.R;
 
 import butterknife.Bind;

@@ -2,13 +2,9 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.CheckVersionBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.CheckVersionModel;
 
 import rxfamily.mvp.BasePresenter;

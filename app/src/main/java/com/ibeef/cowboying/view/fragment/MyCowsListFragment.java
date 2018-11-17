@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,26 +23,24 @@ import com.ibeef.cowboying.adapter.MyCowsListAdapter;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
-import com.ibeef.cowboying.bean.MyCowsListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
-import com.ibeef.cowboying.view.activity.SellCowsFirstActivity;
 import com.ibeef.cowboying.view.activity.MyCowsProgressDialog;
+import com.ibeef.cowboying.view.activity.SellCowsFirstActivity;
 import com.ibeef.cowboying.view.activity.SureOderActivity;
 import com.ibeef.cowboying.view.activity.SureOrderBackDialog;
 import com.orhanobut.hawk.Hawk;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import rxfamily.view.BaseFragment;
 

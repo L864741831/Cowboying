@@ -1,6 +1,5 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;

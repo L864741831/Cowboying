@@ -1,7 +1,6 @@
 package com.ibeef.cowboying.base;
 
 import com.ibeef.cowboying.bean.HomeAdResultBean;
-import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 
 import java.util.Map;
 

@@ -31,7 +31,6 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
-import com.ibeef.cowboying.wxapi.WXPayEntryActivity;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;

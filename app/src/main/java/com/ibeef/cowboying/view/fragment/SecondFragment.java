@@ -3,7 +3,6 @@ package com.ibeef.cowboying.view.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-
 import com.ibeef.cowboying.R;
 
 import rxfamily.view.BaseFragment;

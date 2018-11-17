@@ -1,6 +1,5 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.HeaderMap;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;

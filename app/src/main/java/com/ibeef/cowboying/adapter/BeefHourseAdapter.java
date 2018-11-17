@@ -6,7 +6,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.view.customview.AmountView;
 import com.ibeef.cowboying.view.customview.AmountViewBeef;
 
 import java.util.List;

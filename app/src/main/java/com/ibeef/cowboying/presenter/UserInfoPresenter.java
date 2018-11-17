@@ -8,10 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.UserInfoBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
@@ -19,7 +16,6 @@ import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.UserInfoModel;
 
 import java.io.File;
@@ -101,9 +97,11 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
 
     @Override
     public void getUserInfo(Map<String, String> headers) {
+        mView.showLoading();
         addSubscription(mModel.getUserInfo(headers,new ResponseCallback<UserInfoResultBean>() {
             @Override
             public void onSuccess(UserInfoResultBean result) {
+                mView.hideLoading();
                 mView.getUserInfo(result);
 
             }
@@ -111,6 +109,7 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
             @Override
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
+                mView.hideLoading();
                 mView.showMsg(msg);
             }
         }));

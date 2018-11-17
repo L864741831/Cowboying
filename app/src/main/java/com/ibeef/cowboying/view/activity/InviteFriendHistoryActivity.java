@@ -12,7 +12,6 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.InviteNotesAdapter;
 import com.ibeef.cowboying.config.HawkKey;
 import com.orhanobut.hawk.Hawk;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;

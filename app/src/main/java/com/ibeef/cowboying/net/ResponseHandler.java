@@ -1,11 +1,9 @@
 package com.ibeef.cowboying.net;
 
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.ibeef.cowboying.application.CowboyingApplication;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.view.activity.CowsDesInfoActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.orhanobut.hawk.Hawk;
 

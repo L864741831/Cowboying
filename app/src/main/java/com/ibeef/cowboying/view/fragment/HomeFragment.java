@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
@@ -48,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import rxfamily.view.BaseFragment;
 

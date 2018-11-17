@@ -6,14 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.BeefHourseAdapter;
-import com.ibeef.cowboying.adapter.GetGoodsRecordAdapter;
 import com.ibeef.cowboying.config.HawkKey;
 import com.orhanobut.hawk.Hawk;
 

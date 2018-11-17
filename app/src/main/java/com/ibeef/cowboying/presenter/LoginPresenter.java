@@ -3,7 +3,6 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.LoginBase;
-import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
 import com.ibeef.cowboying.model.LoginModel;

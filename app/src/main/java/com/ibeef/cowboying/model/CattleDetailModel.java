@@ -1,13 +1,9 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.CattleDetailBase;
 import com.ibeef.cowboying.bean.AdoptInfosResultBean;
-import com.ibeef.cowboying.bean.BindThirdCountParamBean;
-import com.ibeef.cowboying.bean.BindThirdCountResultBean;
 import com.ibeef.cowboying.bean.CattleDetailResultBean;
-import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 

@@ -1,8 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,26 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.BindMobileBase;
-import com.ibeef.cowboying.base.SmscodeBase;
-import com.ibeef.cowboying.bean.BindMobileParamBean;
-import com.ibeef.cowboying.bean.BindMobileResultBean;
-import com.ibeef.cowboying.bean.SmsCodeParamBean;
-import com.ibeef.cowboying.bean.SmsCodeResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.BindMobilePresenter;
-import com.ibeef.cowboying.presenter.SmsCodePresenter;
-import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.TimeUtils;
 import com.orhanobut.hawk.Hawk;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

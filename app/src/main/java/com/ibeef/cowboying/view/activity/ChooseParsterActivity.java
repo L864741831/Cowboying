@@ -29,7 +29,6 @@ import com.ibeef.cowboying.presenter.RanchBottomVideoPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
-import com.wang.avi.AVLoadingIndicatorView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;

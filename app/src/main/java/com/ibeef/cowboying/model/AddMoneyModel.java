@@ -1,10 +1,7 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.AddMoneyBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.YesterdayIncomeResultBean;
 import com.ibeef.cowboying.config.Constant;

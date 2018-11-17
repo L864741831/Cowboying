@@ -2,14 +2,10 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.AccountSecurityBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.AccountSecurityModel;
 
 import java.util.Map;

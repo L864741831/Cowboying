@@ -1,18 +1,14 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.WalletRecordResultBean;
 
 import java.util.List;
-
-import rxfamily.bean.BaseBean;
 
 /**
  * @author ls

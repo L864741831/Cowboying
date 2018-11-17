@@ -5,22 +5,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.SmscodeBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.SmsCodeModel;
 import com.ibeef.cowboying.utils.CountDownTimerListener;
 import com.ibeef.cowboying.utils.CountDownTimerService;
-import com.ibeef.cowboying.utils.RxCountDown;
 import com.ibeef.cowboying.utils.SDCardUtil;
 
-import rx.Subscriber;
-import rx.functions.Action0;
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;
 

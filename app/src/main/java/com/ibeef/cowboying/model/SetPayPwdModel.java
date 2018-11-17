@@ -1,10 +1,7 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.SetPayPwdBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ResetPayPwdParamBean;
 import com.ibeef.cowboying.bean.ResetPayPwdResultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;

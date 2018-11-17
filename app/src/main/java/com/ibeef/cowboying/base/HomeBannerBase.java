@@ -1,13 +1,11 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 
 import java.util.Map;
 
-import retrofit2.http.HeaderMap;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

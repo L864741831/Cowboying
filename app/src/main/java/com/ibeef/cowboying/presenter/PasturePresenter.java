@@ -2,12 +2,9 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.PastureBase;
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
-import com.ibeef.cowboying.model.HomeAdModel;
 import com.ibeef.cowboying.model.PastureModel;
 
 import java.util.Map;
