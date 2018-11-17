@@ -207,6 +207,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
+                finish();
             }
         }else {
             showToast(thirdCountLoginResultBean.getMessage());
