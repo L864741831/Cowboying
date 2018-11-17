@@ -21,6 +21,7 @@ import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
 import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
@@ -100,6 +101,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         reqData.put("version",getVersionCodes());
         homeBannerPresenter.getHomeBanner(reqData);
         homeBannerPresenter.getHomeVideo(reqData);
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
         mPrefDailog = getHoldingActivity().getSharedPreferences("firstopenDailogs", Activity.MODE_PRIVATE);
         history= mPrefDailog.getString(KEY_HISTORY_KEYWORD, "");
 
@@ -173,8 +175,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         //设置图片加载器
         specialbeefImgId.setBannerAnimation(Transformer.DepthPage);
         //设置banner动画效果
-        specialbeefImgId.isAutoPlay(true);
-        specialbeefImgId.setDelayTime(1000 * 6);
+        specialbeefImgId.isAutoPlay(false);
+//        specialbeefImgId.setDelayTime(1000 * 6);
         //设置轮播时间
         specialbeefImgId.setClickable(true);
 
@@ -220,6 +222,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         reqData.put("version",getVersionCodes());
         homeBannerPresenter.getHomeBanner(reqData);
         homeBannerPresenter.getHomeVideo(reqData);
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
         swipeLy.setRefreshing(false);
     }
 
@@ -334,6 +337,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         beanList.add(bizDataBean);
         ranchDynamicsAdapter.setNewData(this.beanList);
         ranchDynamicsAdapter.loadMoreEnd();
+    }
+
+    @Override
+    public void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean) {
+        if("000000".equals(homeSellCowNumResultBean.getCode())){
+            sellCowNumId.setText(homeSellCowNumResultBean.getBizData().getTotalSalesQuantity()+"");
+            sellCowNum2Id.setText(homeSellCowNumResultBean.getBizData().getTotalUserQuantity()+"");
+        }else {
+            showToast(homeSellCowNumResultBean.getMessage());
+        }
+
     }
 
     @Override

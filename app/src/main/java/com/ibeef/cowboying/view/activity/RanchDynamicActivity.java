@@ -16,6 +16,7 @@ import com.ibeef.cowboying.adapter.RanchDynamicdapter;
 import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
@@ -148,6 +149,11 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
 
     @Override
     public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
+    }
+
+    @Override
+    public void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean) {
+
     }
 
     @Override

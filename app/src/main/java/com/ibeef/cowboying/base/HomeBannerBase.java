@@ -2,6 +2,7 @@ package com.ibeef.cowboying.base;
 
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ public class HomeBannerBase {
         void showMsg(String msg);
         void getHomeBanner(HomeBannerResultBean homeBannerResultBean);
         void getHomeVideo(HomeVideoResultBean homeAdResultBean);
+        void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean);
         void getAllVideo(HomeAllVideoResultBean homeAllVideoResultBean);
         void showLoading();
         void hideLoading();
@@ -29,12 +31,14 @@ public class HomeBannerBase {
     public interface IPresenter {
         void getHomeBanner(Map<String, String> headers);
         void getHomeVideo(Map<String, String> headers);
+        void getHomeSellCowsNum(Map<String, String> headers);
         void getAllVideo(Map<String, String> headers,int currentPage);
     }
 
     public interface IModel {
         Subscription getHomeBanner(Map<String, String> headers,ResponseCallback<HomeBannerResultBean> callback);
         Subscription getHomeVideo(Map<String, String> headers,ResponseCallback<HomeVideoResultBean> callback);
+        Subscription getHomeSellCowsNum(Map<String, String> headers,ResponseCallback<HomeSellCowNumResultBean> callback);
         Subscription getAllVideo(Map<String, String> headers, int currentPage, ResponseCallback<HomeAllVideoResultBean> callback);
     }
 }

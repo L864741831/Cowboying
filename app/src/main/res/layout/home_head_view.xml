@@ -29,12 +29,12 @@
                 android:gravity="center">
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/sell_cow_num_id"
-                    android:layout_height="wrap_content" android:text="122222"
+                    android:layout_height="wrap_content" android:text="0"
                     android:layout_gravity="center" android:textColor="@color/black"
                     android:textSize="17sp" android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="累计销售牛只数"
+                    android:layout_height="wrap_content" android:text="累计销售牛只"
                     android:layout_gravity="center" android:textColor="@color/black"
                     android:textSize="13sp"/>
             </LinearLayout>
@@ -47,12 +47,12 @@
                 android:gravity="center">
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/sell_cow_num2_id"
-                    android:layout_height="wrap_content" android:text="122222"
+                    android:layout_height="wrap_content" android:text="0"
                     android:layout_gravity="center" android:textColor="@color/black"
                     android:textSize="17sp" android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="累计销售牛只数"
+                    android:layout_height="wrap_content" android:text="累计销售牛人"
                     android:layout_gravity="center" android:textColor="@color/black"
                     android:textSize="13sp"/>
             </LinearLayout>

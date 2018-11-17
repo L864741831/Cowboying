@@ -29,6 +29,7 @@ import com.ibeef.cowboying.bean.HistorySchemeResultBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.bean.IncomeInfoResultBean;
 import com.ibeef.cowboying.bean.JionPersonInfoResultBean;
@@ -499,5 +500,12 @@ public interface ApiService {
      */
     @GET("adopt/order/nopay/detail")
     Observable<CreatOderResultBean> getMyCowsToPay(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
+
+    /**
+     * 累计销售数据
+     * @return
+     */
+    @GET("index/total/data")
+    Observable<HomeSellCowNumResultBean> getHomeSellCowsNum(@HeaderMap Map<String, String> headers);
 
 }
