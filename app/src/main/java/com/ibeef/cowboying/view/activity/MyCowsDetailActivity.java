@@ -131,7 +131,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     private String pastureName;
     private MyCowsOrderListDetailBean myCowsOrderListDetailBean;
     private String orderCode;
-    private double LockMonths;
+    private int LockMonths;
     private String unlockTime;
 
     @Override
@@ -150,8 +150,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
         rvCowsList.setHasFixedSize(true);
         rvCowsList.setNestedScrollingEnabled(false);
         beanList = new ArrayList<>();
-        myCowsDetailListAdapter = new MyCowsDetailListAdapter(beanList, status, pastureName, this, R.layout.my_cows_chird_item);
-        rvCowsList.setAdapter(myCowsDetailListAdapter);
+
         myCowsOrderPresenter = new MyCowsOrderPresenter(this);
         if (!TextUtils.isEmpty(token)) {
             Map<String, String> reqData = new HashMap<>();
@@ -314,6 +313,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             if (myCowsOrderListDetailBean.getBizData().getCattleList().size()>0){
                 beanList.clear();
                 this.beanList.addAll(myCowsOrderListDetailBean.getBizData().getCattleList());
+                myCowsDetailListAdapter = new MyCowsDetailListAdapter(beanList, status, pastureName, this, R.layout.my_cows_chird_item);
+                rvCowsList.setAdapter(myCowsDetailListAdapter);
                 myCowsDetailListAdapter.setNewData(beanList);
             }else{
                 rlEmeng.setVisibility(View.VISIBLE);
@@ -355,7 +356,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 rlAssignTime.setVisibility(View.VISIBLE);
                 rlLockDay.setVisibility(View.VISIBLE);
                 rlLockEndTime.setVisibility(View.VISIBLE);
-                tvLockDay.setText(myCowsOrderListDetailBean.getBizData().getLockMonths()+"");
+                tvLockDay.setText(myCowsOrderListDetailBean.getBizData().getLockMonths()+"个月");
                 tvLockEndTime.setText(myCowsOrderListDetailBean.getBizData().getUnlockTime());
             } else if ("5".equals(status)) {
                 tvStatusId.setText("出售中");

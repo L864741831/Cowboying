@@ -51,7 +51,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
         ry_id.setNestedScrollingEnabled(false);
         if(item.getCattleList().size()>0&&!SDCardUtil.isNullOrEmpty(item.getCattleList())){
             ry_id.setVisibility(View.VISIBLE);
-            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),context);
+            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),item.getStatus(),context);
             ry_id.setAdapter(sureOrderChirdListAdapter);
             sureOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
