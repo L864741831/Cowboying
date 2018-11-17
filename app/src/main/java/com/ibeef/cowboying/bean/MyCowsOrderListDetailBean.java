@@ -66,7 +66,7 @@ public class MyCowsOrderListDetailBean {
         private String pastureImage;
         private String adoptType;
         private String unlockTime;
-        private double lockMonths;
+        private int lockMonths;
         private String schemeCode;
         private double price;
         private String payType;
@@ -166,11 +166,11 @@ public class MyCowsOrderListDetailBean {
             this.unlockTime = unlockTime;
         }
 
-        public double getLockMonths() {
+        public int getLockMonths() {
             return lockMonths;
         }
 
-        public void setLockMonths(double lockMonths) {
+        public void setLockMonths(int lockMonths) {
             this.lockMonths = lockMonths;
         }
 
