@@ -16,6 +16,8 @@ import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
 import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 import com.ibeef.cowboying.bean.CattleDetailResultBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.bean.CowManInfosResultBean;
@@ -507,5 +509,12 @@ public interface ApiService {
      */
     @GET("index/total/data")
     Observable<HomeSellCowNumResultBean> getHomeSellCowsNum(@HeaderMap Map<String, String> headers);
+
+    /**
+     * 第三方登录再次验证
+     * @return
+     */
+    @POST("user/third/reLogin")
+    Observable<CheckThirdLoginResultBean> getCheckThirLogin(@HeaderMap Map<String, String> headers, @Body CheckThirdLoginParamBean checkThirdLoginParamBean);
 
 }

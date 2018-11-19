@@ -11,7 +11,7 @@
             <ImageView
                 android:layout_width="match_parent" android:id="@+id/show_img_id"
                 android:layout_height="150dp"
-                android:scaleType="fitXY"/>
+                android:scaleType="centerCrop"/>
             <RelativeLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
@@ -25,7 +25,7 @@
 
             <LinearLayout
                 android:layout_width="300dp" android:layout_marginTop="120dp"
-                android:layout_height="160dp" android:orientation="vertical"
+                android:layout_height="170dp" android:orientation="vertical"
                 android:background="@drawable/shape_square_btn" android:layout_gravity="center_horizontal"
                 android:padding="15dp">
                 <RelativeLayout
@@ -44,15 +44,27 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_marginTop="5dp">
-                    <TextView
-                        android:layout_width="wrap_content" android:id="@+id/percent_txt_id"
-                        android:layout_height="wrap_content" android:textColor="@color/colorGolds"
-                        android:text="9.0%" android:textSize="17sp" />
-                    <TextView
-                        android:layout_width="wrap_content" android:id="@+id/percent_way_txt_id"
-                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
-                        android:text="T+7" android:textColor="@color/colorGolds"
-                        android:textSize="17sp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/percent_txt_id"
+                            android:layout_height="wrap_content" android:textColor="@color/colorGolds"
+                            android:text="9.0%" android:textSize="17sp"
+                            android:background="@mipmap/buycowline"
+                            android:drawablePadding="3dp" android:gravity="center"/>
+                    </LinearLayout>
+                  
+                    <LinearLayout
+                        android:layout_width="wrap_content" android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content" android:id="@+id/percent_way_txt_id"
+                            android:layout_height="wrap_content"  android:gravity="center"
+                            android:text="T+7" android:textColor="@color/colorGolds"
+                            android:textSize="16sp" android:background="@mipmap/buycowline"
+                            android:drawablePadding="3dp"/>
+                    </LinearLayout>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -75,12 +87,22 @@
                         android:layout_width="wrap_content" android:id="@+id/percent_zero_txt_id"
                         android:layout_height="wrap_content" android:textColor="@color/white"
                         android:text="0%" android:textSize="13sp" />
-                    <SeekBar
-                        android:layout_width="match_parent" android:id="@+id/seekbar_id"
-                        android:layout_height="3dp" android:max="100"
-                        android:progressDrawable="@drawable/seekbar_bg" android:layout_toRightOf="@+id/percent_zero_txt_id"
-                        android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true"
-                        android:thumb="@null" android:progress="100" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp" android:layout_toRightOf="@+id/percent_zero_txt_id"
+                        android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true">
+                        <TextView
+                            android:layout_width="match_parent" android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp" android:layout_gravity="center"
+                            android:layout_height="1dp" android:background="@color/gray_cc"/>
+                        <SeekBar
+                            android:layout_width="match_parent" android:id="@+id/seekbar_id"
+                            android:layout_height="2dp" android:max="100"
+                            android:progressDrawable="@drawable/seekbar_bg"
+                            android:thumb="@null" android:progress="50"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/percent_hundred_txt_id"
                         android:layout_height="wrap_content" android:layout_alignParentRight="true"

@@ -21,6 +21,9 @@ import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
+import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 import com.ibeef.cowboying.bean.LoginBean;
 import com.ibeef.cowboying.bean.LoginParamBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
@@ -77,6 +80,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
     private UpdateMobilePresenter updateMobilePresenter;
     private String token;
     private BindMobilePresenter bindMobilePresenter;
+    private int visitorId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +106,9 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             mobileTxtId.setText("+86  "+mobile);
         }
 
+        if("3".equals(stadus)){
+            visitorId=getIntent().getIntExtra("visitorId",0);
+        }
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
             public void onComplete(String content) {
@@ -376,11 +383,11 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             }else   if("3".equals(stadus)){
                 //0 正常手机号登录完成  //3 第三方登录绑定手机号
                 Map<String, String> reqData = new HashMap<>();
-                reqData.put("Authorization",token);
                 reqData.put("version",getVersionCodes());
-                BindMobileParamBean bindMobileParamBean=new BindMobileParamBean();
-                bindMobileParamBean.setMobile(mobile);
-                bindMobilePresenter.getBindMobile(reqData,bindMobileParamBean);
+                CheckThirdLoginParamBean checkThirdLoginParamBean=new CheckThirdLoginParamBean();
+                checkThirdLoginParamBean.setMobile(mobile);
+                checkThirdLoginParamBean.setVisitorId(visitorId);
+                bindMobilePresenter.getCheckThirLogin(reqData,checkThirdLoginParamBean);
 
             }else   if("4".equals(stadus)){
                 //2注册流程 4 //设置<账号安全<修改登录手机号
@@ -459,6 +466,20 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             finish();
         }else {
             showToast(bindMobileResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void getCheckThirLogin(CheckThirdLoginResultBean checkThirdLoginResultBean) {
+        if("000000".equals(checkThirdLoginResultBean.getCode())){
+            Hawk.put(HawkKey.TOKEN, checkThirdLoginResultBean.getBizData());
+            Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
+            finish();
+        }else {
+            showToast(checkThirdLoginResultBean.getMessage());
         }
     }
 

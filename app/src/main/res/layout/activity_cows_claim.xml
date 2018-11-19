@@ -55,7 +55,7 @@
                             android:orientation="vertical" android:gravity="center">
                             <TextView
                                 android:layout_width="wrap_content" android:id="@+id/target_txt_id"
-                                android:layout_height="wrap_content" android:text="300头"
+                                android:layout_height="wrap_content" android:text="0头"
                                 android:textColor="@color/black" android:textSize="15sp"
                                 android:textStyle="bold"/>
                             <TextView
@@ -73,7 +73,7 @@
                             android:orientation="vertical" android:gravity="center">
                             <TextView
                                 android:layout_width="wrap_content" android:id="@+id/hasidentify_txt_id"
-                                android:layout_height="wrap_content" android:text="30头"
+                                android:layout_height="wrap_content" android:text="0头"
                                 android:textColor="@color/black" android:textSize="15sp"
                                 android:textStyle="bold"/>
                             <TextView

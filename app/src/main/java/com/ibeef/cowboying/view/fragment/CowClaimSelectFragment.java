@@ -28,7 +28,7 @@ import java.util.Map;
 
 import rxfamily.view.BaseFragment;
 
-public class CowClaimSelectFragment extends BaseFragment implements View.OnClickListener,CattleDetailBase.IView {
+public class CowClaimSelectFragment extends BaseFragment implements View.OnClickListener,CattleDetailBase.IView ,BaseQuickAdapter.RequestLoadMoreListener{
 
     private Integer schemeId;
     private String code;
@@ -40,9 +40,10 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
     private List<AdoptInfosResultBean.BizDataBean> objectList;
     private CattleDetailPresenter cattleDetailPresenter;
     private String token;
-    private Integer currentPage;
+    private Integer currentPage=1;
     RelativeLayout rvOrder;
     private boolean isFirst=true;
+    private boolean isMoreLoad=false;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         token= Hawk.get(HawkKey.TOKEN);
@@ -59,6 +60,7 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
         objectList=new ArrayList<>();
         ryId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         cowClaimSelectAdapter=new CowClaimSelectAdapter(objectList,getHoldingActivity(),R.layout.item_cows_cliam_select);
+        cowClaimSelectAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(cowClaimSelectAdapter);
         cowClaimSelectAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -76,7 +78,7 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        cattleDetailPresenter.getAdoptInfos(reqData,null,schemeId,null);
+        cattleDetailPresenter.getAdoptInfos(reqData,null,null,currentPage);
     }
 
     @Override
@@ -110,10 +112,12 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
             case R.id.sure_id:
                 isFirst=true;
                 objectList.clear();
+                currentPage=1;
+                isMoreLoad=false;
                 Map<String, String> reqData = new HashMap<>();
                 reqData.put("Authorization",token);
                 reqData.put("version",getVersionCodes());
-                cattleDetailPresenter.getAdoptInfos(reqData,edtId.getText().toString().trim(),schemeId,null);
+                cattleDetailPresenter.getAdoptInfos(reqData,edtId.getText().toString().trim(),null,currentPage);
                 break;
             default:
                 break;
@@ -156,8 +160,14 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void showLoading() {
-        loadingLayout.setVisibility(View.VISIBLE);
-        ryId.setVisibility(View.GONE);
+        if (isMoreLoad) {
+            loadingLayout.setVisibility(View.GONE);
+            ryId.setVisibility(View.VISIBLE);
+            isMoreLoad = false;
+        } else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            ryId.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -172,5 +182,15 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
             cattleDetailPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        isMoreLoad = true;
+        currentPage += 1;
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        cattleDetailPresenter.getAdoptInfos(reqData,edtId.getText().toString().trim(),null,currentPage);
     }
 }

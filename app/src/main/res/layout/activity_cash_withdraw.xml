@@ -159,6 +159,32 @@
                     android:layout_marginBottom="200dp"/>
             </LinearLayout>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent" android:id="@+id/get_succese_dialog"
+            android:layout_height="match_parent" android:background="@color/colordialog"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="300dp" android:orientation="vertical"
+                android:layout_height="230dp" android:background="@mipmap/getmoneydialog"
+                android:layout_centerInParent="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="取现成功，预计第二天打款\n到账，请注意查收"
+                    android:layout_gravity="center" android:layout_marginTop="100dp"
+                    android:lineSpacingExtra="5dp" android:gravity="center"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/sure_close_btn"
+                    android:layout_height="wrap_content" android:background="@drawable/shape_square_btn"
+                    android:text="确定" android:textColor="@color/white"
+                    android:layout_gravity="center" android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp" android:paddingRight="20dp"
+                    android:paddingTop="3dp" android:paddingBottom="3dp"/>
+            </LinearLayout>
+
+        </RelativeLayout>
     </FrameLayout>
 
 

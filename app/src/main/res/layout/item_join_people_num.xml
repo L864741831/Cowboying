@@ -15,7 +15,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="35dp" android:id="@+id/head_img_id"
         android:layout_height="35dp" android:layout_gravity="center_vertical"
-        android:src="@mipmap/cowicon" android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp"/>
     <TextView
         android:layout_width="match_parent" android:id="@+id/nickname_txt_id"
         android:layout_height="wrap_content" android:textSize="15sp"

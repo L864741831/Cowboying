@@ -111,6 +111,16 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
         });
 
         buyCowsSchemePresenter=new BuyCowsSchemePresenter(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentPage=1;
+        isFirst=true;
+        isMoreLoad=false;
+        objectList.clear();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());

@@ -196,13 +196,13 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
-
             if(SDCardUtil.isNullOrEmpty(thirdCountLoginResultBean.getBizData().getMobile())){
                 Intent intent2=new Intent(LoginActivity.this,MobileLoginActivity.class);
                 intent2.putExtra("stadus","3");
+                intent2.putExtra("visitorId",thirdCountLoginResultBean.getBizData().getVisitorId());
                 startActivity(intent2);
             }else {
+                Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
                 Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);

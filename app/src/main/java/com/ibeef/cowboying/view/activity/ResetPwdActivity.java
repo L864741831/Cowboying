@@ -194,8 +194,10 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }else {
                 showToast("密码设置成功~");
+                finish();
             }
         }else {
             showToast(editLoginPwdResultBean.getMessage());
@@ -212,6 +214,7 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         }else {
             showToast(restLoginPwdResultBean.getMessage());
         }

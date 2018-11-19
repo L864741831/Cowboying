@@ -1,12 +1,14 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -70,8 +72,12 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     RelativeLayout addAccountzfbRv;
     @Bind(R.id.sure_out_money_btn)
     TextView sureOutMoneyBtn;
+    @Bind(R.id.sure_close_btn)
+    TextView sureCloseBtn;
     @Bind(R.id.account_pay_show_rv)
     RelativeLayout accountPayShowRv;
+    @Bind(R.id.get_succese_dialog)
+    RelativeLayout getSucceseDialog;
     @Bind(R.id.verificationCodeInput_id)
     VerificationCodeInput verificationCodeInputId;
     @Bind(R.id.foret_pwd_id)
@@ -105,6 +111,8 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
                 accountPayShowRv.setVisibility(View.GONE);
                 sureOutMoneyBtn.setVisibility(View.VISIBLE);
                 Log.e(Constant.TAG, "完成输入：" + content);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 if(isGetMoney){
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization",token);
@@ -131,10 +139,13 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     }
 
 
-    @OnClick({R.id.back_id, R.id.add_accountzfb_rv, R.id.sure_out_money_btn,R.id.foret_pwd_id,R.id.pay_back_id})
+    @OnClick({R.id.back_id, R.id.add_accountzfb_rv, R.id.sure_out_money_btn,R.id.foret_pwd_id,R.id.pay_back_id,R.id.sure_close_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                finish();
+                break;
+            case R.id.sure_close_btn:
                 finish();
                 break;
             case R.id.add_accountzfb_rv:
@@ -288,9 +299,9 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     public void getCashMoney(CashMoneyResultBean cashMoneyResultBean) {
 
         if("000000".equals(cashMoneyResultBean.getCode())){
-            showToast("取现成功");
+            //取现成功
+            getSucceseDialog.setVisibility(View.VISIBLE);
             isGetMoney=false;
-            finish();
         }else {
             showToast(cashMoneyResultBean.getMessage());
         }

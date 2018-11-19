@@ -31,7 +31,7 @@
                         android:id="@+id/iv_ranch_canosciation"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:scaleType="fitXY"/>
+                        android:scaleType="centerCrop"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:src="@mipmap/vediostart"
@@ -58,7 +58,7 @@
                     android:id="@+id/banner"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="153dp" app:image_scale_type="fit_xy"
+                    android:layout_height="153dp" app:image_scale_type="center_crop"
                     android:visibility="gone"/>
                 <ImageView
                     android:layout_width="wrap_content"
