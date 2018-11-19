@@ -5,15 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.CattleDetailBase;
-import com.ibeef.cowboying.bean.AdoptInfosResultBean;
-import com.ibeef.cowboying.bean.CattleDetailResultBean;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.CattleDetailPresenter;
 import com.orhanobut.hawk.Hawk;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import jp.wasabeef.richeditor.RichEditor;
 import rxfamily.view.BaseFragment;

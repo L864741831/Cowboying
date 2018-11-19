@@ -1,13 +1,10 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.UpdateMobileParamBean;
 import com.ibeef.cowboying.bean.UpdateMobileResultBean;
 
 import java.util.Map;
 
-import retrofit2.http.Body;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

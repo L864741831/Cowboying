@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,7 +29,6 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.orhanobut.hawk.Hawk;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;

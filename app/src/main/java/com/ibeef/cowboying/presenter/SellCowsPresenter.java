@@ -2,14 +2,10 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.SellCowsBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
 import com.ibeef.cowboying.bean.SellCowsResultBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.SellCowsModel;
 
 import java.util.Map;

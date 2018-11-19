@@ -12,7 +12,6 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.SetPayPwdBase;
 import com.ibeef.cowboying.bean.ResetPayPwdParamBean;
 import com.ibeef.cowboying.bean.ResetPayPwdResultBean;
-import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.SetPayPwdPresenter;

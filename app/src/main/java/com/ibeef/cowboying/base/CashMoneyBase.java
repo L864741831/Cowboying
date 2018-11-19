@@ -1,7 +1,5 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
@@ -9,7 +7,6 @@ import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 
 import java.util.Map;
 
-import retrofit2.http.Body;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

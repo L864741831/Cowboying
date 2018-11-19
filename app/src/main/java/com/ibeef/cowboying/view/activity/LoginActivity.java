@@ -12,30 +12,23 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
-
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
 import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.bean.AuthResult;
-import com.ibeef.cowboying.bean.BindThirdCountResultBean;
-import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
-import com.ibeef.cowboying.wxapi.WXEntryActivity;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -214,6 +207,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
+                finish();
             }
         }else {
             showToast(thirdCountLoginResultBean.getMessage());

@@ -1,8 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.AssetDetailListAdapter;
 import com.ibeef.cowboying.adapter.WalletDetailListAdapter;
 import com.ibeef.cowboying.base.IncomeInfoBase;
 import com.ibeef.cowboying.bean.IncomeInfoResultBean;
@@ -30,7 +28,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
 /**

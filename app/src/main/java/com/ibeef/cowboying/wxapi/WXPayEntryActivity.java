@@ -1,4 +1,5 @@
 package com.ibeef.cowboying.wxapi;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +8,7 @@ import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
-import com.ibeef.cowboying.view.activity.SureOderActivity;
-import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;

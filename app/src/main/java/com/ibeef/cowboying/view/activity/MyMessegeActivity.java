@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyMessegeListAdapter;
 import com.ibeef.cowboying.config.HawkKey;

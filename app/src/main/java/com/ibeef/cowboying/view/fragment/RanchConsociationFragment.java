@@ -38,8 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.OnClick;
 import jp.wasabeef.richeditor.RichEditor;
 import rxfamily.view.BaseFragment;
 

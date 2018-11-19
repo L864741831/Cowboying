@@ -1,8 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,18 +12,13 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.BuyCowListAdapter;
 import com.ibeef.cowboying.adapter.JoinPeopleNumListAdapter;
-import com.ibeef.cowboying.base.PastureBase;
 import com.ibeef.cowboying.base.PastureDetailBase;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
 import com.ibeef.cowboying.bean.JionPersonInfoResultBean;
-import com.ibeef.cowboying.bean.PastureAllResultBean;
-import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.SchemeDetailReultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.PastureDetailPresenter;
-import com.ibeef.cowboying.presenter.PasturePresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 

@@ -1,8 +1,6 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,12 +14,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.utils.SDCardUtil;
-import com.ibeef.cowboying.view.activity.ClaimCertificationActivity;
-import com.ibeef.cowboying.view.activity.ClaimUnCertificationActivity;
-import com.ibeef.cowboying.view.activity.CowsClaimActivity;
-import com.ibeef.cowboying.view.activity.LoginActivity;
-import com.ibeef.cowboying.view.activity.MobileLoginActivity;
 
 import java.text.NumberFormat;
 import java.util.List;

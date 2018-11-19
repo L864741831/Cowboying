@@ -3,17 +3,13 @@ package com.ibeef.cowboying.view.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeAdPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;

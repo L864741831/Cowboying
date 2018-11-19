@@ -41,23 +41,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.base.GetOssImgBase;
-import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
-import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
-import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.FeedbackPresenter;
 import com.ibeef.cowboying.presenter.GetOssImgPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.Md5Utils;
@@ -76,9 +71,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import rx.functions.Action1;
 import rxfamily.utils.PermissionsUtils;
 import rxfamily.view.BaseActivity;
@@ -136,6 +128,10 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     RelativeLayout showRealinfoRv;
     @Bind(R.id.search2_id)
     LinearLayout search2Id;
+    @Bind(R.id.lv_info_show)
+    LinearLayout lvInfoShow;
+    @Bind(R.id.loading_layout)
+    RelativeLayout loadingLayout;
     private boolean isNickname=false;
     private   File file;
     private boolean isTakePhoto=true;
@@ -603,6 +599,18 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 ossUpload(photos,ossResultBean.getBizData().getBucketName(),ossResultBean.getBizData().getFolder());
             }
         }
+    }
+
+    @Override
+    public void showLoading() {
+        loadingLayout.setVisibility(View.VISIBLE);
+        lvInfoShow.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        lvInfoShow.setVisibility(View.VISIBLE);
     }
 
 

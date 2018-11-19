@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,13 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
 import com.ibeef.cowboying.adapter.RanchDynamicsAdapter;
 import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
@@ -48,7 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import rxfamily.view.BaseFragment;
 
@@ -103,6 +101,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         reqData.put("version",getVersionCodes());
         homeBannerPresenter.getHomeBanner(reqData);
         homeBannerPresenter.getHomeVideo(reqData);
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
         mPrefDailog = getHoldingActivity().getSharedPreferences("firstopenDailogs", Activity.MODE_PRIVATE);
         history= mPrefDailog.getString(KEY_HISTORY_KEYWORD, "");
 
@@ -176,8 +175,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         //设置图片加载器
         specialbeefImgId.setBannerAnimation(Transformer.DepthPage);
         //设置banner动画效果
-        specialbeefImgId.isAutoPlay(true);
-        specialbeefImgId.setDelayTime(1000 * 6);
+        specialbeefImgId.isAutoPlay(false);
+//        specialbeefImgId.setDelayTime(1000 * 6);
         //设置轮播时间
         specialbeefImgId.setClickable(true);
 
@@ -223,6 +222,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         reqData.put("version",getVersionCodes());
         homeBannerPresenter.getHomeBanner(reqData);
         homeBannerPresenter.getHomeVideo(reqData);
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
         swipeLy.setRefreshing(false);
     }
 
@@ -337,6 +337,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         beanList.add(bizDataBean);
         ranchDynamicsAdapter.setNewData(this.beanList);
         ranchDynamicsAdapter.loadMoreEnd();
+    }
+
+    @Override
+    public void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean) {
+        if("000000".equals(homeSellCowNumResultBean.getCode())){
+            sellCowNumId.setText(homeSellCowNumResultBean.getBizData().getTotalSalesQuantity()+"");
+            sellCowNum2Id.setText(homeSellCowNumResultBean.getBizData().getTotalUserQuantity()+"");
+        }else {
+            showToast(homeSellCowNumResultBean.getMessage());
+        }
+
     }
 
     @Override

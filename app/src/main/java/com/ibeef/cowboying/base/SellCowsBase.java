@@ -1,14 +1,11 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
 import com.ibeef.cowboying.bean.SellCowsResultBean;
 
 import java.util.Map;
 
-import retrofit2.http.Query;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

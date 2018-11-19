@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
-import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
 

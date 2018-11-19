@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
@@ -17,7 +15,6 @@ import com.ibeef.cowboying.bean.UserInfoResultBean;
 import java.io.FileOutputStream;
 import java.util.Map;
 
-import retrofit2.http.Body;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;
@@ -36,6 +33,8 @@ public class UserInfoBase {
         void getRealName(RealNameReaultBean realNameReaultBean);
         void getUserInfo(UserInfoResultBean userInfoResultBean);
         void  isTakePhoeto(String msg);
+        void showLoading();
+        void hideLoading();
     }
 
     public interface IPresenter {

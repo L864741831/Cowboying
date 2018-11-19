@@ -1,8 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -39,7 +37,6 @@ import com.ibeef.cowboying.presenter.SmsCodePresenter;
 import com.ibeef.cowboying.presenter.UpdateMobilePresenter;
 import com.ibeef.cowboying.utils.Md5Util;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
-import com.ibeef.cowboying.wxapi.WXEntryActivity;
 import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;

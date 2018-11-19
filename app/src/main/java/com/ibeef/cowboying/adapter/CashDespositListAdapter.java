@@ -1,7 +1,6 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;

@@ -1,19 +1,15 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.EditLogionPwdBase;
@@ -21,7 +17,6 @@ import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.bean.RestLoginParamBean;
 import com.ibeef.cowboying.bean.RestLoginPwdResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.EditLoginPwdPresenter;
 import com.orhanobut.hawk.Hawk;

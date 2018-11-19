@@ -9,10 +9,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
-import com.ibeef.cowboying.bean.HomeVideoResultBean;
 
 import java.util.List;
 

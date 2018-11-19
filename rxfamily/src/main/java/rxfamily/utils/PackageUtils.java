@@ -1,7 +1,5 @@
 package rxfamily.utils;
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -14,7 +12,6 @@ import android.provider.Settings;
 import android.util.Log;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * PackageUtils

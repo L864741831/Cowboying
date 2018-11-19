@@ -1,9 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -269,7 +266,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
 
         if("000000".equals(incomeInfeResultBean.getCode())){
             this.incomeInfeResultBean=incomeInfeResultBean;
-            allMoneyId.setText(incomeInfeResultBean.getBizData().getTotalAssets()+">");
+            allMoneyId.setText(incomeInfeResultBean.getBizData().getTotalAssets()+"");
             yesterdayMoneyId.setText(incomeInfeResultBean.getBizData().getYesterdayIncome()+"");
             addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
             myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());

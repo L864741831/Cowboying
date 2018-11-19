@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-
 import com.ibeef.cowboying.R;
 
 import java.util.ArrayList;

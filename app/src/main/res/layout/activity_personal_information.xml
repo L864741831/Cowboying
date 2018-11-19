@@ -5,10 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.PersonalInformationActivity">
+    <include
+        layout="@layout/loading_layout"
+        android:id="@+id/loading_layout"  />
+    <include layout="@layout/include_title"/>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" android:orientation="vertical">
-        <include layout="@layout/include_title"/>
+        android:layout_width="match_parent" android:id="@+id/lv_info_show"
+        android:layout_height="match_parent" android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
         <RelativeLayout
             android:layout_width="match_parent" android:id="@+id/see_head"
             android:layout_height="45dp"  android:background="@color/white"

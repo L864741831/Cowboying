@@ -2,7 +2,6 @@ package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.HomeAdBase;
-import com.ibeef.cowboying.base.LoginBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;

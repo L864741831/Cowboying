@@ -3,14 +3,9 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.AccountRegisterBase;
-import com.ibeef.cowboying.base.FeedbackBase;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
-import com.ibeef.cowboying.bean.MyFeedbackResultBean;
-import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
-import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.model.AccountRegisetModel;
-import com.ibeef.cowboying.model.FeedbackModel;
 
 import rxfamily.mvp.BasePresenter;
 import rxfamily.net.ResponseCallback;

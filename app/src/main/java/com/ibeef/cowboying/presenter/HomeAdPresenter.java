@@ -3,11 +3,8 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.HomeAdBase;
-import com.ibeef.cowboying.base.LoginBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
-import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.model.HomeAdModel;
-import com.ibeef.cowboying.model.LoginModel;
 
 import java.util.Map;
 

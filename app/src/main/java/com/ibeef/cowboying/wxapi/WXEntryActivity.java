@@ -2,11 +2,9 @@ package com.ibeef.cowboying.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.base.WeiXinAuthBase;
@@ -21,9 +19,7 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
-import com.ibeef.cowboying.presenter.WeixinAuthPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
-import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MobileLoginActivity;
 import com.orhanobut.hawk.Hawk;

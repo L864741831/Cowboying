@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.CowClaimPastRecordAdapter;
 import com.ibeef.cowboying.adapter.CowClaimSelectAdapter;
 import com.ibeef.cowboying.base.CattleDetailBase;
 import com.ibeef.cowboying.bean.AdoptInfosResultBean;
@@ -20,7 +19,6 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CattleDetailPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.CowsDesInfoActivity;
-import com.ibeef.cowboying.view.activity.JionPeopleNumActivity;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
 import rxfamily.view.BaseFragment;
 
 public class CowClaimSelectFragment extends BaseFragment implements View.OnClickListener,CattleDetailBase.IView {

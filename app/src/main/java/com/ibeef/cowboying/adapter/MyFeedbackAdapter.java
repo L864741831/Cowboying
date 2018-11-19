@@ -12,8 +12,6 @@ import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import rxfamily.bean.BaseBean;
-
 /**
  * @author ls
  * @date on 2018/10/23 17:16

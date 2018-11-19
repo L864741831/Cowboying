@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.InviteNotesAdapter;
 import com.ibeef.cowboying.adapter.MyContractAdapter;
 import com.ibeef.cowboying.config.HawkKey;
 import com.orhanobut.hawk.Hawk;

@@ -29,6 +29,7 @@ import com.ibeef.cowboying.bean.HistorySchemeResultBean;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.bean.IncomeInfoResultBean;
 import com.ibeef.cowboying.bean.JionPersonInfoResultBean;
@@ -59,6 +60,7 @@ import com.ibeef.cowboying.bean.SchemeDetailReultBean;
 import com.ibeef.cowboying.bean.SellCowsResultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
+import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
@@ -69,7 +71,6 @@ import com.ibeef.cowboying.bean.UpdateMobileParamBean;
 import com.ibeef.cowboying.bean.UpdateMobileResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
-import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.bean.WeixinAuthFirstBean;
 import com.ibeef.cowboying.bean.WeixinAuthSecondeBean;
@@ -499,5 +500,12 @@ public interface ApiService {
      */
     @GET("adopt/order/nopay/detail")
     Observable<CreatOderResultBean> getMyCowsToPay(@HeaderMap Map<String, String> headers, @Query("orderId") String orderCode);
+
+    /**
+     * 累计销售数据
+     * @return
+     */
+    @GET("index/total/data")
+    Observable<HomeSellCowNumResultBean> getHomeSellCowsNum(@HeaderMap Map<String, String> headers);
 
 }

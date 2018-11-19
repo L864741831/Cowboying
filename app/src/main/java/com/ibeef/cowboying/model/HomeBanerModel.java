@@ -1,11 +1,10 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.HomeAdBase;
 import com.ibeef.cowboying.base.HomeBannerBase;
-import com.ibeef.cowboying.bean.HomeAdResultBean;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
 import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
@@ -70,6 +69,28 @@ public class HomeBanerModel implements HomeBannerBase.IModel {
                 .subscribe(new Action1<HomeVideoResultBean>() {
                     @Override
                     public void call(HomeVideoResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getHomeSellCowsNum(Map<String, String> headers,final ResponseCallback<HomeSellCowNumResultBean> callback) {
+        Observable<HomeSellCowNumResultBean> observable = service.getHomeSellCowsNum(headers);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<HomeSellCowNumResultBean>() {
+                    @Override
+                    public void call(HomeSellCowNumResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

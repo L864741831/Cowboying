@@ -5,7 +5,6 @@ import com.ibeef.cowboying.bean.WalletRecordResultBean;
 
 import java.util.Map;
 
-import retrofit2.http.Query;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

@@ -1,18 +1,11 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.SeekBar;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
-import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
 

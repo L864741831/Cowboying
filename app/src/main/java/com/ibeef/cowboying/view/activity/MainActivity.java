@@ -7,19 +7,18 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.base.CheckVersionBase;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CheckVersionPresenter;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.view.fragment.HomeFragment;
 import com.ibeef.cowboying.view.fragment.SecondFragment;
 import com.ibeef.cowboying.view.fragment.ThreeFragment;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;

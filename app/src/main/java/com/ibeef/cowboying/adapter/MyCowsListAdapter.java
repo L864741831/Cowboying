@@ -15,16 +15,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.MyCowsListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 
-
 import java.util.List;
-
-import rxfamily.bean.BaseBean;
 
 
 public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDataBean, BaseViewHolder> {
