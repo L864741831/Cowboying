@@ -4,6 +4,9 @@ import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.BindMobileBase;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
+import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -45,6 +48,28 @@ public class BindMobileModel implements BindMobileBase.IModel {
                 .subscribe(new Action1<BindMobileResultBean>() {
                     @Override
                     public void call(BindMobileResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getCheckThirLogin(Map<String, String> headers, CheckThirdLoginParamBean checkThirdLoginParamBean, final ResponseCallback<CheckThirdLoginResultBean> callback) {
+        Observable<CheckThirdLoginResultBean> observable = service.getCheckThirLogin(headers,checkThirdLoginParamBean);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<CheckThirdLoginResultBean>() {
+                    @Override
+                    public void call(CheckThirdLoginResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

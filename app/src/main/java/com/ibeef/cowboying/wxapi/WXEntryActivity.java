@@ -124,14 +124,15 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
     @Override
     public void getThirdCountLogin(ThirdCountLoginResultBean thirdCountLoginResultBean) {
         if("000000".equals(thirdCountLoginResultBean.getCode())){
-            Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
 
             if(SDCardUtil.isNullOrEmpty(thirdCountLoginResultBean.getBizData().getMobile())){
                 Intent intent2=new Intent(WXEntryActivity.this,MobileLoginActivity.class);
                 intent2.putExtra("stadus","3");
+                intent2.putExtra("visitorId",thirdCountLoginResultBean.getBizData().getVisitorId());
                 startActivity(intent2);
                 finish();
             }else {
+                Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
                 Intent intent1=new Intent(WXEntryActivity.this,MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);

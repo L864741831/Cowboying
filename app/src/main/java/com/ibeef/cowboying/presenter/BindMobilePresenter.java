@@ -5,6 +5,9 @@ import android.util.Log;
 import com.ibeef.cowboying.base.BindMobileBase;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
+import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
+import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 import com.ibeef.cowboying.model.BindMobileModel;
 
 import java.util.Map;
@@ -35,6 +38,23 @@ public class BindMobilePresenter extends BasePresenter implements BindMobileBase
             @Override
             public void onSuccess(BindMobileResultBean result) {
                 mView.getBindMobile(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getCheckThirLogin(Map<String, String> headers, CheckThirdLoginParamBean checkThirdLoginParamBean) {
+        addSubscription(mModel.getCheckThirLogin(headers,checkThirdLoginParamBean,new ResponseCallback<CheckThirdLoginResultBean>() {
+            @Override
+            public void onSuccess(CheckThirdLoginResultBean result) {
+                mView.getCheckThirLogin(result);
 
             }
 

@@ -11,8 +11,8 @@ public class ThirdCountLoginResultBean {
 
     /**
      * code : 000000
-     * message : null
-     * bizData : {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1NDE4MTg1MjEsImxvZ2luVHlwZSI6IjMiLCJpc3MiOiJ3d3cueWFiZWkuc2hvcCIsImV4cCI6MTU0NDQxMDUyMSwiaWF0IjoxNTQxODE4NTIxLCJ1c2VySWQiOjQyfQ.Yzc_uaP9DLd9LF9RitmPWQqstD4f_10-cisDnxtXNu0","mobile":null}
+     * message :
+     * bizData : {"token":"","visitorId":2,"mobile":""}
      */
 
     private String code;
@@ -45,11 +45,13 @@ public class ThirdCountLoginResultBean {
 
     public  class BizDataBean {
         /**
-         * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1NDE4MTg1MjEsImxvZ2luVHlwZSI6IjMiLCJpc3MiOiJ3d3cueWFiZWkuc2hvcCIsImV4cCI6MTU0NDQxMDUyMSwiaWF0IjoxNTQxODE4NTIxLCJ1c2VySWQiOjQyfQ.Yzc_uaP9DLd9LF9RitmPWQqstD4f_10-cisDnxtXNu0
-         * mobile : null
+         * token :
+         * visitorId : 2
+         * mobile :
          */
 
         private String token;
+        private int visitorId;
         private String mobile;
 
         public String getToken() {
@@ -58,6 +60,14 @@ public class ThirdCountLoginResultBean {
 
         public void setToken(String token) {
             this.token = token;
+        }
+
+        public int getVisitorId() {
+            return visitorId;
+        }
+
+        public void setVisitorId(int visitorId) {
+            this.visitorId = visitorId;
         }
 
         public String getMobile() {

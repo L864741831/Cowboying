@@ -80,12 +80,22 @@
                         android:layout_width="wrap_content" android:id="@+id/percent_zero_txt_id"
                         android:layout_height="wrap_content" android:textColor="@color/colorAccent"
                         android:text="0%" android:textSize="13sp" />
-                    <SeekBar
-                        android:layout_width="match_parent" android:id="@+id/seekbar_id"
-                        android:layout_height="3dp" android:max="100"
-                        android:progressDrawable="@drawable/seekbar_bg" android:layout_toRightOf="@+id/percent_zero_txt_id"
-                        android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true"
-                        android:thumb="@null" android:progress="100" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"  android:layout_toRightOf="@+id/percent_zero_txt_id"
+                        android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true">
+                        <TextView
+                            android:layout_width="match_parent" android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp" android:layout_gravity="center"
+                            android:layout_height="1dp" android:background="@color/gray_cc"/>
+                        <SeekBar
+                            android:layout_width="match_parent" android:id="@+id/seekbar_id"
+                            android:layout_height="2dp" android:max="100"
+                            android:progressDrawable="@drawable/seekbar_bg"
+                            android:thumb="@null" android:progress="50"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/percent_hundred_txt_id"
                         android:layout_height="wrap_content" android:layout_alignParentRight="true"

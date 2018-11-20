@@ -55,6 +55,7 @@ public class MobileLoginActivity extends BaseActivity {
     RelativeLayout showBindRv;
     private String stadus;
     private String token,oldmobile;
+    private int visitorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +106,10 @@ public class MobileLoginActivity extends BaseActivity {
 
         } else if ("3".equals(stadus)) {
             //第三方登录绑定
-            actionRightTv.setVisibility(View.VISIBLE);
+            actionRightTv.setVisibility(View.GONE);
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("绑定手机号");
+            visitorId=getIntent().getIntExtra("visitorId",0);
         } else if ("7".equals(stadus)) {
             //个人信息 绑定手机号
             actionRightTv.setVisibility(View.GONE);
@@ -177,6 +179,9 @@ public class MobileLoginActivity extends BaseActivity {
                                     Intent intent = new Intent(MobileLoginActivity.this, IdentifyCodeActivity.class);
                                     intent.putExtra("stadus", stadus);
                                     intent.putExtra("mobile", etMobile.getText().toString().trim());
+                                    if("3".equals(stadus)){
+                                        intent.putExtra("visitorId",visitorId);
+                                    }
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -188,6 +193,9 @@ public class MobileLoginActivity extends BaseActivity {
                         Intent intent = new Intent(MobileLoginActivity.this, IdentifyCodeActivity.class);
                         intent.putExtra("stadus", stadus);
                         intent.putExtra("mobile", etMobile.getText().toString().trim());
+                        if("3".equals(stadus)){
+                            intent.putExtra("visitorId",visitorId);
+                        }
                         startActivity(intent);
                         finish();
                     }

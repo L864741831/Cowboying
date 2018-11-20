@@ -13,19 +13,13 @@ import rxfamily.view.BaseFragment;
 
 public class CowClaimDesFragment extends BaseFragment {
 
-    private String des;
+    private static String  des;
     private RichEditor rich_edit_id;
     private String token;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         token= Hawk.get(HawkKey.TOKEN);
         rich_edit_id=view.findViewById(R.id.rich_edit_id);
-        rich_edit_id.setEditorFontSize(0);
-        rich_edit_id.setEditorFontColor(Color.BLACK);
-        rich_edit_id.setInputEnabled(false);
-        rich_edit_id.setPadding(0, 0, 0, 0);
-        rich_edit_id.loadCSS("file:///android_asset/img.css");
-        rich_edit_id.setHtml(des);
     }
 
     @Override
@@ -36,16 +30,29 @@ public class CowClaimDesFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) {
-            des = args.getString("des");
-        }
+//        Bundle args = getArguments();
+//        if (args != null) {
+//            des = args.getString("des");
+//        }
     }
-    public static CowClaimDesFragment newInstance(String  des) {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        rich_edit_id.setEditorFontSize(16);
+        rich_edit_id.setEditorFontColor(Color.BLACK);
+        rich_edit_id.setInputEnabled(false);
+        rich_edit_id.setPadding(3, 5, 5, 5);
+        rich_edit_id.loadCSS("file:///android_asset/img.css");
+        rich_edit_id.setHtml(des);
+    }
+
+    public static CowClaimDesFragment newInstance(String  info) {
 
         CowClaimDesFragment newFragment = new CowClaimDesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("des", des);
+//        bundle.putString("des", des);
+        des=info;
         newFragment.setArguments(bundle);
         return newFragment;
     }

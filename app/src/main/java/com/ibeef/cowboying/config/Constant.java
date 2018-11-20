@@ -9,6 +9,7 @@ public class Constant {
      */
 //    public static final String BASE_URL = "http://192.168.0.122:8082/";
 //    public static final String BASE_URL = "http://192.168.0.162:8090/";
+//    public static final String BASE_URL = "http://192.168.1.100:8090/";
     public static final String BASE_URL = "http://120.27.12.205:9001/";
     /**
      * 阿里云应用服务器地址

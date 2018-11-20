@@ -42,7 +42,7 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
         if("1".equals(item.getType())){
             helper.setText(R.id.percent_way_txt_id,"T+7");
         }else   if("2".equals(item.getType())){
-            helper.setText(R.id.percent_way_txt_id,item.getLockMonths()+"月");
+            helper.setText(R.id.percent_way_txt_id,"锁定期"+item.getLockMonths()+"个月");
         }
         int num1=item.getTotalStock()-item.getStock();
         int num2=item.getTotalStock();
@@ -50,10 +50,10 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
         NumberFormat numberFormat = NumberFormat.getInstance();
         // 设置精确到小数点后2位
         numberFormat.setMaximumFractionDigits(2);
-        String result = numberFormat.format((float) num1 / (float) num2 * 100);
+        String result = numberFormat.format( (float)num1 / num2 * 100);
         helper.setText(R.id.minpercent_txt_id,"进度"+result+"%");
         SeekBar seekbarId=helper.getView(R.id.seekbar_id);
-        seekbarId.setProgress(Integer.parseInt(result));
+        seekbarId.setProgress(Math.round(Float.parseFloat(result)));
 
         helper.addOnClickListener(R.id.now_claim_btn_id);
         seekbarId.setOnTouchListener(new View.OnTouchListener() {

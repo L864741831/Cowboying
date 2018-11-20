@@ -132,11 +132,6 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         }
 
         pastureDetailPresenter=new PastureDetailPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
-
         userInfoPresenter=new UserInfoPresenter(this);
     }
 
@@ -146,6 +141,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
+        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
         userInfoPresenter.getUserInfo(reqData);
     }
 
