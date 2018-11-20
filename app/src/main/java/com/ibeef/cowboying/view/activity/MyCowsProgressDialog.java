@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 import rxfamily.view.BaseActivity;
 
 
-public class MyCowsProgressDialog extends BaseActivity implements View.OnClickListener, MyCowsOrderBase.IView {
+public class MyCowsProgressDialog extends AppCompatActivity implements View.OnClickListener, MyCowsOrderBase.IView {
 
     @Bind(R.id.show_title_id)
     TextView showTitleId;

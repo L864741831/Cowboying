@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.orhanobut.hawk.Hawk;
@@ -23,7 +25,7 @@ import java.util.Map;
 import rxfamily.view.BaseActivity;
 
 
-public class SureOrderBackDialog extends BaseActivity implements View.OnClickListener, MyCowsOrderBase.IView{
+public class SureOrderBackDialog extends AppCompatActivity implements View.OnClickListener, MyCowsOrderBase.IView{
 
     private TextView refuce_id,sure_id;
     private String orderCode;
@@ -56,7 +58,7 @@ public class SureOrderBackDialog extends BaseActivity implements View.OnClickLis
                 if (!TextUtils.isEmpty(token)) {
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization", token);
-                    reqData.put("version", getVersionCodes());
+                    reqData.put("version", Constant.VersionCodes);
                     myCowsOrderPresenter.getMyCowsOrderCancel(reqData, orderCode);
                 }
                 break;

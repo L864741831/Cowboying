@@ -79,4 +79,9 @@ public class Constant {
      */
     public static  final String appappSecret="9780986f8ce29b0c6db809ecec0874a5";
 
+    /**
+     * VersionCodes
+     */
+    public static  final String VersionCodes="1.0";
+
 }

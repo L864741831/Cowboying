@@ -150,7 +150,11 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
         rvCowsList.setHasFixedSize(true);
         rvCowsList.setNestedScrollingEnabled(false);
         beanList = new ArrayList<>();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         myCowsOrderPresenter = new MyCowsOrderPresenter(this);
         if (!TextUtils.isEmpty(token)) {
             Map<String, String> reqData = new HashMap<>();
