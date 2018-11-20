@@ -266,7 +266,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                         final int end = 22 * 60;// 结束时间 22:00的分钟数
                         if (i==2){
                             if (minuteOfDay >= start && minuteOfDay <= end) {
-                                System.out.println("在外围内");
                                 Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
                                 intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId());
                                 startActivity(intent);
