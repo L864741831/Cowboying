@@ -174,6 +174,10 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
                     showToast("输入金额不正确，请重新输入！");
                     return;
                 }
+                if(Float.parseFloat(moneyTxtId.getText().toString().trim())<10){
+                    showToast("10元起可以提现哟~");
+                    return;
+                }
 
                 if(chooseAccoutCk.isChecked()){
                     accountPayShowRv.setVisibility(View.VISIBLE);

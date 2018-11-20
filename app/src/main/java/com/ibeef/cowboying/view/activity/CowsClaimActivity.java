@@ -63,7 +63,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     @Bind(R.id.parsture_name_id)
     TextView parstureNameId;
     @Bind(R.id.see_all_pasture_rv)
-    RelativeLayout seeAllPastureRv;
+    TextView seeAllPastureRv;
     @Bind(R.id.target_txt_id)
     TextView targetTxtId;
     @Bind(R.id.hasidentify_txt_id)
@@ -124,7 +124,8 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
             rvMiddleId.setVisibility(View.GONE);
         }else  if("2".equals(infos.getCurStatus())) {
             nowClaimBtnId.setImageResource(R.mipmap.claimwillopen);
-            rvMiddleId.setVisibility(View.GONE);
+            rvMiddleId.setVisibility(View.VISIBLE);
+            scrollIsShowId.setText("开售时间："+infos.getStartTime());
         }else  if("3".equals(infos.getCurStatus())) {
             nowClaimBtnId.setImageResource(R.mipmap.claimend);
             rvMiddleId.setVisibility(View.VISIBLE);
@@ -133,6 +134,10 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
 
         pastureDetailPresenter=new PastureDetailPresenter(this);
         userInfoPresenter=new UserInfoPresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
     }
 
     @Override
@@ -141,7 +146,6 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
         userInfoPresenter.getUserInfo(reqData);
     }
 
@@ -173,6 +177,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
             case R.id.see_all_pasture_rv:
                 Intent intent = new Intent(CowsClaimActivity.this, ChooseParsterActivity.class);
                 intent.putExtra("id", infos.getPastureId());
+                intent.putExtra("name", infos.getPastureName());
                 startActivity(intent);
                 break;
             case R.id.custom_img_id:

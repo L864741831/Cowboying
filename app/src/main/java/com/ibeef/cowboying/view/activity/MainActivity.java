@@ -83,13 +83,11 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
         bnve.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.i_three) {
                     token= Hawk.get(HawkKey.TOKEN);
                     if(TextUtils.isEmpty(token)){
                         startActivity(LoginActivity.class);
                         finish();
                     }
-                }
                 return true;
             }
         });

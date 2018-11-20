@@ -32,8 +32,6 @@ public class SmsCodeModel implements SmscodeBase.IModel {
         service = httpService.getHttpService().create(ApiService.class);
     }
 
-
-
     @Override
     public Subscription getSms(String version, SmsCodeParamBean smsCodeParamBean,final ResponseCallback<SmsCodeResultBean> callback) {
         Observable<SmsCodeResultBean> observable = service.getSms(version,smsCodeParamBean);

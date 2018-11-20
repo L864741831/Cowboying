@@ -52,6 +52,8 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
     RelativeLayout loadingLayout;
     @Bind(R.id.rv_order)
     RelativeLayout rvOrder;
+    @Bind(R.id.rv_bottom_id)
+    RelativeLayout rvBottomId;
     @Bind(R.id.all_cownum_id)
     TextView allCownumId;
     private SellCowsAdapter sellCowsAdapter;
@@ -218,9 +220,11 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
                 if (isFirst) {
                     rvOrder.setVisibility(View.VISIBLE);
                     ryId.setVisibility(View.GONE);
+                    rvBottomId.setVisibility(View.GONE);
                 } else {
                     rvOrder.setVisibility(View.GONE);
                     ryId.setVisibility(View.VISIBLE);
+                    rvBottomId.setVisibility(View.VISIBLE);
                 }
                 sellCowsAdapter.loadMoreEnd();
             } else {

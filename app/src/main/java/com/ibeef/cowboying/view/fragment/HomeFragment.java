@@ -77,7 +77,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private String token;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
         rv_show_id=view.findViewById(R.id.rv_show_id);
@@ -125,6 +124,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        token= Hawk.get(HawkKey.TOKEN);
     }
 
     @Override

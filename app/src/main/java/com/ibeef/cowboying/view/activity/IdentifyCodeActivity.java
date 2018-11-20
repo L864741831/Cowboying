@@ -3,6 +3,7 @@ package com.ibeef.cowboying.view.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -429,12 +430,18 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void countNumber(String msg) {
-
+        againGetcodeId.setText(msg);
     }
 
     @Override
     public void setClickable(boolean clickable) {
-
+        if(clickable){
+            againGetcodeId.setClickable(true);
+            againGetcodeId.setTextColor(getResources().getColor(R.color.skyblue));
+        }else{
+            againGetcodeId.setClickable(false);
+            againGetcodeId.setTextColor(getResources().getColor(R.color.txthui));
+        }
     }
 
     @Override
@@ -485,9 +492,6 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     protected void onDestroy() {
-        if(smsCodePresenter != null){
-            smsCodePresenter.detachView();
-        }
         if(bindMobilePresenter!=null){
             bindMobilePresenter.detachView();
         }
@@ -496,6 +500,10 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         }
         if(accountRegisterPresenter != null){
             accountRegisterPresenter.detachView();
+        }
+        if(smsCodePresenter!=null){
+            smsCodePresenter.getCountDownTimerService().stopCountDown();
+            smsCodePresenter.detachView();
         }
         super.onDestroy();
     }

@@ -62,7 +62,7 @@ public class SmsCodePresenter extends BasePresenter implements SmscodeBase.IPres
                                     ,60*1000);
                         }else {
                             mView.setClickable(false);
-                            mView.countNumber(countDownTimerService.getCountingTime()/1000 + "秒后重发");
+                            mView.countNumber( "重新发送("+countDownTimerService.getCountingTime()/1000+")");
                         }
                     }
                     break;
