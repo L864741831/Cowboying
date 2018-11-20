@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -124,10 +126,8 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(SureOderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(SureOderActivity.this,MyCowsActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("from",true);
+                        Intent intent=new Intent(SureOderActivity.this,PayResultActivity.class);
+                        intent.putExtra("orderId",infos.getBizData().getOrderId());
                         startActivity(intent);
                         finish();
                     } else {
@@ -161,6 +161,9 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 .skipMemoryCache(true)
                 //跳过内存缓存
                 ;
+        //WXPayEntryActivity 的orderId赋值
+        Constant.orderId=infos.getBizData().getOrderId();
+
         Glide.with(this).load(Constant.imageDomain+infos.getBizData().getHeadImage()).apply(options).into(headImg);
         nickNameTxt.setText("昵称："+infos.getBizData().getNickName());
         knowNameId.setText("认领人："+infos.getBizData().getRealName());
@@ -178,7 +181,8 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
             @Override
             public void onComplete(String content) {
                 contents = content;
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 if(isComplet){
                     isComplet=false;
                     Map<String, String> reqData = new HashMap<>();
@@ -301,12 +305,13 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 Toast.makeText(SureOderActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
                 api.sendReq(request);
+                finish();
             } else if (chooseType == 3) {
-                Intent intent=new Intent(SureOderActivity.this,MyCowsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("from",true);
+
+                Intent intent=new Intent(SureOderActivity.this,PayResultActivity.class);
+                intent.putExtra("orderId",infos.getBizData().getOrderId());
                 startActivity(intent);
+                finish();
                 accountPayShowRv.setVisibility(View.GONE);
                 surePayBtn.setVisibility(View.VISIBLE);
             }
@@ -322,6 +327,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
         }
+        Constant.orderId=null;
         super.onDestroy();
     }
 }

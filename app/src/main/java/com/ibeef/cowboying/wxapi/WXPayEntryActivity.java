@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
+import com.ibeef.cowboying.view.activity.PayResultActivity;
+import com.ibeef.cowboying.view.activity.SureOderActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -58,15 +60,12 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             // 支付成功
             {
                 Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(WXPayEntryActivity.this,MyCowsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("from",true);
+                Intent intent=new Intent(WXPayEntryActivity.this,PayResultActivity.class);
+                intent.putExtra("orderId",Constant.orderId);
                 startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "支付失败！", Toast.LENGTH_SHORT).show();
-
                 finish();
             }
         }

@@ -177,14 +177,6 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
-    public void onDestroy() {
-        if(cattleDetailPresenter!=null){
-            cattleDetailPresenter.detachView();
-        }
-        super.onDestroy();
-    }
-
-    @Override
     public void onLoadMoreRequested() {
         isMoreLoad = true;
         currentPage += 1;
@@ -192,5 +184,13 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         cattleDetailPresenter.getAdoptInfos(reqData,edtId.getText().toString().trim(),null,currentPage);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(cattleDetailPresenter!=null){
+            cattleDetailPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

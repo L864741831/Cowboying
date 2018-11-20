@@ -28,20 +28,23 @@
                         android:layout_marginLeft="10dp" android:layout_marginTop="10dp">
                         <View
                             android:layout_width="3dp" android:layout_height="17dp"
-                            android:background="@color/black" android:layout_gravity="center"/>
-                        <TextView
-                            android:layout_width="wrap_content" android:id="@+id/parsture_name_id"
-                            android:layout_height="wrap_content" android:text="奥尔良牧场"
-                            android:textColor="@color/colorhometxt"
-                            android:textSize="15sp" android:layout_marginLeft="10dp"/>
+                            android:background="@color/black" android:layout_gravity="center_vertical" />
+
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/see_all_pasture_rv">
+                            android:layout_height="wrap_content" android:layout_gravity="center_vertical">
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent" android:id="@+id/parsture_name_id"
+                                android:layout_height="wrap_content" android:text="奥尔良牧场"
+                                android:textColor="@color/colorhometxt"  android:maxLines="2"
+                                android:ellipsize="end"  android:layout_marginTop="4dp"
+                                android:textSize="15sp" android:layout_marginLeft="9dp"
+                                android:layout_marginRight="10dp" android:layout_toLeftOf="@+id/see_all_pasture_rv"/>
+                            <TextView
+                                android:layout_width="wrap_content" android:id="@+id/see_all_pasture_rv"
                                 android:layout_height="wrap_content" android:text="查看牧场"
-                                android:drawableRight="@mipmap/enterright" android:gravity="center_vertical"
-                                android:layout_alignParentRight="true" android:textSize="13sp"/>
+                                android:drawableRight="@mipmap/enterright" android:gravity="center"
+                                android:textSize="13sp" android:layout_alignParentRight="true" />
                         </RelativeLayout>
                     </LinearLayout>
 

@@ -105,7 +105,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
 //                }else {
 //                    startActivity(UseCouponActivity.class);
 //                }
-                showToast("无可用优惠优惠券");
+                showToast("无可用优惠券");
                 break;
             case R.id.next_step_txt:
                 if(agreeXieyiChck.isChecked()){

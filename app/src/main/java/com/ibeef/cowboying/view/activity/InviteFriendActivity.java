@@ -52,7 +52,7 @@ public class InviteFriendActivity extends BaseActivity {
         token= Hawk.get(HawkKey.TOKEN);
         actionNewQuestionTv.setVisibility(View.VISIBLE);
         actionNewQuestionTv.setText("邀请记录");
-        info.setText("全民推广");
+        info.setText("邀请有礼");
     }
 
     @OnClick({R.id.back_id, R.id.action_new_question_tv, R.id.btn_share_wechat, R.id.btn_share_wechat_quan, R.id.btn_share_or_code})

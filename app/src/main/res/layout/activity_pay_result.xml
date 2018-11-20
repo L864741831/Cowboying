@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/homef7"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.PayResultActivity">
+    <include layout="@layout/include_title" android:id="@+id/title_txt_id"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent" android:layout_below="@+id/title_txt_id"
+        android:layout_height="match_parent"  android:layout_above="@+id/see_order_btn">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="vertical">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp" android:src="@mipmap/payresultimg"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="30dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="支付成功"
+                android:textColor="@color/colorAccent" android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp" android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:background="@color/white" android:layout_marginTop="10dp"
+                android:paddingTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="已支付"
+                    android:layout_gravity="center_horizontal" android:textSize="15sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/pay_money_id"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:text="￥5000" android:textSize="24sp" android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"/>
+                <View
+                    style="@style/line" android:layout_marginTop="20dp"
+                    android:layout_marginBottom="23dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/pasture_name_id"
+                    android:layout_height="wrap_content" android:text="认领牧场："
+                    android:layout_marginLeft="15dp" android:layout_marginRight="35dp"
+                    android:lineSpacingExtra="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/pay_time_id"
+                    android:layout_height="wrap_content" android:text="交易时间："
+                    android:layout_marginLeft="15dp" android:layout_marginRight="35dp"
+                    android:layout_marginTop="15dp" android:lineSpacingExtra="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/pay_type_id"
+                    android:layout_height="wrap_content" android:text="付款方式："
+                    android:layout_marginLeft="15dp" android:layout_marginRight="35dp"
+                    android:layout_marginTop="15dp" android:lineSpacingExtra="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/impordent_info_id"
+                    android:layout_height="wrap_content" android:text="特别提醒：支付成功后请耐心等待系统审核，您的收益将从次日起开始计算，请注意查看。"
+                    android:layout_marginLeft="15dp" android:layout_marginRight="35dp"
+                    android:layout_marginTop="15dp" android:layout_marginBottom="50dp"
+                    android:lineSpacingExtra="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/see_order_btn"
+            android:layout_height="50dp" android:background="@color/colorAccent"
+            android:textColor="@color/white" android:text="查看订单"
+            android:layout_alignParentBottom="true" android:gravity="center"
+            android:textSize="16sp"/>
+
+</RelativeLayout>

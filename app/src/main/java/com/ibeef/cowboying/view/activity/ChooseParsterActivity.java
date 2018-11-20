@@ -77,7 +77,7 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
     private PastureDetelBottomImgAdapter pastureDetelBottomImgAdapter;
     private PastureDetelResultBean pastureDetelResultBean;
     private RanchBottomVideoPresenter ranchBottomVideoPresenter;
-    private String token;
+    private String token,name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +88,9 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
 
     private void init() {
         id = getIntent().getIntExtra("id", 0);
-        info.setText("当前选中的牧场");
+        name=getIntent().getStringExtra("name");
+
+        info.setText(name);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置banner样式
         banner.setImageLoader(new GlideImageLoader());

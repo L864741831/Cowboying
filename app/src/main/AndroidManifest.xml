@@ -181,13 +181,14 @@
         <activity android:name=".view.activity.MyCowsDetailActivity" />
         <activity android:name=".view.activity.SellCowsActivity" />
         <activity android:name=".view.activity.SellCowsFirstActivity" />
-        <activity android:name=".view.activity.SellCowsSecondActivity"></activity>
+        <activity android:name=".view.activity.SellCowsSecondActivity" />
         <activity
             android:name=".view.activity.SureOrderBackDialog"
             android:theme="@style/myTransparent" />
         <activity
             android:name=".view.activity.MyCowsProgressDialog"
             android:theme="@style/myTransparent" />
+        <activity android:name=".view.activity.PayResultActivity"></activity>
     </application>
 
 </manifest>

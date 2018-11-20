@@ -58,18 +58,21 @@
                         android:layout_marginRight="20dp" android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp">
                         <TextView
-                            android:layout_width="0dp" android:layout_weight="0.25"
-                            android:layout_height="wrap_content" android:text="卖牛收入"/>
+                            android:layout_width="0dp" android:layout_weight="0.35"
+                            android:layout_height="wrap_content" android:text="卖牛收入"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="0dp" android:layout_weight="0.4"
+                            android:layout_height="wrap_content" android:text="偿还白条"
+                            android:gravity="center"/>
                         <TextView
                             android:layout_width="0dp" android:layout_weight="0.25"
-                            android:layout_height="wrap_content" android:text="偿还白条"/>
-                        <TextView
-                            android:layout_width="0dp" android:layout_weight="0.25"
-                            android:layout_height="wrap_content" android:text="手续费"/>
+                            android:layout_height="wrap_content" android:text="手续费"
+                            android:gravity="center"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp" android:orientation="horizontal"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
                         android:layout_marginRight="20dp"
                         android:layout_marginLeft="10dp">
                         <TextView
@@ -82,12 +85,12 @@
                             android:gravity="center"/>
                         <ImageView
                             android:layout_width="0dp"
-                            android:layout_weight="0.2"
+                            android:layout_weight="0.15"
                             android:layout_height="wrap_content" android:src="@mipmap/sellcowone"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center" android:layout_marginBottom="8dp"/>
                         <TextView
                             android:layout_width="0dp"  android:id="@+id/return_monry_id"
-                            android:layout_weight="0.3"
+                            android:layout_weight="0.2"
                             android:layout_height="wrap_content" android:text="0"
                             android:paddingTop="7dp" android:paddingBottom="7dp"
                             android:paddingLeft="8dp" android:paddingRight="8dp"
@@ -95,12 +98,12 @@
                             android:gravity="center"/>
                         <ImageView
                             android:layout_width="0dp"
-                            android:layout_weight="0.2"
+                            android:layout_weight="0.15"
                             android:layout_height="wrap_content" android:src="@mipmap/sellcowone"
-                            android:layout_gravity="center_vertical"/>
+                            android:layout_gravity="center_vertical" android:layout_marginBottom="8dp"/>
                         <TextView
                             android:layout_width="0dp" android:id="@+id/other_money_id"
-                            android:layout_weight="0.3" android:gravity="center"
+                            android:layout_weight="0.2" android:gravity="center"
                             android:layout_height="wrap_content" android:text="0"
                             android:paddingTop="7dp" android:paddingBottom="7dp"
                             android:paddingLeft="8dp" android:paddingRight="8dp"
@@ -126,7 +129,7 @@
                             android:layout_height="wrap_content" android:src="@mipmap/sellcowstwo"
                             android:layout_marginRight="20dp"/>
                         <TextView
-                            android:layout_width="70dp"
+                            android:layout_width="85dp"
                             android:gravity="center" android:id="@+id/real_money_id"
                             android:layout_height="wrap_content" android:text="0"
                             android:paddingTop="7dp" android:paddingBottom="7dp"
