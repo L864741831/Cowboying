@@ -44,7 +44,7 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
     @Bind(R.id.info)
     TextView info;
     @Bind(R.id.loading_layout)
-    RelativeLayout rvLoading;
+    RelativeLayout loadingLayout;
     @Bind(R.id.ry_id)
     RecyclerView ryId;
     @Bind(R.id.rv_bg)
@@ -145,12 +145,20 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void showLoading() {
-
+        if(isMoreLoad){
+            loadingLayout.setVisibility(View.GONE);
+            ryId.setVisibility(View.VISIBLE);
+            isMoreLoad=false;
+        }else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            ryId.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void hideLoading() {
-
+        loadingLayout.setVisibility(View.GONE);
+        ryId.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -175,5 +183,13 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
     @Override
     public void getMyContrantURL(MyContractURLBean myContractURLBean) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(myContractPresenter!=null){
+            myContractPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }
