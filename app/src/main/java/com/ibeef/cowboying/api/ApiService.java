@@ -41,6 +41,8 @@ import com.ibeef.cowboying.bean.ModifyHeadParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickParamBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.MyContractListBean;
+import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
@@ -517,4 +519,17 @@ public interface ApiService {
     @POST("user/third/reLogin")
     Observable<CheckThirdLoginResultBean> getCheckThirLogin(@HeaderMap Map<String, String> headers, @Body CheckThirdLoginParamBean checkThirdLoginParamBean);
 
+    /**
+     * 合同列表
+     * @return
+     */
+    @GET("contract/list")
+    Observable<MyContractListBean> getMyContrantList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 合同域名
+     * @return
+     */
+    @GET("file/pdfUrl")
+    Observable<MyContractURLBean> getMyContrantURL(@HeaderMap Map<String, String> headers, @Query("type") String type, @Query("fileName") String fileName);
 }
