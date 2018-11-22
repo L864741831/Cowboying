@@ -34,7 +34,7 @@ public class CashDespositListAdapter extends BaseQuickAdapter<CashMoneyRecordRes
             title_stadus_id.setText("取现成功");
             helper.setVisible(R.id.transfer_money_rv,true);
             helper.setText(R.id.transfer_money_id,item.getSuccessTime())
-            .setText(R.id.transfer_money_stadus,"取现成功时间：")
+            .setText(R.id.transfer_money_stadus,"取现成功时间:")
             .setText(R.id.cash_progress_id,"取现成功");
         }else if("1".equals(item.getStatus())){
             //申请取现
@@ -46,14 +46,14 @@ public class CashDespositListAdapter extends BaseQuickAdapter<CashMoneyRecordRes
             title_stadus_id.setText("提现失败");
             helper.setVisible(R.id.transfer_money_rv,true);
             helper.setText(R.id.transfer_money_id,item.getReason())
-                    .setText(R.id.transfer_money_stadus,"失败原因：")
+                    .setText(R.id.transfer_money_stadus,"失败原因:")
                     .setText(R.id.cash_progress_id,"提现失败");
         }else if("4".equals(item.getStatus())){
             //取现拒绝
             title_stadus_id.setText("取现拒绝");
             helper.setVisible(R.id.transfer_money_rv,true);
             helper.setText(R.id.transfer_money_id,item.getReason())
-                    .setText(R.id.transfer_money_stadus,"拒绝原因：")
+                    .setText(R.id.transfer_money_stadus,"拒绝原因:")
                     .setText(R.id.cash_progress_id,"取现拒绝");
         }
 

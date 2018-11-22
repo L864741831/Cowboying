@@ -32,20 +32,23 @@
             android:lineSpacingExtra="5dp"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/tv_ranch_id"
-            android:layout_height="wrap_content" android:textSize="10sp"
-            android:text="" android:textColor="@color/black"
+            android:layout_height="wrap_content" android:textSize="11sp"
+            android:text=""
             android:layout_below="@+id/store_name" android:layout_alignLeft="@+id/store_name"
             android:layout_marginTop="25dp"/>
         <TextView
-            android:layout_width="wrap_content" android:id="@+id/money_id"
+            android:layout_width="match_parent" android:id="@+id/money_id"
             android:layout_height="wrap_content" android:textColor="@color/black"
             android:text="安格斯牛" android:layout_below="@+id/tv_ranch_id"
-            android:layout_alignLeft="@+id/tv_ranch_id" android:layout_marginTop="25dp"/>
+            android:layout_alignLeft="@+id/tv_ranch_id" android:layout_marginTop="25dp"
+            android:layout_toLeftOf="@+id/num_id" android:layout_marginRight="10dp"
+            android:textSize="11sp"/>
         <TextView
-            android:layout_width="wrap_content" android:id="@+id/num_id"
+            android:layout_width="150dp" android:id="@+id/num_id"
             android:layout_height="wrap_content" android:text=""
-            android:layout_alignBottom="@+id/money_id" android:textColor="@color/black"
-            android:layout_alignParentRight="true" android:layout_marginRight="20dp"/>
+            android:layout_alignBottom="@+id/money_id" android:textSize="11sp"
+            android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+            android:gravity="right"/>
         <View
             android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"

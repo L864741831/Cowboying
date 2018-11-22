@@ -7,9 +7,16 @@ package com.ibeef.cowboying.bean;
  * @package com.ibeef.cowboying.bean
  **/
 public class MyContractURLBean {
+
+    /**
+     * code : 000000
+     * message :
+     * bizData : http://pasture-contract.oss-cn-beijing.aliyuncs.com/contract/adoptContract.pdf?Expires=1542855426&OSSAccessKeyId=LTAIMwEKWL7OahCb&Signature=fQo4JBN2ZhbGFzEtERAG1ZZbnK8%3D
+     */
+
     private String code;
     private String message;
-    private BizDataBean bizData;
+    private String bizData;
 
     public String getCode() {
         return code;
@@ -27,15 +34,11 @@ public class MyContractURLBean {
         this.message = message;
     }
 
-    public BizDataBean getBizData() {
+    public String getBizData() {
         return bizData;
     }
 
-    public void setBizData(BizDataBean bizData) {
+    public void setBizData(String bizData) {
         this.bizData = bizData;
-    }
-
-    public  class BizDataBean {
-
     }
 }

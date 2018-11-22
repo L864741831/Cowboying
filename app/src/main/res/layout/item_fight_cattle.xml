@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:orientation="vertical"
+    android:layout_height="match_parent" android:background="@color/colorAccent">
+
+        <ImageView
+            android:layout_width="match_parent" android:id="@+id/banner_img_id"
+            android:layout_height="200dp" android:src="@color/colorGold"
+            android:scaleType="fitXY"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:background="@drawable/shape_search_md_edit_bg"
+            android:layout_marginTop="-40dp" android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp" android:orientation="vertical"
+            android:paddingLeft="15dp" android:paddingRight="15dp">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/container_txt_id"
+                android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                android:text="· 澳洲02号货柜 ·" android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:src="@mipmap/pocketranch"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="7dp"/>
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_marginTop="15dp"
+                android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.33" android:gravity="left"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:text="屠宰场" android:textSize="11sp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.33" android:gravity="center"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="牛品种" android:textColor="@color/colorAccent"
+                    android:textSize="11sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.33" android:gravity="right"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="服务费" android:textColor="@color/colorAccent"
+                    android:textSize="11sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent" android:orientation="horizontal"
+                android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="0dp"  android:id="@+id/kill_house_txt_id"
+                    android:layout_weight="0.2" android:gravity="left"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="澳洲屠宰场" android:textColor="@color/black"
+                    android:textSize="13sp" />
+                <TextView
+                    android:layout_width="0dp" android:id="@+id/parsture_name_id"
+                    android:layout_weight="0.46" android:gravity="center"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="安格斯牛" android:textSize="13sp" />
+                <TextView
+                    android:layout_width="0dp" android:id="@+id/percent_txt_id"
+                    android:layout_weight="0.2"  android:gravity="right"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="30%" android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/percent_zero_txt_id"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:text="0%" android:textSize="13sp" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"  android:layout_toRightOf="@+id/percent_zero_txt_id"
+                    android:layout_toLeftOf="@+id/percent_hundred_txt_id" android:layout_centerVertical="true">
+                    <TextView
+                        android:layout_width="match_parent" android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp" android:layout_gravity="center"
+                        android:layout_height="1dp" android:background="@color/gray_cc"/>
+                    <SeekBar
+                        android:layout_width="match_parent" android:id="@+id/seekbar_id"
+                        android:layout_height="2dp" android:max="100"
+                        android:progressDrawable="@drawable/seekbar_bg"
+                        android:thumb="@null" android:progress="50"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/percent_hundred_txt_id"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:text="100%" android:textColor="@color/colorAccent"
+                    android:textSize="13sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/minpercent_txt_id"
+                    android:layout_height="wrap_content"
+                    android:text="进度10%" android:textColor="@color/colorAccent"
+                    android:textSize="13sp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/fight_person_name_id"
+                    android:layout_height="wrap_content" android:textColor="@color/colorGold"
+                    android:text="0人已拼" android:textSize="13sp"
+                    android:layout_alignParentRight="true" android:background="@drawable/shape_oval_cicle_btn" />
+
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                android:text="· 肉品 ·" android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:src="@mipmap/separate"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="7dp"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent" android:id="@+id/ry_id"
+            android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

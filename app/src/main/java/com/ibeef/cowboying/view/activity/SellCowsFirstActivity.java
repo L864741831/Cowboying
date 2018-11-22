@@ -70,11 +70,11 @@ public class SellCowsFirstActivity extends BaseActivity implements SellCowsBase.
     @Override
     public void getSellCows(SellCowsResultBean sellCowsResultBean) {
         if("000000".equals(sellCowsResultBean.getCode())){
-            getSellCowsMoney.setText((sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()+"");
+            getSellCowsMoney.setText((sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+"");
             returnMonryId.setText(sellCowsResultBean.getBizData().getDebt()+"");
             otherMoneyId.setText(sellCowsResultBean.getBizData().getBrokerage()+"");
             sellCowFirstId.setText("您本次共选中订单1笔，合计卖牛"+sellCowsResultBean.getBizData().getPastureNum()+"只所选订单养殖回报率平均为"+sellCowsResultBean.getBizData().getRate()+"%每年");
-            float realMoney=(sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()-sellCowsResultBean.getBizData().getDebt().floatValue()-sellCowsResultBean.getBizData().getBrokerage().floatValue();
+            float realMoney=(sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())-sellCowsResultBean.getBizData().getDebt().floatValue()-sellCowsResultBean.getBizData().getBrokerage().floatValue();
             realMoneyId.setText(realMoney+"");
             succeceMoneyId.setText("本次取回返利："+sellCowsResultBean.getBizData().getEarn()+"元");
         }else {

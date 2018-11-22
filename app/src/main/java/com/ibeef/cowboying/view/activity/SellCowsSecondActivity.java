@@ -91,10 +91,10 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
     @Override
     public void getSellCows(SellCowsResultBean sellCowsResultBean) {
         if("000000".equals(sellCowsResultBean.getCode())){
-            getSellCowsMoney.setText((sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()+"");
+            getSellCowsMoney.setText((sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+"");
             returnMonryId.setText(sellCowsResultBean.getBizData().getDebt()+"");
             otheMoneyId.setText(sellCowsResultBean.getBizData().getBrokerage()+"");
-            float realMoney=(sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()-sellCowsResultBean.getBizData().getDebt().floatValue()-sellCowsResultBean.getBizData().getBrokerage().floatValue()+sellCowsResultBean.getBizData().getEarn().floatValue();
+            float realMoney=(sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()-sellCowsResultBean.getBizData().getDebt().floatValue()-sellCowsResultBean.getBizData().getBrokerage().floatValue();
             realMoneyId.setText(realMoney+"");
             showMoneyId.setText(realMoney+"");
             giveMoneyId.setText(sellCowsResultBean.getBizData().getEarn()+"");

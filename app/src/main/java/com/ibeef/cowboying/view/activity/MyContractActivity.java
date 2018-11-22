@@ -106,6 +106,7 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
                 MyContractListBean.BizDataBean item=myContractAdapter.getItem(position);
                 Intent intent = new Intent(MyContractActivity.this, MyContractDetailActivity.class);
                 intent.putExtra("fileName",item.getFileName());
+                intent.putExtra("type",item.getContractType());
                 startActivity(intent);
             }
         });

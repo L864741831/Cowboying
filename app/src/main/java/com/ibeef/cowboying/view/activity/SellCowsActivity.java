@@ -160,6 +160,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
                     Intent intent=new Intent(SellCowsActivity.this,SellCowsFirstActivity.class);
                     intent.putExtra("orderId",orderId);
                     startActivity(intent);
+                    orderId="";
                 }
                 break;
             default:

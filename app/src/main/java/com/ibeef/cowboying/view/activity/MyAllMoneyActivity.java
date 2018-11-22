@@ -27,6 +27,7 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -150,25 +151,28 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
         //不显示网格线
         yAxis.setDrawGridLines(false);
         //设置Y轴坐标之间的最小间隔
-        yAxis.setGranularity(1);
+        yAxis.setGranularity(0.3f);
         //设置y轴的刻度数量
-//        yAxis.setLabelCount(num, false);
+//        yAxis.setLabelCount(6, false);
         //设置从Y轴值
         yAxis.setAxisMinimum(0f);
         //+1:y轴多一个单位长度，为了好看
-        if(Collections.max(doubleList).floatValue()==0){
-            yAxis.setAxisMaximum(1);
-        }else {
+        if(Collections.max(doubleList).floatValue()<=1){
+            yAxis.setAxisMaximum(1f);
+        }else  {
             yAxis.setAxisMaximum(Collections.max(doubleList).floatValue());
         }
-
+        yAxis.setTextSize(8);
 
         //y轴
         yAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                int IValue = (int) value;
-                return String.valueOf(IValue);
+                NumberFormat numberFormat = NumberFormat.getInstance();
+                // 设置精确到小数点后2位
+                numberFormat.setMaximumFractionDigits(2);
+                String result = numberFormat.format(value)+"元";
+                return result;
             }
         });
         //一个LineDataSet就是一条线
@@ -189,9 +193,9 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             set1.setLineWidth(1f);
             set1.setDrawCircleHole(false);
             set1.setCircleRadius(1.5f);
-            set1.setCircleColor(getResources().getColor(R.color.skyblue));
+            set1.setCircleColor(getResources().getColor(R.color.e4bb));
             set1.setHighLightColor(getResources().getColor(R.color.bule_7d));
-            set1.setColor(getResources().getColor(R.color.skyblue));
+            set1.setColor(getResources().getColor(R.color.e4bb));
             set1.setFillColor(getResources().getColor(R.color.bule_7d));
             set1.setDrawHorizontalHighlightIndicator(false);
             set1.setFillFormatter(new IFillFormatter() {

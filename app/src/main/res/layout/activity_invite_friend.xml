@@ -147,11 +147,14 @@
                         android:layout_marginBottom="23dp"
                         />
                 </RelativeLayout>
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/invite_top_1"
-                    />
+                    android:src="@mipmap/invite_top_1"
+                    android:scaleType="fitXY" android:layout_marginTop="-1dp"/>
+
+
             </FrameLayout>
 
     <RelativeLayout

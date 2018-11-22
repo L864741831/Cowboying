@@ -47,7 +47,7 @@ public class SellCowsChirdAdapter extends BaseQuickAdapter<MyCowsOrderListBean.B
             all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.hascheck));
         }
         helper.setText(R.id.pasture_name_id,pastureName)
-                .setText(R.id.cows_name_id,"安格拉斯牛")
+                .setText(R.id.cows_name_id,"安格斯牛")
                 .setText(R.id.get_money_id,"已领取收益合计："+item.getCattleCode());
         helper.addOnClickListener(R.id.all_ck_id);
 

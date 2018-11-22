@@ -87,11 +87,17 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
         orderInitPresenter=new OrderInitPresenter(this);
     }
 
-    @OnClick({R.id.back_id, R.id.is_coupon_rv, R.id.next_step_txt})
+    @OnClick({R.id.back_id, R.id.is_coupon_rv, R.id.next_step_txt,R.id.xieyiss_txt_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
+                break;
+            case R.id.xieyiss_txt_id:
+                Intent intent=new Intent(ClaimUnCertificationActivity.this,MyContractDetailActivity.class);
+                intent.putExtra("fileName","");
+                intent.putExtra("type","1");
+                startActivity(intent);
                 break;
             case R.id.is_coupon_rv:
                 // TODO: 2018/11/14 暂无需求

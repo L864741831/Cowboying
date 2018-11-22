@@ -20,7 +20,9 @@
     <color name="seekbar_bg_last">#B0957A</color>
     <color name="qian_red">#FA3F3F</color>
     <color name="color3c">#CCCCCC</color>
-    <color name="bule_7d">#7DB8F2</color>
+    <color name="bule_7d">#f3e9d6</color>
     <color name="bule_9e">#9EC8F0</color>
     <color name="hui_33">#333332</color>
+    <color name="e4bb">#e4d2bb</color>
+    <color name="cea2">#cea266</color>
 </resources>

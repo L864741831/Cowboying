@@ -31,6 +31,7 @@ import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
+import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
@@ -243,6 +244,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 break;
             case R.id.together_cow_fm:
                 //拼牛
+                startActivity(FightCattleActivity.class);
                 break;
             case R.id.newpeople_img_id:
                 //新人礼券
