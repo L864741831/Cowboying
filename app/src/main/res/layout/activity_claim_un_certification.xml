@@ -108,10 +108,10 @@
         <TextView
             android:layout_width="wrap_content" android:id="@+id/agreen_txt_id"
             android:layout_height="wrap_content" android:text="同意"
-            android:layout_centerVertical="true"  android:layout_toLeftOf="@+id/xieyi_txt_id"
+            android:layout_centerVertical="true"  android:layout_toLeftOf="@+id/xieyiss_txt_id"
             android:layout_marginLeft="10dp" android:layout_marginRight="5dp"/>
         <TextView
-            android:layout_width="wrap_content" android:id="@+id/xieyi_txt_id"
+            android:layout_width="wrap_content" android:id="@+id/xieyiss_txt_id"
             android:layout_height="wrap_content" android:text="《认领协议》"
             android:textColor="@color/colorGolds" android:layout_alignParentRight="true"
             android:layout_centerVertical="true" android:layout_marginRight="15dp"/>

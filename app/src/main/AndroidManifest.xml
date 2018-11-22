@@ -188,7 +188,7 @@
         <activity
             android:name=".view.activity.MyCowsProgressDialog"
             android:theme="@style/myTransparent" />
-        <activity android:name=".view.activity.PayResultActivity"></activity>
+        <activity android:name=".view.activity.PayResultActivity" />
     </application>
 
 </manifest>

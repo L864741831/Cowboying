@@ -50,8 +50,8 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
     EditText etRightCodeId;
     @Bind(R.id.agree_xieyi_chck)
     CheckBox agreeXieyiChck;
-    @Bind(R.id.xieyi_txt_id)
-    TextView xieyiTxtId;
+    @Bind(R.id.xieyiss_txt_id)
+    TextView xieyissTxtId;
     @Bind(R.id.quan_txt_id)
     TextView quanTxtId;
     @Bind(R.id.coupon_num_id)

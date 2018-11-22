@@ -53,8 +53,8 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
     EditText etRightCodeId;
     @Bind(R.id.agree_xieyi_chck)
     CheckBox agreeXieyiChck;
-    @Bind(R.id.xieyi_txt_id)
-    TextView xieyiTxtId;
+    @Bind(R.id.xieyiss_txt_id)
+    TextView xieyissTxtId;
     @Bind(R.id.is_use_id)
     TextView isUseId;
     @Bind(R.id.is_coupon_rv)

@@ -1,11 +1,18 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 
@@ -28,7 +35,6 @@ public class AdWebviewActivity extends BaseActivity {
     @Bind(R.id.action_new_question_tv)
     TextView actionNewQuestionTv;
     private String url,title;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +66,7 @@ public class AdWebviewActivity extends BaseActivity {
         //开启DomStorage缓存
         webSettings.setDomStorageEnabled(true);
         webId.loadUrl(url);
+
         info.setText(title);
     }
 
