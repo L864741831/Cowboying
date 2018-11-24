@@ -28,7 +28,7 @@ public class CowClaimPastRecordAdapter extends BaseQuickAdapter<HistorySchemeRes
         helper.setText(R.id.cows_name_id,"第"+item.getCode()+"期 "+item.getPastureName())
                 .setText(R.id.money_txt_id,item.getPrice()+"元")
                 .setText(R.id.percent_txt_id,item.getExpectRate())
-                .setText(R.id.people_num_id,(item.getTotalStock()-item.getStock())+"人");
+                .setText(R.id.people_num_id,item.getParticipatorNum()+"人");
         helper.addOnClickListener(R.id.see_people_num_rv);
 
 

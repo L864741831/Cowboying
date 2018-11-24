@@ -57,9 +57,15 @@
                     android:layout_marginTop="15dp" android:lineSpacingExtra="5dp"/>
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/impordent_info_id"
-                    android:layout_height="wrap_content" android:text="特别提醒：支付成功后请耐心等待系统审核，您的收益将从次日起开始计算，请注意查看。"
+                    android:layout_height="wrap_content" android:text="特别提醒：支付成功后请耐心等待系统审核， 您"
                     android:layout_marginLeft="15dp" android:layout_marginRight="35dp"
-                    android:layout_marginTop="15dp" android:layout_marginBottom="50dp"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="的收益将从次日起开始计算，请注意查看。"
+                    android:layout_marginLeft="85dp" android:layout_marginRight="35dp"
+                    android:layout_marginTop="5dp" android:layout_marginBottom="50dp"
                     android:lineSpacingExtra="5dp"/>
             </LinearLayout>
         </LinearLayout>

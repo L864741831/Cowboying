@@ -140,12 +140,16 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                     loginParamBean.setType("2");
                     //1：密码登录；2：短信验证码登录
                     loginParamBean.setSmsCode(contents);
+                    loginParamBean.setMachineCode(Md5Util.getIMEI(IdentifyCodeActivity.this));
+                    Log.e(Constant.TAG,Md5Util.getIMEI(IdentifyCodeActivity.this)+"~~~~~~~~~~");
                     loginPresenter.getUserLogin(getVersionCodes(),loginParamBean);
                 }else  if("2".equals(stadus)){
                   //注册接口
                     AccountRegisterParamBean accountRegisterParamBean=new AccountRegisterParamBean();
                     accountRegisterParamBean.setMobile(mobile);
                     accountRegisterParamBean.setCode(contents);
+                    accountRegisterParamBean.setMachineCode(Md5Util.getIMEI(IdentifyCodeActivity.this));
+                    Log.e(Constant.TAG,Md5Util.getIMEI(IdentifyCodeActivity.this)+"~~~~~~~~~~");
                     accountRegisterPresenter.getAccoutRegister(getVersionCodes(),accountRegisterParamBean);
 
                 }else {
@@ -388,6 +392,8 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 CheckThirdLoginParamBean checkThirdLoginParamBean=new CheckThirdLoginParamBean();
                 checkThirdLoginParamBean.setMobile(mobile);
                 checkThirdLoginParamBean.setVisitorId(visitorId);
+                checkThirdLoginParamBean.setMachineCode(Md5Util.getIMEI(IdentifyCodeActivity.this));
+                Log.e(Constant.TAG,Md5Util.getIMEI(IdentifyCodeActivity.this)+"~~~~~~~~~~");
                 bindMobilePresenter.getCheckThirLogin(reqData,checkThirdLoginParamBean);
 
             }else   if("4".equals(stadus)){

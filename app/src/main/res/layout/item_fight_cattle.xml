@@ -11,9 +11,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:background="@drawable/shape_search_md_edit_bg"
-            android:layout_marginTop="-40dp" android:layout_marginRight="15dp"
+            android:layout_marginTop="-32dp" android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp" android:orientation="vertical"
-            android:paddingLeft="15dp" android:paddingRight="15dp">
+            android:paddingLeft="15dp" android:paddingRight="15dp"
+            android:layout_marginBottom="20dp">
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/container_txt_id"
                 android:layout_height="wrap_content" android:layout_alignParentRight="true"
@@ -121,11 +122,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:src="@mipmap/separate"
                 android:layout_gravity="center_horizontal" android:layout_marginTop="7dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent" android:id="@+id/ry_id"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent" android:id="@+id/ry_id"
-            android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

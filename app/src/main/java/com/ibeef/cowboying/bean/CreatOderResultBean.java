@@ -60,8 +60,8 @@ public class CreatOderResultBean implements Serializable {
          * discountAmount : 0
          * orderStatus : 1
          * quantity : 1
-         * realName : 李闪闪
-         * cardNo : 410223199005143549
+         * realName :
+         * cardNo :
          * mobile : 18703643373
          * distributeTime : null
          * unlockDate : null

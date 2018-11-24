@@ -8,7 +8,16 @@ package com.ibeef.cowboying.bean;
  **/
 public class CheckThirdLoginParamBean {
     private String mobile;
+    private String machineCode;
     private Integer visitorId;
+
+    public String getMachineCode() {
+        return machineCode;
+    }
+
+    public void setMachineCode(String machineCode) {
+        this.machineCode = machineCode;
+    }
 
     public String getMobile() {
         return mobile;

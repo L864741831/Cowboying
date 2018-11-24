@@ -20,6 +20,7 @@ import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
 import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatOrderParamBean;
@@ -74,6 +75,7 @@ import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.bean.UpdateMobileParamBean;
 import com.ibeef.cowboying.bean.UpdateMobileResultBean;
+import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.bean.ValidateSmsCodeParamBean;
 import com.ibeef.cowboying.bean.WalletRecordResultBean;
@@ -533,6 +535,20 @@ public interface ApiService {
      */
     @GET("file/pdfUrl")
     Observable<MyContractURLBean> getMyContrantURL(@HeaderMap Map<String, String> headers, @Query("type") String type, @Query("fileName") String fileName);
+
+    /**
+     * 当前方案可用优惠券数量
+     * @return
+     */
+    @GET("coupon/scheme/count")
+    Observable<CouponNumResultBean> getCouponNum(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId);
+
+    /**
+     * 获取当前方案中所有可用的优惠券信息
+     * @return
+     */
+    @GET("coupon/scheme/info")
+    Observable<UseCouponListResultBean> getUseCouponList(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("currentPage") int currentPage);
 
     /**
      * 我的优惠券列表

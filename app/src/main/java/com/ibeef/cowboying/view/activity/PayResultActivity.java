@@ -43,7 +43,7 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
     @Bind(R.id.see_order_btn)
     TextView seeOrderBtn;
 
-    private Integer orderId;
+    private int orderId;
     private MyCowsOrderPresenter myCowsOrderPresenter;
     private String token;
     @Override

@@ -56,8 +56,6 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
     RelativeLayout modifyPwdRv;
     @Bind(R.id.option_return_rv)
     RelativeLayout optionReturnRv;
-    @Bind(R.id.nomal_question_rv)
-    RelativeLayout nomalQuestionRv;
     @Bind(R.id.version_code_txt)
     TextView versionCodeTxt;
     @Bind(R.id.release_cache_txt)
@@ -113,7 +111,7 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
         initDialog();
     }
 
-    @OnClick({R.id.accout_securty_id, R.id.modify_pwd_rv, R.id.option_return_rv, R.id.nomal_question_rv, R.id.release_cache_rv,R.id.back_id,R.id.unlogin_rv})
+    @OnClick({R.id.accout_securty_id, R.id.modify_pwd_rv, R.id.option_return_rv, R.id.release_cache_rv,R.id.back_id,R.id.unlogin_rv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -127,9 +125,6 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
                 break;
             case R.id.option_return_rv:
                 startActivity(OptionReturnActivity.class);
-                break;
-            case R.id.nomal_question_rv:
-                startActivity(NormalQuestionActivity.class);
                 break;
             case R.id.release_cache_rv:
                 try {

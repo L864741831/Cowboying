@@ -29,12 +29,13 @@
                     android:scrollbars="none" />
                 <RelativeLayout
                     android:layout_width="match_parent" android:id="@+id/rv_show_id"
-                    android:layout_height="50dp" android:background="@color/colorAccent"
-                    android:visibility="gone">
+                    android:layout_height="wrap_content" android:background="@color/colorAccent"
+                    android:paddingBottom="10dp" android:visibility="gone">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:src="@mipmap/toptitlehome"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true" android:layout_marginTop="26dp"
+                       />
                 </RelativeLayout>
 
             </FrameLayout>

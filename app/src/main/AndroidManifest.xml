@@ -193,6 +193,7 @@
         <activity android:name=".view.activity.FightCattleActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activity.DiscountCouponActivity"/>
+        <activity android:name=".view.activity.NewManwelfareActivity"></activity>
     </application>
 
 </manifest>

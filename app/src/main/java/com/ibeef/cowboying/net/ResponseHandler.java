@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.ibeef.cowboying.application.CowboyingApplication;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.utils.ActivityCollector;
 import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.orhanobut.hawk.Hawk;
 
@@ -29,8 +30,10 @@ public class ResponseHandler {
             }
 
             if(code==401){
-                Hawk.put(HawkKey.TOKEN, "");
-                CowboyingApplication.getInstance().startActivity(new Intent(CowboyingApplication.getInstance(), LoginActivity.class));
+                if(!ActivityCollector.isForeground(CowboyingApplication.getInstance(),"LoginActivity")){
+                    Hawk.put(HawkKey.TOKEN, "");
+                    CowboyingApplication.getInstance().startActivity(new Intent(CowboyingApplication.getInstance(), LoginActivity.class));
+                }
                 return "未登录";
             }
         } else if (e instanceof ConnectException) {

@@ -10,6 +10,7 @@ public class AccountRegisterParamBean {
 
      private String mobile;
      private String code;
+     private String machineCode;
 
     public String getMobile() {
         return mobile;
@@ -25,5 +26,13 @@ public class AccountRegisterParamBean {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getMachineCode() {
+        return machineCode;
+    }
+
+    public void setMachineCode(String machineCode) {
+        this.machineCode = machineCode;
     }
 }

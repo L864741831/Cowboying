@@ -33,6 +33,7 @@ import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
+import com.ibeef.cowboying.view.activity.NormalQuestionActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
 import com.orhanobut.hawk.Hawk;
@@ -102,6 +103,8 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
     RelativeLayout inviteFriendIdRv;
     @Bind(R.id.tell_us_id_rv)
     RelativeLayout tellUsIdRv;
+    @Bind(R.id.nomal_question_rv)
+    RelativeLayout nomalQuestionRv;
 
     private String token;
     private UserInfoPresenter userInfoPresenter;
@@ -148,7 +151,7 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.messege_id, R.id.setting_id, R.id.head_img, R.id.pay_money_codeId, R.id.please_codeId, R.id.get_goods_codeId, R.id.all_order_id, R.id.wait_to_pay_id, R.id.wait_to_delevery_id, R.id.wait_get_goods_id, R.id.wait_push_goods_id, R.id.me_cattle_rv, R.id.cattle_oder_rv, R.id.all_money_rv, R.id.beef_house_rv, R.id.write_money_rv, R.id.coupon_num_rv, R.id.contract_id_rv, R.id.invite_friend_id_rv, R.id.tell_us_id_rv})
+    @OnClick({R.id.messege_id, R.id.setting_id, R.id.head_img,R.id.nomal_question_rv,R.id.pay_money_codeId, R.id.please_codeId, R.id.get_goods_codeId, R.id.all_order_id, R.id.wait_to_pay_id, R.id.wait_to_delevery_id, R.id.wait_get_goods_id, R.id.wait_push_goods_id, R.id.me_cattle_rv, R.id.cattle_oder_rv, R.id.all_money_rv, R.id.beef_house_rv, R.id.write_money_rv, R.id.coupon_num_rv, R.id.contract_id_rv, R.id.invite_friend_id_rv, R.id.tell_us_id_rv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.messege_id:
@@ -263,6 +266,9 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
             case R.id.tell_us_id_rv:
                 //联系我们
                 startActivity(ContactUsActivity.class);
+                break;
+            case R.id.nomal_question_rv:
+                startActivity(NormalQuestionActivity.class);
                 break;
             default:
                 break;
