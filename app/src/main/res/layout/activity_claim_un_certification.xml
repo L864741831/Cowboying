@@ -130,7 +130,7 @@
         <TextView
             android:layout_width="wrap_content" android:id="@+id/coupon_num_id"
             android:layout_height="wrap_content" android:text="5张可用"
-            android:layout_toRightOf="@+id/quan_txt_id" android:visibility="gone"
+            android:layout_toRightOf="@+id/quan_txt_id"
             android:gravity="center" android:layout_centerVertical="true"
             android:layout_marginLeft="10dp" android:textColor="@color/red"/>
         <TextView

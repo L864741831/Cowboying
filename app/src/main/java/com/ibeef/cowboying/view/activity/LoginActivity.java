@@ -234,8 +234,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
             startActivity(intent1);
             finish();
         }
-
-
     }
 
 }

@@ -35,9 +35,15 @@ public class FightCattleActivity extends BaseActivity implements SwipeRefreshLay
     SwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
+    @Bind(R.id.rv_order)
+    RelativeLayout rvOrder;
     private String token;
     private List<Object> baseBeans;
     private FightCattleAdapter fightCattleAdapter;
+
+    private int currentPage=1;
+    private boolean isFirst=true;
+    private boolean isMoreLoad=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,9 @@ public class FightCattleActivity extends BaseActivity implements SwipeRefreshLay
     private void init(){
         token = Hawk.get(HawkKey.TOKEN);
         baseBeans = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            baseBeans.add(new Object());
+        }
         ryId.setLayoutManager(new LinearLayoutManager(this));
         fightCattleAdapter = new FightCattleAdapter( baseBeans,this, R.layout.item_fight_cattle);
         fightCattleAdapter.setOnLoadMoreListener(this, ryId);
@@ -74,11 +83,38 @@ public class FightCattleActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-
+        currentPage = 1;
+        isFirst = true;
+        baseBeans.clear();
+        swipeLy.setRefreshing(false);
     }
 
     @Override
     public void onLoadMoreRequested() {
+        isMoreLoad = true;
+        currentPage += 1;
+    }
 
+//    @Override
+//    public void showLoading() {
+//        if (isMoreLoad) {
+//            loadingLayout.setVisibility(View.GONE);
+//            ryId.setVisibility(View.VISIBLE);
+//            isMoreLoad = false;
+//        } else {
+//            loadingLayout.setVisibility(View.VISIBLE);
+//            ryId.setVisibility(View.GONE);
+//        }
+//    }
+//
+//    @Override
+//    public void hideLoading() {
+//        loadingLayout.setVisibility(View.GONE);
+//        ryId.setVisibility(View.VISIBLE);
+//    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -9,8 +9,8 @@
     <!-- 间隔 设置各个方向的间隔-->
    <padding
         android:bottom="2dp"
-        android:left="6dp"
-        android:right="6dp"
+        android:left="10dp"
+        android:right="10dp"
         android:top="2dp" />
 
 </shape>

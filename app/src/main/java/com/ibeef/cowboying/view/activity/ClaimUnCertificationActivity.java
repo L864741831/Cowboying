@@ -3,6 +3,7 @@ package com.ibeef.cowboying.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.OrderInitBase;
+import com.ibeef.cowboying.base.UseCouponListBase;
 import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatOrderParamBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
@@ -20,9 +23,12 @@ import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.PayInitResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
+import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
+import com.ibeef.cowboying.presenter.UseCouponListPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.orhanobut.hawk.Hawk;
 
@@ -37,7 +43,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 立即认领未实名认证界面
  */
-public class ClaimUnCertificationActivity extends BaseActivity implements UserInfoBase.IView,OrderInitBase.IView {
+public class ClaimUnCertificationActivity extends BaseActivity implements UserInfoBase.IView,OrderInitBase.IView , UseCouponListBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -61,11 +67,17 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
     RelativeLayout isCouponRv;
     @Bind(R.id.next_step_txt)
     TextView nextStepTxt;
+    @Bind(R.id.coupon_num_id)
+    TextView couponNumId;
     private String token;
     private String mobile;
     private int schemeId,quantity,userId;
     private UserInfoPresenter userInfoPresenter;
     private OrderInitPresenter orderInitPresenter;
+    private final static int REQUESTCODE = 1; // 返回的结果码
+    private   String selectId="";
+    private  boolean check;
+    private UseCouponListPresenter useCouponListPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +97,16 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
 
         userInfoPresenter=new UserInfoPresenter(this);
         orderInitPresenter=new OrderInitPresenter(this);
+        useCouponListPresenter=new UseCouponListPresenter(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        useCouponListPresenter.getCouponNum(reqData,schemeId+"");
     }
 
     @OnClick({R.id.back_id, R.id.is_coupon_rv, R.id.next_step_txt,R.id.xieyiss_txt_id})
@@ -100,13 +122,11 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
                 startActivity(intent);
                 break;
             case R.id.is_coupon_rv:
-                // TODO: 2018/11/14 暂无需求
-//                if(TextUtils.isEmpty(token)){
-//                    startActivity(LoginActivity.class);
-//                }else {
-//                    startActivity(UseCouponActivity.class);
-//                }
-                showToast("无可用优惠券");
+                Intent intent1=new Intent(ClaimUnCertificationActivity.this,UseCouponActivity.class);
+                intent1.putExtra("selectId",selectId);
+                intent1.putExtra("check",check);
+                intent1.putExtra("schemeId",schemeId);
+                startActivityForResult(intent1,REQUESTCODE);
                 break;
             case R.id.next_step_txt:
                 // 实名认证
@@ -129,11 +149,9 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
                     realNameParamBean.setRealName(etRealNameId.getText().toString().trim());
                     realNameParamBean.setRealCardNo(etRealIdentificationId.getText().toString().trim());
                     userInfoPresenter.getRealName(reqData,realNameParamBean);
-
                 }else {
                     showToast("请同意认领协议！");
                 }
-
                 break;
             default:
                 break;
@@ -145,6 +163,49 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
 
     }
 
+    @Override
+    public void getCouponNum(CouponNumResultBean couponNumResultBean) {
+        if(couponNumResultBean.getBizData()>0){
+            couponNumId.setVisibility(View.VISIBLE);
+            couponNumId.setText(couponNumResultBean.getBizData()+"张可用");
+            isUseId.setText("未使用");
+        }else {
+            isUseId.setText("无可用");
+            couponNumId.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void getUseCouponList(UseCouponListResultBean useCouponListResultBean) {
+
+    }
+
+    // 为了获取结果
+     @Override
+     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+          super.onActivityResult(requestCode, resultCode, data);
+         // RESULT_OK，判断另外一个activity已经结束数据输入功能，Standard activity result:
+         // operation succeeded. 默认值是-1
+          if (resultCode == 2) {
+              if (requestCode == REQUESTCODE) {
+                  selectId = data.getStringExtra("selectId");
+                  check=data.getBooleanExtra("check",false);
+                  //优惠金额
+                  double couponmoney=data.getDoubleExtra("couponmoney",0);
+                  if(check){
+                      //不使用优惠券
+                      isUseId.setText("未使用");
+                  }else {
+                      if(couponmoney>0){
+                          isUseId.setText(couponmoney+"");
+                      }else {
+                          isUseId.setText("无可用");
+                      }
+                  }
+                  Log.e(Constant.TAG,"fddffff"+selectId+check+couponmoney);
+              }
+          }
+        }
     @Override
     public void getCreatOder(CreatOderResultBean creatOderResultBean) {
         if("000000".equals(creatOderResultBean.getCode())){

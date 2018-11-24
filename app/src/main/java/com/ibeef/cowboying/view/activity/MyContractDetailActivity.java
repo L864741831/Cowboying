@@ -27,6 +27,7 @@ import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
@@ -84,9 +85,11 @@ public class MyContractDetailActivity extends BaseActivity implements  MyContrac
         token= Hawk.get(HawkKey.TOKEN);
         fileName = getIntent().getStringExtra("fileName");
         type = getIntent().getStringExtra("type");
-        if("1".equals(type)){
+        if(SDCardUtil.isNullOrEmpty(type)){
             info.setText("养牛合同");
-        } else {
+        }else if("1".equals(type)){
+            info.setText("养牛合同");
+        } else if("2".equals(type)){
             info.setText("拼牛合同");
         }
 

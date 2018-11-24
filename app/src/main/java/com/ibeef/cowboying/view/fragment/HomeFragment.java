@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.HomeProductListAdapter;
@@ -33,6 +35,7 @@ import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
+import com.ibeef.cowboying.view.activity.NewManwelfareActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
@@ -76,6 +79,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private boolean isFirstAdDialog=true;
     private RelativeLayout rv_show_id;
     private String token;
+    private HomeBannerResultBean homeBannerResultBean;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         swipeLy=view.findViewById(R.id.swipe_ly);
@@ -248,6 +252,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 break;
             case R.id.newpeople_img_id:
                 //新人礼券
+                if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean)){
+                    if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())) {
+                        Intent intent=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                        intent.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                        startActivity(intent);
+                    }
+                }
                 break;
             case R.id.ranchconsociation_img_id:
                 //合作牧场
@@ -259,7 +270,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
 
-
     @Override
     public void showMsg(String msg) {
     }
@@ -267,6 +277,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void getHomeBanner(final HomeBannerResultBean homeBannerResultBean) {
+        this.homeBannerResultBean=homeBannerResultBean;
         if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getTopBannerList())){
             return;
         }
@@ -281,13 +292,21 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
-                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
-                intent.putExtra("title","口袋牧场");
-                startActivity(intent);
+//                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
+//                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
+//                intent.putExtra("title","口袋牧场");
+//                startActivity(intent);
             }
         });
 
+        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())){
+            RequestOptions options = new RequestOptions()
+                    .skipMemoryCache(true)
+                    .error(R.mipmap.newpeople)
+                    //跳过内存缓存
+                    ;
+            Glide.with(getHoldingActivity()).load(Constant.imageDomain+homeBannerResultBean.getBizData().getNewUserActivity().getHomeBanner()).apply(options).into(newpeopleImgId);
+        }
         if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getMiddleBannerList())){
             return;
         }
@@ -301,14 +320,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         specialbeefImgId.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
-                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
-                intent.putExtra("title","口袋牧场");
-                startActivity(intent);
+//                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
+//                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
+//                intent.putExtra("title","口袋牧场");
+//                startActivity(intent);
             }
         });
 
-        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBannerResDto())){
+        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBanner())){
             return;
         }
         if(isFirstAdDialog){
@@ -318,7 +337,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                 editor.commit();
                 Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-                intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
+                intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
                 startActivity(intent);
             }else {
                 if(!DateUtils.getTime(new Date()).equals(history)){
@@ -326,7 +345,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                     editor.commit();
                     Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-                    intent.putExtra("info",homeBannerResultBean.getBizData().getPopBannerResDto());
+                    intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
                     startActivity(intent);
                 }
             }

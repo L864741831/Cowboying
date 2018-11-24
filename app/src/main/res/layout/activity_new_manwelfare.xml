@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.NewManwelfareActivity">
+    <include layout="@layout/include_title" android:id="@+id/inclut_id"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_below="@+id/inclut_id"
+        android:layout_above="@+id/experience_btn_id" android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="match_parent" android:id="@+id/show_img_id"
+                    android:layout_height="match_parent" android:scaleType="fitXY" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+    <TextView
+        android:layout_width="match_parent" android:id="@+id/experience_btn_id"
+        android:layout_height="50dp" android:background="@color/colorGold"
+        android:textColor="@color/colorAccent" android:text="立即体验"
+        android:layout_alignParentBottom="true" android:gravity="center"
+        android:textSize="17sp"/>
+</RelativeLayout>

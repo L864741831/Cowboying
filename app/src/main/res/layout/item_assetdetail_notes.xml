@@ -13,13 +13,13 @@
         android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content" android:id="@+id/show_reson_id"
-            android:layout_height="wrap_content" android:textSize="15sp"
+            android:layout_height="wrap_content" android:textSize="16sp"
             android:text="认领牛只" android:textColor="@color/colorAccent"
             android:layout_marginLeft="15dp"  />
         <TextView
             android:layout_width="wrap_content" android:id="@+id/show_time_id"
-            android:layout_height="wrap_content" android:textSize="15sp"
-            android:text="2018-08-25 13:00" android:textColor="@color/colorAccent"
+            android:layout_height="wrap_content" android:textSize="13sp"
+            android:text="2018-08-25 13:00"
             android:layout_marginLeft="15dp" android:layout_marginTop="5dp" />
     </LinearLayout>
 
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content" android:id="@+id/show_money_id"
         android:layout_height="wrap_content" android:text="+5000"
         android:layout_alignParentRight="true" android:layout_centerVertical="true"
-        android:textSize="15sp" android:layout_marginRight="20dp"/>
+        android:textSize="16sp" android:layout_marginRight="20dp"/>
 
     <View
        style="@style/line1" android:layout_alignParentBottom="true"/>

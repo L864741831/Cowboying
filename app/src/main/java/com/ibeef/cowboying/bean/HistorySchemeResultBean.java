@@ -131,6 +131,16 @@ public class HistorySchemeResultBean implements Serializable {
         private String projectDescribe;
         private String curStatus;
 
+        private int participatorNum;
+
+        public int getParticipatorNum() {
+            return participatorNum;
+        }
+
+        public void setParticipatorNum(int participatorNum) {
+            this.participatorNum = participatorNum;
+        }
+
         public int getSchemeId() {
             return schemeId;
         }

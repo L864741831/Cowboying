@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.UseCouponListResultBean;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class UseCouponListAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class UseCouponListAdapter extends BaseQuickAdapter<UseCouponListResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public UseCouponListAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -24,22 +25,28 @@ public class UseCouponListAdapter extends BaseQuickAdapter<Object,BaseViewHolder
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
+    protected void convert(BaseViewHolder helper, UseCouponListResultBean.BizDataBean item) {
         LinearLayout lvBgId=helper.getView(R.id.lv_bg_id);
         LinearLayout unvalidityShowbgLv=helper.getView(R.id.unvalidity_showbg_lv);
+        helper.setText(R.id.coupon_type_id,item.getName());
+        helper.setText(R.id.money_txt_id,item.getParValue()+"");
+        helper.setText(R.id.enough_money_id,"· 满"+item.getNeedAmount()+"元可用 ·");
+        helper.setText(R.id.validity_time_id,"·有效期至"+item.getUseEndTime());
 
-        if(false){
+        //状态（0：未使用；1：已使用；2：不可用）
+        if("0".equals(item.getStatus())){
             //优惠券是否可用 可用
             unvalidityShowbgLv.setVisibility(View.GONE);
-            if(true){
+            if(1==item.getDefautChoose()){
                 //如果选中
                 lvBgId.setBackgroundResource(R.mipmap.choosecoupon);
-            }else {
+            }else  if(0==item.getDefautChoose()){
                 lvBgId.setBackgroundResource(R.mipmap.unchoosecoupon);
             }
-        }else {
+        } else if("1".equals(item.getStatus())||"2".equals(item.getStatus())){
             //优惠券是否可用 不可用
-            unvalidityShowbgLv.setVisibility(View.VISIBLE);
+//            unvalidityShowbgLv.setVisibility(View.VISIBLE);
+            unvalidityShowbgLv.setVisibility(View.GONE);
             lvBgId.setBackgroundResource(R.mipmap.unusecoupon);
         }
 

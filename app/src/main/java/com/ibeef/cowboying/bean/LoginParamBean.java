@@ -13,6 +13,7 @@ public class LoginParamBean {
     private String password;
     private String type;
     private String smsCode;
+    private String machineCode;
 
     public String getType() {
         return type;
@@ -44,5 +45,13 @@ public class LoginParamBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMachineCode() {
+        return machineCode;
+    }
+
+    public void setMachineCode(String machineCode) {
+        this.machineCode = machineCode;
     }
 }

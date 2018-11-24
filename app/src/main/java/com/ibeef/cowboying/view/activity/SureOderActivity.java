@@ -167,7 +167,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         Glide.with(this).load(Constant.imageDomain+infos.getBizData().getHeadImage()).apply(options).into(headImg);
         nickNameTxt.setText("昵称："+infos.getBizData().getNickName());
         knowNameId.setText("认领人："+infos.getBizData().getRealName());
-        orderCodeTxt.setText("订单编号："+infos.getBizData().getOrderId());
+        orderCodeTxt.setText("订单编号："+infos.getBizData().getCode());
         payMoneyId.setText("￥"+infos.getBizData().getPayAmount());
         knowMobileId.setText(infos.getBizData().getMobile());
         knowIdentifycodeId.setText("身份证号："+infos.getBizData().getCardNo());
@@ -327,7 +327,6 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
         }
-        Constant.orderId=null;
         super.onDestroy();
     }
 }

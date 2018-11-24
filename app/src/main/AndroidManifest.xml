@@ -190,8 +190,10 @@
             android:theme="@style/myTransparent" />
         <activity android:name=".view.activity.PayResultActivity" />
         <activity android:name=".view.activity.MyContractDetailActivity" />
-        <activity android:name=".view.activity.FightCattleActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".view.activity.FightCattleActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.activity.NewManwelfareActivity"></activity>
     </application>
 
 </manifest>

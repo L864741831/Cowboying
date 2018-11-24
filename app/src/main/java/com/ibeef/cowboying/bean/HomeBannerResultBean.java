@@ -52,16 +52,25 @@ public class HomeBannerResultBean implements Serializable {
          * popBannerResDto : {"id":7,"position":"4","imageUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png","pageId":null,"linkUrl":"tryout/images/ce38e911e896a4843e2d2360387023c6.png"}
          */
 
-        private PopBannerResDtoBean popBannerResDto;
+        private PopBannerResDtoBean popBanner;
+        private NewUserActivity newUserActivity;
         private List<TopBannerListBean> topBannerList;
         private List<MiddleBannerListBean> middleBannerList;
 
-        public PopBannerResDtoBean getPopBannerResDto() {
-            return popBannerResDto;
+        public PopBannerResDtoBean getPopBanner() {
+            return popBanner;
         }
 
-        public void setPopBannerResDto(PopBannerResDtoBean popBannerResDto) {
-            this.popBannerResDto = popBannerResDto;
+        public void setPopBanner(PopBannerResDtoBean popBanner) {
+            this.popBanner = popBanner;
+        }
+
+        public NewUserActivity getNewUserActivity() {
+            return newUserActivity;
+        }
+
+        public void setNewUserActivity(NewUserActivity newUserActivity) {
+            this.newUserActivity = newUserActivity;
         }
 
         public List<TopBannerListBean> getTopBannerList() {
@@ -80,6 +89,36 @@ public class HomeBannerResultBean implements Serializable {
             this.middleBannerList = middleBannerList;
         }
 
+        public class  NewUserActivity implements  Serializable{
+
+            private String homeBanner;
+            private String describe;
+            private int schemeId;
+
+            public int getSchemeId() {
+                return schemeId;
+            }
+
+            public void setSchemeId(int schemeId) {
+                this.schemeId = schemeId;
+            }
+
+            public String getHomeBanner() {
+                return homeBanner;
+            }
+
+            public void setHomeBanner(String homeBanner) {
+                this.homeBanner = homeBanner;
+            }
+
+            public String getDescribe() {
+                return describe;
+            }
+
+            public void setDescribe(String describe) {
+                this.describe = describe;
+            }
+        }
         public  class PopBannerResDtoBean implements Serializable{
             /**
              * id : 7
