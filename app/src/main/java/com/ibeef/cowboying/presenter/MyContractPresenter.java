@@ -10,6 +10,7 @@ import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
+import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.model.MyContractModel;
 import com.ibeef.cowboying.model.MyCowsOrderModel;
 
@@ -59,6 +60,26 @@ public class MyContractPresenter extends BasePresenter implements MyContractBase
             public void onSuccess(MyContractURLBean result) {
                 mView.hideLoading();
                 mView.getMyContrantURL(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getMyDiscountCouponList(Map<String, String> headers, int currentPage, int pageSize, String findType) {
+        mView.showLoading();
+        addSubscription(mModel.getMyDiscountCouponList(headers,currentPage,pageSize,findType,new ResponseCallback<MyDiscountCouponListBean>() {
+            @Override
+            public void onSuccess(MyDiscountCouponListBean result) {
+                mView.hideLoading();
+                mView.getMyDiscountCouponList(result);
 
             }
 

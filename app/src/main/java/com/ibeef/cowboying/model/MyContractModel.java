@@ -9,6 +9,7 @@ import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
+import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -66,6 +67,27 @@ public class MyContractModel implements MyContractBase.IModel {
                 .subscribe(new Action1<MyContractURLBean>() {
                     @Override
                     public void call(MyContractURLBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getMyDiscountCouponList(Map<String, String> headers, int currentPage, int pageSize, String findType, final ResponseCallback<MyDiscountCouponListBean> callback) {
+        Observable<MyDiscountCouponListBean> observable = service.getMyDiscountCouponList(headers,currentPage,pageSize,findType);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyDiscountCouponListBean>() {
+                    @Override
+                    public void call(MyDiscountCouponListBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

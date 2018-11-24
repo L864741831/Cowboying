@@ -17,6 +17,7 @@ import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
+import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
@@ -183,6 +184,11 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void getMyContrantURL(MyContractURLBean myContractURLBean) {
+
+    }
+
+    @Override
+    public void getMyDiscountCouponList(MyDiscountCouponListBean myDiscountCouponListBean) {
 
     }
 

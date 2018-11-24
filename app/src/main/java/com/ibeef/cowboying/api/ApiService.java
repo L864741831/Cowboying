@@ -45,6 +45,7 @@ import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
+import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
@@ -532,4 +533,11 @@ public interface ApiService {
      */
     @GET("file/pdfUrl")
     Observable<MyContractURLBean> getMyContrantURL(@HeaderMap Map<String, String> headers, @Query("type") String type, @Query("fileName") String fileName);
+
+    /**
+     * 我的优惠券列表
+     * @return
+     */
+    @GET("coupon/self/info")
+    Observable<MyDiscountCouponListBean> getMyDiscountCouponList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage, @Query("pageSize") int pageSize,@Query("findType") String findType);
 }

@@ -196,6 +196,32 @@
             </RelativeLayout>
             <RelativeLayout
                 android:visibility="gone"
+                android:id="@+id/rl_discount_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠券："
+                    android:textSize="13sp"
+                    android:textColor="@color/wenzi_hei"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:id="@+id/tv_discount_coupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:textColor="@color/wenzi_hei"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_pay_way"
                 android:layout_width="match_parent"
                 android:layout_height="30dp">

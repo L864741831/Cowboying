@@ -24,6 +24,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
+import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
@@ -154,6 +155,11 @@ public class MyContractDetailActivity extends BaseActivity implements  MyContrac
             mWebView.loadUrl(pdfHtml);
             handler.sendEmptyMessage(LOAD_JAVASCRIPT);
         }
+
+    }
+
+    @Override
+    public void getMyDiscountCouponList(MyDiscountCouponListBean myDiscountCouponListBean) {
 
     }
 

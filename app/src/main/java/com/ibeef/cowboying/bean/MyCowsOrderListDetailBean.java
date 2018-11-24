@@ -69,6 +69,7 @@ public class MyCowsOrderListDetailBean {
         private int lockMonths;
         private String schemeCode;
         private double price;
+        private double discountAmount;
         private String payType;
         private String createTime;
         private String payTime;
@@ -109,6 +110,16 @@ public class MyCowsOrderListDetailBean {
         public void setOrderCode(String orderCode) {
             this.orderCode = orderCode;
         }
+
+
+        public double getDiscountAmount() {
+            return discountAmount;
+        }
+
+        public void setDiscountAmount(double discountAmount) {
+            this.discountAmount = discountAmount;
+        }
+
 
         public String getStatus() {
             return status;

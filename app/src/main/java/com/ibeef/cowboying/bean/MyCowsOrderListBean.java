@@ -101,7 +101,7 @@ public class MyCowsOrderListBean {
         private double orderAmount;
         private String pastureName;
         private String pastureImage;
-        private String adoptType;
+        private String schemeType;
         private String unlockTime;
         private int lockMonths;
         private List<CattleListBean> cattleList;
@@ -171,12 +171,12 @@ public class MyCowsOrderListBean {
             this.pastureImage = pastureImage;
         }
 
-        public String getAdoptType() {
-            return adoptType;
+        public String getSchemeType() {
+            return schemeType;
         }
 
-        public void setAdoptType(String adoptType) {
-            this.adoptType = adoptType;
+        public void setSchemeType(String schemeType) {
+            this.schemeType = schemeType;
         }
 
         public String getUnlockTime() {

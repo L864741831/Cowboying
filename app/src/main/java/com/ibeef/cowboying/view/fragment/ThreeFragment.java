@@ -26,6 +26,7 @@ import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.BeefStoreHouseActivity;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
+import com.ibeef.cowboying.view.activity.DiscountCouponActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
 import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
@@ -237,7 +238,11 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
                 break;
             case R.id.coupon_num_rv:
                 //优惠券
-
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(DiscountCouponActivity.class);
+                }
                 break;
             case R.id.contract_id_rv:
                 //我的合同
@@ -330,6 +335,18 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
                 nameId.setText("全民养牛");
             }else {
                 nameId.setText(userInfoResultBean.getBizData().getNickName());
+            }
+
+            if ("1".equals(userInfoResultBean.getBizData().getVipLevel())){
+                 levelId.setImageResource(R.mipmap.level_1);
+            }else if ("2".equals(userInfoResultBean.getBizData().getVipLevel())){
+                levelId.setImageResource(R.mipmap.level_2);
+            }else if ("3".equals(userInfoResultBean.getBizData().getVipLevel())){
+                levelId.setImageResource(R.mipmap.level_3);
+            }else if ("4".equals(userInfoResultBean.getBizData().getVipLevel())){
+                levelId.setImageResource(R.mipmap.level_4);
+            }else if ("5".equals(userInfoResultBean.getBizData().getVipLevel())){
+                levelId.setImageResource(R.mipmap.level_5);
             }
 
         }else {

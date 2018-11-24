@@ -15,6 +15,7 @@
         app:nts_active_color="@color/colorAccent"
         app:nts_color="@color/colorAccent"
         app:nts_corners_radius="0dp"
+        android:background="#eeeeee"
         app:nts_inactive_color="#ff1a1e23"
         app:nts_size="13sp" app:nts_weight="1dp"
        />

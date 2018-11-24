@@ -123,6 +123,10 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     TextView numId;
     @Bind(R.id.rl_emeng)
     RelativeLayout rlEmeng;
+    @Bind(R.id.tv_discount_coupon)
+    TextView tvDiscountCoupon;
+    @Bind(R.id.rl_discount_coupon)
+    RelativeLayout rlDiscountCoupon;
     private String token;
     private MyCowsDetailListAdapter myCowsDetailListAdapter;
     private List<MyCowsOrderListDetailBean.BizDataBean.CattleListBean> beanList;
@@ -176,10 +180,10 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 break;
             case R.id.btn_see_order_progress:
                 //产看进度
-                Intent intent1 = new Intent(this,MyCowsProgressDialog.class);
-                intent1.putExtra("status",status);
-                intent1.putExtra("LockMonths",LockMonths+"");
-                intent1.putExtra("UnlockTime",unlockTime);
+                Intent intent1 = new Intent(this, MyCowsProgressDialog.class);
+                intent1.putExtra("status", status);
+                intent1.putExtra("LockMonths", LockMonths + "");
+                intent1.putExtra("UnlockTime", unlockTime);
                 startActivity(intent1);
                 break;
             case R.id.btn_sell_want:
@@ -189,25 +193,25 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 int hour = cal.get(Calendar.HOUR_OF_DAY);// 获取小时
                 int minute = cal.get(Calendar.MINUTE);// 获取分钟
                 int minuteOfDay = hour * 60 + minute;// 从0:00分开是到目前为止的分钟数
-                final int start = 10* 60;// 起始时间 10:00的分钟数
+                final int start = 10 * 60;// 起始时间 10:00的分钟数
                 final int end = 22 * 60;// 结束时间 22:00的分钟数
-                if (i==2){
+                if (i == 2) {
                     if (minuteOfDay >= start && minuteOfDay <= end) {
                         System.out.println("在外围内");
                         Intent intent = new Intent(this, SellCowsFirstActivity.class);
-                        intent.putExtra("orderId",orderCode);
+                        intent.putExtra("orderId", orderCode);
                         startActivity(intent);
                     } else {
                         showWantShellOrder();
                     }
-                }else{
+                } else {
                     showWantShellOrder();
                 }
                 break;
             case R.id.btn_cancle_order:
                 //取消订单
-                Intent intent = new Intent(this,SureOrderBackDialog.class);
-                intent.putExtra("orderCode",orderCode);
+                Intent intent = new Intent(this, SureOrderBackDialog.class);
+                intent.putExtra("orderCode", orderCode);
                 startActivity(intent);
                 break;
             case R.id.btn_to_pay:
@@ -224,7 +228,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
         }
     }
 
-    public  void showDeleteOrder(){
+    public void showDeleteOrder() {
         final NormalDialog dialog = new NormalDialog(this);
         dialog.isTitleShow(false)
                 .content("确定删除订单？")
@@ -257,7 +261,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 });
     }
 
-    public  void showWantShellOrder(){
+    public void showWantShellOrder() {
         final NormalDialog dialog = new NormalDialog(this);
         dialog.isTitleShow(true)
                 .title("卖牛提示")
@@ -314,21 +318,21 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             pastureName = myCowsOrderListDetailBean.getBizData().getPastureName();
             LockMonths = myCowsOrderListDetailBean.getBizData().getLockMonths();
             unlockTime = myCowsOrderListDetailBean.getBizData().getUnlockTime();
-            if (myCowsOrderListDetailBean.getBizData().getCattleList().size()>0){
+            if (myCowsOrderListDetailBean.getBizData().getCattleList().size() > 0) {
                 beanList.clear();
                 this.beanList.addAll(myCowsOrderListDetailBean.getBizData().getCattleList());
                 myCowsDetailListAdapter = new MyCowsDetailListAdapter(beanList, status, pastureName, this, R.layout.my_cows_chird_item);
                 rvCowsList.setAdapter(myCowsDetailListAdapter);
                 myCowsDetailListAdapter.setNewData(beanList);
-            }else{
+            } else {
                 rlEmeng.setVisibility(View.VISIBLE);
                 RequestOptions options = new RequestOptions()
                         .skipMemoryCache(true)
                         //跳过内存缓存
                         ;
-                Glide.with(this).load(Constant.imageDomain+myCowsOrderListDetailBean.getBizData().getPastureImage()).apply(options).into(storeImg);
+                Glide.with(this).load(Constant.imageDomain + myCowsOrderListDetailBean.getBizData().getPastureImage()).apply(options).into(storeImg);
                 tvRanchId.setText(myCowsOrderListDetailBean.getBizData().getPastureName());
-                numId.setText("×"+myCowsOrderListDetailBean.getBizData().getCattleCount());
+                numId.setText("×" + myCowsOrderListDetailBean.getBizData().getCattleCount());
             }
             if ("1".equals(status)) {
                 //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
@@ -360,7 +364,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 rlAssignTime.setVisibility(View.VISIBLE);
                 rlLockDay.setVisibility(View.VISIBLE);
                 rlLockEndTime.setVisibility(View.VISIBLE);
-                tvLockDay.setText(myCowsOrderListDetailBean.getBizData().getLockMonths()+"个月");
+                tvLockDay.setText(myCowsOrderListDetailBean.getBizData().getLockMonths() + "个月");
                 tvLockEndTime.setText(myCowsOrderListDetailBean.getBizData().getUnlockTime());
             } else if ("5".equals(status)) {
                 tvStatusId.setText("出售中");
@@ -393,23 +397,27 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             }
 //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
-            tvOrderId.setText("订单编号："+myCowsOrderListDetailBean.getBizData().getOrderCode());
+            tvOrderId.setText("订单编号：" + myCowsOrderListDetailBean.getBizData().getOrderCode());
             tvPeriodNumber.setText(myCowsOrderListDetailBean.getBizData().getSchemeCode());
-            tvPrice.setText("￥"+String.valueOf(myCowsOrderListDetailBean.getBizData().getPrice()));
+            tvPrice.setText("￥" + String.valueOf(myCowsOrderListDetailBean.getBizData().getPrice()));
             tvCreateTime.setText(myCowsOrderListDetailBean.getBizData().getCreateTime());
             tvPayTime.setText(myCowsOrderListDetailBean.getBizData().getPayTime());
             tvAssignTime.setText(myCowsOrderListDetailBean.getBizData().getDistributeTime());
-            if ("1".equals(myCowsOrderListDetailBean.getBizData().getAdoptType())){
+            if ("1".equals(myCowsOrderListDetailBean.getBizData().getAdoptType())) {
                 tvMode.setText("活期养牛");
-            }else{
+            } else {
                 tvMode.setText("定期养牛");
             }
-            if ("1".equals(myCowsOrderListDetailBean.getBizData().getPayType())){
+            if ("1".equals(myCowsOrderListDetailBean.getBizData().getPayType())) {
                 tvPayWay.setText("支付宝");
-            }else if ("2".equals(myCowsOrderListDetailBean.getBizData().getPayType())){
+            } else if ("2".equals(myCowsOrderListDetailBean.getBizData().getPayType())) {
                 tvPayWay.setText("微信");
-            }else{
+            } else {
                 tvPayWay.setText("钱包余额");
+            }
+            if (Double.valueOf(myCowsOrderListDetailBean.getBizData().getDiscountAmount())!=null){
+                rlDiscountCoupon.setVisibility(View.VISIBLE);
+                tvDiscountCoupon.setText("-￥"+myCowsOrderListDetailBean.getBizData().getDiscountAmount());
             }
         } else {
             Toast.makeText(this, myCowsOrderListDetailBean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -418,32 +426,32 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
 
     @Override
     public void getMyCowsOrderDelete(MyCowsOrderDeleteBean msg) {
-        if("000000".equals(msg.getCode())){
+        if ("000000".equals(msg.getCode())) {
             finish();
-            Toast.makeText(this,"删除订单成功", Toast.LENGTH_SHORT).show();
-        }else {
+            Toast.makeText(this, "删除订单成功", Toast.LENGTH_SHORT).show();
+        } else {
             Toast.makeText(this, msg.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void getMyCowsOrderCancel(MyCowsOrderDeleteBean msg) {
-        if("000000".equals(msg.getCode())){
-            Toast.makeText(this,"取消订单成功", Toast.LENGTH_SHORT).show();
+        if ("000000".equals(msg.getCode())) {
+            Toast.makeText(this, "取消订单成功", Toast.LENGTH_SHORT).show();
             finish();
-        }else {
+        } else {
             Toast.makeText(this, msg.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
-        if("000000".equals(creatOderResultBean.getCode())){
-            Intent intent=new Intent(this,SureOderActivity.class);
-            intent.putExtra("infos",creatOderResultBean);
+        if ("000000".equals(creatOderResultBean.getCode())) {
+            Intent intent = new Intent(this, SureOderActivity.class);
+            intent.putExtra("infos", creatOderResultBean);
             startActivity(intent);
             finish();
-        }else {
+        } else {
             showToast(creatOderResultBean.getMessage());
         }
     }

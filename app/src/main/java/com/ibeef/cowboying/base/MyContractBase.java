@@ -5,6 +5,7 @@ import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
+import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 
 import java.util.Map;
 
@@ -24,15 +25,18 @@ public class MyContractBase {
         void hideLoading();
         void getMyContrantList(MyContractListBean myContractListBean);
         void getMyContrantURL(MyContractURLBean myContractURLBean);
+        void getMyDiscountCouponList(MyDiscountCouponListBean myDiscountCouponListBean);
     }
 
     public interface IPresenter {
         void getMyContrantList(Map<String, String> headers,int currentPage);
         void getMyContrantURL(Map<String, String> headers, String type, String fileName);
+        void getMyDiscountCouponList(Map<String, String> headers,int currentPage,int pageSize, String findType);
     }
 
     public interface IModel {
         Subscription getMyContrantList(Map<String, String> headers,int currentPage, ResponseCallback<MyContractListBean> callback);
         Subscription getMyContrantURL(Map<String, String> headers, String type, String fileName, ResponseCallback<MyContractURLBean> callback);
+        Subscription getMyDiscountCouponList(Map<String, String> headers,int currentPage,int pageSize, String findType, ResponseCallback<MyDiscountCouponListBean> callback);
     }
 }
