@@ -8,7 +8,7 @@ public class MyCowsOrderListBean {
     /**
      * code : 000000
      * message : null
-     * bizData : [{"orderCode":"4165161644893","status":"6","cattleCount":1,"orderAmount":15000,"pastureName":"撒","pastureImage":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","cattleList":[{"cattleCode":"fdsa1174","cattleImage":"images/6zYS7Sw5DR.jpg","cattleWeight":284.6}],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112445580996736","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"啦啦啦","pastureImage":"images/F6aYnxzW3M.jpg","cattleList":[],"adoptType":"2","unlockTime":"","lockMonths":6},{"orderCode":"112456184430720","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112458319741056","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112458743509120","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112458874536064","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112458945257600","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112459028017280","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112459350483072","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null},{"orderCode":"112461220872320","status":"1","cattleCount":1,"orderAmount":5000,"pastureName":"答复","pastureImage":"images/et6DxTSP88.jpg","cattleList":[],"adoptType":"1","unlockTime":"","lockMonths":null}]
+     * bizData : [{"orderId":176,"orderCode":"116664239775872","status":"2","cattleCount":1,"payAmount":100,"pastureName":"aaaa","pastureImage":"images/DK7tdfmFBF.jpg","cattleList":[],"schemeType":"1","unlockTime":"","lockMonths":null,"orderIncome":null,"activityImageUrl":"images/snmACwyANx.jpg"},{"orderId":175,"orderCode":"116663339397248","status":"2","cattleCount":1,"payAmount":100,"pastureName":"aaaa","pastureImage":"images/DK7tdfmFBF.jpg","cattleList":[],"schemeType":"1","unlockTime":"","lockMonths":null,"orderIncome":null,"activityImageUrl":"images/snmACwyANx.jpg"},{"orderId":173,"orderCode":"116662826946688","status":"2","cattleCount":1,"payAmount":100,"pastureName":"aaaa","pastureImage":"images/DK7tdfmFBF.jpg","cattleList":[],"schemeType":"1","unlockTime":"","lockMonths":null,"orderIncome":null,"activityImageUrl":"images/snmACwyANx.jpg"},{"orderId":172,"orderCode":"116662254297216","status":"2","cattleCount":1,"payAmount":100,"pastureName":"aaaa","pastureImage":"images/DK7tdfmFBF.jpg","cattleList":[],"schemeType":"1","unlockTime":"","lockMonths":null,"orderIncome":null,"activityImageUrl":"images/snmACwyANx.jpg"},{"orderId":171,"orderCode":"116660809916544","status":"2","cattleCount":1,"payAmount":100,"pastureName":"aaaa","pastureImage":"images/DK7tdfmFBF.jpg","cattleList":[],"schemeType":"1","unlockTime":"","lockMonths":null,"orderIncome":null,"activityImageUrl":"images/snmACwyANx.jpg"},{"orderId":166,"orderCode":"116648627376256","status":"2","cattleCount":1,"payAmount":1,"pastureName":null,"pastureImage":null,"cattleList":[],"schemeType":"3","unlockTime":"","lockMonths":null,"orderIncome":null,"activityImageUrl":"images/fyasMdpwfs.jpg"}]
      * pageNo : 1
      * pageSize : null
      * totalRows : null
@@ -18,9 +18,9 @@ public class MyCowsOrderListBean {
     private String code;
     private String message;
     private int pageNo;
-    private Object pageSize;
-    private Object totalRows;
-    private Object totalPages;
+    private int pageSize;
+    private int totalRows;
+    private int totalPages;
     private List<BizDataBean> bizData;
 
     public String getCode() {
@@ -47,27 +47,27 @@ public class MyCowsOrderListBean {
         this.pageNo = pageNo;
     }
 
-    public Object getPageSize() {
+    public int getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(Object pageSize) {
+    public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
 
-    public Object getTotalRows() {
+    public int getTotalRows() {
         return totalRows;
     }
 
-    public void setTotalRows(Object totalRows) {
+    public void setTotalRows(int totalRows) {
         this.totalRows = totalRows;
     }
 
-    public Object getTotalPages() {
+    public int getTotalPages() {
         return totalPages;
     }
 
-    public void setTotalPages(Object totalPages) {
+    public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
     }
 
@@ -81,31 +81,66 @@ public class MyCowsOrderListBean {
 
     public  class BizDataBean {
         /**
-         * orderCode : 4165161644893
-         * status : 6
+         * orderId : 176
+         * orderCode : 116664239775872
+         * status : 2
          * cattleCount : 1
-         * orderAmount : 15000.0
-         * pastureName : 撒
-         * pastureImage : images/2ff889ef4d454c15a237d43c144c00ae.jpg
-         * cattleList : [{"cattleCode":"fdsa1174","cattleImage":"images/6zYS7Sw5DR.jpg","cattleWeight":284.6}]
-         * adoptType : 1
+         * payAmount : 100.0
+         * pastureName : aaaa
+         * pastureImage : images/DK7tdfmFBF.jpg
+         * cattleList : []
+         * schemeType : 1
          * unlockTime :
          * lockMonths : null
+         * orderIncome : null
+         * activityImageUrl : images/snmACwyANx.jpg
          */
 
+        private int orderId;
         private String orderCode;
-        private String orderId;
         private String status;
         private int cattleCount;
-
-        private double orderAmount;
+        private double payAmount;
         private String pastureName;
         private String pastureImage;
         private String schemeType;
         private String unlockTime;
         private int lockMonths;
+        private double orderIncome;
+        private String activityImageUrl;
         private List<CattleListBean> cattleList;
 
+        public int getLockMonths() {
+            return lockMonths;
+        }
+
+        public void setLockMonths(int lockMonths) {
+            this.lockMonths = lockMonths;
+        }
+
+        public double getOrderIncome() {
+            return orderIncome;
+        }
+
+        public void setOrderIncome(double orderIncome) {
+            this.orderIncome = orderIncome;
+        }
+
+        public String getActivityImageUrl() {
+            return activityImageUrl;
+        }
+
+        public void setActivityImageUrl(String activityImageUrl) {
+            this.activityImageUrl = activityImageUrl;
+        }
+
+        public int getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(int orderId) {
+            this.orderId = orderId;
+        }
 
         public String getOrderCode() {
             return orderCode;
@@ -113,14 +148,6 @@ public class MyCowsOrderListBean {
 
         public void setOrderCode(String orderCode) {
             this.orderCode = orderCode;
-        }
-
-        public String getOrderId() {
-            return orderId;
-        }
-
-        public void setOrderId(String orderId) {
-            this.orderId = orderId;
         }
 
         public String getStatus() {
@@ -139,20 +166,12 @@ public class MyCowsOrderListBean {
             this.cattleCount = cattleCount;
         }
 
-        public double getOrderAmount() {
-            return orderAmount;
+        public double getPayAmount() {
+            return payAmount;
         }
 
-        public void setOrderAmount(double orderAmount) {
-            this.orderAmount = orderAmount;
-        }
-
-        public int getLockMonths() {
-            return lockMonths;
-        }
-
-        public void setLockMonths(int lockMonths) {
-            this.lockMonths = lockMonths;
+        public void setPayAmount(double payAmount) {
+            this.payAmount = payAmount;
         }
 
         public String getPastureName() {
@@ -188,7 +207,6 @@ public class MyCowsOrderListBean {
         }
 
 
-
         public List<CattleListBean> getCattleList() {
             return cattleList;
         }
@@ -196,7 +214,6 @@ public class MyCowsOrderListBean {
         public void setCattleList(List<CattleListBean> cattleList) {
             this.cattleList = cattleList;
         }
-
         public  class CattleListBean {
             /**
              * cattleCode : fdsa1174

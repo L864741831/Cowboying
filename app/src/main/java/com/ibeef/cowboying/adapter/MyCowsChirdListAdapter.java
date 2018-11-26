@@ -38,9 +38,14 @@ public class MyCowsChirdListAdapter extends BaseQuickAdapter<MyCowsOrderListBean
                 //跳过内存缓存
                 ;
         Glide.with(mContext).load(Constant.imageDomain+item.getCattleImage()).apply(options).into((ImageView) helper.getView(R.id.store_img));
-        if ("4".equals(status)){
+        //方案类型（1：活期；2：定期；3：新人活动）
+        if ("2".equals(status)) {
             imageView.setVisibility(View.VISIBLE);
-        }else{
+            imageView.setImageResource(R.mipmap.img_my_cows_dingqi);
+        } else  if ("3".equals(status)){
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(R.mipmap.newmangoods);
+        }else {
             imageView.setVisibility(View.GONE);
         }
     }

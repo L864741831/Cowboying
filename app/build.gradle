@@ -120,5 +120,4 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
-    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 }

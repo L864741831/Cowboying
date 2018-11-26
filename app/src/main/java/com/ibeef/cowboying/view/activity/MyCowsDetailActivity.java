@@ -391,6 +391,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 tvStatusId.setText("交易关闭");
                 btnDeletOrder.setVisibility(View.VISIBLE);
                 storeName.setText("交易关闭");
+                btnCancleOrder.setVisibility(View.GONE);
+                btnToPay.setVisibility(View.GONE);
                 //交易关闭
                 rlTransactionEndTime.setVisibility(View.VISIBLE);
                 tvTransactionEndTime.setText(myCowsOrderListDetailBean.getBizData().getCloseTime());
