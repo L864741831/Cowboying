@@ -399,7 +399,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
 //    不用给领养类型，活期是3 定期只有4，不会为3
             tvOrderId.setText("订单编号：" + myCowsOrderListDetailBean.getBizData().getOrderCode());
             tvPeriodNumber.setText(myCowsOrderListDetailBean.getBizData().getSchemeCode());
-            tvPrice.setText("￥" + String.valueOf(myCowsOrderListDetailBean.getBizData().getPayAmount()));
+            tvPrice.setText("￥" + String.valueOf(myCowsOrderListDetailBean.getBizData().getPrice()));
             tvCreateTime.setText(myCowsOrderListDetailBean.getBizData().getCreateTime());
             tvPayTime.setText(myCowsOrderListDetailBean.getBizData().getPayTime());
             tvAssignTime.setText(myCowsOrderListDetailBean.getBizData().getDistributeTime());

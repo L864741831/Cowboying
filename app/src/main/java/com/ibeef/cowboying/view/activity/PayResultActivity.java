@@ -119,7 +119,7 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
                 payType="账户余额";
             }
             payTypeId.setText("付款方式："+payType);
-            impordentInfoId.setText("特别提醒：支付成功后请耐心等待系统审核，您的收益将从次日起开始计算，请注意查看。");
+//            impordentInfoId.setText("特别提醒：支付成功后请耐心等待系统审核，您的收益将从次日起开始计算，请注意查看。");
         }else {
             showToast(myCowsOrderListDetailBean.getMessage());
         }
