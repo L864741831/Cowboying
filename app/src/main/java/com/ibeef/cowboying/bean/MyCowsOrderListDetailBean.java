@@ -4,10 +4,11 @@ import java.util.List;
 
 public class MyCowsOrderListDetailBean {
 
+
     /**
      * code : 000000
-     * message : “”
-     * bizData : {"orderCode":"112335466422400","status":"2","cattleCount":1,"orderAmount":5000,"pastureName":"撒","pastureImage":"images/2ff889ef4d454c15a237d43c144c00ae.jpg","cattleList":[{"cattleCode":"2222222","cattleImage":"images/ca09570497f14175b29cc0be930be12c.png","cattleWeight":100}],"adoptType":"1","unlockTime":"\u201c\u201d","lockMonths":3,"schemeCode":"11111111","price":5000,"payType":"1","createTime":"2018-11-14 10:14:11","payTime":"2018-11-14 14:38:44","distributeTime":""}
+     * message :
+     * bizData : {"orderId":158,"orderCode":"116639270654080","status":"2","cattleCount":1,"payAmount":null,"pastureName":"aaaa","pastureImage":"images/DK7tdfmFBF.jpg","cattleList":[],"schemeType":"1","unlockTime":null,"lockMonths":null,"orderIncome":null,"activityImageUrl":"images/snmACwyANx.jpg","schemeCode":"20181123001","price":100,"discountAmount":null,"payType":"3","createTime":"2018-11-26 14:06:24","payTime":"2018-11-26 14:14:56","distributeTime":null,"sellTime":null,"sellSuccessTime":null,"closeTime":"2018-11-26 14:14:56","experienceDays":null}
      */
 
     private String code;
@@ -40,33 +41,44 @@ public class MyCowsOrderListDetailBean {
 
     public  class BizDataBean {
         /**
-         * orderCode : 112335466422400
+         * orderId : 158
+         * orderCode : 116639270654080
          * status : 2
          * cattleCount : 1
-         * orderAmount : 5000.0
-         * pastureName : 撒
-         * pastureImage : images/2ff889ef4d454c15a237d43c144c00ae.jpg
-         * cattleList : [{"cattleCode":"2222222","cattleImage":"images/ca09570497f14175b29cc0be930be12c.png","cattleWeight":100}]
-         * adoptType : 1
-         * unlockTime : “”
-         * lockMonths : 3.0
-         * schemeCode : 11111111
-         * price : 5000
-         * payType : 1
-         * createTime : 2018-11-14 10:14:11
-         * payTime : 2018-11-14 14:38:44
-         * distributeTime :
+         * payAmount : null
+         * pastureName : aaaa
+         * pastureImage : images/DK7tdfmFBF.jpg
+         * cattleList : []
+         * schemeType : 1
+         * unlockTime : null
+         * lockMonths : null
+         * orderIncome : null
+         * activityImageUrl : images/snmACwyANx.jpg
+         * schemeCode : 20181123001
+         * price : 100.0
+         * discountAmount : null
+         * payType : 3
+         * createTime : 2018-11-26 14:06:24
+         * payTime : 2018-11-26 14:14:56
+         * distributeTime : null
+         * sellTime : null
+         * sellSuccessTime : null
+         * closeTime : 2018-11-26 14:14:56
+         * experienceDays : null
          */
 
+        private int orderId;
         private String orderCode;
         private String status;
         private int cattleCount;
-        private double orderAmount;
+        private double payAmount;
         private String pastureName;
         private String pastureImage;
-        private String adoptType;
+        private String schemeType;
         private String unlockTime;
         private int lockMonths;
+        private double orderIncome;
+        private String activityImageUrl;
         private String schemeCode;
         private double price;
         private double discountAmount;
@@ -77,14 +89,87 @@ public class MyCowsOrderListDetailBean {
         private String sellTime;
         private String sellSuccessTime;
         private String closeTime;
-        private List<CattleListBean> cattleList;
+        private String experienceDays;
+        private List<CattleListBean > cattleList;
 
-        public String getCloseTime() {
-            return closeTime;
+        public int getOrderId() {
+            return orderId;
         }
 
-        public void setCloseTime(String closeTime) {
-            this.closeTime = closeTime;
+        public void setOrderId(int orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getOrderCode() {
+            return orderCode;
+        }
+
+        public void setOrderCode(String orderCode) {
+            this.orderCode = orderCode;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public int getCattleCount() {
+            return cattleCount;
+        }
+
+        public void setCattleCount(int cattleCount) {
+            this.cattleCount = cattleCount;
+        }
+
+        public double getPayAmount() {
+            return payAmount;
+        }
+
+        public void setPayAmount(double payAmount) {
+            this.payAmount = payAmount;
+        }
+
+        public String getUnlockTime() {
+            return unlockTime;
+        }
+
+        public void setUnlockTime(String unlockTime) {
+            this.unlockTime = unlockTime;
+        }
+
+        public int getLockMonths() {
+            return lockMonths;
+        }
+
+        public void setLockMonths(int lockMonths) {
+            this.lockMonths = lockMonths;
+        }
+
+        public double getOrderIncome() {
+            return orderIncome;
+        }
+
+        public void setOrderIncome(double orderIncome) {
+            this.orderIncome = orderIncome;
+        }
+
+        public double getDiscountAmount() {
+            return discountAmount;
+        }
+
+        public void setDiscountAmount(double discountAmount) {
+            this.discountAmount = discountAmount;
+        }
+
+        public String getDistributeTime() {
+            return distributeTime;
+        }
+
+        public void setDistributeTime(String distributeTime) {
+            this.distributeTime = distributeTime;
         }
 
         public String getSellTime() {
@@ -103,46 +188,12 @@ public class MyCowsOrderListDetailBean {
             this.sellSuccessTime = sellSuccessTime;
         }
 
-        public String getOrderCode() {
-            return orderCode;
+        public String getExperienceDays() {
+            return experienceDays;
         }
 
-        public void setOrderCode(String orderCode) {
-            this.orderCode = orderCode;
-        }
-
-
-        public double getDiscountAmount() {
-            return discountAmount;
-        }
-
-        public void setDiscountAmount(double discountAmount) {
-            this.discountAmount = discountAmount;
-        }
-
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public int getCattleCount() {
-            return cattleCount;
-        }
-
-        public void setCattleCount(int cattleCount) {
-            this.cattleCount = cattleCount;
-        }
-
-        public double getOrderAmount() {
-            return orderAmount;
-        }
-
-        public void setOrderAmount(double orderAmount) {
-            this.orderAmount = orderAmount;
+        public void setExperienceDays(String experienceDays) {
+            this.experienceDays = experienceDays;
         }
 
         public String getPastureName() {
@@ -161,28 +212,21 @@ public class MyCowsOrderListDetailBean {
             this.pastureImage = pastureImage;
         }
 
-        public String getAdoptType() {
-            return adoptType;
+        public String getSchemeType() {
+            return schemeType;
         }
 
-        public void setAdoptType(String adoptType) {
-            this.adoptType = adoptType;
+        public void setSchemeType(String schemeType) {
+            this.schemeType = schemeType;
         }
 
-        public String getUnlockTime() {
-            return unlockTime;
+
+        public String getActivityImageUrl() {
+            return activityImageUrl;
         }
 
-        public void setUnlockTime(String unlockTime) {
-            this.unlockTime = unlockTime;
-        }
-
-        public int getLockMonths() {
-            return lockMonths;
-        }
-
-        public void setLockMonths(int lockMonths) {
-            this.lockMonths = lockMonths;
+        public void setActivityImageUrl(String activityImageUrl) {
+            this.activityImageUrl = activityImageUrl;
         }
 
         public String getSchemeCode() {
@@ -225,13 +269,14 @@ public class MyCowsOrderListDetailBean {
             this.payTime = payTime;
         }
 
-        public String getDistributeTime() {
-            return distributeTime;
+        public String getCloseTime() {
+            return closeTime;
         }
 
-        public void setDistributeTime(String distributeTime) {
-            this.distributeTime = distributeTime;
+        public void setCloseTime(String closeTime) {
+            this.closeTime = closeTime;
         }
+
 
         public List<CattleListBean> getCattleList() {
             return cattleList;
@@ -240,7 +285,6 @@ public class MyCowsOrderListDetailBean {
         public void setCattleList(List<CattleListBean> cattleList) {
             this.cattleList = cattleList;
         }
-
         public  class CattleListBean {
             /**
              * cattleCode : 2222222

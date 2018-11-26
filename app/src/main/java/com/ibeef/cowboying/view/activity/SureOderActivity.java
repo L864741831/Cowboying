@@ -171,7 +171,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         payMoneyId.setText("￥"+infos.getBizData().getPayAmount());
         knowMobileId.setText(infos.getBizData().getMobile());
         knowIdentifycodeId.setText("身份证号："+infos.getBizData().getCardNo());
-        couponMoneyId.setText("已优惠￥0");
+        couponMoneyId.setText("已优惠￥"+infos.getBizData().getDiscountAmount());
         knowCodeId.setText("第"+infos.getBizData().getCode()+"期");
         knowPastureId.setText(infos.getBizData().getPastureName());
         knowNumberId.setText(infos.getBizData().getQuantity()+"");

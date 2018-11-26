@@ -106,7 +106,7 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
     @Override
     public void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean) {
         if("000000".equals(myCowsOrderListDetailBean.getCode())){
-            payMoneyId.setText("￥"+myCowsOrderListDetailBean.getBizData().getPrice());
+            payMoneyId.setText("￥"+myCowsOrderListDetailBean.getBizData().getPayAmount());
             pastureNameId.setText("认领牧场："+myCowsOrderListDetailBean.getBizData().getPastureName());
             payTimeId.setText("交易时间："+myCowsOrderListDetailBean.getBizData().getPayTime());
             //支付方式（1:支付宝：2：微信支付；3：钱包余额）

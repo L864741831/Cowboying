@@ -214,18 +214,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public void onRefresh() {
         beanList.clear();
         Map<String, String> reqData = new HashMap<>();

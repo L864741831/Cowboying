@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
@@ -60,10 +61,11 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
     TextView showMoneyId;
     @Bind(R.id.sure_id)
     TextView sureId;
+    @Bind(R.id.beef_hourse_rv)
+    RelativeLayout beefHourseRv;
     private SellCowsPresenter sellCowsPresenter;
     private String token, orderId;
     private int chooseType=1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,13 +93,18 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
     @Override
     public void getSellCows(SellCowsResultBean sellCowsResultBean) {
         if("000000".equals(sellCowsResultBean.getCode())){
-            getSellCowsMoney.setText((sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+"");
+            getSellCowsMoney.setText((sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()+"");
             returnMonryId.setText(sellCowsResultBean.getBizData().getDebt()+"");
             otheMoneyId.setText(sellCowsResultBean.getBizData().getBrokerage()+"");
+            giveMoneyId.setText("0");
             float realMoney=(sellCowsResultBean.getBizData().getPrice().floatValue()*sellCowsResultBean.getBizData().getPastureNum())+sellCowsResultBean.getBizData().getEarn().floatValue()-sellCowsResultBean.getBizData().getDebt().floatValue()-sellCowsResultBean.getBizData().getBrokerage().floatValue();
             realMoneyId.setText(realMoney+"");
             showMoneyId.setText(realMoney+"");
-            giveMoneyId.setText(sellCowsResultBean.getBizData().getEarn()+"");
+            if(sellCowsResultBean.getBizData().getDays()>=365){
+                beefHourseRv.setVisibility(View.VISIBLE);
+            }else {
+                beefHourseRv.setVisibility(View.GONE);
+            }
         }else {
             showToast(sellCowsResultBean.getMessage());
         }
