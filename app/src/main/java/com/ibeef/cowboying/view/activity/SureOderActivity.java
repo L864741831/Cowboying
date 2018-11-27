@@ -127,7 +127,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(SureOderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(SureOderActivity.this,PayResultActivity.class);
-                        intent.putExtra("orderId",infos.getBizData().getOrderId()+"");
+                        intent.putExtra("orderId",infos.getBizData().getOrderId());
                         startActivity(intent);
                         finish();
                     } else {
@@ -309,7 +309,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
             } else if (chooseType == 3) {
 
                 Intent intent=new Intent(SureOderActivity.this,PayResultActivity.class);
-                intent.putExtra("orderId",infos.getBizData().getOrderId()+"");
+                intent.putExtra("orderId",infos.getBizData().getOrderId());
                 startActivity(intent);
                 finish();
                 accountPayShowRv.setVisibility(View.GONE);

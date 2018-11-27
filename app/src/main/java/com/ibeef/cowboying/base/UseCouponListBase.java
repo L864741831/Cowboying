@@ -28,12 +28,12 @@ public class UseCouponListBase {
     }
 
     public interface IPresenter {
-        void getCouponNum(Map<String, String> headers,String schemeId);
-        void getUseCouponList(Map<String, String> headers,String schemeId, int currentPage);
+        void getCouponNum(Map<String, String> headers,String schemeId,int quality);
+        void getUseCouponList(Map<String, String> headers,String schemeId,int quality, int currentPage);
     }
 
     public interface IModel {
-        Subscription getCouponNum(Map<String, String> headers,String schemeId, ResponseCallback<CouponNumResultBean> callback);
-        Subscription getUseCouponList(Map<String, String> headers,String schemeId, int currentPage, ResponseCallback<UseCouponListResultBean> callback);
+        Subscription getCouponNum(Map<String, String> headers,String schemeId,int quality, ResponseCallback<CouponNumResultBean> callback);
+        Subscription getUseCouponList(Map<String, String> headers,String schemeId,int quality, int currentPage, ResponseCallback<UseCouponListResultBean> callback);
     }
 }

@@ -241,10 +241,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             case R.id.newpeople_img_id:
                 //新人礼券
                 if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean)){
-                    if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())) {
-                        Intent intent=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
-                        intent.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
-                        startActivity(intent);
+                    if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData())){
+                        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())) {
+                            Intent intent=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                            intent.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                            startActivity(intent);
+                        }
                     }
                 }
                 break;

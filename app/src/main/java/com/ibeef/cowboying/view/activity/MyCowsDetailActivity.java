@@ -182,7 +182,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 //产看进度
                 Intent intent1 = new Intent(this, MyCowsProgressDialog.class);
                 intent1.putExtra("status", status);
-                intent1.putExtra("LockMonths", LockMonths + "");
+                intent1.putExtra("LockMonths", LockMonths);
                 intent1.putExtra("UnlockTime", unlockTime);
                 startActivity(intent1);
                 break;
@@ -319,21 +319,27 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             LockMonths = myCowsOrderListDetailBean.getBizData().getLockMonths();
             unlockTime = myCowsOrderListDetailBean.getBizData().getUnlockTime();
             if (myCowsOrderListDetailBean.getBizData().getCattleList().size() > 0) {
+                rlEmeng.setVisibility(View.GONE);
+                rvCowsList.setVisibility(View.VISIBLE);
                 beanList.clear();
                 this.beanList.addAll(myCowsOrderListDetailBean.getBizData().getCattleList());
-                myCowsDetailListAdapter = new MyCowsDetailListAdapter(beanList, status, pastureName, this, R.layout.my_cows_chird_item);
+                myCowsDetailListAdapter = new MyCowsDetailListAdapter(beanList, status, myCowsOrderListDetailBean.getBizData().getSchemeType(),pastureName, this, R.layout.my_cows_chird_item);
                 rvCowsList.setAdapter(myCowsDetailListAdapter);
                 myCowsDetailListAdapter.setNewData(beanList);
             } else {
-                rlEmeng.setVisibility(View.VISIBLE);
                 RequestOptions options = new RequestOptions()
                         .skipMemoryCache(true)
+                        .error(R.mipmap.jzsb)
                         //跳过内存缓存
                         ;
                 Glide.with(this).load(Constant.imageDomain + myCowsOrderListDetailBean.getBizData().getPastureImage()).apply(options).into(storeImg);
                 tvRanchId.setText(myCowsOrderListDetailBean.getBizData().getPastureName());
+                moneyId.setText("安格斯牛");
+                rlEmeng.setVisibility(View.VISIBLE);
+                rvCowsList.setVisibility(View.GONE);
                 numId.setText("×" + myCowsOrderListDetailBean.getBizData().getCattleCount());
             }
+
             if ("1".equals(status)) {
                 //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
                 storeName.setText("待付款");
@@ -397,6 +403,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 rlTransactionEndTime.setVisibility(View.VISIBLE);
                 tvTransactionEndTime.setText(myCowsOrderListDetailBean.getBizData().getCloseTime());
             }
+
+
 //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
             tvOrderId.setText("订单编号：" + myCowsOrderListDetailBean.getBizData().getOrderCode());

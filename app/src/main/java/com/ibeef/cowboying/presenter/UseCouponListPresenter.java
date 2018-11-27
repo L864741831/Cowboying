@@ -33,8 +33,8 @@ public class UseCouponListPresenter extends BasePresenter implements UseCouponLi
     }
 
     @Override
-    public void getCouponNum(Map<String, String> headers, String schemeId) {
-        addSubscription(mModel.getCouponNum(headers,schemeId,new ResponseCallback<CouponNumResultBean>() {
+    public void getCouponNum(Map<String, String> headers, String schemeId,int quality) {
+        addSubscription(mModel.getCouponNum(headers,schemeId,quality,new ResponseCallback<CouponNumResultBean>() {
             @Override
             public void onSuccess(CouponNumResultBean result) {
                 mView.getCouponNum(result);
@@ -50,9 +50,9 @@ public class UseCouponListPresenter extends BasePresenter implements UseCouponLi
     }
 
     @Override
-    public void getUseCouponList(Map<String, String> headers, String schemeId, int currentPage) {
+    public void getUseCouponList(Map<String, String> headers, String schemeId, int quality,int currentPage) {
         mView.showLoading();
-        addSubscription(mModel.getUseCouponList(headers,schemeId,currentPage,new ResponseCallback<UseCouponListResultBean>() {
+        addSubscription(mModel.getUseCouponList(headers,schemeId,quality,currentPage,new ResponseCallback<UseCouponListResultBean>() {
             @Override
             public void onSuccess(UseCouponListResultBean result) {
                 mView.hideLoading();

@@ -24,11 +24,13 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
     private Context context;
     private String status;
     private String pastureName;
-    public MyCowsDetailListAdapter(List data,String status,String pastureName, Context context, int layout) {
+    private  String schemeType;
+    public MyCowsDetailListAdapter(List data,String status,String schemeType,String pastureName, Context context, int layout) {
         super(layout, data);
         this.context=context;
         this.status=status;
         this.pastureName=pastureName;
+        this.schemeType=schemeType;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
 
         Log.i("/adopt/order/detail", "pastureName: ::::"+pastureName);
         helper .setText(R.id.tv_ranch_id,pastureName)
+                .setText(R.id.money_id,"安格斯牛")
                .setText(R.id.num_id,"初始重量："+item.getCattleWeight()+"kg");
 
         RequestOptions options = new RequestOptions()
@@ -55,13 +58,28 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
             helper.setText(R.id.store_name,"待分配牛只");
         } else if ("3".equals(status)) {
             //已分配（这里只有活期养牛这一种）
-            helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,"虚拟牛只");
+            }else {
+                helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            }
         } else if ("4".equals(status)) {
             //已分配锁定期中（只有定期养牛才会有这个状态）
-            helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,"虚拟牛只");
+            }else {
+                helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            }
         } else if ("5".equals(status)) {
             //出售中（不分活期和定期。。定期到期后会自动转为活期的）
-            helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,"虚拟牛只");
+            }else {
+                helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            }
         } else if ("6".equals(status)) {
             //交易完成（比交易完成多一个出售成功时间）
             helper.setText(R.id.store_name,"交易完成");
@@ -71,10 +89,10 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
         }
 
         //方案类型（1：活期；2：定期；3：新人活动）
-        if ("2".equals(status)) {
+        if ("2".equals(schemeType)) {
             imageView2.setVisibility(View.VISIBLE);
             imageView2.setImageResource(R.mipmap.img_my_cows_dingqi);
-        } else  if ("3".equals(status)){
+        } else  if ("3".equals(schemeType)){
             imageView2.setVisibility(View.VISIBLE);
             imageView2.setImageResource(R.mipmap.newmangoods);
         }else {

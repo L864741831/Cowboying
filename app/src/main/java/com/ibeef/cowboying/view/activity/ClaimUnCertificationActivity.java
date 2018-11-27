@@ -76,7 +76,7 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
     private OrderInitPresenter orderInitPresenter;
     private final static int REQUESTCODE = 1; // 返回的结果码
     private   int selectId;
-    private  boolean check;
+    private  boolean check,isNewMan;
     private UseCouponListPresenter useCouponListPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,7 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
         schemeId=getIntent().getIntExtra("schemeId",0);
         quantity=getIntent().getIntExtra("quantity",0);
         userId=getIntent().getIntExtra("userId",0);
+        isNewMan=getIntent().getBooleanExtra("isNewMan",false);
         mobileTxtId.setText(mobile);
 
         userInfoPresenter=new UserInfoPresenter(this);
@@ -101,7 +102,12 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getCouponNum(reqData,schemeId+"");
+        useCouponListPresenter.getCouponNum(reqData,schemeId+"",quantity);
+        if(isNewMan){
+            isCouponRv.setVisibility(View.GONE);
+        }else {
+            isCouponRv.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.back_id, R.id.is_coupon_rv, R.id.next_step_txt,R.id.xieyiss_txt_id})
@@ -121,6 +127,7 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
                 intent1.putExtra("selectId",selectId);
                 intent1.putExtra("check",check);
                 intent1.putExtra("schemeId",schemeId);
+                intent1.putExtra("quantity",quantity);
                 startActivityForResult(intent1,REQUESTCODE);
                 break;
             case R.id.next_step_txt:

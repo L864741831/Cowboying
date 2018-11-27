@@ -294,7 +294,16 @@ public class MyCowsOrderListDetailBean {
 
             private String cattleCode;
             private String cattleImage;
+            private String cattleName;
             private double cattleWeight;
+
+            public String getCattleName() {
+                return cattleName;
+            }
+
+            public void setCattleName(String cattleName) {
+                this.cattleName = cattleName;
+            }
 
             public String getCattleCode() {
                 return cattleCode;

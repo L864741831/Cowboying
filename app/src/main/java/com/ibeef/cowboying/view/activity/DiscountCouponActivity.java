@@ -37,7 +37,7 @@ public class DiscountCouponActivity extends BaseActivity {
     private ArrayList<BaseFragment> fragmentList;
     private MainFragmentAdapter mAdpter;
     private int index;
-    private String[] title = {"可使用", "不可用"};
+    private String[] title = {"已领取", "不可用"};
 
 
     @Override

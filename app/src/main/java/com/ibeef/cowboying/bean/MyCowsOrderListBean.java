@@ -223,8 +223,17 @@ public class MyCowsOrderListBean {
 
             private String cattleCode;
             private String cattleImage;
+            private String cattleName;
             private double cattleWeight;
             private int defautChoose;
+
+            public String getCattleName() {
+                return cattleName;
+            }
+
+            public void setCattleName(String cattleName) {
+                this.cattleName = cattleName;
+            }
 
             public int getDefautChoose() {
                 return defautChoose;

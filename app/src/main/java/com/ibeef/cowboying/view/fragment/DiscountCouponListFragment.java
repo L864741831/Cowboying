@@ -51,7 +51,7 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
     private MyContractPresenter myContractPresenter;
-    private LinearLayout lv_line_show;
+
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
@@ -61,7 +61,6 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
         mSwipeLayout.setEnabled(true);
         listData=new ArrayList<>();
         loadingLayout = view.findViewById(R.id.loading_layout);
-        lv_line_show = view.findViewById(R.id.lv_line_show);
         rv_order = view.findViewById(R.id.rv_order);
         mRView = view.findViewById(R.id.video_list_rv);
         mRView.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
@@ -104,11 +103,6 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
             }
         });
 
-        if("1".equals(stadus)){
-            lv_line_show.setVisibility(View.GONE);
-        }else {
-            lv_line_show.setVisibility(View.VISIBLE);
-        }
     }
 
     public static DiscountCouponListFragment newInstance(String stadus) {

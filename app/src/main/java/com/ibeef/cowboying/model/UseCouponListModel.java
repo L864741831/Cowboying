@@ -37,8 +37,8 @@ public class UseCouponListModel implements UseCouponListBase.IModel {
     }
 
     @Override
-    public Subscription getCouponNum(Map<String, String> headers, String schemeId,final ResponseCallback<CouponNumResultBean> callback) {
-        Observable<CouponNumResultBean> observable = service.getCouponNum(headers,schemeId);
+    public Subscription getCouponNum(Map<String, String> headers, String schemeId,int quality,final ResponseCallback<CouponNumResultBean> callback) {
+        Observable<CouponNumResultBean> observable = service.getCouponNum(headers,schemeId,quality);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,8 +59,8 @@ public class UseCouponListModel implements UseCouponListBase.IModel {
     }
 
     @Override
-    public Subscription getUseCouponList(Map<String, String> headers, String schemeId, int currentPage, final ResponseCallback<UseCouponListResultBean> callback) {
-        Observable<UseCouponListResultBean> observable = service.getUseCouponList(headers,schemeId,currentPage);
+    public Subscription getUseCouponList(Map<String, String> headers, String schemeId,int quality, int currentPage, final ResponseCallback<UseCouponListResultBean> callback) {
+        Observable<UseCouponListResultBean> observable = service.getUseCouponList(headers,schemeId,quality,currentPage);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

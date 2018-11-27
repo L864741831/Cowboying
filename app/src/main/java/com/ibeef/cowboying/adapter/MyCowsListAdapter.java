@@ -57,7 +57,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     Intent intent = new Intent(context, MyCowsDetailActivity.class);
-                    intent.putExtra("orderId",item.getOrderId());
+                    intent.putExtra("orderId",item.getOrderId()+"");
                     context.startActivity(intent);
                 }
             });
@@ -65,15 +65,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
             ry_id.setVisibility(View.GONE);
         }
 
-        helper.setText(R.id.tv_ranch_id,item.getPastureName()).
-                setText(R.id.num_id,"×"+item.getCattleCount());
-        RequestOptions options = new RequestOptions()
-                .skipMemoryCache(true)
-                //跳过内存缓存
-                ;
-        Glide.with(mContext).load(Constant.imageDomain+item.getPastureImage()).apply(options).into((ImageView) helper.getView(R.id.store_img));
-
-//    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
+            //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
 //    不用给领养类型，活期是3 定期只有4，不会为3
             if ("1".equals(item.getStatus())) {
                 //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
@@ -143,6 +135,15 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 delet_order.setVisibility(View.VISIBLE);
             }
 
+        helper.setText(R.id.tv_ranch_id,item.getPastureName()).
+                setText(R.id.money_id,"安格斯牛").
+                setText(R.id.num_id,"×"+item.getCattleCount());
+        RequestOptions options = new RequestOptions()
+                .skipMemoryCache(true)
+                .error(R.mipmap.jzsb)
+                //跳过内存缓存
+                ;
+        Glide.with(mContext).load(Constant.imageDomain+item.getPastureImage()).apply(options).into((ImageView) helper.getView(R.id.store_img));
             helper.addOnClickListener(R.id.sell_want);
     }
 }
