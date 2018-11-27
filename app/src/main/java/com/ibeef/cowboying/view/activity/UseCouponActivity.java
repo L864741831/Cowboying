@@ -160,6 +160,8 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
                finish();
                 break;
             case R.id.agree_xieyi_chck:
+                item=null;
+                agreeXieyiChck.setChecked(true);
                 Intent intent1 = new Intent();
                 if(!SDCardUtil.isNullOrEmpty(item)){
                     intent1.putExtra("couponmoney", item.getParValue());

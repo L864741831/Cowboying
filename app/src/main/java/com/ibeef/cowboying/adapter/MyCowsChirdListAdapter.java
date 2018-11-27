@@ -35,6 +35,7 @@ public class MyCowsChirdListAdapter extends BaseQuickAdapter<MyCowsOrderListBean
         ImageView imageView= helper.getView(R.id.iv_my_cows_dingqi);
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
+                .error(R.mipmap.jzsb)
                 //跳过内存缓存
                 ;
         Glide.with(mContext).load(Constant.imageDomain+item.getCattleImage()).apply(options).into((ImageView) helper.getView(R.id.store_img));

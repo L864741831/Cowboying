@@ -85,7 +85,7 @@ public class FightCattleActivity extends BaseActivity implements SwipeRefreshLay
     public void onRefresh() {
         currentPage = 1;
         isFirst = true;
-        baseBeans.clear();
+//        baseBeans.clear();
         swipeLy.setRefreshing(false);
     }
 

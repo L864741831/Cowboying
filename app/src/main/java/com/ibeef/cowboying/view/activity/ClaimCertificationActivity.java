@@ -106,14 +106,15 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
         userCertifycodeTxt.setText(infos.getBizData().getRealCardNo());
         mobieTxtId.setText("手机号 "+infos.getBizData().getMobile());
         useCouponListPresenter=new UseCouponListPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getCouponNum(reqData,schemeId+"",quantity);
+
         if(isNewMan){
             isCouponRv.setVisibility(View.GONE);
         }else {
             isCouponRv.setVisibility(View.VISIBLE);
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            useCouponListPresenter.getCouponNum(reqData,schemeId+"",quantity);
         }
     }
 

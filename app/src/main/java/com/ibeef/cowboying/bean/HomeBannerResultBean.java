@@ -93,13 +93,13 @@ public class HomeBannerResultBean implements Serializable {
 
             private String homeBanner;
             private String describe;
-            private int schemeId;
+            private Integer schemeId;
 
-            public int getSchemeId() {
+            public Integer getSchemeId() {
                 return schemeId;
             }
 
-            public void setSchemeId(int schemeId) {
+            public void setSchemeId(Integer schemeId) {
                 this.schemeId = schemeId;
             }
 

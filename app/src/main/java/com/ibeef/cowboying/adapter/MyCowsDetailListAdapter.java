@@ -43,6 +43,7 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
 
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
+                .error(R.mipmap.jzsb)
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.store_img);

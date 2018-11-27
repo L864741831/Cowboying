@@ -541,14 +541,14 @@ public interface ApiService {
      * @return
      */
     @GET("coupon/scheme/count")
-    Observable<CouponNumResultBean> getCouponNum(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("quality") int quality);
+    Observable<CouponNumResultBean> getCouponNum(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("quantity") int quality);
 
     /**
      * 获取当前方案中所有可用的优惠券信息
      * @return
      */
     @GET("coupon/scheme/info")
-    Observable<UseCouponListResultBean> getUseCouponList(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("quality") int quality, @Query("currentPage") int currentPage);
+    Observable<UseCouponListResultBean> getUseCouponList(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("quantity") int quality, @Query("currentPage") int currentPage);
 
     /**
      * 我的优惠券列表

@@ -38,7 +38,7 @@ public class SellCowsAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDat
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
 
-        final SellCowsChirdAdapter sellCowsChirdAdapter=new SellCowsChirdAdapter(item.getCattleList(),context,item.getPastureName());
+        final SellCowsChirdAdapter sellCowsChirdAdapter=new SellCowsChirdAdapter(item.getCattleList(),context,item.getSchemeType(),item.getPastureName());
         sellCowsChirdAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
