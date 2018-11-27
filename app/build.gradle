@@ -71,7 +71,7 @@ android {
         debug {
             keyAlias 'cows'
             keyPassword 'liangniu888'
-            storeFile file('C:/Users/Administrator/Desktop/cowboy/cows.keystore')
+            storeFile file('C:/Users/lwang/Desktop/cows.keystore')
             storePassword 'liangniu888'
         }
     }
@@ -120,5 +120,4 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
-    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 }

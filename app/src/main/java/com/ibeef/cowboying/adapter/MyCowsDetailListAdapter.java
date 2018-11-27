@@ -50,30 +50,34 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
         if ("1".equals(status)) {
             //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
             helper.setText(R.id.store_name,"待付款");
-            imageView2.setVisibility(View.GONE);
         } else if ("2".equals(status)) {
             //已付款未分配（比待付款多了一个支付时间和支付时间）
             helper.setText(R.id.store_name,"待分配牛只");
-            imageView2.setVisibility(View.GONE);
         } else if ("3".equals(status)) {
             //已分配（这里只有活期养牛这一种）
             helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
-            imageView2.setVisibility(View.GONE);
         } else if ("4".equals(status)) {
             //已分配锁定期中（只有定期养牛才会有这个状态）
-            imageView2.setVisibility(View.VISIBLE);
             helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
         } else if ("5".equals(status)) {
             //出售中（不分活期和定期。。定期到期后会自动转为活期的）
             helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
-            imageView2.setVisibility(View.GONE);
         } else if ("6".equals(status)) {
             //交易完成（比交易完成多一个出售成功时间）
-            helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
-            imageView2.setVisibility(View.GONE);
+            helper.setText(R.id.store_name,"交易完成");
         }else if ("9".equals(status)) {
             //交易关闭
             helper.setText(R.id.store_name,"交易关闭");
+        }
+
+        //方案类型（1：活期；2：定期；3：新人活动）
+        if ("2".equals(status)) {
+            imageView2.setVisibility(View.VISIBLE);
+            imageView2.setImageResource(R.mipmap.img_my_cows_dingqi);
+        } else  if ("3".equals(status)){
+            imageView2.setVisibility(View.VISIBLE);
+            imageView2.setImageResource(R.mipmap.newmangoods);
+        }else {
             imageView2.setVisibility(View.GONE);
         }
     }

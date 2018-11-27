@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,7 +51,7 @@ import rxfamily.view.BaseFragment;
 /**
  * 牛人界面
  */
-public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,CowManInfoBase.IView {
+public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,UserInfoBase.IView,CowManInfoBase.IView {
 
     @Bind(R.id.messege_id)
     ImageView messegeId;
@@ -109,11 +110,17 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
     private String token;
     private UserInfoPresenter userInfoPresenter;
     private CowManInfoPresenter cowManInfoPresenter;
+    SwipeRefreshLayout swipeLy;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         nameId=view.findViewById(R.id.name_id);
         headImg=view.findViewById(R.id.head_img);
+        swipeLy=view.findViewById(R.id.swipe_ly);
+        swipeLy.setColorSchemeResources(R.color.colorAccent);
+        swipeLy.setOnRefreshListener(this);
+        swipeLy.setEnabled(true);
+
         userInfoPresenter=new UserInfoPresenter(this);
         cowManInfoPresenter=new CowManInfoPresenter(this);
     }
@@ -133,7 +140,7 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
     public void onResume() {
         super.onResume();
         token= Hawk.get(HawkKey.TOKEN);
-        if(TextUtils.isEmpty(token)){
+        if(TextUtils.isEmpty(token)) {
             nameId.setText("全民养牛");
             headImg.setImageResource(R.mipmap.defaulthead);
         }else {
@@ -282,26 +289,43 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
     @Override
     public void getCowManInfos(CowManInfosResultBean cowManInfosResultBean) {
         if("000000".equals(cowManInfosResultBean.getCode())){
-            if(cowManInfosResultBean.getBizData().getMyCattleCount()>0){
-                cattleNumId.setText(cowManInfosResultBean.getBizData().getMyCattleCount()+"只");
+
+            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyCattleCount())) {
+                if (cowManInfosResultBean.getBizData().getMyCattleCount() > 0) {
+                    cattleNumId.setText(cowManInfosResultBean.getBizData().getMyCattleCount() + "只");
+                } else {
+                    cattleNumId.setText("");
+                }
             }else {
                 cattleNumId.setText("");
             }
 
-            if(cowManInfosResultBean.getBizData().getMyTotalAssets().floatValue()>0){
-                allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
+            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyTotalAssets())){
+                if(cowManInfosResultBean.getBizData().getMyTotalAssets().floatValue()>0){
+                    allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
+                }else {
+                    allMoneyId.setText("");
+                }
             }else {
                 allMoneyId.setText("");
             }
 
-            if(cowManInfosResultBean.getBizData().getMyCreditAmount().floatValue()>0){
-                writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount()+"元");
+            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyCreditAmount())) {
+                if (cowManInfosResultBean.getBizData().getMyCreditAmount().floatValue() > 0) {
+                    writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount() + "元");
+                } else {
+                    writeMoneyId.setText("");
+                }
             }else {
                 writeMoneyId.setText("");
             }
 
-            if(cowManInfosResultBean.getBizData().getMyCouponCount()>0){
-                couponNumId.setText(cowManInfosResultBean.getBizData().getMyCouponCount()+"张");
+            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyCouponCount())) {
+                if (cowManInfosResultBean.getBizData().getMyCouponCount() > 0) {
+                    couponNumId.setText(cowManInfosResultBean.getBizData().getMyCouponCount() + "张");
+                } else {
+                    couponNumId.setText("");
+                }
             }else {
                 couponNumId.setText("");
             }
@@ -384,4 +408,14 @@ public class ThreeFragment extends BaseFragment  implements UserInfoBase.IView,C
         super.onDestroy();
     }
 
+    @Override
+    public void onRefresh() {
+        token= Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        userInfoPresenter.getUserInfo(reqData);
+        cowManInfoPresenter.getCowManInfos(reqData);
+        swipeLy.setRefreshing(false);
+    }
 }

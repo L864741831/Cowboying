@@ -10,6 +10,7 @@ public class CreatOrderParamBean {
     private Integer schemeId;
     private Integer quantity;
     private String recommender;
+    private Integer couponId;
 
     public Integer getSchemeId() {
         return schemeId;
@@ -33,5 +34,13 @@ public class CreatOrderParamBean {
 
     public void setRecommender(String recommender) {
         this.recommender = recommender;
+    }
+
+    public Integer getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(Integer couponId) {
+        this.couponId = couponId;
     }
 }

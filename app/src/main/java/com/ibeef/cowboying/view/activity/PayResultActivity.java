@@ -14,6 +14,7 @@ import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
@@ -106,8 +107,12 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
     @Override
     public void geMyCowsOrderListDetail(MyCowsOrderListDetailBean myCowsOrderListDetailBean) {
         if("000000".equals(myCowsOrderListDetailBean.getCode())){
-            payMoneyId.setText("￥"+myCowsOrderListDetailBean.getBizData().getPrice());
-            pastureNameId.setText("认领牧场："+myCowsOrderListDetailBean.getBizData().getPastureName());
+            payMoneyId.setText("￥"+myCowsOrderListDetailBean.getBizData().getPayAmount());
+            if(SDCardUtil.isNullOrEmpty(myCowsOrderListDetailBean.getBizData().getPastureName())){
+                pastureNameId.setText("认领牧场：新手福利");
+            }else {
+                pastureNameId.setText("认领牧场："+myCowsOrderListDetailBean.getBizData().getPastureName());
+            }
             payTimeId.setText("交易时间："+myCowsOrderListDetailBean.getBizData().getPayTime());
             //支付方式（1:支付宝：2：微信支付；3：钱包余额）
             String payType="";
@@ -119,7 +124,7 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
                 payType="账户余额";
             }
             payTypeId.setText("付款方式："+payType);
-            impordentInfoId.setText("特别提醒：支付成功后请耐心等待系统审核，您的收益将从次日起开始计算，请注意查看。");
+//            impordentInfoId.setText("特别提醒：支付成功后请耐心等待系统审核，您的收益将从次日起开始计算，请注意查看。");
         }else {
             showToast(myCowsOrderListDetailBean.getMessage());
         }

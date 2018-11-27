@@ -1,13 +1,13 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
-import com.ibeef.cowboying.utils.NoScrollViewPager;
 import com.ibeef.cowboying.view.fragment.DiscountCouponListFragment;
 
 import java.util.ArrayList;
@@ -27,13 +27,7 @@ public class DiscountCouponActivity extends BaseActivity {
     ImageView backId;
     @Bind(R.id.info)
     TextView info;
-    @Bind(R.id.action_new_question_tv)
-    TextView actionNewQuestionTv;
-    @Bind(R.id.nts_top)
-    NavigationTabStrip ntsTop;
-    @Bind(R.id.content_vp)
-    NoScrollViewPager contentVp;
-    private NoScrollViewPager mViewPager;
+    private ViewPager mViewPager;
     private NavigationTabStrip mTopNavigationTabStrip;
 
     private DiscountCouponListFragment fragment_0;
@@ -62,8 +56,8 @@ public class DiscountCouponActivity extends BaseActivity {
 
         fragmentList = new ArrayList<>();
 
-        fragment_0 = DiscountCouponListFragment.newInstance("0");
-        fragment_1 = DiscountCouponListFragment.newInstance("1");
+        fragment_0 = DiscountCouponListFragment.newInstance("1");
+        fragment_1 = DiscountCouponListFragment.newInstance("2");
 
         fragmentList.add(fragment_0);
         fragmentList.add(fragment_1);

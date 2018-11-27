@@ -75,7 +75,7 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
     private UserInfoPresenter userInfoPresenter;
     private OrderInitPresenter orderInitPresenter;
     private final static int REQUESTCODE = 1; // 返回的结果码
-    private   String selectId="";
+    private   int selectId;
     private  boolean check;
     private UseCouponListPresenter useCouponListPresenter;
     @Override
@@ -98,11 +98,6 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
         userInfoPresenter=new UserInfoPresenter(this);
         orderInitPresenter=new OrderInitPresenter(this);
         useCouponListPresenter=new UseCouponListPresenter(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
@@ -188,7 +183,7 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
          // operation succeeded. 默认值是-1
           if (resultCode == 2) {
               if (requestCode == REQUESTCODE) {
-                  selectId = data.getStringExtra("selectId");
+                  selectId = data.getIntExtra("selectId",0);
                   check=data.getBooleanExtra("check",false);
                   //优惠金额
                   double couponmoney=data.getDoubleExtra("couponmoney",0);
@@ -243,6 +238,9 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
             creatOrderParamBean.setQuantity(quantity);
             creatOrderParamBean.setRecommender(etRightCodeId.getText().toString().trim());
             creatOrderParamBean.setSchemeId(schemeId);
+            if(selectId!=0){
+                creatOrderParamBean.setCouponId(selectId);
+            }
             orderInitPresenter.getCreatOder(reqData,creatOrderParamBean);
         }else {
             showToast(realNameReaultBean.getMessage());

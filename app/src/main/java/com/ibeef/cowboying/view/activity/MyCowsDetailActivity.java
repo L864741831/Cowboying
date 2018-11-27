@@ -391,6 +391,8 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 tvStatusId.setText("交易关闭");
                 btnDeletOrder.setVisibility(View.VISIBLE);
                 storeName.setText("交易关闭");
+                btnCancleOrder.setVisibility(View.GONE);
+                btnToPay.setVisibility(View.GONE);
                 //交易关闭
                 rlTransactionEndTime.setVisibility(View.VISIBLE);
                 tvTransactionEndTime.setText(myCowsOrderListDetailBean.getBizData().getCloseTime());
@@ -403,10 +405,12 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             tvCreateTime.setText(myCowsOrderListDetailBean.getBizData().getCreateTime());
             tvPayTime.setText(myCowsOrderListDetailBean.getBizData().getPayTime());
             tvAssignTime.setText(myCowsOrderListDetailBean.getBizData().getDistributeTime());
-            if ("1".equals(myCowsOrderListDetailBean.getBizData().getAdoptType())) {
+            if ("1".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())) {
                 tvMode.setText("活期养牛");
-            } else {
+            } else  if ("2".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())) {
                 tvMode.setText("定期养牛");
+            } else  if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
+                tvMode.setText("新手体验养牛");
             }
             if ("1".equals(myCowsOrderListDetailBean.getBizData().getPayType())) {
                 tvPayWay.setText("支付宝");

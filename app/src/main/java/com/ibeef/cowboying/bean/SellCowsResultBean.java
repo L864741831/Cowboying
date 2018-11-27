@@ -58,11 +58,19 @@ public class SellCowsResultBean {
         private BigDecimal earn;
         private int orderId;
         private int pastureNum;
+        private int days;
         private BigDecimal rate;
         private BigDecimal price;
         private BigDecimal debt;
         private BigDecimal brokerage;
 
+        public int getDays() {
+            return days;
+        }
+
+        public void setDays(int days) {
+            this.days = days;
+        }
 
         public int getOrderId() {
             return orderId;

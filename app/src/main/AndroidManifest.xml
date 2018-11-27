@@ -87,7 +87,6 @@
             android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarWithBackGrounds" />
-        <activity android:name=".view.activity.ToPayActivity" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

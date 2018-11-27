@@ -38,7 +38,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
         helper.addOnClickListener(R.id.cancle_order);
         helper.addOnClickListener(R.id.to_pay);
         helper.setText(R.id.order_id,"订单编号："+item.getOrderCode())
-              .setText(R.id.tv_total,"共"+item.getCattleCount()+"头，合计：￥"+item.getOrderAmount());
+              .setText(R.id.tv_total,"共"+item.getCattleCount()+"头，合计：￥"+item.getPayAmount());
         TextView delet_order =helper.getView(R.id.delet_order);
         TextView see_order_progress =helper.getView(R.id.see_order_progress);
         TextView sell_want =helper.getView(R.id.sell_want);
@@ -51,7 +51,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
         ry_id.setNestedScrollingEnabled(false);
         if(item.getCattleList().size()>0&&!SDCardUtil.isNullOrEmpty(item.getCattleList())){
             ry_id.setVisibility(View.VISIBLE);
-            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),item.getStatus(),context);
+            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),item.getSchemeType(),context);
             ry_id.setAdapter(sureOrderChirdListAdapter);
             sureOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override

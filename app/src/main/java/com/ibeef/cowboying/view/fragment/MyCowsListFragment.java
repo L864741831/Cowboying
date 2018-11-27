@@ -106,7 +106,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-                intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId());
+                intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
                 startActivity(intent);
             }
         });
@@ -245,7 +245,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                 switch (view.getId()){
                     case R.id.delet_order:
                         //删除订单
-                        showDeleteOrder(dataBean.getOrderId());
+                        showDeleteOrder(dataBean.getOrderId()+"");
                         break;
                     case R.id.see_order_progress:
                         //查看进度
@@ -267,7 +267,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                         if (i==2){
                             if (minuteOfDay >= start && minuteOfDay <= end) {
                                 Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
-                                intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId());
+                                intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
                                 startActivity(intent);
                             } else {
                                 showWantShellOrder();
@@ -279,7 +279,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                     case  R.id.cancle_order:
                         //取消订单
                         Intent intent2 = new Intent(getHoldingActivity(),SureOrderBackDialog.class);
-                        intent2.putExtra("orderCode",dataBean.getOrderId());
+                        intent2.putExtra("orderCode",dataBean.getOrderId()+"");
                         startActivity(intent2);
                         break;
                     case  R.id.to_pay:
@@ -288,7 +288,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                             Map<String, String> reqData = new HashMap<>();
                             reqData.put("Authorization", token);
                             reqData.put("version", getVersionCodes());
-                            myCowsOrderPresenter.getMyCowsToPay(reqData, dataBean.getOrderId());
+                            myCowsOrderPresenter.getMyCowsToPay(reqData, dataBean.getOrderId()+"");
                         }
                         break;
                     default:

@@ -76,7 +76,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
     private Integer schemeId,quantity;
     private OrderInitPresenter orderInitPresenter;
     private final static int REQUESTCODE = 1; // 返回的结果码
-    private   String selectId="";
+    private   int selectId;
     private boolean check;
     private UseCouponListPresenter useCouponListPresenter;
     @Override
@@ -105,12 +105,6 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
         userCertifycodeTxt.setText(infos.getBizData().getRealCardNo());
         mobieTxtId.setText("手机号 "+infos.getBizData().getMobile());
         useCouponListPresenter=new UseCouponListPresenter(this);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
@@ -145,6 +139,9 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
                     creatOrderParamBean.setQuantity(quantity);
                     creatOrderParamBean.setRecommender(etRightCodeId.getText().toString().trim());
                     creatOrderParamBean.setSchemeId(schemeId);
+                    if(selectId!=0){
+                        creatOrderParamBean.setCouponId(selectId);
+                    }
                     Log.e(Constant.TAG,quantity+"?????"+schemeId);
                     orderInitPresenter.getCreatOder(reqData,creatOrderParamBean);
                 }else {
@@ -202,7 +199,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
         // operation succeeded. 默认值是-1
         if (resultCode == 2) {
             if (requestCode == REQUESTCODE) {
-                selectId = data.getStringExtra("selectId");
+                selectId = data.getIntExtra("selectId",0);
                  check=data.getBooleanExtra("check",false);
                 //优惠金额
                 double couponmoney=data.getDoubleExtra("couponmoney",0);
@@ -216,7 +213,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
                         isUseId.setText("无可用");
                     }
                 }
-                Log.e(Constant.TAG,"fddffff"+selectId+couponmoney);
+                Log.e(Constant.TAG,"fddffff"+selectId+check+couponmoney);
             }
         }
     }

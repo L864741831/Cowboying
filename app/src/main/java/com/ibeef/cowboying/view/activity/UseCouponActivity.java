@@ -56,7 +56,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
     private UseCouponListAdapter useCouponListAdapter;
     private List<UseCouponListResultBean.BizDataBean> objectList;
     private String token;
-    private String selectId;
+    private int selectId;
     private boolean check;
     private UseCouponListPresenter useCouponListPresenter;
     private int schemeId;
@@ -84,7 +84,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         objectList=new ArrayList<>();
         useCouponListPresenter=new UseCouponListPresenter(this);
 
-        selectId=getIntent().getStringExtra("selectId");
+        selectId=getIntent().getIntExtra("selectId",0);
         check=getIntent().getBooleanExtra("check",false);
 
         ryId.setLayoutManager(new LinearLayoutManager(this));
@@ -112,6 +112,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                  item=useCouponListAdapter.getItem(position);
+                agreeXieyiChck.setChecked(false);
                 Intent intent = new Intent();
                 intent.putExtra("selectId",item.getCouponId());
                 intent.putExtra("couponmoney", item.getParValue());
@@ -145,7 +146,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
                    intent.putExtra("couponmoney", item.getParValue());
                    intent.putExtra("selectId",item.getCouponId());
                }else {
-                   intent.putExtra("selectId", "");
+                   intent.putExtra("selectId", 0);
                }
                 if(agreeXieyiChck.isChecked()){
                     intent.putExtra("check",true);
@@ -163,7 +164,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
                     intent1.putExtra("couponmoney", item.getParValue());
                     intent1.putExtra("selectId", item.getCouponId());
                 }else {
-                    intent1.putExtra("selectId", "");
+                    intent1.putExtra("selectId", 0);
                 }
                 if(agreeXieyiChck.isChecked()){
                     intent1.putExtra("check",true);
@@ -210,7 +211,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
             intent.putExtra("couponmoney", item.getParValue());
             intent.putExtra("selectId", item.getCouponId());
         }else {
-            intent.putExtra("selectId", "");
+            intent.putExtra("selectId", 0);
         }
         if(agreeXieyiChck.isChecked()){
             intent.putExtra("check",true);
@@ -256,8 +257,9 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
                 }else {
                     //使用优惠券刷新数据
                     for (int i=0;i<objectList.size();i++){
-                        if(selectId.equals(objectList.get(i).getCouponId())){
+                        if(selectId==objectList.get(i).getCouponId()){
                             objectList.get(i).setDefautChoose(1);
+                            item=objectList.get(i);
                         }else {
                             objectList.get(i).setDefautChoose(0);
                         }

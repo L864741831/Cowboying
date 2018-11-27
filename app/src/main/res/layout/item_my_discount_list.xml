@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true" android:id="@+id/swipe_layout"
+    android:clickable="true" android:orientation="vertical"
     android:layout_margin="5dp"
     android:background="@color/white">
 
-    <RelativeLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
             android:id="@+id/rl_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,70 +21,71 @@
                 android:layout_height="wrap_content"
                 android:text="养牛券"
                 android:layout_centerHorizontal="true"
-                android:textSize="18sp"
+                android:textSize="18sp" android:maxLines="1"
+                android:textColor="@color/wenzi_hei"
+                android:ellipsize="end"/>
+            <TextView
+                android:id="@+id/tv_price_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥30"
+                android:layout_below="@+id/tv_type_id"
+                android:layout_centerHorizontal="true"
+                android:textSize="36sp"
                 android:textColor="@color/wenzi_hei"
                 />
-        <TextView
-            android:id="@+id/tv_price_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="￥30"
-            android:layout_below="@+id/tv_type_id"
-            android:layout_centerHorizontal="true"
-            android:textSize="36sp"
-            android:textColor="@color/wenzi_hei"
-            />
-        <TextView
-            android:id="@+id/tv_condition_1_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="满200可用"
-            android:layout_below="@+id/tv_price_id"
-            android:layout_centerHorizontal="true"
-            android:textSize="13sp"
-            android:textColor="@color/wenzi_hei"
-            />
-        <TextView
-            android:layout_marginTop="7dp"
-            android:id="@+id/tv_condition_2_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="仅可购买牛肉使用"
-            android:layout_below="@+id/tv_condition_1_id"
-            android:layout_centerHorizontal="true"
-            android:textSize="9sp"
-            android:textColor="@color/gray_999999"
-            />
-        <TextView
-            android:layout_marginTop="3dp"
-            android:id="@+id/tv_time_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2018.10.01-2018.10.7"
-            android:layout_below="@+id/tv_condition_2_id"
-            android:layout_centerHorizontal="true"
-            android:textSize="9sp"
-            android:textColor="@color/gray_999999"
-            />
-        <TextView
-            android:layout_marginTop="5dp"
-            android:id="@+id/tv_commit_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/my_discount_coupon_commit"
-            android:layout_below="@+id/tv_time_id"
-            android:layout_centerHorizontal="true"
-            android:textSize="9sp"
-            android:textColor="@color/gray_999999"
-            />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_condition_1_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="满200可用"
+                android:layout_below="@+id/tv_price_id"
+                android:layout_centerHorizontal="true"
+                android:textSize="13sp"
+                android:textColor="@color/wenzi_hei"
+                />
+            <TextView
+                android:layout_marginTop="7dp"
+                android:id="@+id/tv_condition_2_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="仅可购买牛肉使用"
+                android:layout_below="@+id/tv_condition_1_id"
+                android:layout_centerHorizontal="true"
+                android:textSize="9sp"
+                android:textColor="@color/gray_999999"
+                />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:id="@+id/tv_time_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2018.10.01-2018.10.7"
+                android:layout_below="@+id/tv_condition_2_id"
+                android:layout_centerHorizontal="true"
+                android:textSize="9sp"
+                android:textColor="@color/gray_999999"
+                />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/tv_commit_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/my_discount_coupon_commit"
+                android:layout_below="@+id/tv_time_id"
+                android:layout_centerHorizontal="true"
+                android:textSize="9sp"
+                android:textColor="@color/gray_999999"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent" android:visibility="gone"
+            android:layout_height="wrap_content" android:id="@+id/rv_show_id">
+            <ImageView
+                android:layout_width="wrap_content" android:id="@+id/img_show_id"
+                android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                android:src="@mipmap/hasuntime"/>
+        </RelativeLayout>
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
-        android:text="删除"
-        android:textColor="@android:color/white"/>
-
-</com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+</LinearLayout>
