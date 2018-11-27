@@ -46,7 +46,7 @@ public class Md5Util {
         byte[] array = md.digest(data.getBytes("UTF-8"));
         StringBuilder sb = new StringBuilder();
         for (byte item : array) {
-            sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
+            sb.append(Integer.toHexString((item & 0xFF) | 0x100), 1, 3);
         }
         return sb.toString().toUpperCase();
     }

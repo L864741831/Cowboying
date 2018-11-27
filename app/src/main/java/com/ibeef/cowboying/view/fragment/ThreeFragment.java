@@ -46,6 +46,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.OkHttpClient;
 import rxfamily.view.BaseFragment;
 
 /**
@@ -111,6 +112,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
     private UserInfoPresenter userInfoPresenter;
     private CowManInfoPresenter cowManInfoPresenter;
     SwipeRefreshLayout swipeLy;
+    private OkHttpClient okHttpClient;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -123,6 +125,8 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
 
         userInfoPresenter=new UserInfoPresenter(this);
         cowManInfoPresenter=new CowManInfoPresenter(this);
+
+
     }
 
     @Override
@@ -290,45 +294,30 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
     public void getCowManInfos(CowManInfosResultBean cowManInfosResultBean) {
         if("000000".equals(cowManInfosResultBean.getCode())){
 
-            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyCattleCount())) {
-                if (cowManInfosResultBean.getBizData().getMyCattleCount() > 0) {
-                    cattleNumId.setText(cowManInfosResultBean.getBizData().getMyCattleCount() + "只");
-                } else {
-                    cattleNumId.setText("");
-                }
-            }else {
+            if (cowManInfosResultBean.getBizData().getMyCattleCount() > 0) {
+                cattleNumId.setText(cowManInfosResultBean.getBizData().getMyCattleCount() + "只");
+            } else {
                 cattleNumId.setText("");
             }
 
-            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyTotalAssets())){
-                if(cowManInfosResultBean.getBizData().getMyTotalAssets().floatValue()>0){
-                    allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
-                }else {
-                    allMoneyId.setText("");
-                }
+            if(cowManInfosResultBean.getBizData().getMyTotalAssets()>0){
+                allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
             }else {
                 allMoneyId.setText("");
             }
 
-            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyCreditAmount())) {
-                if (cowManInfosResultBean.getBizData().getMyCreditAmount().floatValue() > 0) {
-                    writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount() + "元");
-                } else {
-                    writeMoneyId.setText("");
-                }
-            }else {
+            if (cowManInfosResultBean.getBizData().getMyCreditAmount() > 0) {
+                writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount() + "元");
+            } else {
                 writeMoneyId.setText("");
             }
 
-            if(!SDCardUtil.isNullOrEmpty(cowManInfosResultBean.getBizData().getMyCouponCount())) {
-                if (cowManInfosResultBean.getBizData().getMyCouponCount() > 0) {
-                    couponNumId.setText(cowManInfosResultBean.getBizData().getMyCouponCount() + "张");
-                } else {
-                    couponNumId.setText("");
-                }
-            }else {
+            if (cowManInfosResultBean.getBizData().getMyCouponCount() > 0) {
+                couponNumId.setText(cowManInfosResultBean.getBizData().getMyCouponCount() + "张");
+            } else {
                 couponNumId.setText("");
             }
+
 
         }else {
             showToast(cowManInfosResultBean.getMessage());

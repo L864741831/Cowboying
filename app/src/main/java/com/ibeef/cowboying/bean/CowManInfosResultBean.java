@@ -1,7 +1,5 @@
 package com.ibeef.cowboying.bean;
 
-import java.math.BigDecimal;
-
 /**
  * @author ls
  * @date on 2018/11/12 14:05
@@ -10,10 +8,11 @@ import java.math.BigDecimal;
  **/
 public class CowManInfosResultBean {
 
+
     /**
      * code : 000000
-     * message :
-     * bizData : {"myCattleCount":0,"myTotalAssets":0,"myCreditAmount":0,"myBeefAmount":0,"myCouponCount":0}
+     * message : null
+     * bizData : {"myCattleCount":0,"myTotalAssets":0,"myCreditAmount":null,"myBeefAmount":0,"myCouponCount":8}
      */
 
     private String code;
@@ -48,15 +47,15 @@ public class CowManInfosResultBean {
         /**
          * myCattleCount : 0
          * myTotalAssets : 0.0
-         * myCreditAmount : 0.0
+         * myCreditAmount : null
          * myBeefAmount : 0.0
-         * myCouponCount : 0.0
+         * myCouponCount : 8
          */
 
         private int myCattleCount;
-        private BigDecimal myTotalAssets;
-        private BigDecimal myCreditAmount;
-        private BigDecimal myBeefAmount;
+        private double myTotalAssets;
+        private double myCreditAmount;
+        private double myBeefAmount;
         private int myCouponCount;
 
         public int getMyCattleCount() {
@@ -67,27 +66,27 @@ public class CowManInfosResultBean {
             this.myCattleCount = myCattleCount;
         }
 
-        public BigDecimal getMyTotalAssets() {
+        public double getMyTotalAssets() {
             return myTotalAssets;
         }
 
-        public void setMyTotalAssets(BigDecimal myTotalAssets) {
+        public void setMyTotalAssets(double myTotalAssets) {
             this.myTotalAssets = myTotalAssets;
         }
 
-        public BigDecimal getMyCreditAmount() {
+        public double getMyCreditAmount() {
             return myCreditAmount;
         }
 
-        public void setMyCreditAmount(BigDecimal myCreditAmount) {
+        public void setMyCreditAmount(double myCreditAmount) {
             this.myCreditAmount = myCreditAmount;
         }
 
-        public BigDecimal getMyBeefAmount() {
+        public double getMyBeefAmount() {
             return myBeefAmount;
         }
 
-        public void setMyBeefAmount(BigDecimal myBeefAmount) {
+        public void setMyBeefAmount(double myBeefAmount) {
             this.myBeefAmount = myBeefAmount;
         }
 

@@ -234,9 +234,7 @@ class DownLoadRequest {
         if (map.isEmpty()) {
             return true;
         }
-        if (map.containsKey(downLoadEntity.dataId)) {
-            map.remove(downLoadEntity.dataId);
-        }
+        map.remove(downLoadEntity.dataId);
         if (map.size() == 0) {
             mUrlTaskMap.remove(downLoadEntity.url);
         }
