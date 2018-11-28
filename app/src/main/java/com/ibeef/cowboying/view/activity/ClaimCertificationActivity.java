@@ -214,11 +214,14 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
                 if(check){
                     //不使用优惠券
                     isUseId.setText("未使用");
+                    isUseId.setTextColor(getResources().getColor(R.color.txthui));
                 }else {
                     if(couponmoney>0){
-                        isUseId.setText(couponmoney+"");
+                        isUseId.setText("-"+couponmoney);
+                        isUseId.setTextColor(getResources().getColor(R.color.red));
                     }else {
                         isUseId.setText("无可用");
+                        isUseId.setTextColor(getResources().getColor(R.color.txthui));
                     }
                 }
                 Log.e(Constant.TAG,"fddffff"+selectId+check+couponmoney);

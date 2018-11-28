@@ -111,7 +111,6 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
     private UserInfoPresenter userInfoPresenter;
     private CowManInfoPresenter cowManInfoPresenter;
     SwipeRefreshLayout swipeLy;
-    private OkHttpClient okHttpClient;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
