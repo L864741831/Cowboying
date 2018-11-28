@@ -96,6 +96,7 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
         } else  if ("3".equals(schemeType)){
             imageView2.setVisibility(View.VISIBLE);
             imageView2.setImageResource(R.mipmap.newmangoods);
+            helper.getView(R.id.num_id).setVisibility(View.GONE);
         }else {
             imageView2.setVisibility(View.GONE);
         }
