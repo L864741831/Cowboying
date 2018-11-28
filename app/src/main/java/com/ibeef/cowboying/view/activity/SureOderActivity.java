@@ -32,6 +32,7 @@ import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -172,8 +173,10 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         knowMobileId.setText(infos.getBizData().getMobile());
         knowIdentifycodeId.setText("身份证号："+infos.getBizData().getCardNo());
         couponMoneyId.setText("已优惠￥"+infos.getBizData().getDiscountAmount());
-        knowCodeId.setText("第"+infos.getBizData().getCode()+"期");
-        knowPastureId.setText(infos.getBizData().getPastureName());
+        knowCodeId.setText("第"+infos.getBizData().getSchemeCode()+"期");
+        if(!SDCardUtil.isNullOrEmpty(infos.getBizData().getPastureName())){
+            knowPastureId.setText(infos.getBizData().getPastureName());
+        }
         knowNumberId.setText(infos.getBizData().getQuantity()+"");
         knowOnePriceId.setText(infos.getBizData().getPrice()+"");
 

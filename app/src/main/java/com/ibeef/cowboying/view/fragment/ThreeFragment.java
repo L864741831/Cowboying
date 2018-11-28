@@ -59,7 +59,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
     @Bind(R.id.setting_id)
     ImageView settingId;
     CircleImageView headImg;
-    @Bind(R.id.level_id)
+
     ImageView levelId;
     TextView nameId;
     @Bind(R.id.pay_money_codeId)
@@ -78,24 +78,23 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
     LinearLayout waitGetGoodsId;
     @Bind(R.id.wait_push_goods_id)
     LinearLayout waitPushGoodsId;
-    @Bind(R.id.cattle_num_id)
+
     TextView cattleNumId;
     @Bind(R.id.me_cattle_rv)
     RelativeLayout meCattleRv;
     @Bind(R.id.cattle_oder_rv)
     RelativeLayout cattleOderRv;
-    @Bind(R.id.all_money_id)
+
     TextView allMoneyId;
     @Bind(R.id.all_money_rv)
     RelativeLayout allMoneyRv;
     @Bind(R.id.beef_house_rv)
     RelativeLayout beefHouseRv;
-    @Bind(R.id.write_money_id)
     TextView writeMoneyId;
 
     @Bind(R.id.write_money_rv)
     RelativeLayout writeMoneyRv;
-    @Bind(R.id.coupon_num_id)
+
     TextView couponNumId;
     @Bind(R.id.coupon_num_rv)
     RelativeLayout couponNumRv;
@@ -119,6 +118,11 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         nameId=view.findViewById(R.id.name_id);
         headImg=view.findViewById(R.id.head_img);
         swipeLy=view.findViewById(R.id.swipe_ly);
+        writeMoneyId=view.findViewById(R.id.write_money_id);
+        cattleNumId=view.findViewById(R.id.cattle_num_id);
+        allMoneyId=view.findViewById(R.id.all_money_id);
+        couponNumId=view.findViewById(R.id.coupon_num_id);
+        levelId=view.findViewById(R.id.level_id);
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
@@ -152,7 +156,10 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
             reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
             userInfoPresenter.getUserInfo(reqData);
-            cowManInfoPresenter.getCowManInfos(reqData);
+            Map<String, String> reqData1 = new HashMap<>();
+            reqData1.put("Authorization",token);
+            reqData1.put("version",getVersionCodes());
+            cowManInfoPresenter.getCowManInfos(reqData1);
         }
     }
 
@@ -404,7 +411,10 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         userInfoPresenter.getUserInfo(reqData);
-        cowManInfoPresenter.getCowManInfos(reqData);
+        Map<String, String> reqData1 = new HashMap<>();
+        reqData1.put("Authorization",token);
+        reqData1.put("version",getVersionCodes());
+        cowManInfoPresenter.getCowManInfos(reqData1);
         swipeLy.setRefreshing(false);
     }
 }
