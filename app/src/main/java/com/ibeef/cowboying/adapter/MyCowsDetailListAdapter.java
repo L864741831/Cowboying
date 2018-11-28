@@ -64,7 +64,7 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
             helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
         } else if ("6".equals(status)) {
             //交易完成（比交易完成多一个出售成功时间）
-            helper.setText(R.id.store_name,"交易完成");
+            helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
         }else if ("9".equals(status)) {
             //交易关闭
             helper.setText(R.id.store_name,"交易关闭");
