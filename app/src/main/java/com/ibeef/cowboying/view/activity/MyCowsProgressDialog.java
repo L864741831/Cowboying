@@ -57,7 +57,7 @@ public class MyCowsProgressDialog extends AppCompatActivity implements View.OnCl
     @Bind(R.id.tv_lock_month)
     TextView tvLockMonth;
     private String status;
-    private String LockMonths;
+    private int LockMonths;
     private String UnlockTime;
     private String token;
     private LinearLayout linearLayout;
@@ -74,7 +74,7 @@ public class MyCowsProgressDialog extends AppCompatActivity implements View.OnCl
     private void init() {
         token = Hawk.get(HawkKey.TOKEN);
         status = getIntent().getStringExtra("status");
-        LockMonths = getIntent().getStringExtra("LockMonths");
+        LockMonths = getIntent().getIntExtra("LockMonths",0);
         UnlockTime = getIntent().getStringExtra("UnlockTime");
         Log.i("htht", "status:::::::: " + status);
         linearLayout = findViewById(R.id.rvs_id);

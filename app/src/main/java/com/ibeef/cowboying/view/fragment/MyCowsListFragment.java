@@ -251,7 +251,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                         //查看进度
                         Intent intent1 = new Intent(getHoldingActivity(),MyCowsProgressDialog.class);
                         intent1.putExtra("status",myCowsListAdapter.getItem(position).getStatus());
-                        intent1.putExtra("LockMonths",myCowsListAdapter.getItem(position).getLockMonths()+"");
+                        intent1.putExtra("LockMonths",myCowsListAdapter.getItem(position).getLockMonths());
                         intent1.putExtra("UnlockTime",myCowsListAdapter.getItem(position).getUnlockTime());
                         startActivity(intent1);
                         break;

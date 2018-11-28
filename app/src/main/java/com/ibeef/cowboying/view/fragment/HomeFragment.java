@@ -240,13 +240,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 break;
             case R.id.newpeople_img_id:
                 //新人礼券
-                if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean)){
-                    if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())) {
-                        Intent intent=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
-                        intent.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
-                        startActivity(intent);
-                    }
-                }
+                Intent intent=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                intent.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                startActivity(intent);
                 break;
             case R.id.ranchconsociation_img_id:
                 //合作牧场
@@ -266,75 +262,85 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void getHomeBanner(final HomeBannerResultBean homeBannerResultBean) {
         this.homeBannerResultBean=homeBannerResultBean;
-        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getTopBannerList())){
-            return;
-        }
 
-        ArrayList<String> imgStr = new ArrayList<>();
-        for (int i=0;i<homeBannerResultBean.getBizData().getTopBannerList().size();i++){
-            imgStr.add(Constant.imageDomain+homeBannerResultBean.getBizData().getTopBannerList().get(i).getImageUrl());
-        }
-        banner.setImages(imgStr);
-        //设置图片集合
-        banner.start();
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-//                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
-//                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
-//                intent.putExtra("title","口袋牧场");
-//                startActivity(intent);
-            }
-        });
-
-        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())){
+        //新人专享
+        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())) {
             RequestOptions options = new RequestOptions()
                     .skipMemoryCache(true)
                     .error(R.mipmap.newpeople)
                     //跳过内存缓存
                     ;
             Glide.with(getHoldingActivity()).load(Constant.imageDomain+homeBannerResultBean.getBizData().getNewUserActivity().getHomeBanner()).apply(options).into(newpeopleImgId);
+
+            if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity().getSchemeId())){
+                newpeopleImgId.setVisibility(View.VISIBLE);
+            }else {
+                newpeopleImgId.setVisibility(View.GONE);
+            }
+        }else {
+            newpeopleImgId.setVisibility(View.GONE);
         }
-        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getMiddleBannerList())){
-            return;
-        }
-        ArrayList<String> imgStr1 = new ArrayList<>();
-        for (int i=0;i<homeBannerResultBean.getBizData().getMiddleBannerList().size();i++){
-            imgStr1.add(Constant.imageDomain+homeBannerResultBean.getBizData().getMiddleBannerList().get(i).getImageUrl());
-        }
-        specialbeefImgId.setImages(imgStr1);
-        //设置图片集合
-        specialbeefImgId.start();
-        specialbeefImgId.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
+
+        //顶部banner
+        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getTopBannerList())){
+            ArrayList<String> imgStr = new ArrayList<>();
+            for (int i=0;i<homeBannerResultBean.getBizData().getTopBannerList().size();i++){
+                imgStr.add(Constant.imageDomain+homeBannerResultBean.getBizData().getTopBannerList().get(i).getImageUrl());
+            }
+            banner.setImages(imgStr);
+            //设置图片集合
+            banner.start();
+            banner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
 //                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
 //                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
 //                intent.putExtra("title","口袋牧场");
 //                startActivity(intent);
-            }
-        });
-
-        if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBanner())){
-            return;
+                }
+            });
         }
-        if(isFirstAdDialog){
-            isFirstAdDialog=false;
-            if(TextUtils.isEmpty(history)){
-                SharedPreferences.Editor editor = mPrefDailog.edit();
-                editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
-                editor.commit();
-                Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-                intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
-                startActivity(intent);
-            }else {
-                if(!DateUtils.getTime(new Date()).equals(history)){
+
+        //中间轮播banner
+        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getMiddleBannerList())){
+            ArrayList<String> imgStr1 = new ArrayList<>();
+            for (int i=0;i<homeBannerResultBean.getBizData().getMiddleBannerList().size();i++){
+                imgStr1.add(Constant.imageDomain+homeBannerResultBean.getBizData().getMiddleBannerList().get(i).getImageUrl());
+            }
+            specialbeefImgId.setImages(imgStr1);
+            //设置图片集合
+            specialbeefImgId.start();
+            specialbeefImgId.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+//                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
+//                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
+//                intent.putExtra("title","口袋牧场");
+//                startActivity(intent);
+                }
+            });
+        }
+
+        //一天一次的广告弹框
+        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBanner())){
+            if(isFirstAdDialog){
+                isFirstAdDialog=false;
+                if(TextUtils.isEmpty(history)){
                     SharedPreferences.Editor editor = mPrefDailog.edit();
                     editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                     editor.commit();
                     Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
                     intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
                     startActivity(intent);
+                }else {
+                    if(!DateUtils.getTime(new Date()).equals(history)){
+                        SharedPreferences.Editor editor = mPrefDailog.edit();
+                        editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
+                        editor.commit();
+                        Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
+                        intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
+                        startActivity(intent);
+                    }
                 }
             }
         }

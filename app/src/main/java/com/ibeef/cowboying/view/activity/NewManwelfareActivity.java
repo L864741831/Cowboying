@@ -99,6 +99,7 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
                                 intent1.putExtra("schemeId",infos.getSchemeId());
                                 intent1.putExtra("quantity",1);
                                 intent1.putExtra("userId",userInfoResultBean.getBizData().getUserId());
+                                intent1.putExtra("isNewMan",true);
                                 startActivity(intent1);
                             }else {
                                 //已实名认证
@@ -106,6 +107,7 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
                                 intent1.putExtra("infos",userInfoResultBean);
                                 intent1.putExtra("schemeId",infos.getSchemeId());
                                 intent1.putExtra("quantity",1);
+                                intent1.putExtra("isNewMan",true);
                                 startActivity(intent1);
                             }
                         }

@@ -77,7 +77,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
     private OrderInitPresenter orderInitPresenter;
     private final static int REQUESTCODE = 1; // 返回的结果码
     private   int selectId;
-    private boolean check;
+    private boolean check,isNewMan;
     private UseCouponListPresenter useCouponListPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
         infos= (UserInfoResultBean) getIntent().getSerializableExtra("infos");
         schemeId=getIntent().getIntExtra("schemeId",0);
         quantity=getIntent().getIntExtra("quantity",0);
+        isNewMan=getIntent().getBooleanExtra("isNewMan",false);
         orderInitPresenter=new OrderInitPresenter(this);
         RequestOptions options = new RequestOptions()
                 .error(R.mipmap.meheaddefalut)
@@ -105,10 +106,16 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
         userCertifycodeTxt.setText(infos.getBizData().getRealCardNo());
         mobieTxtId.setText("手机号 "+infos.getBizData().getMobile());
         useCouponListPresenter=new UseCouponListPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getCouponNum(reqData,schemeId+"");
+
+        if(isNewMan){
+            isCouponRv.setVisibility(View.GONE);
+        }else {
+            isCouponRv.setVisibility(View.VISIBLE);
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            useCouponListPresenter.getCouponNum(reqData,schemeId+"",quantity);
+        }
     }
 
     @OnClick({R.id.back_id, R.id.is_coupon_rv, R.id.next_step_txt,R.id.xieyiss_txt_id})
@@ -128,6 +135,7 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
                 intent1.putExtra("selectId",selectId);
                 intent1.putExtra("check",check);
                 intent1.putExtra("schemeId",schemeId);
+                intent1.putExtra("quantity",quantity);
                 startActivityForResult(intent1,REQUESTCODE);
                 break;
             case R.id.next_step_txt:

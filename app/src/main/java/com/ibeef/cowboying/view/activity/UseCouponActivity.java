@@ -59,7 +59,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
     private int selectId;
     private boolean check;
     private UseCouponListPresenter useCouponListPresenter;
-    private int schemeId;
+    private int schemeId,quantity;
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
@@ -80,6 +80,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         swipeLy.setEnabled(true);
 
         schemeId=getIntent().getIntExtra("schemeId",0);
+        quantity=getIntent().getIntExtra("quantity",0);
 
         objectList=new ArrayList<>();
         useCouponListPresenter=new UseCouponListPresenter(this);
@@ -133,7 +134,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",currentPage);
+        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",quantity,currentPage);
 
     }
 
@@ -159,6 +160,8 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
                finish();
                 break;
             case R.id.agree_xieyi_chck:
+                item=null;
+                agreeXieyiChck.setChecked(true);
                 Intent intent1 = new Intent();
                 if(!SDCardUtil.isNullOrEmpty(item)){
                     intent1.putExtra("couponmoney", item.getParValue());
@@ -189,7 +192,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",currentPage);
+        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",quantity,currentPage);
         swipeLy.setRefreshing(false);
     }
 
@@ -200,7 +203,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",currentPage);
+        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",quantity,currentPage);
     }
 
     @Override
