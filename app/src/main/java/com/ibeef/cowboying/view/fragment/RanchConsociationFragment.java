@@ -28,6 +28,7 @@ import com.ibeef.cowboying.presenter.RanchBottomVideoPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
+import com.ibeef.cowboying.view.activity.TvLiveActivity;
 import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -267,7 +268,7 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
                 //直播view需要自定义
                 if (!SDCardUtil.isNullOrEmpty(pastureDetelResultBean)) {
                     if (!SDCardUtil.isNullOrEmpty(pastureDetelResultBean.getBizData())) {
-                        Intent intent = new Intent(getHoldingActivity(), PlayerVideoActivity.class);
+                        Intent intent = new Intent(getHoldingActivity(), TvLiveActivity.class);
                         intent.putExtra("video_url", pastureDetelResultBean.getBizData().getLivePlayUrl());
                         intent.putExtra("title", pastureDetelResultBean.getBizData().getName());
                         intent.putExtra("coverUrl", pastureDetelResultBean.getBizData().getVideoCoverUrl());

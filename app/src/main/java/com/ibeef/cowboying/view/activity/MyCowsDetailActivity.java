@@ -125,8 +125,14 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     RelativeLayout rlEmeng;
     @Bind(R.id.tv_discount_coupon)
     TextView tvDiscountCoupon;
+    @Bind(R.id.discount_type_id)
+    TextView discountTypeId;
+    @Bind(R.id.txt_expirence_day)
+    TextView txtExpirenceDay;
     @Bind(R.id.rl_discount_coupon)
     RelativeLayout rlDiscountCoupon;
+    @Bind(R.id.rl_expirence_day)
+    RelativeLayout rlExpirenceDay;
     private String token;
     private MyCowsDetailListAdapter myCowsDetailListAdapter;
     private List<MyCowsOrderListDetailBean.BizDataBean.CattleListBean> beanList;
@@ -415,10 +421,15 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             tvAssignTime.setText(myCowsOrderListDetailBean.getBizData().getDistributeTime());
             if ("1".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())) {
                 tvMode.setText("活期养牛");
+                discountTypeId.setText("优惠券：");
             } else  if ("2".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())) {
                 tvMode.setText("定期养牛");
+                discountTypeId.setText("优惠券：");
             } else  if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
                 tvMode.setText("新手体验养牛");
+                discountTypeId.setText("体验金额：");
+                rlExpirenceDay.setVisibility(View.VISIBLE);
+                txtExpirenceDay.setText(myCowsOrderListDetailBean.getBizData().getExperienceDays()+"天");
             }
             if ("1".equals(myCowsOrderListDetailBean.getBizData().getPayType())) {
                 tvPayWay.setText("支付宝");
@@ -429,7 +440,12 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             }
             if (Double.valueOf(myCowsOrderListDetailBean.getBizData().getDiscountAmount())!=null){
                 rlDiscountCoupon.setVisibility(View.VISIBLE);
-                tvDiscountCoupon.setText("-￥"+myCowsOrderListDetailBean.getBizData().getDiscountAmount());
+                if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
+                    tvDiscountCoupon.setText("￥"+myCowsOrderListDetailBean.getBizData().getDiscountAmount());
+                }else {
+                    tvDiscountCoupon.setText("-￥"+myCowsOrderListDetailBean.getBizData().getDiscountAmount());
+                }
+
             }
         } else {
             Toast.makeText(this, myCowsOrderListDetailBean.getMessage(), Toast.LENGTH_SHORT).show();

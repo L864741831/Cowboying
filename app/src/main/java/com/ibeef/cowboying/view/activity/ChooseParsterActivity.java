@@ -163,7 +163,7 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
                 //直播view需要自定义
                 if (!SDCardUtil.isNullOrEmpty(pastureDetelResultBean)) {
                     if (!SDCardUtil.isNullOrEmpty(pastureDetelResultBean.getBizData())) {
-                        Intent intent = new Intent(ChooseParsterActivity.this, PlayerVideoActivity.class);
+                        Intent intent = new Intent(ChooseParsterActivity.this, TvLiveActivity.class);
                         intent.putExtra("video_url", pastureDetelResultBean.getBizData().getLivePlayUrl());
                         intent.putExtra("title", pastureDetelResultBean.getBizData().getName());
                         intent.putExtra("coverUrl", pastureDetelResultBean.getBizData().getVideoCoverUrl());

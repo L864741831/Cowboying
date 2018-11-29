@@ -32,7 +32,7 @@ public class DiscountCoupondapter extends BaseQuickAdapter<MyDiscountCouponListB
 
           helper.setText(R.id.tv_type_id,item.getName())
                 .setText(R.id.tv_condition_1_id,"· 满"+item.getNeedAmount()+"元可用 ·")
-                .setText(R.id.tv_time_id,DateUtils.formatDate(item.getUseStartTime(),DateUtils.TYPE_01)+"-"+DateUtils.formatDate(item.getUseEndTime(),DateUtils.TYPE_01))
+                .setText(R.id.tv_time_id,DateUtils.formatDate(item.getUseStartTime(),DateUtils.TYPE_04)+"-"+DateUtils.formatDate(item.getUseEndTime(),DateUtils.TYPE_04))
                 .setText(R.id.tv_price_id,item.getParValue()+"");
           //getUseType 使用类型（0：全部；1：养牛；2：拼牛；3：商城；） getUseSchemeType适用方案类型（0：所有；1：活期；2：定期）
           if("0".equals(item.getUseType())){
@@ -44,7 +44,9 @@ public class DiscountCoupondapter extends BaseQuickAdapter<MyDiscountCouponListB
                   helper.setText(R.id.tv_condition_2_id,"仅可参与定期养牛使用");
               }
           }else  if("1".equals(item.getUseType())){
-              if("1".equals(item.getUseSchemeType())){
+              if("0".equals(item.getUseSchemeType())){
+                  helper.setText(R.id.tv_condition_2_id,"仅可参与养牛使用");
+              }else if("1".equals(item.getUseSchemeType())){
                   helper.setText(R.id.tv_condition_2_id,"仅可参与活期养牛使用");
               }else  if("2".equals(item.getUseSchemeType())){
                   helper.setText(R.id.tv_condition_2_id,"仅可参与定期养牛使用");

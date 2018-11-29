@@ -49,8 +49,9 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
         ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
-        if(item.getCattleList().size()>0&&!SDCardUtil.isNullOrEmpty(item.getCattleList())){
+        if(item.getCattleList().size()>0){
             ry_id.setVisibility(View.VISIBLE);
+            rlEmeng.setVisibility(View.GONE);
             MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),item.getSchemeType(),context);
             ry_id.setAdapter(sureOrderChirdListAdapter);
             sureOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -63,6 +64,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
             });
         }else {
             ry_id.setVisibility(View.GONE);
+            rlEmeng.setVisibility(View.VISIBLE);
         }
 
             //    订单状态（1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
@@ -73,7 +75,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"等待用户付款");
                 to_pay.setVisibility(View.VISIBLE);
                 cancle_order.setVisibility(View.VISIBLE);
-                rlEmeng.setVisibility(View.VISIBLE);
                 see_order_progress.setVisibility(View.GONE);
                 sell_want.setVisibility(View.GONE);
                 delet_order.setVisibility(View.GONE);
@@ -82,7 +83,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.store_name,"待分配牛只");
                 helper.setText(R.id.stadus_id,"已付款，待分配牛只");
                 see_order_progress.setVisibility(View.VISIBLE);
-                rlEmeng.setVisibility(View.VISIBLE);
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
                 sell_want.setVisibility(View.GONE);
@@ -92,7 +92,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"已分配牛只");
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
-                rlEmeng.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.VISIBLE);
                 sell_want.setVisibility(View.VISIBLE);
                 delet_order.setVisibility(View.GONE);
@@ -101,7 +100,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"已分配牛只");
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
-                rlEmeng.setVisibility(View.GONE);
                 sell_want.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.VISIBLE);
                 delet_order.setVisibility(View.GONE);
@@ -110,7 +108,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"牛只出售中");
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
-                rlEmeng.setVisibility(View.GONE);
                 sell_want.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.VISIBLE);
                 delet_order.setVisibility(View.GONE);
@@ -119,7 +116,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"交易完成");
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
-                rlEmeng.setVisibility(View.GONE);
                 sell_want.setVisibility(View.GONE);
                 delet_order.setVisibility(View.VISIBLE);
                 see_order_progress.setVisibility(View.VISIBLE);
@@ -129,7 +125,6 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
                 helper.setText(R.id.stadus_id,"交易关闭");
                 to_pay.setVisibility(View.GONE);
                 cancle_order.setVisibility(View.GONE);
-                rlEmeng.setVisibility(View.VISIBLE);
                 sell_want.setVisibility(View.GONE);
                 see_order_progress.setVisibility(View.GONE);
                 delet_order.setVisibility(View.VISIBLE);

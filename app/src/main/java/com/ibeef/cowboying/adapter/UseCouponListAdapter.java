@@ -32,7 +32,7 @@ public class UseCouponListAdapter extends BaseQuickAdapter<UseCouponListResultBe
         helper.setText(R.id.coupon_type_id,item.getName());
         helper.setText(R.id.money_txt_id,item.getParValue()+"");
         helper.setText(R.id.enough_money_id,"· 满"+item.getNeedAmount()+"元可用 ·");
-        helper.setText(R.id.validity_time_id,"·有效期至"+DateUtils.formatDate(item.getUseEndTime(),DateUtils.TYPE_01));
+        helper.setText(R.id.validity_time_id,"·有效期至"+DateUtils.formatDate(item.getUseEndTime(),DateUtils.TYPE_04));
 
         //状态（0：未使用；1：已使用；2：不可用）
         if("0".equals(item.getStatus())){

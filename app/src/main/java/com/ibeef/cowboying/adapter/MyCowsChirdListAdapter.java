@@ -45,15 +45,18 @@ public class MyCowsChirdListAdapter extends BaseQuickAdapter<MyCowsOrderListBean
             .setText(R.id.money_id,"安格斯牛");
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(R.mipmap.img_my_cows_dingqi);
+            helper.setVisible(R.id.num_id,true);
         } else  if ("3".equals(status)){
             helper.setText(R.id.store_name,item.getCattleCode())
                     .setText(R.id.money_id,"虚拟牛只");
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(R.mipmap.newmangoods);
+            helper.setVisible(R.id.num_id,false);
         }else {
             helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode())
             .setText(R.id.money_id,"安格斯牛");
             imageView.setVisibility(View.GONE);
+            helper.setVisible(R.id.num_id,true);
         }
     }
 }
