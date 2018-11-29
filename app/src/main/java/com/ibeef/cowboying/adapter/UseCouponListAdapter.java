@@ -27,11 +27,15 @@ public class UseCouponListAdapter extends BaseQuickAdapter<UseCouponListResultBe
 
     @Override
     protected void convert(BaseViewHolder helper, UseCouponListResultBean.BizDataBean item) {
+        Double d = new Double(item.getNeedAmount());
+        int i = d.intValue();
+        Double d1 = new Double(item.getParValue());
+        int i1 = d1.intValue();
         LinearLayout lvBgId=helper.getView(R.id.lv_bg_id);
         LinearLayout unvalidityShowbgLv=helper.getView(R.id.unvalidity_showbg_lv);
         helper.setText(R.id.coupon_type_id,item.getName());
-        helper.setText(R.id.money_txt_id,item.getParValue()+"");
-        helper.setText(R.id.enough_money_id,"· 满"+item.getNeedAmount()+"元可用 ·");
+        helper.setText(R.id.money_txt_id,i1+"");
+        helper.setText(R.id.enough_money_id,"· 满"+i+"元可用 ·");
         helper.setText(R.id.validity_time_id,"·有效期至"+DateUtils.formatDate(item.getUseEndTime(),DateUtils.TYPE_04));
 
         //状态（0：未使用；1：已使用；2：不可用）

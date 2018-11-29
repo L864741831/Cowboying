@@ -12,11 +12,11 @@
         <com.youth.banner.Banner
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="320dp" app:image_scale_type="fit_xy" />
+            android:layout_height="320dp" app:image_scale_type="center_crop" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:src="@mipmap/toptitle" android:layout_marginTop="20dp"/>
+            android:src="@mipmap/toptitle" android:layout_marginTop="14dp"/>
     </FrameLayout>
 
 
@@ -52,7 +52,7 @@
                     android:textSize="17sp" android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="累计销售牛人"
+                    android:layout_height="wrap_content" android:text="累计注册牛人"
                     android:layout_gravity="center" android:textColor="@color/black"
                     android:textSize="13sp"/>
             </LinearLayout>
@@ -60,7 +60,7 @@
         <com.youth.banner.Banner
             android:id="@+id/specialbeef_img_id"
             android:layout_width="match_parent"
-            android:layout_height="135dp" app:image_scale_type="fit_xy" />
+            android:layout_height="135dp" app:image_scale_type="center_crop" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
         <ImageView
             android:layout_width="match_parent" android:id="@+id/newpeople_img_id"
             android:layout_height="135dp" android:src="@mipmap/newpeople"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:src="@mipmap/sign"

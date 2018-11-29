@@ -53,15 +53,26 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
 //    不用给领养类型，活期是3 定期只有4，不会为3
         if ("1".equals(status)) {
             //待付款(基础界面只显示待付款的几个条目，其他都隐藏掉了)
-            helper.setText(R.id.store_name,"待付款");
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,item.getCattleName());
+            }else {
+                helper.setText(R.id.store_name,"待付款");
+            }
+
         } else if ("2".equals(status)) {
             //已付款未分配（比待付款多了一个支付时间和支付时间）
-            helper.setText(R.id.store_name,"待分配牛只");
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,item.getCattleName());
+            }else {
+                helper.setText(R.id.store_name,"待分配牛只");
+            }
         } else if ("3".equals(status)) {
             //已分配（这里只有活期养牛这一种）
             if("3".equals(schemeType)){
                 helper.setText(R.id.store_name,item.getCattleCode())
-                        .setText(R.id.money_id,"虚拟牛只");
+                        .setText(R.id.money_id,item.getCattleName());
             }else {
                 helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
             }
@@ -69,7 +80,7 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
             //已分配锁定期中（只有定期养牛才会有这个状态）
             if("3".equals(schemeType)){
                 helper.setText(R.id.store_name,item.getCattleCode())
-                        .setText(R.id.money_id,"虚拟牛只");
+                        .setText(R.id.money_id,item.getCattleName());
             }else {
                 helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
             }
@@ -77,16 +88,27 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
             //出售中（不分活期和定期。。定期到期后会自动转为活期的）
             if("3".equals(schemeType)){
                 helper.setText(R.id.store_name,item.getCattleCode())
-                        .setText(R.id.money_id,"虚拟牛只");
+                        .setText(R.id.money_id,item.getCattleName());
             }else {
                 helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
             }
         } else if ("6".equals(status)) {
             //交易完成（比交易完成多一个出售成功时间）
-            helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,item.getCattleName());
+            }else {
+                helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode());
+            }
         }else if ("9".equals(status)) {
             //交易关闭
-            helper.setText(R.id.store_name,"交易关闭");
+            if("3".equals(schemeType)){
+                helper.setText(R.id.store_name,item.getCattleCode())
+                        .setText(R.id.money_id,item.getCattleName());
+            }else {
+                helper.setText(R.id.store_name,"交易关闭");
+            }
+
         }
 
         //方案类型（1：活期；2：定期；3：新人活动）

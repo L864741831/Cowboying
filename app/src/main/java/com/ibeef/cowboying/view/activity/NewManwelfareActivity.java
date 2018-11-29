@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,6 +29,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.richeditor.RichEditor;
 import rxfamily.view.BaseActivity;
 
 public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.IView{
@@ -36,10 +38,10 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
     ImageView backId;
     @Bind(R.id.info)
     TextView info;
-    @Bind(R.id.show_img_id)
-    ImageView showImgId;
     @Bind(R.id.experience_btn_id)
     TextView experienceBtnId;
+    @Bind(R.id.rich_edit_id)
+    RichEditor rich_edit_id;
     private UserInfoPresenter userInfoPresenter;
     private UserInfoResultBean userInfoResultBean;
     private String token;
@@ -55,12 +57,13 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
         info.setText("新手福利");
         userInfoPresenter=new UserInfoPresenter(this);
         infos= (HomeBannerResultBean.BizDataBean.NewUserActivity) getIntent().getSerializableExtra("infos");
-        RequestOptions options = new RequestOptions()
-                .skipMemoryCache(true)
-                .error(R.mipmap.jzsb)
-                //跳过内存缓存
-                ;
-        Glide.with(this).load(Constant.imageDomain+infos.getDescribe()).apply(options).into(showImgId);
+
+        rich_edit_id.setEditorFontSize(16);
+        rich_edit_id.setEditorFontColor(Color.BLACK);
+        rich_edit_id.setInputEnabled(false);
+        rich_edit_id.setPadding(3, 5, 5, 5);
+        rich_edit_id.loadCSS("file:///android_asset/img.css");
+        rich_edit_id.setHtml(infos.getDescribe());
     }
 
     @Override
