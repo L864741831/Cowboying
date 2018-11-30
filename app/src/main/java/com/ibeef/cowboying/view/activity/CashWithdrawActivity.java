@@ -200,6 +200,23 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
         }
     }
 
+
+    private void clearData(){
+        //遍历子类
+        for (int i=0;i<verificationCodeInputId.getChildCount();i++){
+            //设置可点击
+            verificationCodeInputId.getChildAt(i).setEnabled(true);
+            EditText childAt = (EditText) verificationCodeInputId.getChildAt(i);
+            //清空内容
+            childAt.setText("");
+            if(i==0){
+                //第一个获取焦点
+                verificationCodeInputId.getChildAt(i).requestFocus();
+                verificationCodeInputId.getChildAt(i).setFocusable(true);
+                verificationCodeInputId.getChildAt(i).setFocusableInTouchMode(true);
+            }
+        }
+    }
     @Override
     public void showMsg(String msg) {
 
@@ -307,6 +324,7 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
             getSucceseDialog.setVisibility(View.VISIBLE);
             isGetMoney=false;
         }else {
+            clearData();
             showToast(cashMoneyResultBean.getMessage());
         }
     }

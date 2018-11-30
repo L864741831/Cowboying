@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -89,7 +90,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     TextView surePayBtn;
     @Bind(R.id.account_pay_show_rv)
     RelativeLayout accountPayShowRv;
-    @Bind(R.id.verificationCodeInput_id)
+//    @Bind(R.id.verificationCodeInput_id)
     VerificationCodeInput verificationCodeInputId;
     @Bind(R.id.foret_pwd_id)
     TextView foretPwdId;
@@ -147,6 +148,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sure_oder);
         ButterKnife.bind(this);
+        verificationCodeInputId=findViewById(R.id.verificationCodeInput_id);
         init();
     }
 
@@ -259,7 +261,22 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         }
     }
 
-
+    private void clearData(){
+        //遍历子类
+        for (int i=0;i<verificationCodeInputId.getChildCount();i++){
+            //设置可点击
+            verificationCodeInputId.getChildAt(i).setEnabled(true);
+            EditText childAt = (EditText) verificationCodeInputId.getChildAt(i);
+            //清空内容
+            childAt.setText("");
+            if(i==0){
+                //第一个获取焦点
+                verificationCodeInputId.getChildAt(i).requestFocus();
+                verificationCodeInputId.getChildAt(i).setFocusable(true);
+                verificationCodeInputId.getChildAt(i).setFocusableInTouchMode(true);
+            }
+        }
+    }
     @Override
     public void showMsg(String msg) {
 
@@ -319,6 +336,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 surePayBtn.setVisibility(View.VISIBLE);
             }
         }else {
+            clearData();
             accountPayShowRv.setVisibility(View.GONE);
             surePayBtn.setVisibility(View.VISIBLE);
             showToast(payInitResultBean.getMessage());

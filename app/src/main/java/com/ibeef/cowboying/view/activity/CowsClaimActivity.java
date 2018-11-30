@@ -118,6 +118,13 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
 
         scrollIsShowId.setSelected(true);
         infos= (ActiveSchemeResultBean.BizDataBean) getIntent().getSerializableExtra("infos");
+        pastureDetailPresenter=new PastureDetailPresenter(this);
+        userInfoPresenter=new UserInfoPresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
+
         if("1".equals(infos.getCurStatus())){
             //当前类型（1：可以认领；2：即将开始；3：领完）
             nowClaimBtnId.setImageResource(R.mipmap.nowclaim);
@@ -132,12 +139,6 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
             scrollIsShowId.setText("您来晚了，当前养牛方案牛只已售罄，不过还有牧场主未付款，您还有机会哟~");
         }
 
-        pastureDetailPresenter=new PastureDetailPresenter(this);
-        userInfoPresenter=new UserInfoPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
     }
 
     @Override

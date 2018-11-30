@@ -129,7 +129,6 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         userInfoPresenter=new UserInfoPresenter(this);
         cowManInfoPresenter=new CowManInfoPresenter(this);
 
-
     }
 
     @Override
@@ -155,10 +154,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
             reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
             userInfoPresenter.getUserInfo(reqData);
-            Map<String, String> reqData1 = new HashMap<>();
-            reqData1.put("Authorization",token);
-            reqData1.put("version",getVersionCodes());
-            cowManInfoPresenter.getCowManInfos(reqData1);
+            cowManInfoPresenter.getCowManInfos(reqData);
         }
     }
 
@@ -410,10 +406,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         userInfoPresenter.getUserInfo(reqData);
-        Map<String, String> reqData1 = new HashMap<>();
-        reqData1.put("Authorization",token);
-        reqData1.put("version",getVersionCodes());
-        cowManInfoPresenter.getCowManInfos(reqData1);
+        cowManInfoPresenter.getCowManInfos(reqData);
         swipeLy.setRefreshing(false);
     }
 }

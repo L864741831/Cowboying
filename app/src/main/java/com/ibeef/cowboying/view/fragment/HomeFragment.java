@@ -162,6 +162,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setClickable(true);
+        banner.setBannerAnimation(Transformer.Accordion);
 
         sellCowNumId=view.findViewById(R.id.sell_cow_num_id);
         sellCowNum2Id=view.findViewById(R.id.sell_cow_num2_id);
