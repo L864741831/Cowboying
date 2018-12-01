@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,6 +66,7 @@ public class FightCattleActivity extends BaseActivity implements SwipeRefreshLay
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
+
     }
 
     @OnClick({R.id.back_id, R.id.fight_cattle_order})
@@ -116,5 +118,11 @@ public class FightCattleActivity extends BaseActivity implements SwipeRefreshLay
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

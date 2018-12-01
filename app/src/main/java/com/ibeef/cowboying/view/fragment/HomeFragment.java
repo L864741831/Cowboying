@@ -1,7 +1,10 @@
 package com.ibeef.cowboying.view.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -77,6 +80,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private RelativeLayout rv_show_id;
     private String token;
     private HomeBannerResultBean homeBannerResultBean;
+
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         swipeLy=view.findViewById(R.id.swipe_ly);
@@ -125,6 +129,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             }
         });
+
 
     }
 

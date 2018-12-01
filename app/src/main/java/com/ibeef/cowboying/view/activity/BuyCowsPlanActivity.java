@@ -111,7 +111,6 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
         });
 
         buyCowsSchemePresenter=new BuyCowsSchemePresenter(this);
-
     }
 
     @Override
@@ -220,5 +219,11 @@ public class BuyCowsPlanActivity extends BaseActivity implements SwipeRefreshLay
             buyCowsSchemePresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

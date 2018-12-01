@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
     private ArrayList<BaseFragment> fragments;
     private CheckVersionPresenter checkVersionPresenter;
     private String token;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,9 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
         MainFragmentAdapter mAdpter = new MainFragmentAdapter(getSupportFragmentManager(),fragments);
         vp.setAdapter(mAdpter);
         bnve.setupWithViewPager(vp);
+
+        index=getIntent().getIntExtra("index",0);
+//        bnve.setCurrentItem(index);
 
         checkVersionPresenter=new CheckVersionPresenter(this);
         CheckVersionParamBean checkVersionParamBean=new CheckVersionParamBean();

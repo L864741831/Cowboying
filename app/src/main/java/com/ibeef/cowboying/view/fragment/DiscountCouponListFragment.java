@@ -22,6 +22,8 @@ import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
+import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.orhanobut.hawk.Hawk;
@@ -92,12 +94,29 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
         discountCoupondapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                MyDiscountCouponListBean.BizDataBean item=discountCoupondapter.getItem(position);
                 if(view.getId()==R.id.tv_commit_id){
                     if("1".equals(stadus)){
-                        Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent1);
+                        //getUseType 使用类型（0：全部；1：养牛；2：拼牛；3：商城；）
+                        if("0".equals(item.getUseType())){
+                            Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent1);
+                        }else   if("1".equals(item.getUseType())){
+                            Intent intent1=new Intent(getHoldingActivity(),BuyCowsPlanActivity.class);
+                            startActivity(intent1);
+                        }else   if("2".equals(item.getUseType())){
+                            Intent intent1=new Intent(getHoldingActivity(),FightCattleActivity.class);
+                            startActivity(intent1);
+                        }else  if("3".equals(item.getUseType())){
+                            Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent1.putExtra("index",1);
+                            startActivity(intent1);
+                        }
+
                     }
                 }
             }

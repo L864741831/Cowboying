@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:background="@color/white"
+    android:showDividers="middle"
+    android:orientation="horizontal" android:padding="5dp">
+
+    <Button
+        android:id="@+id/btnDecrease"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:gravity="center" android:layout_gravity="center_vertical"
+        android:background="@mipmap/reducestore" android:layout_marginRight="7dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:orientation="vertical">
+        <EditText
+            android:id="@+id/etAmount"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:inputType="number" android:textColor="@color/colorAccent"
+            android:gravity="center" android:focusable="false"
+            android:text="1" android:textSize="13sp" />
+        <View android:layout_width="30dp" android:layout_height="1dp"
+            android:background="@color/colorAccent" android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="20dp"
+        android:layout_height="20dp" android:layout_gravity="center_vertical"
+        android:gravity="center" android:layout_marginLeft="7dp"
+        android:background="@mipmap/addstore" />
+</LinearLayout>
