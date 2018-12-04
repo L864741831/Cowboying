@@ -1,28 +1,41 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
+import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.OrderInitBase;
+import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.PayInitParamBean;
+import com.ibeef.cowboying.bean.PayInitResultBean;
+import com.ibeef.cowboying.bean.PayResult;
+import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.utils.DateUtils;
+import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
 import com.ibeef.cowboying.view.customview.CountDownView;
 import com.orhanobut.hawk.Hawk;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +47,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城支付方式
  */
-public class StorePayTypeActivity extends BaseActivity {
+public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -60,10 +73,53 @@ public class StorePayTypeActivity extends BaseActivity {
     VerificationCodeInput verificationCodeInputId;
     @Bind(R.id.foret_pwd_id)
     TextView foretPwdId;
+    @Bind(R.id.lvs_id)
+    LinearLayout lvsId;
+    @Bind(R.id.refuce_id)
+    TextView refuceId;
+    @Bind(R.id.cancle_order_id)
+    TextView cancle_order_id;
     private int type=1;
     private boolean isComplet=true;
     private String token, contents;
     private IWXAPI api;
+    private static final int SDK_PAY_FLAG = 1;
+
+    private OrderInitPresenter orderInitPresenter;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG:
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    // 同步返回需要验证的信息
+                    String resultInfo = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        Toast.makeText(StorePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
+                        intent.putExtra("orderId","");
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        Toast.makeText(StorePayTypeActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +150,15 @@ public class StorePayTypeActivity extends BaseActivity {
                 if(isComplet){
                     isComplet=false;
                     //网络请求
-
+                    isComplet=false;
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    PayInitParamBean payInitParamBean=new PayInitParamBean();
+                    payInitParamBean.setOrderId(1);
+                    payInitParamBean.setPayType(type+"");
+                    payInitParamBean.setSecret(contents);
+                    orderInitPresenter.getPayInit(reqData,payInitParamBean);
                 }
 
             }
@@ -102,13 +166,27 @@ public class StorePayTypeActivity extends BaseActivity {
 
         api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
         token = Hawk.get(HawkKey.TOKEN);
+        orderInitPresenter=new OrderInitPresenter(this);
+        Constant.PAY_RESULT_TYPE=1;
+        //WXPayEntryActivity 的orderId赋值
+        Constant.orderId=1;
     }
 
-    @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.zfb_check,R.id.weixin_check, R.id.foret_pwd_id, R.id.pay_back_id,R.id.wallet_check})
+    @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.zfb_check,R.id.weixin_check, R.id.foret_pwd_id, R.id.pay_back_id,R.id.wallet_check,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                finish();
+                lvsId.setVisibility(View.VISIBLE);
+                break;
+            case R.id.lvs_id:
+                //重写取消订单dialog
+                break;
+            case R.id.cancle_order_id:
+                // TODO: 2018/12/4 取消订单接口 取消完隐藏dialog 调到订单列表
+                lvsId.setVisibility(View.GONE);
+            case R.id.refuce_id:
+                //我再想想
+                lvsId.setVisibility(View.GONE);
                 break;
             case R.id.zfb_check:
                 type=1;
@@ -136,22 +214,121 @@ public class StorePayTypeActivity extends BaseActivity {
                 accountPayShowRv.setVisibility(View.GONE);
                 break;
             case R.id.cancle_id:
+                lvsId.setVisibility(View.VISIBLE);
                 break;
             case R.id.sure_pay_id:
-                if (type==3){
-                    accountPayShowRv.setVisibility(View.VISIBLE);
-                    isComplet=true;
-                }else {
-                   //网络请求
-                }
+                Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
+                intent.putExtra("orderId",1);
+                startActivity(intent);
+
+//                if (type==3){
+//                    accountPayShowRv.setVisibility(View.VISIBLE);
+//                    isComplet=true;
+//                }else {
+//                   //网络请求
+//                    Map<String, String> reqData = new HashMap<>();
+//                    reqData.put("Authorization",token);
+//                    reqData.put("version",getVersionCodes());
+//                    PayInitParamBean payInitParamBean=new PayInitParamBean();
+//                    payInitParamBean.setOrderId(1);
+//                    payInitParamBean.setPayType(type+"");
+//                    orderInitPresenter.getPayInit(reqData,payInitParamBean);
+//                }
                 break;
             default:
                 break;
         }
     }
+    private void clearData(){
+        //遍历子类
+        for (int i=0;i<verificationCodeInputId.getChildCount();i++){
+            //设置可点击
+            verificationCodeInputId.getChildAt(i).setEnabled(true);
+            EditText childAt = (EditText) verificationCodeInputId.getChildAt(i);
+            //清空内容
+            childAt.setText("");
+            if(i==0){
+                //第一个获取焦点
+                verificationCodeInputId.getChildAt(i).requestFocus();
+                verificationCodeInputId.getChildAt(i).setFocusable(true);
+                verificationCodeInputId.getChildAt(i).setFocusableInTouchMode(true);
+            }
+        }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getCreatOder(CreatOderResultBean creatOderResultBean) {
+
+    }
+
+    @Override
+    public void getPayInit(final PayInitResultBean payInitResultBean) {
+        if("000000".equals(payInitResultBean.getCode())){
+            if (type == 1) {
+                //异步处理
+                Runnable payRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //新建任务
+                        PayTask alipay = new PayTask(StorePayTypeActivity.this);
+                        //获取支付结果
+                        Map<String, String> result = alipay.payV2(payInitResultBean.getBizData(), true);
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+                // 必须异步调用
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+            } else if (type == 2) {
+                Gson gs = new Gson();
+                WeinXinBean weinXinBean=gs.fromJson(payInitResultBean.getBizData(), WeinXinBean.class);
+                //把JSON字符串转为对象
+                PayReq request = new PayReq();
+                request.appId = weinXinBean.getAppid();
+                request.partnerId = weinXinBean.getPartnerid();
+                request.prepayId= weinXinBean.getPrepayid();
+                request.packageValue = weinXinBean.getPackageX();
+                request.nonceStr= weinXinBean.getNoncestr();
+                request.timeStamp= weinXinBean.getTimestamp();
+                request.sign= weinXinBean.getSign();
+                Toast.makeText(StorePayTypeActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
+                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                api.sendReq(request);
+                finish();
+            } else if (type == 3) {
+                Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
+                intent.putExtra("orderId",1);
+                startActivity(intent);
+                finish();
+                accountPayShowRv.setVisibility(View.GONE);
+            }
+        }else {
+            clearData();
+            accountPayShowRv.setVisibility(View.GONE);
+            showToast(payInitResultBean.getMessage());
+        }
+    }
 
     @Override
     protected void onDestroy() {
+        if(orderInitPresenter!=null){
+            orderInitPresenter.detachView();
+        }
+        Constant.PAY_RESULT_TYPE=0;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        lvsId.setVisibility(View.VISIBLE);
     }
 }

@@ -32,7 +32,7 @@ public class StoreBottomAdapter extends BaseQuickAdapter<Object,BaseViewHolder> 
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        Glide.with(mContext).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
+        Glide.with(context).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
         helper.setText(R.id.img_txt_id,"牛排作法2");
     }
 }

@@ -35,7 +35,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
-
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.WheelViewAdapter;
 

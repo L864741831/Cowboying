@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:background="@color/white"
-    android:layout_height="match_parent"  xmlns:ver="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    xmlns:ver="http://schemas.android.com/apk/res-auto"
     tools:context=".view.activity.StorePayTypeActivity">
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                 android:layout_width="wrap_content" android:id="@+id/time_show_id"
                 android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
                 android:textSize="20sp" android:textColor="@color/colorGold"
-                android:layout_marginTop="50dp" android:drawableTop="@mipmap/showaddbg"
+                android:layout_marginTop="50dp" android:drawableTop="@mipmap/stattimes"
                 android:drawablePadding="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -164,5 +165,53 @@
                 android:layout_marginBottom="200dp"/>
         </LinearLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/lvs_id"
+        android:layout_width="match_parent"  android:orientation="vertical"
+        android:layout_height="match_parent"  android:background="#70000000"
+        android:gravity="center"  android:visibility="gone">
+        <LinearLayout
+            android:layout_width="300dp" android:background="@drawable/cicle_write_bg"
+            android:layout_height="wrap_content" android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="15dp">
+                <TextView
+                    android:layout_width="match_parent" android:id="@+id/show_title_id"
+                    android:layout_height="wrap_content" android:text="确定要取消订单吗？"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="正宗澳洲牛肉近在咫尺，真的要放弃吗？" android:layout_gravity="center"
+                    android:id="@+id/infos_id"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"   android:layout_marginTop="10dp"
+                android:layout_height="1dp" android:background="#f3f3f3"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="我再想想" android:gravity="center"
+                    android:id="@+id/refuce_id" android:textSize="16sp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" android:background="#f3f3f3"/>
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="0.5"
+                    android:layout_height="match_parent" android:background="@mipmap/sureorderbg"
+                    android:text="取消订单" android:gravity="center" android:id="@+id/cancle_order_id"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

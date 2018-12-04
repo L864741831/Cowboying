@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -28,7 +27,6 @@ import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.presenter.UseCouponListPresenter;
 import com.orhanobut.hawk.Hawk;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 

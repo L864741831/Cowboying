@@ -5,7 +5,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
+        android:layout_marginRight="8dp" android:layout_marginTop="13dp">
         <ImageView
             android:layout_width="170dp" android:id="@+id/show_img_id"
             android:layout_height="120dp" android:src="@mipmap/cowbeefimg"

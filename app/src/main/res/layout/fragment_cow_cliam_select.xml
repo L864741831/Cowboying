@@ -37,7 +37,7 @@
                 android:id="@+id/loading_layout"  />
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent" android:id="@+id/ry_id"
-                android:layout_height="match_parent" android:layout_marginTop="5dp" />
+                android:layout_height="match_parent" />
             <RelativeLayout
                 android:layout_width="match_parent" android:id="@+id/rv_order"
                 android:layout_height="match_parent" android:visibility="gone">

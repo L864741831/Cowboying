@@ -1,8 +1,5 @@
 package com.ibeef.cowboying.bean;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
 /**
  * @author ls
  * @date on 2018/11/17 16:00

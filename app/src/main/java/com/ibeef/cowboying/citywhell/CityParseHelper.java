@@ -10,7 +10,6 @@ import com.ibeef.cowboying.bean.ProvinceBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.utils.AddrWheels;
 
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;

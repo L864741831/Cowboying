@@ -15,8 +15,6 @@ import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
 
-import rxfamily.bean.BaseBean;
-
 /**
  *
  * @author Administrator*/

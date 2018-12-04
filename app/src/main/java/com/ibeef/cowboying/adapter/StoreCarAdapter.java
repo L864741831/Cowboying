@@ -14,7 +14,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.view.customview.AmountViewStoreBeef;
 import com.ibeef.cowboying.view.customview.AmountViewWhite;
 
 import java.util.List;
@@ -48,14 +47,14 @@ public class StoreCarAdapter extends BaseQuickAdapter<StoreCarResultBean,BaseVie
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        Glide.with(mContext).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
+        Glide.with(context).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
 
         helper.setText(R.id.name_beef_id,"位置"+helper.getAdapterPosition())
                 .setText(R.id.price_id,"￥1")
                 ;
         final AmountViewWhite amountViewWhite=helper.getView(R.id.amout_num_id);
         amountViewWhite.setGoods_storage(1000000);
-        amountViewWhite.intEdit(1+"");
+        amountViewWhite.intEdit(item.getNum()+"");
         amountViewWhite.setOnAmountChangeListener(new AmountViewWhite.OnAmountChangeListener() {
             @Override
             public void onAmountChange(View view, int amount) {

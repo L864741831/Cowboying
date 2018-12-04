@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.StoreSureOderActivity">
+    <include layout="@layout/include_title" android:id="@+id/inclut_id"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:background="@null"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_below="@+id/inclut_id"
+        android:layout_above="@+id/rv_bottom_id">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" android:gravity="center_vertical"
+                android:text="将商品寄送至：" android:layout_marginLeft="20dp"
+                android:textSize="14sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/colorline"
+                android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/address_rv">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/show_addr_id"
+                    android:layout_height="wrap_content" android:drawableLeft="@mipmap/showaddbg"
+                    android:layout_marginTop="15dp" android:textColor="@color/colorAccent"
+                    android:layout_marginRight="10dp" android:layout_marginLeft="20dp"
+                    android:text="请选择收货地址" android:drawablePadding="15dp"
+                    android:textSize="@dimen/sp_14"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/mobile_txt_id"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:textSize="14sp" android:text="10000000000"
+                    android:layout_alignParentRight="true" android:layout_marginTop="15dp"
+                    android:layout_marginRight="40dp"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/del_addr_txt_id"
+                    android:layout_height="wrap_content" android:textSize="14sp"
+                    android:textColor="@color/colorAccent" android:layout_below="@+id/show_addr_id"
+                    android:text="河南省" android:layout_marginLeft="60dp"
+                    android:layout_marginTop="5dp" android:layout_marginBottom="10dp"
+                    android:layout_marginRight="40dp"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/colorAccent"
+                android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content" android:id="@+id/ry_id"
+                android:layout_height="wrap_content" android:layout_gravity="center"
+                android:layout_marginTop="30dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp" android:id="@+id/delevery_rv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="配送方式" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/delevery_type_id"
+                    android:layout_height="wrap_content" android:text="配送方式"
+                    android:textSize="14sp"
+                    android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp" android:id="@+id/cuppon_rv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠券" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/couppon_money_id"
+                    android:layout_height="wrap_content" android:text="未使用"
+                    android:textSize="14sp" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp" android:id="@+id/freight_rv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="运费" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/freight_money_id"
+                    android:layout_height="wrap_content" android:text="包邮"
+                    android:textSize="14sp"
+                    android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:text="订单总价" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/oder_all_money_id"
+                    android:layout_height="wrap_content" android:text="￥122"
+                    android:textColor="@color/colorAccent" android:textSize="14sp"
+                    android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line" android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+                    android:text="实付金额" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/real_pay_money_id"
+                    android:layout_height="wrap_content" android:text="￥122"
+                    android:textColor="@color/colorAccent" android:textSize="14sp"
+                    android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line" android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/rv_bottom_id"
+        android:layout_height="50dp" android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent" >
+
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/see_order_id"
+            android:layout_height="wrap_content" android:text="查看订单"
+            android:textColor="@color/colorGold" android:gravity="center"
+            android:textSize="16sp" android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

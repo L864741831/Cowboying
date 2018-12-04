@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +18,6 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreAddrAdapter;
 import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.orhanobut.hawk.Hawk;
 
@@ -68,6 +64,12 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     RelativeLayout addressRv;
     @Bind(R.id.show_addr_id)
     TextView showAddrId;
+    @Bind(R.id.mobile_txt_id)
+    TextView mobileTxtId;
+    @Bind(R.id.del_addr_txt_id)
+    TextView delAddrTxtId;
+    @Bind(R.id.right_img_show)
+    ImageView rightImgShow;
     @Bind(R.id.lvs_id)
     LinearLayout lvsId;
     @Bind(R.id.refuce_id)
@@ -150,6 +152,18 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
                 }
             }
         });
+
+        if(true){
+            //没有地址
+            mobileTxtId.setVisibility(View.INVISIBLE);
+            delAddrTxtId.setVisibility(View.INVISIBLE);
+            rightImgShow.setVisibility(View.GONE);
+            showAddrId.setText("请选择收货地址");
+        }else {
+            mobileTxtId.setVisibility(View.VISIBLE);
+            delAddrTxtId.setVisibility(View.VISIBLE);
+            rightImgShow.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.back_id, R.id.delevery_rv, R.id.cuppon_rv, R.id.now_pay_id,R.id.address_rv,R.id.refuce_id,R.id.sure_id,R.id.lv_choose_id,R.id.img_choose1_id,R.id.img_choose2_id})

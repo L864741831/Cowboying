@@ -4,39 +4,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.FightCattleAdapter;
-import com.ibeef.cowboying.adapter.StoreBottomAdapter;
 import com.ibeef.cowboying.adapter.StoreTopAdapter;
+import com.ibeef.cowboying.bean.StoreCarResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.utils.CustomGridLayoutManager;
-import com.ibeef.cowboying.utils.SmoonRecycleViewUtil;
 import com.ibeef.cowboying.view.activity.StoreCarActivity;
+import com.ibeef.cowboying.view.customview.AmountViewStoreBeef;
 import com.orhanobut.hawk.Hawk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import jp.wasabeef.richeditor.RichEditor;
 import rxfamily.view.BaseFragment;
 
 public class SecondFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
-    private ImageView showCarImg;
     private RecyclerView ryId;
     private SwipeRefreshLayout swipeLy;
     private TextView txt1_id;
@@ -44,23 +41,26 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
     private String token;
-    private List<Object> baseBeans;
+    private List<StoreCarResultBean> baseBeans;
     private StoreTopAdapter storeTopAdapter;
     private LinearLayoutManager layoutManager;
+    private RelativeLayout storecars_rv;
 
-    private BroadcastReceiver receiver1;
-    private int num;
+    private BroadcastReceiver receiver1,receiver;
+    private int num,idChoose,position;
     //目标项是否在最后一个可见项之后
     private boolean mShouldScroll;
     //记录目标项位置
     private int mToPosition;
+    private boolean isClick=true;
+    private List<StoreCarResultBean> storeCarResultBeans;
     /**
      * 滑动到指定位置
      */
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        showCarImg=view.findViewById(R.id.show_car_img);
-        showCarImg.setOnClickListener(this);
+        storecars_rv=view.findViewById(R.id.storecars_rv);
+        storecars_rv.setOnClickListener(this);
         ryId=view.findViewById(R.id.ry_id);
 
         swipeLy=view.findViewById(R.id.swipe_ly);
@@ -75,9 +75,13 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
         token = Hawk.get(HawkKey.TOKEN);
         baseBeans = new ArrayList<>();
+        storeCarResultBeans = new ArrayList<>();
         for (int i=0;i<10;i++){
-            baseBeans.add(new Object());
+            StoreCarResultBean storeCarResultBean=new StoreCarResultBean();
+            storeCarResultBean.setDefautChoose(0);
+            baseBeans.add(storeCarResultBean);
         }
+
 
         storeTopAdapter = new StoreTopAdapter(baseBeans,getHoldingActivity(), R.layout.item_store_top);
         storeTopAdapter.setOnLoadMoreListener(this, ryId);
@@ -87,33 +91,20 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         storeTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                if(view.getId()==R.id.first_go_img){
-//                    if(position!=baseBeans.size()-1){
-//                        smoothMoveToPosition(ryId,position+1);
-//                    }else {
-//                        smoothMoveToPosition(ryId,position);
-//                    }
-//                }else if(view.getId()==R.id.last_go_img){
-//                    if(position!=0){
-//                        smoothMoveToPosition(ryId,position-1);
-//                    }else {
-//                        smoothMoveToPosition(ryId,position);
-//                    }
-//                }
+                if(view.getId()==R.id.first_go_img){
+                    if(position!=baseBeans.size()-1){
+                        MoveToPosition(layoutManager,ryId,position+1);
+                    }else {
+                        MoveToPosition(layoutManager,ryId,position);
+                    }
+                }else if(view.getId()==R.id.last_go_img){
+                    if(position!=0){
+                        MoveToPosition(layoutManager,ryId,position-1);
+                    }else {
+                        MoveToPosition(layoutManager,ryId,position);
+                    }
+                }
 
-                if(view.getId()==R.id.see_more_id){
-                    //视频查看更多
-                }
-            }
-        });
-        ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (mShouldScroll&& RecyclerView.SCROLL_STATE_IDLE == newState) {
-                    mShouldScroll = false;
-                    smoothMoveToPosition(ryId, mToPosition);
-                }
             }
         });
 
@@ -121,25 +112,54 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
 
-
-        // 设置广播接收器,动态修改布局
-        IntentFilter intentFilter1 = new IntentFilter("com.ibeef.cowboying.storenum");
-        receiver1 = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                num=intent.getIntExtra("num",0);
-                if(num>0){
-                    //网络请求改变购物车
-                    txt1_id.setVisibility(View.VISIBLE);
-                    txt1_id.setText(num+"");
-                }else {
-                    txt1_id.setVisibility(View.GONE);
+        if (receiver1 == null) {
+            // 设置广播接收器,动态修改布局
+            IntentFilter intentFilter1 = new IntentFilter("com.ibeef.cowboying.storenum");
+            receiver1 = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    num=intent.getIntExtra("num",0);
+                    position=intent.getIntExtra("position",0);
+                    baseBeans.get(position).setNum(num);
+                    baseBeans.get(position).setChoose(true);
+                    isClick=true;
+                    if(num>0){
+                        //网络请求改变购物车
+                        txt1_id.setVisibility(View.VISIBLE);
+                        txt1_id.setText(num+"");
+                    }else {
+                        txt1_id.setVisibility(View.GONE);
+                    }
                 }
-            }
-        };
-        getHoldingActivity().registerReceiver(receiver1, intentFilter1);
+            };
+            getHoldingActivity().registerReceiver(receiver1, intentFilter1);
+        }
 
+        if(receiver==null){
+            // 设置广播接收器,动态修改布局
+            IntentFilter intentFilter = new IntentFilter("com.ibeef.cowboying.storeaddcar");
+            receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if(isClick){
+                        storeCarResultBeans.clear();
+                        isClick=false;
+                        //跳到购物车
+                        for(int i=0;i<baseBeans.size();i++){
+                            if(baseBeans.get(i).isChoose()){
+                                storeCarResultBeans.add(baseBeans.get(i));
+                            }
+                        }
+                        // TODO: 2018/12/4 net 请求加入购物车 storeCarResultBeans>0
+
+                    }
+                }
+            };
+            getHoldingActivity().registerReceiver(receiver, intentFilter);
+        }
     }
+
+
 
     @Override
     protected int getLayoutId() {
@@ -150,43 +170,52 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     /**
-     * 滑动到指定位置
+     * RecyclerView 移动到当前位置，
+     *
+     * @param manager   设置RecyclerView对应的manager
+     * @param mRecyclerView  当前的RecyclerView
+     * @param n  要跳转的位置
      */
-    private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
-        // 第一个可见位置
-        int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
-        // 最后一个可见位置
-        int lastItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1));
-        if (position < firstItem) {
-            // 第一种可能:跳转位置在第一个可见位置之前
-            mRecyclerView.smoothScrollToPosition(position);
-        } else if (position <= lastItem) {
-            // 第二种可能:跳转位置在第一个可见位置之后
-            int movePosition = position - firstItem;
-            if (movePosition >= 0 && movePosition < mRecyclerView.getChildCount()) {
-                int top = mRecyclerView.getChildAt(movePosition).getTop();
-                mRecyclerView.smoothScrollBy(0, top);
-            }
+    public static void MoveToPosition(LinearLayoutManager manager, RecyclerView mRecyclerView, int n) {
+
+
+        int firstItem = manager.findFirstVisibleItemPosition();
+        int lastItem = manager.findLastVisibleItemPosition();
+        if (n <= firstItem) {
+            mRecyclerView.scrollToPosition(n);
+        } else if (n <= lastItem) {
+            int top = mRecyclerView.getChildAt(n - firstItem).getTop();
+            mRecyclerView.scrollBy(0, top);
         } else {
-            // 第三种可能:跳转位置在最后可见项之后
-            mRecyclerView.smoothScrollToPosition(position);
-            mToPosition = position;
-            mShouldScroll = true;
+            mRecyclerView.scrollToPosition(n);
         }
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.show_car_img:
+            case R.id.storecars_rv:
+                storeCarResultBeans.clear();
                 //跳到购物车
-                startActivity(StoreCarActivity.class);
+                for(int i=0;i<baseBeans.size();i++){
+                    if(baseBeans.get(i).isChoose()){
+                        storeCarResultBeans.add(baseBeans.get(i));
+                    }
+                }
+                // TODO: 2018/12/4 net 请求加入购物车storeCarResultBeans>0
+                Intent intent=new Intent(getHoldingActivity(),StoreCarActivity.class);
+                intent.putExtra("lists",(Serializable) storeCarResultBeans);
+                startActivity(intent);
                 break;
             default:
                 break;
         }
     }
+
+
 
     @Override
     public void onRefresh() {
@@ -207,6 +236,9 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         super.onDestroy();
         if (receiver1 != null) {
             getHoldingActivity().unregisterReceiver(receiver1);
+        }
+        if (receiver != null) {
+            getHoldingActivity().unregisterReceiver(receiver);
         }
     }
 }

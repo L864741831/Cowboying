@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:orientation="vertical"
-    android:layout_height="wrap_content" android:background="@color/white"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
     tools:context=".view.activity.InviteFriendHistoryActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         <CheckBox
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/all_ck_id"
+            android:id="@+id/all_ck_id"  android:visibility="gone"
             android:background="@drawable/unhascheck" android:checked="true"
             android:button="@null"  android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"/>
 

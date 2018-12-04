@@ -7,9 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -19,18 +17,12 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.BuyCowListAdapter;
 import com.ibeef.cowboying.adapter.StoreCarAdapter;
-import com.ibeef.cowboying.base.BuyCowSchemeBase;
-import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.BuyCowsSchemePresenter;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -73,7 +65,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     LinearLayout lvsId;
     @Bind(R.id.infos_id)
     TextView infosId;
-    private List<StoreCarResultBean> objectList;
 
     private String token;
 
@@ -84,6 +75,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     private StoreCarAdapter storeCarAdapter;
     private BroadcastReceiver receiver1;
     private int num,position,chooseNum;
+    private  List<StoreCarResultBean> lists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,17 +91,12 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
-        objectList=new ArrayList<>();
-        for (int i=0;i<10;i++){
-            StoreCarResultBean storeCarResultBean=new StoreCarResultBean();
-            storeCarResultBean.setDefautChoose(0);
-            objectList.add(storeCarResultBean);
-        }
+        lists= (List<StoreCarResultBean>) getIntent().getSerializableExtra("lists");
 
         ryId.setHasFixedSize(true);
         ryId.setNestedScrollingEnabled(false);
         ryId.setLayoutManager(new GridLayoutManager(this,2));
-        storeCarAdapter=new StoreCarAdapter(objectList,this,R.layout.item_store_car);
+        storeCarAdapter=new StoreCarAdapter(lists,this,R.layout.item_store_car);
         storeCarAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(storeCarAdapter);
         ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -136,7 +123,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             public void onReceive(Context context, Intent intent) {
                 num=intent.getIntExtra("num",1);
                 position=intent.getIntExtra("position",0);
-                objectList.get(position).setNum(num);
+                lists.get(position).setNum(num);
             }
         };
        registerReceiver(receiver1, intentFilter1);
@@ -146,12 +133,12 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.all_ck_id:
-                        if(0==objectList.get(position).getDefautChoose()){
-                            objectList.get(position).setDefautChoose(1);
+                        if(0==lists.get(position).getDefautChoose()){
+                            lists.get(position).setDefautChoose(1);
                             chooseNum++;
                         }else{
                             chooseNum--;
-                            objectList.get(position).setDefautChoose(0);
+                            lists.get(position).setDefautChoose(0);
                         }
                        storeCarAdapter.notifyItemChanged(position);
                         break;
@@ -182,10 +169,10 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 //编辑，批量删除
                 lvsId.setVisibility(View.GONE);
                 chooseNum=0;
-                int size = objectList.size();
+                int size = lists.size();
                 for(int i=size-1;i>=0;i--){
-                    if(1==objectList.get(i).getDefautChoose()) {
-                        objectList.remove(i);
+                    if(1==lists.get(i).getDefautChoose()) {
+                        lists.remove(i);
                         storeCarAdapter.notifyItemRemoved(i);
                         storeCarAdapter.notifyItemChanged(i);
                     }
@@ -194,15 +181,15 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 break;
             case R.id.all_ck_id:
               //全选
-                for (int i=0;i<objectList.size();i++){
+                for (int i=0;i<lists.size();i++){
                     if(allCkId.isChecked()){
-                        objectList.get(i).setDefautChoose(1);
+                        lists.get(i).setDefautChoose(1);
                     }else {
-                        objectList.get(i).setDefautChoose(0);
+                        lists.get(i).setDefautChoose(0);
                     }
                     storeCarAdapter.notifyItemChanged(i);
                 }
-                chooseNum=objectList.size();
+                chooseNum=lists.size();
                 break;
             case R.id.now_claim_btn_id:
                 if(isclick){
@@ -227,8 +214,8 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                     actionNewQuestionTv.setText("完成");
                     nowClaimBtnId.setText("删除");
                     allCownumId.setVisibility(View.GONE);
-                    for (int i=0;i<objectList.size();i++){
-                        objectList.get(i).setDefautChoose(0);
+                    for (int i=0;i<lists.size();i++){
+                        lists.get(i).setDefautChoose(0);
                         storeCarAdapter.notifyItemChanged(i);
                     }
                     isclick=true;
@@ -236,8 +223,8 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                     actionNewQuestionTv.setText("编辑");
                     nowClaimBtnId.setText("立即购买");
                     allCownumId.setVisibility(View.VISIBLE);
-                    for (int i=0;i<objectList.size();i++){
-                        objectList.get(i).setDefautChoose(0);
+                    for (int i=0;i<lists.size();i++){
+                        lists.get(i).setDefautChoose(0);
                         storeCarAdapter.notifyItemChanged(i);
                     }
                     isclick=false;

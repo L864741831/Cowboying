@@ -22,8 +22,6 @@ import com.orhanobut.hawk.Hawk;
 import java.util.HashMap;
 import java.util.Map;
 
-import rxfamily.view.BaseActivity;
-
 
 public class SureOrderBackDialog extends AppCompatActivity implements View.OnClickListener, MyCowsOrderBase.IView{
 

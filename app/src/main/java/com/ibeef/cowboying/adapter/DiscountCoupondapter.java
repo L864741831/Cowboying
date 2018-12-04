@@ -14,7 +14,6 @@ import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.utils.DateUtils;
 
 import java.util.List;
-import rxfamily.bean.BaseBean;
 
 
 public class DiscountCoupondapter extends BaseQuickAdapter<MyDiscountCouponListBean.BizDataBean, BaseViewHolder> {

@@ -22,7 +22,7 @@ import com.ibeef.cowboying.R;
 public class AmountViewStoreBeef extends LinearLayout implements View.OnClickListener, TextWatcher {
 
     private static final String TAG = "AmountView";
-    private int amount = 1;
+    private int amount = 0;
     //购买数量
 
     private int goods_storage = 1;
@@ -90,7 +90,7 @@ public class AmountViewStoreBeef extends LinearLayout implements View.OnClickLis
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btnDecrease) {
-            if (amount > 1) {
+            if (amount > 0) {
                 amount--;
                 etAmount.setText(amount + "");
             }
@@ -129,9 +129,9 @@ public class AmountViewStoreBeef extends LinearLayout implements View.OnClickLis
             return;
         }
 
-        if (mListener != null) {
-            mListener.onAmountChange(this, amount);
-        }
+//        if (mListener != null) {
+//            mListener.onAmountChange(this, amount);
+//        }
     }
 
 

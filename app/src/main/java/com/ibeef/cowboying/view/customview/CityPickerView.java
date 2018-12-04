@@ -12,7 +12,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.ArrayWheelAdapter;
 import com.ibeef.cowboying.bean.CityBean;

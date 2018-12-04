@@ -129,9 +129,9 @@ public class AmountViewWhite extends LinearLayout implements View.OnClickListene
             return;
         }
 
-        if (mListener != null) {
-            mListener.onAmountChange(this, amount);
-        }
+//        if (mListener != null) {
+//            mListener.onAmountChange(this, amount);
+//        }
     }
 
 
