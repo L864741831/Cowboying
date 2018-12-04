@@ -37,12 +37,8 @@ import rxfamily.view.BaseFragment;
 public class SecondFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     private ImageView showCarImg;
-    private ImageView cow_nine_img;
     private RecyclerView ryId;
-    private  RichEditor richEditId;
-    private RecyclerView ryBottomId;
     private SwipeRefreshLayout swipeLy;
-    private  TextView see_more_id;
     private TextView txt1_id;
     private int currentPage=1;
     private boolean isFirst=true;
@@ -50,7 +46,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private String token;
     private List<Object> baseBeans;
     private StoreTopAdapter storeTopAdapter;
-    private StoreBottomAdapter storeBottomAdapter;
     private LinearLayoutManager layoutManager;
 
     private BroadcastReceiver receiver1;
@@ -67,21 +62,16 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         showCarImg=view.findViewById(R.id.show_car_img);
         showCarImg.setOnClickListener(this);
         ryId=view.findViewById(R.id.ry_id);
-        richEditId=view.findViewById(R.id.rich_edit_id);
-        ryBottomId=view.findViewById(R.id.ry_bottom_id);
-        swipeLy=view.findViewById(R.id.swipe_ly);
-        cow_nine_img=view.findViewById(R.id.cow_nine_img);
-        see_more_id=view.findViewById(R.id.see_more_id);
-        txt1_id=view.findViewById(R.id.txt1_id);
 
-        see_more_id.setOnClickListener(this);
+        swipeLy=view.findViewById(R.id.swipe_ly);
+
+        txt1_id=view.findViewById(R.id.txt1_id);
         ryId.setHasFixedSize(true);
         ryId.setNestedScrollingEnabled(false);
-        ryBottomId.setHasFixedSize(true);
-        ryBottomId.setNestedScrollingEnabled(false);
+
         layoutManager=new LinearLayoutManager(getHoldingActivity(), LinearLayoutManager.HORIZONTAL, false);
         ryId.setLayoutManager(layoutManager);
-        ryBottomId.setLayoutManager(new LinearLayoutManager(getHoldingActivity(), LinearLayoutManager.HORIZONTAL, false));
+
 
         token = Hawk.get(HawkKey.TOKEN);
         baseBeans = new ArrayList<>();
@@ -110,6 +100,10 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 //                        smoothMoveToPosition(ryId,position);
 //                    }
 //                }
+
+                if(view.getId()==R.id.see_more_id){
+                    //视频查看更多
+                }
             }
         });
         ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -123,21 +117,10 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-        storeBottomAdapter=new StoreBottomAdapter(baseBeans,getHoldingActivity(),R.layout.item_store_bottm);
-        storeBottomAdapter.setOnLoadMoreListener(this, ryBottomId);
-        ryBottomId.setAdapter(storeBottomAdapter);
-        storeBottomAdapter.loadMoreEnd();
-
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
 
-        richEditId.setEditorFontSize(16);
-        richEditId.setEditorFontColor(Color.BLACK);
-        richEditId.setInputEnabled(false);
-        richEditId.setPadding(3, 5, 5, 5);
-        richEditId.loadCSS("file:///android_asset/img.css");
-        richEditId.setHtml("");
 
         // 设置广播接收器,动态修改布局
         IntentFilter intentFilter1 = new IntentFilter("com.ibeef.cowboying.storenum");
@@ -199,9 +182,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             case R.id.show_car_img:
                 //跳到购物车
                 startActivity(StoreCarActivity.class);
-                break;
-            case R.id.see_more_id:
-                //查看更多视频
                 break;
             default:
                 break;

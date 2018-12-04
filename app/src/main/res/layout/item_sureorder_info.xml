@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/homef7">
+
+        <ImageView
+            android:layout_marginLeft="7dp"
+            android:layout_width="100dp" android:id="@+id/store_img"
+            android:layout_height="100dp" android:scaleType="centerCrop"
+            android:src="@mipmap/cowbeefimg"  android:layout_marginTop="4dp"/>
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/store_name"
+            android:layout_height="wrap_content" android:text="牛胸肉"
+            android:textColor="@color/black" android:layout_toRightOf="@+id/store_img"
+            android:layout_marginLeft="15dp" android:lines="1"
+            android:textSize="15sp" android:layout_marginTop="10dp"
+            android:ellipsize="end" android:paddingRight="20dp"
+            android:lineSpacingExtra="5dp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/type_id"
+            android:layout_height="wrap_content" android:textSize="13sp"
+            android:text="20斤"
+            android:layout_below="@+id/store_name" android:layout_alignLeft="@+id/store_name"
+            android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/money_id"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="￥0" android:layout_below="@+id/type_id"
+            android:layout_alignLeft="@+id/type_id" android:layout_marginTop="15dp"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="match_parent" android:id="@+id/num_id"
+            android:layout_height="wrap_content" android:text="x1"
+            android:layout_alignBottom="@+id/money_id" android:textSize="13sp"
+           android:layout_toRightOf="@+id/money_id" android:layout_marginRight="20dp"
+            android:gravity="right" android:layout_marginLeft="10dp"/>
+        <View
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@+id/money_id"
+            android:background="@color/white"/>
+</RelativeLayout>
+

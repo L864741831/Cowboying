@@ -90,4 +90,8 @@ public class Constant {
      */
     public static  final String VersionCodes="1.0";
 
+    /**
+     * 地址json文件
+     */
+    public static final String CITY_DATA = "china_city_data.json";
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:orientation="vertical"
+    android:layout_height="wrap_content" android:background="@color/white"
+    tools:context=".view.activity.InviteFriendHistoryActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"     android:layout_gravity="center">
+        <CheckBox
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/all_ck_id"
+            android:background="@drawable/unhascheck" android:layout_marginTop="15dp"
+            android:button="@null"  />
+
+        <ImageView
+            android:layout_width="130dp" android:id="@+id/goods_info_img"
+            android:layout_marginTop="10dp" android:layout_below="@+id/all_ck_id"
+            android:layout_height="130dp" android:src="@mipmap/cowbeefimg"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/name_beef_id"
+            android:layout_height="wrap_content" android:text="牛胸肉"
+            android:gravity="center" android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" android:textColor="@color/colorAccent"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/price_id"
+            android:layout_height="wrap_content" android:text="￥1"
+            android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" android:textSize="14sp"
+            android:textStyle="bold"/>
+        <com.ibeef.cowboying.view.customview.AmountViewWhite
+            android:layout_width="wrap_content" android:id="@+id/amout_num_id"
+            android:layout_height="32dp"    app:btnWidth="36dp"
+            app:tvWidth="80dp"  android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>
