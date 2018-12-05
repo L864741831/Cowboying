@@ -7,65 +7,65 @@
     android:background="@color/homef7"
     tools:context=".view.activity.InviteFriendHistoryActivity">
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="150dp" android:orientation="vertical"
-      android:layout_marginTop="10dp"  android:layout_marginLeft="15dp"
-      android:background="@drawable/shape_bottom_bg" android:layout_marginRight="15dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp" android:orientation="vertical"
+        android:layout_marginTop="10dp"  android:layout_marginLeft="15dp"
+        android:background="@drawable/shape_bottom_bg" android:layout_marginRight="15dp">
 
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="50dp" android:background="@drawable/shape_oval_line_strokeblack">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" android:background="@drawable/shape_oval_line_strokeblack">
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/title_txt_id"
                 android:layout_height="wrap_content" android:text="拼牛合同"
                 android:layout_marginLeft="10dp" android:textColor="@color/colorGolds"
                 android:textSize="15sp" android:layout_centerVertical="true"/>
-          <ImageView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:src="@mipmap/goldrightback"
-              android:layout_alignParentRight="true" android:layout_centerVertical="true"/>
-      </RelativeLayout>
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:layout_marginTop="10dp">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:text="期号："
-              android:textSize="14sp" android:layout_marginLeft="10dp"/>
-          <TextView
-              android:layout_width="wrap_content" android:id="@+id/issue_txt_id"
-              android:layout_height="wrap_content" android:text="2013098777773"
-              android:textSize="14sp" android:layout_marginLeft="10dp"
-              android:layout_alignParentRight="true" android:layout_marginRight="10dp"/>
-      </RelativeLayout>
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:layout_marginTop="10dp">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:text="时间："
-              android:textSize="14sp" android:layout_marginLeft="10dp"/>
-          <TextView
-              android:layout_width="wrap_content" android:id="@+id/time_txt_id"
-              android:layout_height="wrap_content" android:text="2018-10-10"
-              android:textSize="14sp" android:layout_marginLeft="10dp"
-              android:layout_alignParentRight="true" android:layout_marginRight="10dp"/>
-      </RelativeLayout>
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:layout_marginTop="10dp">
-          <TextView
-              android:layout_width="wrap_content" android:id="@+id/stadus_beef"
-              android:layout_height="wrap_content" android:text="牛品种："
-              android:textSize="14sp" android:layout_marginLeft="10dp"/>
-          <TextView
-              android:layout_width="wrap_content" android:id="@+id/cows_txt_id"
-              android:layout_height="wrap_content" android:text="安格斯牛"
-              android:textSize="14sp"   android:layout_toRightOf="@+id/stadus_beef"
-              android:layout_alignParentRight="true" android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp" android:gravity="right"
-              android:maxLines="1" android:ellipsize="end"/>
-      </RelativeLayout>
-  </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:src="@mipmap/goldrightback"
+                android:layout_alignParentRight="true" android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="期号："
+                android:textSize="14sp" android:layout_marginLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/issue_txt_id"
+                android:layout_height="wrap_content" android:text="2013098777773"
+                android:textSize="14sp" android:layout_marginLeft="10dp"
+                android:layout_alignParentRight="true" android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="时间："
+                android:textSize="14sp" android:layout_marginLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/time_txt_id"
+                android:layout_height="wrap_content" android:text="2018-10-10"
+                android:textSize="14sp" android:layout_marginLeft="10dp"
+                android:layout_alignParentRight="true" android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/stadus_beef"
+                android:layout_height="wrap_content" android:text="牛品种："
+                android:textSize="14sp" android:layout_marginLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/cows_txt_id"
+                android:layout_height="wrap_content" android:text="安格斯牛"
+                android:textSize="14sp"   android:layout_toRightOf="@+id/stadus_beef"
+                android:layout_alignParentRight="true" android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp" android:gravity="right"
+                android:maxLines="1" android:ellipsize="end"/>
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

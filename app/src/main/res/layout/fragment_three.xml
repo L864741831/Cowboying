@@ -130,7 +130,7 @@
                 <LinearLayout
                     android:id="@+id/wait_to_pay_id"
                     android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="0.25" android:orientation="vertical">
+                    android:layout_weight="1" android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 <LinearLayout
                     android:id="@+id/wait_to_delevery_id"
                     android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="0.25" android:orientation="vertical">
+                    android:layout_weight="1" android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                 <LinearLayout
                     android:id="@+id/wait_get_goods_id"
                     android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="0.25" android:orientation="vertical">
+                    android:layout_weight="1" android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                 <LinearLayout
                     android:id="@+id/wait_push_goods_id"
                     android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="0.25" android:orientation="vertical">
+                    android:layout_weight="1" android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -181,6 +181,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:textSize="14sp"
                         android:text="待提货" android:textColor="@color/black"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/after_sale_goods_id"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_gravity="center" android:src="@mipmap/after_sale"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textSize="14sp"
+                        android:text="售后" android:textColor="@color/black"
                         android:layout_gravity="center" />
                 </LinearLayout>
             </LinearLayout>
