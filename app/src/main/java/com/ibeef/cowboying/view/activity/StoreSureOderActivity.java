@@ -12,34 +12,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreAddrAdapter;
 import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
 import com.ibeef.cowboying.base.StoreCarPayBase;
-import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
-import com.ibeef.cowboying.bean.ModifyHeadResultBean;
-import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
-import com.ibeef.cowboying.bean.RealNameReaultBean;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
-import com.ibeef.cowboying.bean.UserInfoResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
-import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +41,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城确认订单
  */
-public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView,UserInfoBase.IView{
+public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -104,9 +93,7 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     ImageView imgChoose2Id;
     @Bind(R.id.lv_choose_id)
     LinearLayout lvChooseId;
-
     private StoreSureOrderAdapter storeSureOrderAdapter;
-
     private String token;
     private BroadcastReceiver receiver;
     private StoreAddrAdapter storeAddrAdapter;
@@ -118,7 +105,6 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     private final static int REQUESTCODE = 1; // 返回的结果码
 
     private NowBuyOrderResultBean nowBuyOrderResultBean;
-    private UserInfoPresenter userInfoPresenter;
     private StoreCarPayPresenter storeCarPayPresenter;
     private List<AddStoreCarParamBean> storeCarResultBeans;
     @Override
@@ -174,7 +160,6 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
                 }
             }
         });
-        userInfoPresenter=new UserInfoPresenter(this);
         storeCarPayPresenter=new StoreCarPayPresenter(this);
         if(SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean.getBizData().getAddress())){
             //没有地址
@@ -187,11 +172,9 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
             delAddrTxtId.setVisibility(View.VISIBLE);
             rightImgShow.setVisibility(View.VISIBLE);
             delAddrTxtId.setText(nowBuyOrderResultBean.getBizData().getAddress());
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
-            userInfoPresenter.getUserInfo(reqData);
         }
+        oderAllMoneyId.setText(nowBuyOrderResultBean.getBizData().getOrderAmount()+"");
+        allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+nowBuyOrderResultBean.getBizData().getOrderAmount()+"");
     }
 
     @OnClick({R.id.back_id, R.id.delevery_rv, R.id.cuppon_rv, R.id.now_pay_id,R.id.address_rv,R.id.refuce_id,R.id.sure_id,R.id.lv_choose_id,R.id.img_choose1_id,R.id.img_choose2_id})
@@ -273,13 +256,6 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (receiver != null) {
-            unregisterReceiver(receiver);
-        }
-    }
 
     // 为了获取结果
     @Override
@@ -321,40 +297,6 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     }
 
     @Override
-    public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
-
-    }
-
-    @Override
-    public void getModifNick(ModifyNickResultBean modifyNickResultBean) {
-
-    }
-
-    @Override
-    public void getRealName(RealNameReaultBean realNameReaultBean) {
-
-    }
-
-    @Override
-    public void getUserInfo(UserInfoResultBean userInfoResultBean) {
-        if("000000".equals(userInfoResultBean.getCode())){
-            if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getNickName())){
-                showAddrId.setText("全民养牛");
-            }else {
-                showAddrId.setText(userInfoResultBean.getBizData().getNickName());
-            }
-            mobileTxtId.setText(userInfoResultBean.getBizData().getMobile());
-        }else {
-            showToast(userInfoResultBean.getMessage());
-        }
-    }
-
-    @Override
-    public void isTakePhoeto(String msg) {
-
-    }
-
-    @Override
     public void nowBuyOrder(NowBuyOrderResultBean nowBuyOrderResultBean) {
 
     }
@@ -370,6 +312,11 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     }
 
     @Override
+    public void deleteStoreCar(DeleteCarResultBean deleteCarResultBean) {
+
+    }
+
+    @Override
     public void showLoading() {
 
     }
@@ -377,5 +324,16 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+        }
+        if (storeCarPayPresenter != null) {
+            storeCarPayPresenter.detachView();
+        }
     }
 }

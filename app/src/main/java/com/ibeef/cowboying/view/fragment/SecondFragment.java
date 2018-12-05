@@ -9,10 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,23 +20,19 @@ import com.ibeef.cowboying.base.StoreCarBase;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.StoreCarActivity;
-import com.ibeef.cowboying.view.customview.AmountViewStoreBeef;
 import com.orhanobut.hawk.Hawk;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
 import rxfamily.view.BaseFragment;
 
 public class SecondFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarBase.IView {

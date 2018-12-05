@@ -1,6 +1,5 @@
 package com.ibeef.cowboying.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.MyContractAdapter;
 import com.ibeef.cowboying.adapter.PickUpCodeAdapter;
 import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.bean.MyContractListBean;
@@ -20,13 +18,10 @@ import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

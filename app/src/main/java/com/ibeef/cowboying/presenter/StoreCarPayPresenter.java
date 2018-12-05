@@ -2,17 +2,13 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.StoreCarBase;
 import com.ibeef.cowboying.base.StoreCarPayBase;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
-import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
+import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
-import com.ibeef.cowboying.bean.StoreCarNumResultBean;
-import com.ibeef.cowboying.bean.StoreInfoListResultBean;
-import com.ibeef.cowboying.model.StoreCarModel;
 import com.ibeef.cowboying.model.StoreCarPayModel;
 
 import java.util.List;
@@ -53,6 +49,24 @@ public class StoreCarPayPresenter extends BasePresenter implements StoreCarPayBa
             }
         }));
     }
+
+    @Override
+    public void deleteStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans) {
+        addSubscription(mModel.deleteStoreCar(headers,addStoreCarParamBeans,new ResponseCallback<DeleteCarResultBean>() {
+            @Override
+            public void onSuccess(DeleteCarResultBean result) {
+                mView.deleteStoreCar(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
 
     @Override
     public void nowPayOrder(Map<String, String> headers, NowPayOrderParamBean noPayOrderParamBean) {

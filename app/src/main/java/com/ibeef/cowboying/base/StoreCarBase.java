@@ -1,7 +1,5 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
@@ -10,7 +8,6 @@ import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.http.Query;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

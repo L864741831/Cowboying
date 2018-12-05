@@ -1,7 +1,5 @@
 package com.ibeef.cowboying.bean;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**

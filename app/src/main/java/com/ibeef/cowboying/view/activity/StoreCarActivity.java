@@ -19,16 +19,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreCarAdapter;
 import com.ibeef.cowboying.base.StoreCarPayBase;
-import com.ibeef.cowboying.base.UserInfoBase;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
-import com.ibeef.cowboying.bean.ModifyHeadResultBean;
-import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
-import com.ibeef.cowboying.bean.RealNameReaultBean;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
-import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
@@ -93,6 +88,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     private  List<CarListResultBean.BizDataBean> lists;
     private StoreCarPayPresenter storeCarPayPresenter;
     private List<AddStoreCarParamBean> storeCarResultBeans;
+    private    Map<String, String> reqData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +162,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         });
 
         storeCarPayPresenter=new StoreCarPayPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
+        reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         storeCarPayPresenter.getCarList(reqData,currentPage);
@@ -193,13 +189,18 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 lvsId.setVisibility(View.GONE);
                 chooseNum=0;
                 int size = lists.size();
+                storeCarResultBeans.clear();
                 for(int i=size-1;i>=0;i--){
                     if(1==lists.get(i).getDefautChoose()) {
-                        lists.remove(i);
-                        storeCarAdapter.notifyItemRemoved(i);
-                        storeCarAdapter.notifyItemChanged(i);
+                        AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
+                        addStoreCarParamBean.setProductId(lists.get(i).getProductId());
+                        addStoreCarParamBean.setQuantity(lists.get(i).getQuantity());
+                        storeCarResultBeans.add(addStoreCarParamBean);
+
                     }
                 }
+
+                storeCarPayPresenter.deleteStoreCar(reqData,storeCarResultBeans);
                 allCkId.setChecked(false);
                 break;
             case R.id.all_ck_id:
@@ -226,6 +227,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 }else {
                     //立即购买
                     if(chooseNum>0){
+                        storeCarResultBeans.clear();
                         for (int i=0;i<lists.size();i++){
                             if(lists.get(i).getDefautChoose()==1){
                                 AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
@@ -234,9 +236,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                                 storeCarResultBeans.add(addStoreCarParamBean);
                             }
                         }
-                        Map<String, String> reqData = new HashMap<>();
-                        reqData.put("Authorization",token);
-                        reqData.put("version",getVersionCodes());
                         storeCarPayPresenter.nowBuyOrder(reqData,storeCarResultBeans);
                     }else {
                         showToast("请选中要购买的商品？");
@@ -275,9 +274,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         currentPage = 1;
         isFirst = true;
         lists.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
         storeCarPayPresenter.getCarList(reqData,currentPage);
         swipeLy.setRefreshing(false);
     }
@@ -286,9 +282,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     public void onLoadMoreRequested() {
         isMoreLoad = true;
         currentPage += 1;
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
         storeCarPayPresenter.getCarList(reqData,currentPage);
     }
 
@@ -337,6 +330,19 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         } else {
             showToast(carListResultBean.getMessage());
         }
+    }
+
+    @Override
+    public void deleteStoreCar(DeleteCarResultBean deleteCarResultBean) {
+        if("000000".equals(deleteCarResultBean.getCode())){
+            currentPage = 1;
+            isFirst = true;
+            lists.clear();
+            storeCarPayPresenter.getCarList(reqData,currentPage);
+        }else {
+            showToast(deleteCarResultBean.getMessage());
+        }
+
     }
 
     @Override

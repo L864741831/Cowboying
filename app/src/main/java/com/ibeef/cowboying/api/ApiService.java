@@ -5,6 +5,7 @@ import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
+import com.ibeef.cowboying.bean.AddAddressParamBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
@@ -29,6 +30,7 @@ import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatOrderParamBean;
 import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
+import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.EditLoginPwdParamBean;
 import com.ibeef.cowboying.bean.EditLoginPwdResultBean;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
@@ -72,6 +74,7 @@ import com.ibeef.cowboying.bean.SchemeDetailReultBean;
 import com.ibeef.cowboying.bean.SellCowsResultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
+import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
@@ -587,6 +590,13 @@ public interface ApiService {
     Observable<AddStoreCarResultBean> addStoreCar(@HeaderMap Map<String, String> headers, @Body List<AddStoreCarParamBean> addStoreCarParamBeans);
 
     /**
+     * 批量删除
+     * @return
+     */
+    @POST("cart/delete/products")
+    Observable<DeleteCarResultBean> deleteStoreCar(@HeaderMap Map<String, String> headers, @Body List<AddStoreCarParamBean> addStoreCarParamBeans);
+
+    /**
      * 立即购买(确认订单页面)
      * @return
      */
@@ -606,4 +616,32 @@ public interface ApiService {
      */
     @GET("cart/product/list")
     Observable<CarListResultBean> getCarList(@HeaderMap Map<String, String> headers,@Query("currentPage") int currentPage);
+
+    /**
+     *地址 新增
+     * @return
+     */
+    @POST("shop/address/add")
+    Observable<DeleteCarResultBean> addAddress(@HeaderMap Map<String, String> headers,@Body AddAddressParamBean addAddressResultBean);
+
+    /**
+     * 地址列表
+     * @return
+     */
+    @GET("shop/address/list")
+    Observable<ShowAddressResultBean> showAddressList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 地址修改
+     * @return
+     */
+    @POST("shop/address/update")
+    Observable<DeleteCarResultBean> updateAddress(@HeaderMap Map<String, String> headers,@Body AddAddressParamBean addAddressResultBean);
+
+    /**
+     * 地址删除
+     * @return
+     */
+    @GET("shop/address/delete")
+    Observable<DeleteCarResultBean> deleteAddress(@HeaderMap Map<String, String> headers,@Query("addressId") int addressId);
 }

@@ -13,7 +13,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.CarListResultBean;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.view.customview.AmountViewWhite;
 
