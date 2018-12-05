@@ -49,7 +49,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.OkHttpClient;
 import rxfamily.view.BaseFragment;
 
 /**

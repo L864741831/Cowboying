@@ -1,15 +1,11 @@
 package com.ibeef.cowboying.base;
 
-import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 
 import java.util.Map;
 
-import retrofit2.http.Query;
 import rx.Subscription;
 import rxfamily.mvp.BaseView;
 import rxfamily.net.ResponseCallback;

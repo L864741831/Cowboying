@@ -14,7 +14,7 @@
         android:background="@color/colorAccent"
         app:itemTextColor="@color/selector_item_color"
         app:menu="@menu/menu_navigation_with_view_pager" />
-    <android.support.v4.view.ViewPager
+    <com.ibeef.cowboying.view.customview.NoScrollViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

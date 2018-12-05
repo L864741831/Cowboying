@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context=".view.activity.InviteFriendHistoryActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <CheckBox
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/all_ck_id"  android:visibility="gone"
+            android:background="@drawable/unhascheck" android:checked="true"
+            android:button="@null"  android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/store_addr_id"
+            android:layout_height="wrap_content" android:text=""
+            android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

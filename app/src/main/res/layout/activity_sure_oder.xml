@@ -201,7 +201,7 @@
                     android:layout_marginBottom="50dp">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="账户余额"
+                        android:layout_height="wrap_content" android:text="钱包余额"
                         android:textColor="@color/black"  android:textSize="14sp"
                         android:layout_centerVertical="true"  android:layout_marginLeft="5dp"/>
                     <CheckBox

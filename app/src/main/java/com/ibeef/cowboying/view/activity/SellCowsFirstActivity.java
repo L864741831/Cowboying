@@ -12,7 +12,6 @@ import com.ibeef.cowboying.bean.CreatSellCowsResultBean;
 import com.ibeef.cowboying.bean.SellCowsResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.SellCowsPresenter;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;

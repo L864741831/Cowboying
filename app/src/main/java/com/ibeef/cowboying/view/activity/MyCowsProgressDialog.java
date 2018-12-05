@@ -21,7 +21,6 @@ import com.orhanobut.hawk.Hawk;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rxfamily.view.BaseActivity;
 
 
 public class MyCowsProgressDialog extends AppCompatActivity implements View.OnClickListener, MyCowsOrderBase.IView {

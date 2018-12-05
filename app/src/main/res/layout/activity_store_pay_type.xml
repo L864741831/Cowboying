@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    xmlns:ver="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.activity.StorePayTypeActivity">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_above="@+id/lv_bottom_id">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+            <include layout="@layout/include_title" android:id="@+id/inclut_id"/>
+            <RelativeLayout
+                android:layout_width="match_parent" android:background="@color/homef7"
+                android:layout_height="40dp" android:padding="10dp" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="选择支付方式"
+                    android:layout_centerVertical="true" android:textColor="@color/black"/>
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/colorline"/>
+            <RelativeLayout
+                android:layout_width="match_parent" android:background="@color/white"
+                android:layout_height="60dp" android:padding="10dp"
+                android:id="@+id/zfb_id">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="支付宝"
+                    android:textColor="@color/black" android:textSize="15sp"
+                    android:layout_centerVertical="true" android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" android:layout_alignParentRight="true"
+                    android:id="@+id/zfb_check" android:layout_centerVertical="true"
+                    android:src="@drawable/hascheck"  android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/colorline"/>
+            <RelativeLayout
+                android:layout_width="match_parent" android:background="@color/white"
+                android:layout_height="60dp" android:padding="10dp" android:id="@+id/weixin_id">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="微信"
+                    android:textColor="@color/black"  android:textSize="15sp"
+                    android:layout_centerVertical="true" android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" android:layout_alignParentRight="true"
+                    android:id="@+id/weixin_check" android:layout_centerVertical="true"
+                    android:src="@drawable/unhascheck"  android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/colorline"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent" android:background="@color/white"
+                android:layout_height="60dp" android:padding="10dp" android:id="@+id/wallet_id">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="钱包余额"
+                    android:textColor="@color/black"  android:textSize="15sp"
+                    android:layout_centerVertical="true" android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" android:layout_alignParentRight="true"
+                    android:id="@+id/wallet_check" android:layout_centerVertical="true"
+                    android:src="@drawable/unhascheck" android:layout_marginRight="10dp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/homef7"/>
+
+            <com.ibeef.cowboying.view.customview.CountDownView
+                android:layout_width="wrap_content" android:id="@+id/time_show_id"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                android:textSize="20sp" android:textColor="@color/colorGold"
+                android:layout_marginTop="50dp" android:drawableTop="@mipmap/stattimes"
+                android:drawablePadding="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorAccent" android:textSize="13sp"
+                android:text="您的订单已提交，请您在30分钟内完成支付，超时订单将自动取消。"
+                android:gravity="center" android:lineSpacingExtra="5dp"
+                android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:id="@+id/lv_bottom_id"
+            android:layout_height="60dp" android:orientation="horizontal"
+            android:layout_alignParentBottom="true" android:background="@color/colorAccent">
+            <TextView
+                android:id="@+id/cancle_id"
+                android:layout_width="0dp" android:layout_weight="0.4"
+                android:layout_height="match_parent" android:textColor="@color/white"
+                android:text="取消订单" android:textSize="16sp"
+                android:gravity="center"/>
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent" android:background="@color/colorGolds"/>
+            <TextView
+                android:id="@+id/sure_pay_id"
+                android:layout_width="0dp" android:layout_weight="0.4"
+                android:layout_height="match_parent" android:textColor="@color/colorGolds"
+                android:text="确认付款" android:textSize="16sp"
+                android:gravity="center"/>
+        </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent" android:id="@+id/account_pay_show_rv"
+        android:layout_height="match_parent" android:background="@color/colordialog"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical"
+            android:layout_alignParentBottom="true" android:background="@color/white">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:layout_width="35dp" android:id="@+id/pay_back_id"
+                    android:layout_height="30dp" android:src="@mipmap/backgray"
+                    android:layout_centerVertical="true" android:scaleType="fitXY"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+                    android:text="请输入支付密码"  android:textSize="14sp"/>
+            </RelativeLayout>
+
+
+            <View
+                style="@style/line1"/>
+
+            <com.ibeef.cowboying.utils.VerificationCodeInput
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ver:box="6" android:layout_gravity="center"
+                ver:child_h_padding="2dp"
+                ver:child_width="45dp"
+                ver:child_height="40dp" ver:inputType="password"
+                android:layout_centerInParent="true"
+                android:id="@+id/verificationCodeInput_id"
+                android:layout_marginTop="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/foret_pwd_id"
+                android:layout_height="wrap_content" android:textColor="@color/red"
+                android:text="忘记密码？" android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp" android:textSize="14sp"
+                android:layout_marginBottom="200dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/lvs_id"
+        android:layout_width="match_parent"  android:orientation="vertical"
+        android:layout_height="match_parent"  android:background="#70000000"
+        android:gravity="center"  android:visibility="gone">
+        <LinearLayout
+            android:layout_width="300dp" android:background="@drawable/cicle_write_bg"
+            android:layout_height="wrap_content" android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="15dp">
+                <TextView
+                    android:layout_width="match_parent" android:id="@+id/show_title_id"
+                    android:layout_height="wrap_content" android:text="确定要取消订单吗？"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="正宗澳洲牛肉近在咫尺，真的要放弃吗？" android:layout_gravity="center"
+                    android:id="@+id/infos_id"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"   android:layout_marginTop="10dp"
+                android:layout_height="1dp" android:background="#f3f3f3"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="我再想想" android:gravity="center"
+                    android:id="@+id/refuce_id" android:textSize="16sp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" android:background="#f3f3f3"/>
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="0.5"
+                    android:layout_height="match_parent" android:background="@mipmap/sureorderbg"
+                    android:text="取消订单" android:gravity="center" android:id="@+id/cancle_order_id"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

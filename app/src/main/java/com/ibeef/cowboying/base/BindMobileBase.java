@@ -4,7 +4,6 @@ import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
 import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
 import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
-import com.ibeef.cowboying.bean.CreatSellCowsParamBean;
 
 import java.util.Map;
 

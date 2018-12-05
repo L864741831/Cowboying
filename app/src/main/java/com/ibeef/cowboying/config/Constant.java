@@ -90,4 +90,16 @@ public class Constant {
      */
     public static  final String VersionCodes="1.0";
 
+    /**
+     * 地址json文件
+     */
+    public static final String CITY_DATA = "china_city_data.json";
+
+    /**
+     * 支付成功跳转界面 判断是养牛还是商城支付成功
+     * 0是养牛
+     * 1是商城
+     * 2是拼牛
+     */
+    public static  int PAY_RESULT_TYPE = 0;
 }

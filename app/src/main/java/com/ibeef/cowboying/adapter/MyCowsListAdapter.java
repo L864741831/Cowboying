@@ -17,7 +17,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 
 import java.util.List;

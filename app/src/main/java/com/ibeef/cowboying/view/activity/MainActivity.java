@@ -15,6 +15,7 @@ import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CheckVersionPresenter;
+import com.ibeef.cowboying.view.customview.NoScrollViewPager;
 import com.ibeef.cowboying.view.fragment.HomeFragment;
 import com.ibeef.cowboying.view.fragment.SecondFragment;
 import com.ibeef.cowboying.view.fragment.ThreeFragment;
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
     @Bind(R.id.bnve)
     BottomNavigationViewEx bnve;
     @Bind(R.id.vp)
-    ViewPager vp;
+    NoScrollViewPager vp;
     private ArrayList<BaseFragment> fragments;
     private CheckVersionPresenter checkVersionPresenter;
     private String token;
@@ -92,6 +93,9 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
                         startActivity(LoginActivity.class);
                         finish();
                     }
+                Intent intent1=new Intent();
+                intent1.setAction("com.ibeef.cowboying.storeaddcar");
+                sendBroadcast(intent1);
                 return true;
             }
         });

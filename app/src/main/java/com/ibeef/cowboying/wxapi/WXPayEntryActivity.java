@@ -8,9 +8,8 @@ import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.ibeef.cowboying.view.activity.PayResultActivity;
-import com.ibeef.cowboying.view.activity.SureOderActivity;
+import com.ibeef.cowboying.view.activity.StorePayResultActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -59,10 +58,24 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             if (resp.errCode == 0)
             // 支付成功
             {
+                /**
+                 * 0是养牛
+                 *  1是商城
+                 *  2是拼牛
+                 */
                 Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(WXPayEntryActivity.this,PayResultActivity.class);
-                intent.putExtra("orderId",Constant.orderId);
-                startActivity(intent);
+                if(0== Constant.PAY_RESULT_TYPE){
+                    Intent intent=new Intent(WXPayEntryActivity.this,PayResultActivity.class);
+                    intent.putExtra("orderId",Constant.orderId);
+                    startActivity(intent);
+                }else  if(1== Constant.PAY_RESULT_TYPE){
+                    Intent intent=new Intent(WXPayEntryActivity.this,StorePayResultActivity.class);
+                    intent.putExtra("orderId",Constant.orderId);
+                    startActivity(intent);
+                }else  if(2== Constant.PAY_RESULT_TYPE){
+
+                }
+
                 finish();
             } else {
                 Toast.makeText(this, "支付失败！", Toast.LENGTH_SHORT).show();

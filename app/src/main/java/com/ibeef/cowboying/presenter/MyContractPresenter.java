@@ -3,16 +3,10 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.MyContractBase;
-import com.ibeef.cowboying.base.MyCowsOrderBase;
-import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
-import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.model.MyContractModel;
-import com.ibeef.cowboying.model.MyCowsOrderModel;
 
 import java.util.Map;
 

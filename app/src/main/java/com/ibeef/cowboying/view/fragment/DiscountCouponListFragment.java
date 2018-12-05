@@ -7,12 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.flyco.animation.BaseAnimatorSet;
-import com.flyco.animation.BounceEnter.BounceTopEnter;
-import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.DiscountCoupondapter;
 import com.ibeef.cowboying.base.MyContractBase;
@@ -25,7 +22,6 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
-import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -33,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseFragment;
 
 /**
