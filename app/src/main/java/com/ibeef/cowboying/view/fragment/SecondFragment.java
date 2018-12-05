@@ -151,7 +151,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                             }
                         }
                         // TODO: 2018/12/4 net 请求加入购物车 storeCarResultBeans>0
-
+                        Log.e(Constant.TAG,storeCarResultBeans.size()+"广播？？");
                     }
                 }
             };
@@ -179,8 +179,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
      * @param n  要跳转的位置
      */
     public static void MoveToPosition(LinearLayoutManager manager, RecyclerView mRecyclerView, int n) {
-
-
         int firstItem = manager.findFirstVisibleItemPosition();
         int lastItem = manager.findLastVisibleItemPosition();
         if (n <= firstItem) {
@@ -203,8 +201,13 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 for(int i=0;i<baseBeans.size();i++){
                     if(baseBeans.get(i).isChoose()){
                         storeCarResultBeans.add(baseBeans.get(i));
+                        Log.e(Constant.TAG,storeCarResultBeans.get(i).getNum()+"购物车？？"+storeCarResultBeans.get(i).getDefautChoose());
                     }
                 }
+                for(int i=0;i<baseBeans.size();i++){
+                     baseBeans.get(i).setChoose(false);
+                }
+
                 // TODO: 2018/12/4 net 请求加入购物车storeCarResultBeans>0
                 Intent intent=new Intent(getHoldingActivity(),StoreCarActivity.class);
                 intent.putExtra("lists",(Serializable) storeCarResultBeans);
