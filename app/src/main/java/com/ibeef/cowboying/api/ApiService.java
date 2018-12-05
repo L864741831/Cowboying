@@ -6,11 +6,14 @@ import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
+import com.ibeef.cowboying.bean.AddStoreCarParamBean;
+import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.AdoptInfosResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
 import com.ibeef.cowboying.bean.BindMobileResultBean;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
@@ -48,6 +51,9 @@ import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
+import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
+import com.ibeef.cowboying.bean.NowPayOrderParamBean;
+import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
@@ -68,6 +74,8 @@ import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
+import com.ibeef.cowboying.bean.StoreCarNumResultBean;
+import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackParamBean;
 import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
@@ -556,4 +564,46 @@ public interface ApiService {
      */
     @GET("coupon/self/info")
     Observable<MyDiscountCouponListBean> getMyDiscountCouponList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage, @Query("pageSize") int pageSize,@Query("findType") String findType);
+
+    /**
+     * 获取商城商品信息
+     * @return
+     */
+    @GET("shop/product/getAll/info")
+    Observable<StoreInfoListResultBean> getStoreInfoList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+
+    /**
+     * 获取当前用户购车商品数量
+     * @return
+     */
+    @GET("cart/get/productNum")
+    Observable<StoreCarNumResultBean> getStoreCarNum(@HeaderMap Map<String, String> headers);
+
+    /**
+     * 获取当前用户购车商品数量
+     * @return
+     */
+    @POST("cart/add/products")
+    Observable<AddStoreCarResultBean> addStoreCar(@HeaderMap Map<String, String> headers, @Body List<AddStoreCarParamBean> addStoreCarParamBeans);
+
+    /**
+     * 立即购买(确认订单页面)
+     * @return
+     */
+    @POST("shop/order/buyNow")
+    Observable<NowBuyOrderResultBean> nowBuyOrder(@HeaderMap Map<String, String> headers, @Body List<AddStoreCarParamBean> addStoreCarParamBeans);
+
+    /**
+     * 创建订单（立即付款）
+     * @return
+     */
+    @POST("shop/order/create")
+    Observable<NowPayOrderResultBean> nowPayOrder(@HeaderMap Map<String, String> headers, @Body NowPayOrderParamBean noPayOrderParamBean);
+
+    /**
+     * 购物车商品列表
+     * @return
+     */
+    @GET("cart/product/list")
+    Observable<CarListResultBean> getCarList(@HeaderMap Map<String, String> headers,@Query("currentPage") int currentPage);
 }

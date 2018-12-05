@@ -12,17 +12,37 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreAddrAdapter;
 import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
+import com.ibeef.cowboying.base.StoreCarPayBase;
+import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.AddStoreCarParamBean;
+import com.ibeef.cowboying.bean.CarListResultBean;
+import com.ibeef.cowboying.bean.ModifyHeadResultBean;
+import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
+import com.ibeef.cowboying.bean.NowPayOrderParamBean;
+import com.ibeef.cowboying.bean.NowPayOrderResultBean;
+import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
+import com.ibeef.cowboying.bean.UserInfoResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
+import com.ibeef.cowboying.presenter.UserInfoPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +52,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城确认订单
  */
-public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener{
+public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView,UserInfoBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -86,7 +106,7 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     LinearLayout lvChooseId;
 
     private StoreSureOrderAdapter storeSureOrderAdapter;
-    private List<StoreCarResultBean> objectList;
+
     private String token;
     private BroadcastReceiver receiver;
     private StoreAddrAdapter storeAddrAdapter;
@@ -96,6 +116,11 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     private   int selectId;
     private  boolean check;
     private final static int REQUESTCODE = 1; // 返回的结果码
+
+    private NowBuyOrderResultBean nowBuyOrderResultBean;
+    private UserInfoPresenter userInfoPresenter;
+    private StoreCarPayPresenter storeCarPayPresenter;
+    private List<AddStoreCarParamBean> storeCarResultBeans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +130,8 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     }
 
     private void init(){
+        nowBuyOrderResultBean= (NowBuyOrderResultBean) getIntent().getSerializableExtra("infos");
+        storeCarResultBeans= (List<AddStoreCarParamBean>) getIntent().getSerializableExtra("goodlists");
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("确认订单");
         ryId.setHasFixedSize(true);
@@ -113,13 +140,8 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
         ryStoreId.setHasFixedSize(true);
         ryStoreId.setNestedScrollingEnabled(false);
         ryStoreId.setLayoutManager(new LinearLayoutManager(this));
-        objectList=new ArrayList<>();
-        for (int i=0;i<2;i++) {
-            StoreCarResultBean storeCarResultBean=new StoreCarResultBean();
-            storeCarResultBean.setDefautChoose(0);
-            objectList.add(storeCarResultBean);
-        }
-        storeSureOrderAdapter=new StoreSureOrderAdapter(objectList,this,R.layout.item_sureorder_info);
+
+        storeSureOrderAdapter=new StoreSureOrderAdapter(nowBuyOrderResultBean.getBizData().getProducts(),this,R.layout.item_sureorder_info);
         ryId.setAdapter(storeSureOrderAdapter);
 
         IntentFilter intentFilter = new IntentFilter("com.ibeef.cowboying.chooseaddr");
@@ -132,18 +154,18 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
         };
         registerReceiver(receiver, intentFilter);
 
-        storeAddrAdapter=new StoreAddrAdapter(objectList,this);
+        storeAddrAdapter=new StoreAddrAdapter(nowBuyOrderResultBean.getBizData().getProducts(),this);
         storeAddrAdapter.setOnLoadMoreListener(this, ryStoreId);
         ryStoreId.setAdapter(storeAddrAdapter);
         storeAddrAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if(view.getId()==R.id.all_ck_id){
-                    for (int i=0;i<objectList.size();i++){
+                    for (int i=0;i<nowBuyOrderResultBean.getBizData().getProducts().size();i++){
                         if(i==position){
-                            objectList.get(i).setDefautChoose(1);
+                            nowBuyOrderResultBean.getBizData().getProducts().get(i).setDefautChoose(1);
                         }else{
-                            objectList.get(i).setDefautChoose(0);
+                            nowBuyOrderResultBean.getBizData().getProducts().get(i).setDefautChoose(0);
                         }
                         storeAddrAdapter.notifyItemChanged(i);
                     }
@@ -152,8 +174,9 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
                 }
             }
         });
-
-        if(true){
+        userInfoPresenter=new UserInfoPresenter(this);
+        storeCarPayPresenter=new StoreCarPayPresenter(this);
+        if(SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean.getBizData().getAddress())){
             //没有地址
             mobileTxtId.setVisibility(View.INVISIBLE);
             delAddrTxtId.setVisibility(View.INVISIBLE);
@@ -163,6 +186,11 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
             mobileTxtId.setVisibility(View.VISIBLE);
             delAddrTxtId.setVisibility(View.VISIBLE);
             rightImgShow.setVisibility(View.VISIBLE);
+            delAddrTxtId.setText(nowBuyOrderResultBean.getBizData().getAddress());
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization",token);
+            reqData.put("version",getVersionCodes());
+            userInfoPresenter.getUserInfo(reqData);
         }
     }
 
@@ -215,10 +243,27 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
                 }
                 if(selectId!=0){
                     //使用了优惠券 selectId优惠券id
-
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    NowPayOrderParamBean noPayOrderParamBean=new NowPayOrderParamBean();
+                    noPayOrderParamBean.setAddressDetail("1");
+                    noPayOrderParamBean.setAddressId(1);
+                    noPayOrderParamBean.setCouponId(1);
+                    noPayOrderParamBean.setReceiveType(type+"");
+                    noPayOrderParamBean.setProducts(storeCarResultBeans);
+                    storeCarPayPresenter.nowPayOrder(reqData,noPayOrderParamBean);
+                }else {
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    NowPayOrderParamBean noPayOrderParamBean=new NowPayOrderParamBean();
+                    noPayOrderParamBean.setAddressDetail("1");
+                    noPayOrderParamBean.setAddressId(1);
+                    noPayOrderParamBean.setReceiveType(type+"");
+                    noPayOrderParamBean.setProducts(storeCarResultBeans);
+                    storeCarPayPresenter.nowPayOrder(reqData,noPayOrderParamBean);
                 }
-
-                startActivity(StorePayTypeActivity.class);
                 break;
             case R.id.address_rv:
                 startActivity(AddressActivity.class);
@@ -268,5 +313,69 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
     public void onLoadMoreRequested() {
         isMoreLoad = true;
         currentPage += 1;
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
+
+    }
+
+    @Override
+    public void getModifNick(ModifyNickResultBean modifyNickResultBean) {
+
+    }
+
+    @Override
+    public void getRealName(RealNameReaultBean realNameReaultBean) {
+
+    }
+
+    @Override
+    public void getUserInfo(UserInfoResultBean userInfoResultBean) {
+        if("000000".equals(userInfoResultBean.getCode())){
+            if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getNickName())){
+                showAddrId.setText("全民养牛");
+            }else {
+                showAddrId.setText(userInfoResultBean.getBizData().getNickName());
+            }
+            mobileTxtId.setText(userInfoResultBean.getBizData().getMobile());
+        }else {
+            showToast(userInfoResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void isTakePhoeto(String msg) {
+
+    }
+
+    @Override
+    public void nowBuyOrder(NowBuyOrderResultBean nowBuyOrderResultBean) {
+
+    }
+
+    @Override
+    public void nowPayOrder(NowPayOrderResultBean nowPayOrderResultBean) {
+        startActivity(StorePayTypeActivity.class);
+    }
+
+    @Override
+    public void getCarList(CarListResultBean carListResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class StoreBottomAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class StoreBottomAdapter extends BaseQuickAdapter<StoreInfoListResultBean.BizDataBean.ProductVideoResVosBean,BaseViewHolder> {
     private Context context;
     public StoreBottomAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -26,13 +27,13 @@ public class StoreBottomAdapter extends BaseQuickAdapter<Object,BaseViewHolder> 
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
+    protected void convert(BaseViewHolder helper, StoreInfoListResultBean.BizDataBean.ProductVideoResVosBean item) {
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        Glide.with(context).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
-        helper.setText(R.id.img_txt_id,"牛排作法2");
+        Glide.with(context).load(Constant.imageDomain+item.getVideoUrl()).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
+        helper.setText(R.id.img_txt_id,item.getName());
     }
 }

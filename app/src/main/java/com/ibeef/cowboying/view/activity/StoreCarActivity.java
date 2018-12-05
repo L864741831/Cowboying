@@ -18,12 +18,27 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreCarAdapter;
+import com.ibeef.cowboying.base.StoreCarPayBase;
+import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.AddStoreCarParamBean;
+import com.ibeef.cowboying.bean.CarListResultBean;
+import com.ibeef.cowboying.bean.ModifyHeadResultBean;
+import com.ibeef.cowboying.bean.ModifyNickResultBean;
+import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
+import com.ibeef.cowboying.bean.NowPayOrderResultBean;
+import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
+import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +48,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城购物车
  */
-public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -75,7 +90,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     private StoreCarAdapter storeCarAdapter;
     private BroadcastReceiver receiver1;
     private int num,position,chooseNum;
-    private  List<StoreCarResultBean> lists;
+    private  List<CarListResultBean.BizDataBean> lists;
+    private StoreCarPayPresenter storeCarPayPresenter;
+    private List<AddStoreCarParamBean> storeCarResultBeans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,14 +102,14 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     }
     private void init(){
         token = Hawk.get(HawkKey.TOKEN);
+        lists=new ArrayList<>();
+        storeCarResultBeans=new ArrayList<>();
         info.setText("购物车");
         actionNewQuestionTv.setText("编辑");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
-        lists= (List<StoreCarResultBean>) getIntent().getSerializableExtra("lists");
-
         ryId.setHasFixedSize(true);
         ryId.setNestedScrollingEnabled(false);
         ryId.setLayoutManager(new GridLayoutManager(this,2));
@@ -123,7 +140,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             public void onReceive(Context context, Intent intent) {
                 num=intent.getIntExtra("num",1);
                 position=intent.getIntExtra("position",0);
-                lists.get(position).setNum(num);
+                lists.get(position).setQuantity(num);
             }
         };
        registerReceiver(receiver1, intentFilter1);
@@ -147,6 +164,12 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 }
             }
         });
+
+        storeCarPayPresenter=new StoreCarPayPresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        storeCarPayPresenter.getCarList(reqData,currentPage);
     }
 
     @OnClick({R.id.back_id,R.id.action_new_question_tv,R.id.go_store_btn,R.id.now_claim_btn_id,R.id.all_ck_id,R.id.refuce_id,R.id.sure_id,R.id.lvs_id})
@@ -203,7 +226,18 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 }else {
                     //立即购买
                     if(chooseNum>0){
-                        startActivity(StoreSureOderActivity.class);
+                        for (int i=0;i<lists.size();i++){
+                            if(lists.get(i).getDefautChoose()==1){
+                                AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
+                                addStoreCarParamBean.setProductId(lists.get(i).getProductId());
+                                addStoreCarParamBean.setQuantity(lists.get(i).getQuantity());
+                                storeCarResultBeans.add(addStoreCarParamBean);
+                            }
+                        }
+                        Map<String, String> reqData = new HashMap<>();
+                        reqData.put("Authorization",token);
+                        reqData.put("version",getVersionCodes());
+                        storeCarPayPresenter.nowBuyOrder(reqData,storeCarResultBeans);
                     }else {
                         showToast("请选中要购买的商品？");
                     }
@@ -240,7 +274,11 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     public void onRefresh() {
         currentPage = 1;
         isFirst = true;
-//        objectList.clear();
+        lists.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        storeCarPayPresenter.getCarList(reqData,currentPage);
         swipeLy.setRefreshing(false);
     }
 
@@ -248,13 +286,85 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     public void onLoadMoreRequested() {
         isMoreLoad = true;
         currentPage += 1;
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        storeCarPayPresenter.getCarList(reqData,currentPage);
+    }
+
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void nowBuyOrder(NowBuyOrderResultBean nowBuyOrderResultBean) {
+        if("000000".equals(nowBuyOrderResultBean.getCode())){
+            Intent intent=new Intent(StoreCarActivity.this,StoreSureOderActivity.class);
+            intent.putExtra("infos",nowBuyOrderResultBean);
+            intent.putExtra("goodlists",(Serializable) storeCarResultBeans);
+            startActivity(intent);
+        }else {
+            showToast(nowBuyOrderResultBean.getMessage());
+        }
+
+    }
+
+    @Override
+    public void nowPayOrder(NowPayOrderResultBean nowPayOrderResultBean) {
+
+    }
+
+    @Override
+    public void getCarList(CarListResultBean carListResultBean) {
+        if ("000000".equals(carListResultBean.getCode())) {
+            if (SDCardUtil.isNullOrEmpty(carListResultBean.getBizData())) {
+                if (isFirst) {
+                    rvOrder.setVisibility(View.VISIBLE);
+                    ryId.setVisibility(View.GONE);
+                } else {
+                    rvOrder.setVisibility(View.GONE);
+                    ryId.setVisibility(View.VISIBLE);
+                }
+                storeCarAdapter.loadMoreEnd();
+            } else {
+                isFirst = false;
+                lists.addAll(carListResultBean.getBizData());
+                storeCarAdapter.setNewData(this.lists);
+                storeCarAdapter.loadMoreComplete();
+            }
+        } else {
+            showToast(carListResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (isMoreLoad) {
+            loadingLayout.setVisibility(View.GONE);
+            ryId.setVisibility(View.VISIBLE);
+            isMoreLoad = false;
+        } else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            ryId.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        ryId.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (receiver1 != null) {
-           unregisterReceiver(receiver1);
+            unregisterReceiver(receiver1);
+        }
+        if(storeCarPayPresenter!=null){
+            storeCarPayPresenter.detachView();
         }
     }
 }
