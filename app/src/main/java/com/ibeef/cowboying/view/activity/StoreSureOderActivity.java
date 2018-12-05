@@ -171,7 +171,7 @@ public class StoreSureOderActivity extends BaseActivity implements BaseQuickAdap
             mobileTxtId.setVisibility(View.VISIBLE);
             delAddrTxtId.setVisibility(View.VISIBLE);
             rightImgShow.setVisibility(View.VISIBLE);
-            delAddrTxtId.setText(nowBuyOrderResultBean.getBizData().getAddress());
+            delAddrTxtId.setText(nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
         }
         oderAllMoneyId.setText(nowBuyOrderResultBean.getBizData().getOrderAmount()+"");
         allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+nowBuyOrderResultBean.getBizData().getOrderAmount()+"");

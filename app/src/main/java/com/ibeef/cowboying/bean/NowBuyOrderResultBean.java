@@ -11,10 +11,11 @@ import java.util.List;
  **/
 public class NowBuyOrderResultBean implements Serializable {
 
+
     /**
      * code : 000000
      * message :
-     * bizData : {"address":null,"products":[{"productId":19,"name":"来两块的吗","specification":"333","weight":null,"price":1,"stock":10000,"quantity":5}],"carrageAmount":0,"orderAmount":5,"totalQuantity":5}
+     * bizData : {"address":{"id":null,"name":null,"mobile":null,"provinceId":null,"cityId":null,"regionId":null,"detailAddress":null,"isDefualt":null},"products":[{"productId":12,"name":"牛头肉","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":600,"stock":1000,"quantity":3,"productAmount":1800},{"productId":19,"name":"来两块的吗","productMainImage":"images/1cf94a995c9d32b694afb7b245e2f997","specification":"333","weight":null,"price":1,"stock":10000,"quantity":5,"productAmount":5}],"carrageAmount":0,"orderAmount":18.05,"totalQuantity":8}
      */
 
     private String code;
@@ -47,24 +48,24 @@ public class NowBuyOrderResultBean implements Serializable {
 
     public  class BizDataBean implements Serializable{
         /**
-         * address : null
-         * products : [{"productId":19,"name":"来两块的吗","specification":"333","weight":null,"price":1,"stock":10000,"quantity":5}]
+         * address : {"id":null,"name":null,"mobile":null,"provinceId":null,"cityId":null,"regionId":null,"detailAddress":null,"isDefualt":null}
+         * products : [{"productId":12,"name":"牛头肉","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":600,"stock":1000,"quantity":3,"productAmount":1800},{"productId":19,"name":"来两块的吗","productMainImage":"images/1cf94a995c9d32b694afb7b245e2f997","specification":"333","weight":null,"price":1,"stock":10000,"quantity":5,"productAmount":5}]
          * carrageAmount : 0
-         * orderAmount : 5.0
-         * totalQuantity : 5
+         * orderAmount : 18.05
+         * totalQuantity : 8
          */
 
-        private String address;
+        private AddressBean address;
         private int carrageAmount;
         private double orderAmount;
         private int totalQuantity;
         private List<ProductsBean> products;
 
-        public String getAddress() {
+        public AddressBean getAddress() {
             return address;
         }
 
-        public void setAddress(String address) {
+        public void setAddress(AddressBean address) {
             this.address = address;
         }
 
@@ -100,34 +101,115 @@ public class NowBuyOrderResultBean implements Serializable {
             this.products = products;
         }
 
+        public  class AddressBean implements Serializable{
+            /**
+             * id : null
+             * name : null
+             * mobile : null
+             * provinceId : null
+             * cityId : null
+             * regionId : null
+             * detailAddress : null
+             * isDefualt : null
+             */
+
+            private int id;
+            private String name;
+            private String mobile;
+            private String provinceId;
+            private String cityId;
+            private String regionId;
+            private String detailAddress;
+            private int isDefualt;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getMobile() {
+                return mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
+
+            public String getProvinceId() {
+                return provinceId;
+            }
+
+            public void setProvinceId(String provinceId) {
+                this.provinceId = provinceId;
+            }
+
+            public String getCityId() {
+                return cityId;
+            }
+
+            public void setCityId(String cityId) {
+                this.cityId = cityId;
+            }
+
+            public String getRegionId() {
+                return regionId;
+            }
+
+            public void setRegionId(String regionId) {
+                this.regionId = regionId;
+            }
+
+            public String getDetailAddress() {
+                return detailAddress;
+            }
+
+            public void setDetailAddress(String detailAddress) {
+                this.detailAddress = detailAddress;
+            }
+
+            public int getIsDefualt() {
+                return isDefualt;
+            }
+
+            public void setIsDefualt(int isDefualt) {
+                this.isDefualt = isDefualt;
+            }
+        }
+
         public  class ProductsBean implements Serializable{
             /**
-             * productId : 19
-             * name : 来两块的吗
-             * specification : 333
+             * productId : 12
+             * name : 牛头肉
+             * productMainImage : images/ca09570497f14175b29cc0be930be12c.png
+             * specification : 269*3
              * weight : null
-             * price : 1.0
-             * stock : 10000
-             * quantity : 5
+             * price : 600.0
+             * stock : 1000
+             * quantity : 3
+             * productAmount : 1800.0
              */
 
             private int productId;
             private String name;
-            private String specification;
             private String productMainImage;
+            private String specification;
             private Object weight;
             private double price;
             private int stock;
             private int quantity;
+            private double productAmount;
             private int defautChoose;
-
-            public String getProductMainImage() {
-                return productMainImage;
-            }
-
-            public void setProductMainImage(String productMainImage) {
-                this.productMainImage = productMainImage;
-            }
 
             public int getDefautChoose() {
                 return defautChoose;
@@ -151,6 +233,14 @@ public class NowBuyOrderResultBean implements Serializable {
 
             public void setName(String name) {
                 this.name = name;
+            }
+
+            public String getProductMainImage() {
+                return productMainImage;
+            }
+
+            public void setProductMainImage(String productMainImage) {
+                this.productMainImage = productMainImage;
             }
 
             public String getSpecification() {
@@ -191,6 +281,14 @@ public class NowBuyOrderResultBean implements Serializable {
 
             public void setQuantity(int quantity) {
                 this.quantity = quantity;
+            }
+
+            public double getProductAmount() {
+                return productAmount;
+            }
+
+            public void setProductAmount(double productAmount) {
+                this.productAmount = productAmount;
             }
         }
     }
