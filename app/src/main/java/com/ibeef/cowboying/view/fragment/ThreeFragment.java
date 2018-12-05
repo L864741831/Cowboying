@@ -25,6 +25,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CowManInfoPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.AfterSaleActivity;
 import com.ibeef.cowboying.view.activity.BeefStoreHouseActivity;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.DiscountCouponActivity;
@@ -34,8 +35,10 @@ import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
+import com.ibeef.cowboying.view.activity.MyOrderActivity;
 import com.ibeef.cowboying.view.activity.NormalQuestionActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
+import com.ibeef.cowboying.view.activity.PickUpCodeActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
 import com.orhanobut.hawk.Hawk;
 
@@ -164,7 +167,11 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.messege_id, R.id.setting_id, R.id.head_img,R.id.nomal_question_rv,R.id.pay_money_codeId, R.id.please_codeId, R.id.get_goods_codeId, R.id.all_order_id, R.id.wait_to_pay_id, R.id.wait_to_delevery_id, R.id.wait_get_goods_id, R.id.wait_push_goods_id, R.id.me_cattle_rv, R.id.cattle_oder_rv, R.id.all_money_rv, R.id.beef_house_rv, R.id.write_money_rv, R.id.coupon_num_rv, R.id.contract_id_rv, R.id.invite_friend_id_rv, R.id.tell_us_id_rv})
+    @OnClick({R.id.messege_id, R.id.setting_id, R.id.head_img,R.id.nomal_question_rv,R.id.pay_money_codeId,
+            R.id.please_codeId, R.id.get_goods_codeId, R.id.all_order_id, R.id.wait_to_pay_id, R.id.wait_to_delevery_id,
+            R.id.wait_get_goods_id, R.id.wait_push_goods_id, R.id.me_cattle_rv, R.id.cattle_oder_rv, R.id.all_money_rv,
+            R.id.beef_house_rv, R.id.write_money_rv, R.id.coupon_num_rv, R.id.contract_id_rv, R.id.invite_friend_id_rv,
+            R.id.tell_us_id_rv,R.id.after_sale_goods_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.messege_id:
@@ -203,10 +210,15 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 break;
             case R.id.get_goods_codeId:
                 //取货码
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(PickUpCodeActivity.class);
+                }
                 break;
             case R.id.all_order_id:
                 //商城订单
-
+                startActivity(MyOrderActivity.class);
                 break;
             case R.id.wait_to_pay_id:
                 //待付款
@@ -282,6 +294,10 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 break;
             case R.id.nomal_question_rv:
                 startActivity(NormalQuestionActivity.class);
+                break;
+            case R.id.after_sale_goods_id:
+                //售后列表
+                startActivity(AfterSaleActivity.class);
                 break;
             default:
                 break;

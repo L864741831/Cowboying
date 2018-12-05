@@ -200,6 +200,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity android:name=".view.activity.StoreCarActivity"></activity>
+        <activity android:name=".view.activity.PickUpCodeActivity"/>
+        <activity android:name=".view.activity.AfterSaleActivity"/>
+        <activity android:name=".view.activity.AfterSaleDetailActivity"/>
+        <activity android:name=".view.activity.AfterSaleApplyActivity"/>
+        <activity android:name=".view.activity.AfterSaleApplyReasonDialog"
+            android:theme="@style/myTransparent"/>
+        <activity android:name=".view.activity.MyOrderActivity"/>
     </application>
 
 </manifest>
