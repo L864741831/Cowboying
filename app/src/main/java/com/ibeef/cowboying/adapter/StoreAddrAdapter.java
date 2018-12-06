@@ -9,12 +9,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
+import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
 
 import java.util.List;
 
 
-public class StoreAddrAdapter extends BaseQuickAdapter<NowBuyOrderResultBean.BizDataBean.ProductsBean, BaseViewHolder> {
+public class StoreAddrAdapter extends BaseQuickAdapter<StoreAddrResultBean.BizDataBean, BaseViewHolder> {
     private Context context;
     public StoreAddrAdapter(List data, Context context) {
         super(R.layout.item_store_addr, data);
@@ -22,7 +23,7 @@ public class StoreAddrAdapter extends BaseQuickAdapter<NowBuyOrderResultBean.Biz
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final NowBuyOrderResultBean.BizDataBean.ProductsBean item) {
+    protected void convert(BaseViewHolder helper, final StoreAddrResultBean.BizDataBean item) {
 
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         helper.addOnClickListener(R.id.all_ck_id);

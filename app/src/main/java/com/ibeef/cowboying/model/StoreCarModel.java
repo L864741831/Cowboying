@@ -2,6 +2,7 @@ package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.StoreCarBase;
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
@@ -82,8 +83,8 @@ public class StoreCarModel implements StoreCarBase.IModel {
     }
 
     @Override
-    public Subscription addStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans, final ResponseCallback<AddStoreCarResultBean> callback) {
-        Observable<AddStoreCarResultBean> observable = service.addStoreCar(headers,addStoreCarParamBeans);
+    public Subscription addStoreCar(Map<String, String> headers, AddShopCarResultBean addShopCarResultBean, final ResponseCallback<AddStoreCarResultBean> callback) {
+        Observable<AddStoreCarResultBean> observable = service.addStoreCar(headers,addShopCarResultBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

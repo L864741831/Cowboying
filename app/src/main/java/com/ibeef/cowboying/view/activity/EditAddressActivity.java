@@ -98,6 +98,11 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
             provinceId=infos.getProvinceId()+"";
             cityId=infos.getCityId()+"";
             districtId=infos.getRegionId()+"";
+            if("1".equals(infos.getIsDefault())){
+                ckId.setChecked(true);
+            }else {
+                ckId.setChecked(false);
+            }
         }
 
     }
@@ -174,9 +179,7 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
                 }else {
                     addAddressParamBean.setId(null);
                     modifyAddressPresenter.addAddress(reqData,addAddressParamBean);
-
                 }
-
                 break;
             default:
                 break;

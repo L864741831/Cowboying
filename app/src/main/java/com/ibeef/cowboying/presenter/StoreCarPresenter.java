@@ -3,6 +3,7 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.StoreCarBase;
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
@@ -69,8 +70,8 @@ public class StoreCarPresenter extends BasePresenter implements StoreCarBase.IPr
     }
 
     @Override
-    public void addStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans) {
-        addSubscription(mModel.addStoreCar(headers,addStoreCarParamBeans,new ResponseCallback<AddStoreCarResultBean>() {
+    public void addStoreCar(Map<String, String> headers, AddShopCarResultBean addShopCarResultBean) {
+        addSubscription(mModel.addStoreCar(headers,addShopCarResultBean,new ResponseCallback<AddStoreCarResultBean>() {
             @Override
             public void onSuccess(AddStoreCarResultBean result) {
                 mView.addStoreCar(result);

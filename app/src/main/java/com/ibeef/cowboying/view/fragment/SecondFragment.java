@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreTopAdapter;
 import com.ibeef.cowboying.base.StoreCarBase;
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
@@ -151,7 +152,9 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                         Map<String, String> reqData = new HashMap<>();
                         reqData.put("Authorization",token);
                         reqData.put("version",getVersionCodes());
-                        storeCarPresenter.addStoreCar(reqData,storeCarResultBeans);
+                        AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
+                        addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
+                        storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
 
                         Log.e(Constant.TAG,storeCarResultBeans.size()+"广播？？");
                     }
@@ -222,7 +225,9 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());
-                    storeCarPresenter.addStoreCar(reqData,storeCarResultBeans);
+                    AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
+                    addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
+                    storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
                 }else {
                     startActivity(StoreCarActivity.class);
                 }

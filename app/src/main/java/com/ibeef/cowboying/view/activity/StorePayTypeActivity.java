@@ -136,6 +136,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
 
     private void init() {
         orderId=getIntent().getIntExtra("orderId",0);
+
         info.setText("支付方式");
         long time= 1800000;
         //两时间差,精确到毫秒
