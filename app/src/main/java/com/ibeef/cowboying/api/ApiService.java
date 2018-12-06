@@ -57,6 +57,9 @@ import com.ibeef.cowboying.bean.MyFeedbackResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
+import com.ibeef.cowboying.bean.MyOrderListBean;
+import com.ibeef.cowboying.bean.MyOrderListCancelBean;
+import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
@@ -652,4 +655,26 @@ public interface ApiService {
      */
     @GET("shop/address/delete")
     Observable<DeleteCarResultBean> deleteAddress(@HeaderMap Map<String, String> headers,@Query("addressId") int addressId);
+
+    /**
+     * 我的商城订单列表（包含售后列表）
+     * @return
+     */
+    @GET("shop/order/get/orderList")
+    Observable<MyOrderListBean> getMyOrderList(@HeaderMap Map<String, String> headers, @Query("pageSize") int pageSize, @Query("curPage") int curPage, @Query("status") String status);
+
+    /**
+     * 我的商城订单详情
+     * @return
+     */
+    @GET("shop/order/get/orderDetail")
+    Observable<MyOrderListDetailBean> getMyOrderListDetail(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
+    /**
+     * 取消商城订单
+     * @return
+     */
+    @GET("shop/order/cancel")
+    Observable<MyOrderListCancelBean> getMyOrderListCancel(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
 }

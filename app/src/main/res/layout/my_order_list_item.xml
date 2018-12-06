@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+    android:layout_marginTop="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical"
+        android:background="@drawable/shape_white_cicle_2" android:padding="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent" android:id="@+id/yb_zy_dian"
+            android:layout_height="35dp"  android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/order_id"
+                android:layout_height="wrap_content" android:text="订单编号"
+                android:textColor="@color/txthui" android:layout_centerVertical="true"
+                android:textSize="13sp"
+                android:layout_marginLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content" android:id="@+id/stadus_id"
+                android:layout_height="wrap_content" android:textSize="13sp"
+                android:textColor="@color/colorhometxt"
+                android:text="待付款" android:layout_centerVertical="true"
+                android:layout_alignParentRight="true" android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" android:id="@+id/ry_id"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="共2件，合计：￥500"
+                android:textColor="@color/black"
+                android:layout_marginRight="@dimen/dp_10"
+                android:textSize="13sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_delet_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/shape_white_cicle"
+                android:text="删除订单"
+                android:textSize="13sp" />
+
+            <TextView
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_see_order_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/shape_white_cicle"
+                android:text="查看物流"
+                android:textSize="13sp" />
+            <TextView
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_confirm_receipt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/shape_white_cicle"
+                android:text="确认收货"
+                android:textSize="13sp" />
+            <TextView
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_cancle_order"
+                android:background="@drawable/shape_white_cicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="取消订单"
+                android:textSize="13sp" />
+
+            <TextView
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_to_pay"
+                android:background="@drawable/shape_white_cicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="去付款"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

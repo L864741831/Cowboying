@@ -12,6 +12,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.view.fragment.MyCowsListFragment;
+import com.ibeef.cowboying.view.fragment.MyOrderListFragment;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -37,13 +38,14 @@ public class MyOrderActivity extends BaseActivity {
     ViewPager contentVp;
     private String token;
     private int index;
-    private String[] title = {"全部", "待付款", "待分配", "可出售", "出售中"};
+    private String[] title = {"全部", "待付款", "待发货", "待收货", "待取货","退款中"};
     private ArrayList<BaseFragment> fragmentList;
-    private MyCowsListFragment fragment_0;
-    private MyCowsListFragment fragment_1;
-    private MyCowsListFragment fragment_2;
-    private MyCowsListFragment fragment_3;
-    private MyCowsListFragment fragment_4;
+    private MyOrderListFragment fragment_0;
+    private MyOrderListFragment fragment_1;
+    private MyOrderListFragment fragment_2;
+    private MyOrderListFragment fragment_3;
+    private MyOrderListFragment fragment_4;
+    private MyOrderListFragment fragment_5;
     private MainFragmentAdapter mAdpter;
     private boolean from;
 
@@ -59,26 +61,23 @@ public class MyOrderActivity extends BaseActivity {
         from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我的牛只");
-        actionNewQuestionTv.setVisibility(View.VISIBLE);
-        actionNewQuestionTv.setText("我要卖牛");
 
         fragmentList = new ArrayList<>();
-        /**
-         * （1:未付款；2：已付款未分配；3：已分配；4：已分配锁定期中；5：出售中；6:交易完成；9；交易关闭）
-         *   空：全部
-         */
 
-        fragment_0 = MyCowsListFragment.newInstance("");
-        fragment_1 = MyCowsListFragment.newInstance("1");
-        fragment_2 = MyCowsListFragment.newInstance("2");
-        fragment_3 = MyCowsListFragment.newInstance("3");
-        fragment_4 = MyCowsListFragment.newInstance("5");
+//（0：未支付；1：已支付；2：已发货；3：确认收货；4：退款中；5：已退款；6：已取消；7:待取货（库中无此值，仅用于查询时表示线下门店取货方式））如果取所以的，则传空
+        fragment_0 = MyOrderListFragment.newInstance("");
+        fragment_1 = MyOrderListFragment.newInstance("0");
+        fragment_2 = MyOrderListFragment.newInstance("1");
+        fragment_3 = MyOrderListFragment.newInstance("2");
+        fragment_4 = MyOrderListFragment.newInstance("7");
+        fragment_5 = MyOrderListFragment.newInstance("4");
 
         fragmentList.add(fragment_0);
         fragmentList.add(fragment_1);
         fragmentList.add(fragment_2);
         fragmentList.add(fragment_3);
         fragmentList.add(fragment_4);
+        fragmentList.add(fragment_5);
         mAdpter = new MainFragmentAdapter(getSupportFragmentManager(), fragmentList);
         contentVp.setAdapter(mAdpter);
         ntsTop.setViewPager(contentVp, index);
@@ -101,11 +100,6 @@ public class MyOrderActivity extends BaseActivity {
                 }else {
                     finish();
                 }
-                break;
-            case R.id.action_new_question_tv:
-                Intent intent=new Intent(MyOrderActivity.this,SellCowsActivity.class);
-                intent.putExtra("orderId","");
-                startActivity(intent);
                 break;
             default:
                 break;
