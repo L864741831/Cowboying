@@ -149,6 +149,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         ButterKnife.bind(this);
         verificationCodeInputId=findViewById(R.id.verificationCodeInput_id);
         init();
+        Constant.PAY_RESULT_TYPE=0;
     }
 
     private void init() {

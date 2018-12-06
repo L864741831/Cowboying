@@ -20,14 +20,19 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.base.OrderInitBase;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
+import com.ibeef.cowboying.bean.MyOrderListBean;
+import com.ibeef.cowboying.bean.MyOrderListCancelBean;
+import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.PayInitParamBean;
 import com.ibeef.cowboying.bean.PayInitResultBean;
 import com.ibeef.cowboying.bean.PayResult;
 import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
 import com.ibeef.cowboying.view.customview.CountDownView;
@@ -47,7 +52,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城支付方式
  */
-public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView{
+public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView, MyOrderListBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -86,7 +91,8 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     private static final int SDK_PAY_FLAG = 1;
     private int orderId;
     private OrderInitPresenter orderInitPresenter;
-
+    private MyOrderListPresenter myOrderListPresenter;
+    private  Map<String, String> reqData;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -107,7 +113,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(StorePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
-                        intent.putExtra("orderId","");
+                        intent.putExtra("orderId",orderId);
                         startActivity(intent);
                         finish();
                     } else {
@@ -167,9 +173,14 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
         token = Hawk.get(HawkKey.TOKEN);
         orderInitPresenter=new OrderInitPresenter(this);
+        myOrderListPresenter=new MyOrderListPresenter(this);
         Constant.PAY_RESULT_TYPE=1;
         //WXPayEntryActivity 的orderId赋值
         Constant.orderId=orderId;
+
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
     }
 
     @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.zfb_check,R.id.weixin_check, R.id.foret_pwd_id, R.id.pay_back_id,R.id.wallet_check,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id})
@@ -182,13 +193,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 //重写取消订单dialog
                 break;
             case R.id.cancle_order_id:
-                // TODO: 2018/12/4 取消订单接口 取消完隐藏dialog 调到订单列表
-                lvsId.setVisibility(View.GONE);
-                Intent intent1=new Intent(StorePayTypeActivity.this,MyOrderActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent1.putExtra("from",true);
-                startActivity(intent1);
+                myOrderListPresenter.getMyOrderListCancel(reqData,orderId+"");
             case R.id.refuce_id:
                 //我再想想
                 lvsId.setVisibility(View.GONE);
@@ -227,9 +232,6 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                     isComplet=true;
                 }else {
                    //网络请求
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("Authorization",token);
-                    reqData.put("version",getVersionCodes());
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
                     payInitParamBean.setOrderId(orderId);
                     payInitParamBean.setPayType(type+"");
@@ -259,6 +261,41 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
 
     @Override
     public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void getMyOrderList(MyOrderListBean myOrderListBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListDetail(MyOrderListDetailBean MyOrderListDetailBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
+        if("000000".equals(myOrderListCancelBean.getCode())){
+            lvsId.setVisibility(View.GONE);
+            Intent intent1=new Intent(StorePayTypeActivity.this,MyOrderActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent1.putExtra("from",true);
+            startActivity(intent1);
+        }else {
+            showToast(myOrderListCancelBean.getMessage());
+        }
 
     }
 
@@ -329,7 +366,6 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
         }
-        Constant.PAY_RESULT_TYPE=0;
         super.onDestroy();
     }
 

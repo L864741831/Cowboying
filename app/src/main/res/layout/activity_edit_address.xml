@@ -93,12 +93,13 @@
             android:textColor="@color/gray_42"
             android:textSize="14sp" />
         <TextView
-            android:layout_width="wrap_content" android:id="@+id/show_addr"
+            android:layout_width="match_parent" android:id="@+id/show_addr"
             android:layout_height="wrap_content" android:text=""
             android:layout_centerVertical="true" android:textColor="@color/colorAccent"
-            android:layout_toRightOf="@+id/addr" android:layout_marginLeft="10dp"/>
+            android:layout_toRightOf="@+id/addr" android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/right_enter_id"/>
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:id="@+id/right_enter_id"
             android:layout_height="wrap_content" android:src="@mipmap/enterright"
             android:scaleType="fitXY" android:layout_alignParentRight="true"
             android:layout_centerVertical="true" android:layout_marginRight="20dp"/>

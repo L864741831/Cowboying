@@ -75,7 +75,6 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 }else  if(2== Constant.PAY_RESULT_TYPE){
 
                 }
-
                 finish();
             } else {
                 Toast.makeText(this, "支付失败！", Toast.LENGTH_SHORT).show();

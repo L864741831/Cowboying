@@ -8,12 +8,13 @@ import android.widget.CheckBox;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
 
 import java.util.List;
 
 
-public class StoreAddrAdapter extends BaseQuickAdapter<StoreCarResultBean, BaseViewHolder> {
+public class StoreAddrAdapter extends BaseQuickAdapter<NowBuyOrderResultBean.BizDataBean.ProductsBean, BaseViewHolder> {
     private Context context;
     public StoreAddrAdapter(List data, Context context) {
         super(R.layout.item_store_addr, data);
@@ -21,7 +22,7 @@ public class StoreAddrAdapter extends BaseQuickAdapter<StoreCarResultBean, BaseV
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final StoreCarResultBean item) {
+    protected void convert(BaseViewHolder helper, final NowBuyOrderResultBean.BizDataBean.ProductsBean item) {
 
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         helper.addOnClickListener(R.id.all_ck_id);
