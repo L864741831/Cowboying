@@ -22,15 +22,18 @@ public class OrderInitBase {
         void showMsg(String msg);
         void getCreatOder(CreatOderResultBean creatOderResultBean);
         void getPayInit(PayInitResultBean payInitResultBean);
+        void getStorePayInit(PayInitResultBean payInitResultBean);
     }
 
     public interface IPresenter {
         void getCreatOder(Map<String, String> headers, CreatOrderParamBean creatOrderParamBean);
         void getPayInit(Map<String, String> headers, PayInitParamBean payInitParamBean);
+        void getStorePayInit(Map<String, String> headers, PayInitParamBean payInitParamBean);
     }
 
     public interface IModel {
         Subscription getCreatOder(Map<String, String> headers, CreatOrderParamBean creatOrderParamBean, ResponseCallback<CreatOderResultBean> callback);
         Subscription getPayInit(Map<String, String> headers, PayInitParamBean payInitParamBean, ResponseCallback<PayInitResultBean> callback);
+        Subscription getStorePayInit(Map<String, String> headers, PayInitParamBean payInitParamBean, ResponseCallback<PayInitResultBean> callback);
     }
 }

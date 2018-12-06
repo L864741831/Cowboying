@@ -73,9 +73,17 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
                 .error(R.mipmap.des_info_img)
                 //跳过内存缓存
                 ;
-        Glide.with(context).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
-        Glide.with(context).load(Constant.imageDomain).apply(options1).into((ImageView) helper.getView(R.id.cow_nine_img));
-        Glide.with(context).load(Constant.imageDomain).apply(options2).into((ImageView) helper.getView(R.id.show_des_img));
+        if(item.getProductImages().size()!=0){
+            if(item.getProductImages().size()==1){
+                Glide.with(context).load(Constant.imageDomain+item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
+            }
+            if(item.getProductImages().size()==2){
+                Glide.with(context).load(Constant.imageDomain+item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
+                Glide.with(context).load(Constant.imageDomain+item.getProductImages().get(1).getImageUrl()).apply(options2).into((ImageView) helper.getView(R.id.show_des_img));
+            }
+        }
+
+        Glide.with(context).load(Constant.imageDomain+item.getCategoryResVo().getImageUrl()).apply(options1).into((ImageView) helper.getView(R.id.cow_nine_img));
         helper.setText(R.id.nane_beef_id,item.getShopProductResVo().getName())
                 .setText(R.id.beef_price_id,"价格："+item.getShopProductResVo().getPrice()+"元")
                 .setText(R.id.beef_stock_id,"库存："+item.getShopProductResVo().getStock()+"/袋")

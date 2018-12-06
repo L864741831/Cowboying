@@ -24,6 +24,7 @@ import com.ibeef.cowboying.bean.CheckThirdLoginParamBean;
 import com.ibeef.cowboying.bean.CheckThirdLoginResultBean;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.bean.CouponNumParamBean;
 import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.CowManInfosResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
@@ -485,6 +486,13 @@ public interface ApiService {
     Observable<PayInitResultBean> getPayInit(@HeaderMap Map<String, String> headers, @Body PayInitParamBean payInitParamBean);
 
     /**
+     *商城订单支付
+     * @return
+     */
+    @POST("shop/order/pay")
+    Observable<PayInitResultBean> getStorePayInit(@HeaderMap Map<String, String> headers, @Body PayInitParamBean payInitParamBean);
+
+    /**
      *获取卖牛信息
      * @return
      */
@@ -548,18 +556,18 @@ public interface ApiService {
     Observable<MyContractURLBean> getMyContrantURL(@HeaderMap Map<String, String> headers, @Query("type") String type, @Query("fileName") String fileName);
 
     /**
-     * 当前方案可用优惠券数量
+     * 可用优惠券数量
      * @return
      */
-    @GET("coupon/scheme/count")
-    Observable<CouponNumResultBean> getCouponNum(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("quantity") int quality);
+    @POST("coupon/available/count")
+    Observable<CouponNumResultBean> getCouponNum(@HeaderMap Map<String, String> headers,  @Body CouponNumParamBean couponNumParamBean);
 
     /**
      * 获取当前方案中所有可用的优惠券信息
      * @return
      */
-    @GET("coupon/scheme/info")
-    Observable<UseCouponListResultBean> getUseCouponList(@HeaderMap Map<String, String> headers, @Query("schemeId") String schemeId, @Query("quantity") int quality, @Query("currentPage") int currentPage);
+    @POST("coupon/available/list")
+    Observable<UseCouponListResultBean> getUseCouponList(@HeaderMap Map<String, String> headers, @Body CouponNumParamBean couponNumParamBean);
 
     /**
      * 我的优惠券列表

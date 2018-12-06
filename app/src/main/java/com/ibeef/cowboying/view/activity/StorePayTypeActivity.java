@@ -84,7 +84,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     private String token, contents;
     private IWXAPI api;
     private static final int SDK_PAY_FLAG = 1;
-
+    private int orderId;
     private OrderInitPresenter orderInitPresenter;
 
     @SuppressLint("HandlerLeak")
@@ -129,6 +129,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     }
 
     private void init() {
+        orderId=getIntent().getIntExtra("orderId",0);
         info.setText("支付方式");
         long time= 1800000;
         //两时间差,精确到毫秒
@@ -148,17 +149,16 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 if(isComplet){
-                    isComplet=false;
                     //网络请求
                     isComplet=false;
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
-                    payInitParamBean.setOrderId(1);
+                    payInitParamBean.setOrderId(orderId);
                     payInitParamBean.setPayType(type+"");
                     payInitParamBean.setSecret(contents);
-                    orderInitPresenter.getPayInit(reqData,payInitParamBean);
+                    orderInitPresenter.getStorePayInit(reqData,payInitParamBean);
                 }
 
             }
@@ -169,7 +169,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         orderInitPresenter=new OrderInitPresenter(this);
         Constant.PAY_RESULT_TYPE=1;
         //WXPayEntryActivity 的orderId赋值
-        Constant.orderId=1;
+        Constant.orderId=orderId;
     }
 
     @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.zfb_check,R.id.weixin_check, R.id.foret_pwd_id, R.id.pay_back_id,R.id.wallet_check,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id})
@@ -184,6 +184,11 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
             case R.id.cancle_order_id:
                 // TODO: 2018/12/4 取消订单接口 取消完隐藏dialog 调到订单列表
                 lvsId.setVisibility(View.GONE);
+                Intent intent1=new Intent(StorePayTypeActivity.this,MyOrderActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent1.putExtra("from",true);
+                startActivity(intent1);
             case R.id.refuce_id:
                 //我再想想
                 lvsId.setVisibility(View.GONE);
@@ -217,23 +222,19 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 lvsId.setVisibility(View.VISIBLE);
                 break;
             case R.id.sure_pay_id:
-                Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
-                intent.putExtra("orderId",1);
-                startActivity(intent);
-
-//                if (type==3){
-//                    accountPayShowRv.setVisibility(View.VISIBLE);
-//                    isComplet=true;
-//                }else {
-//                   //网络请求
-//                    Map<String, String> reqData = new HashMap<>();
-//                    reqData.put("Authorization",token);
-//                    reqData.put("version",getVersionCodes());
-//                    PayInitParamBean payInitParamBean=new PayInitParamBean();
-//                    payInitParamBean.setOrderId(1);
-//                    payInitParamBean.setPayType(type+"");
-//                    orderInitPresenter.getPayInit(reqData,payInitParamBean);
-//                }
+                if (type==3){
+                    accountPayShowRv.setVisibility(View.VISIBLE);
+                    isComplet=true;
+                }else {
+                   //网络请求
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    PayInitParamBean payInitParamBean=new PayInitParamBean();
+                    payInitParamBean.setOrderId(orderId);
+                    payInitParamBean.setPayType(type+"");
+                    orderInitPresenter.getStorePayInit(reqData,payInitParamBean);
+                }
                 break;
             default:
                 break;
@@ -268,6 +269,11 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
 
     @Override
     public void getPayInit(final PayInitResultBean payInitResultBean) {
+
+    }
+
+    @Override
+    public void getStorePayInit(final PayInitResultBean payInitResultBean) {
         if("000000".equals(payInitResultBean.getCode())){
             if (type == 1) {
                 //异步处理
@@ -306,7 +312,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 finish();
             } else if (type == 3) {
                 Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
-                intent.putExtra("orderId",1);
+                intent.putExtra("orderId",orderId);
                 startActivity(intent);
                 finish();
                 accountPayShowRv.setVisibility(View.GONE);

@@ -77,4 +77,26 @@ public class OrderInitModel implements OrderInitBase.IModel {
                 });
         return sub;
     }
+
+    @Override
+    public Subscription getStorePayInit(Map<String, String> headers, PayInitParamBean payInitParamBean, final ResponseCallback<PayInitResultBean> callback) {
+        Observable<PayInitResultBean> observable = service.getStorePayInit(headers,payInitParamBean);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<PayInitResultBean>() {
+                    @Override
+                    public void call(PayInitResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
 }

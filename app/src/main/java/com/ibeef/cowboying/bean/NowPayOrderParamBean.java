@@ -12,7 +12,7 @@ public class NowPayOrderParamBean {
 
 
     private int addressId;
-    private int couponId;
+    private Integer couponId;
     private String receiveType;
     private String addressDetail;
 
@@ -26,11 +26,11 @@ public class NowPayOrderParamBean {
         this.addressId = addressId;
     }
 
-    public int getCouponId() {
+    public Integer getCouponId() {
         return couponId;
     }
 
-    public void setCouponId(int couponId) {
+    public void setCouponId(Integer couponId) {
         this.couponId = couponId;
     }
 

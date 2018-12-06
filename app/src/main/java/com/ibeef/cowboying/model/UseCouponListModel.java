@@ -2,6 +2,7 @@ package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.UseCouponListBase;
+import com.ibeef.cowboying.bean.CouponNumParamBean;
 import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.config.Constant;
@@ -34,8 +35,8 @@ public class UseCouponListModel implements UseCouponListBase.IModel {
     }
 
     @Override
-    public Subscription getCouponNum(Map<String, String> headers, String schemeId,int quality,final ResponseCallback<CouponNumResultBean> callback) {
-        Observable<CouponNumResultBean> observable = service.getCouponNum(headers,schemeId,quality);
+    public Subscription getCouponNum(Map<String, String> headers, CouponNumParamBean couponNumParamBean, final ResponseCallback<CouponNumResultBean> callback) {
+        Observable<CouponNumResultBean> observable = service.getCouponNum(headers,couponNumParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,8 +57,8 @@ public class UseCouponListModel implements UseCouponListBase.IModel {
     }
 
     @Override
-    public Subscription getUseCouponList(Map<String, String> headers, String schemeId,int quality, int currentPage, final ResponseCallback<UseCouponListResultBean> callback) {
-        Observable<UseCouponListResultBean> observable = service.getUseCouponList(headers,schemeId,quality,currentPage);
+    public Subscription getUseCouponList(Map<String, String> headers, CouponNumParamBean couponNumParamBean, final ResponseCallback<UseCouponListResultBean> callback) {
+        Observable<UseCouponListResultBean> observable = service.getUseCouponList(headers,couponNumParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -10,17 +10,17 @@ public class AddAddressParamBean {
     private String name;
     private String mobile;
     private String detailAddress;
-    private int provinceId;
-    private int cityId;
-    private int regionId;
+    private String provinceId;
+    private String cityId;
+    private String regionId;
     private int isDefault;
-    private int id;
+    private Integer id;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -48,27 +48,27 @@ public class AddAddressParamBean {
         this.detailAddress = detailAddress;
     }
 
-    public int getProvinceId() {
+    public String getProvinceId() {
         return provinceId;
     }
 
-    public void setProvinceId(int provinceId) {
+    public void setProvinceId(String provinceId) {
         this.provinceId = provinceId;
     }
 
-    public int getCityId() {
+    public String getCityId() {
         return cityId;
     }
 
-    public void setCityId(int cityId) {
+    public void setCityId(String cityId) {
         this.cityId = cityId;
     }
 
-    public int getRegionId() {
+    public String getRegionId() {
         return regionId;
     }
 
-    public void setRegionId(int regionId) {
+    public void setRegionId(String regionId) {
         this.regionId = regionId;
     }
 

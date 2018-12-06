@@ -116,9 +116,9 @@ public class NowBuyOrderResultBean implements Serializable {
             private int id;
             private String name;
             private String mobile;
-            private String provinceId;
-            private String cityId;
-            private String regionId;
+            private String province;
+            private String city;
+            private String region;
             private String detailAddress;
             private int isDefualt;
 
@@ -146,28 +146,28 @@ public class NowBuyOrderResultBean implements Serializable {
                 this.mobile = mobile;
             }
 
-            public String getProvinceId() {
-                return provinceId;
+            public String getProvince() {
+                return province;
             }
 
-            public void setProvinceId(String provinceId) {
-                this.provinceId = provinceId;
+            public void setProvince(String province) {
+                this.province = province;
             }
 
-            public String getCityId() {
-                return cityId;
+            public String getCity() {
+                return city;
             }
 
-            public void setCityId(String cityId) {
-                this.cityId = cityId;
+            public void setCity(String city) {
+                this.city = city;
             }
 
-            public String getRegionId() {
-                return regionId;
+            public String getRegion() {
+                return region;
             }
 
-            public void setRegionId(String regionId) {
-                this.regionId = regionId;
+            public void setRegion(String region) {
+                this.region = region;
             }
 
             public String getDetailAddress() {

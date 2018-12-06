@@ -73,8 +73,8 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content" android:id="@+id/show_des_img"
-                    android:layout_height="wrap_content"  android:scaleType="centerCrop"
+                    android:layout_width="match_parent" android:id="@+id/show_des_img"
+                    android:layout_height="100dp"  android:scaleType="centerCrop"
                     android:src="@mipmap/des_info_img"
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="125dp"/>

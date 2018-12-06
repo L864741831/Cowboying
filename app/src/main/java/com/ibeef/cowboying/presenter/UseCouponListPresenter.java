@@ -3,6 +3,7 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.UseCouponListBase;
+import com.ibeef.cowboying.bean.CouponNumParamBean;
 import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.model.UseCouponListModel;
@@ -29,8 +30,8 @@ public class UseCouponListPresenter extends BasePresenter implements UseCouponLi
     }
 
     @Override
-    public void getCouponNum(Map<String, String> headers, String schemeId,int quality) {
-        addSubscription(mModel.getCouponNum(headers,schemeId,quality,new ResponseCallback<CouponNumResultBean>() {
+    public void getCouponNum(Map<String, String> headers, CouponNumParamBean couponNumParamBean) {
+        addSubscription(mModel.getCouponNum(headers,couponNumParamBean,new ResponseCallback<CouponNumResultBean>() {
             @Override
             public void onSuccess(CouponNumResultBean result) {
                 mView.getCouponNum(result);
@@ -46,9 +47,9 @@ public class UseCouponListPresenter extends BasePresenter implements UseCouponLi
     }
 
     @Override
-    public void getUseCouponList(Map<String, String> headers, String schemeId, int quality,int currentPage) {
+    public void getUseCouponList(Map<String, String> headers, CouponNumParamBean couponNumParamBean) {
         mView.showLoading();
-        addSubscription(mModel.getUseCouponList(headers,schemeId,quality,currentPage,new ResponseCallback<UseCouponListResultBean>() {
+        addSubscription(mModel.getUseCouponList(headers,couponNumParamBean,new ResponseCallback<UseCouponListResultBean>() {
             @Override
             public void onSuccess(UseCouponListResultBean result) {
                 mView.hideLoading();

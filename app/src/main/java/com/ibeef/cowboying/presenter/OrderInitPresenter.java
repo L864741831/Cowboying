@@ -64,4 +64,21 @@ public class OrderInitPresenter extends BasePresenter implements OrderInitBase.I
             }
         }));
     }
+
+    @Override
+    public void getStorePayInit(Map<String, String> headers, PayInitParamBean payInitParamBean) {
+        addSubscription(mModel.getStorePayInit(headers,payInitParamBean,new ResponseCallback<PayInitResultBean>() {
+            @Override
+            public void onSuccess(PayInitResultBean result) {
+                mView.getStorePayInit(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.showMsg(msg);
+            }
+        }));
+    }
 }
