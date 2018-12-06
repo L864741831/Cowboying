@@ -1,14 +1,15 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
-import com.ibeef.cowboying.base.OrderInitBase;
-import com.ibeef.cowboying.bean.CreatOderResultBean;
-import com.ibeef.cowboying.bean.CreatOrderParamBean;
-import com.ibeef.cowboying.bean.PayInitParamBean;
-import com.ibeef.cowboying.bean.PayInitResultBean;
+import com.ibeef.cowboying.base.StoreCarBase;
+import com.ibeef.cowboying.bean.AddStoreCarParamBean;
+import com.ibeef.cowboying.bean.AddStoreCarResultBean;
+import com.ibeef.cowboying.bean.StoreCarNumResultBean;
+import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -23,28 +24,30 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 买牛订单
+ * @describe 商城 购物车
  * @package com.ranhan.cowboying.model
  **/
-public class OrderInitModel implements OrderInitBase.IModel {
+public class StoreCarModel implements StoreCarBase.IModel {
     private HttpService httpService;
     private ApiService service;
 
-    public OrderInitModel() {
+    public StoreCarModel() {
         httpService = HttpService.getInstance(Constant.BASE_URL,false);
         service = httpService.getHttpService().create(ApiService.class);
     }
+
+
     @Override
-    public Subscription getCreatOder(Map<String, String> headers, CreatOrderParamBean creatOrderParamBean, final ResponseCallback<CreatOderResultBean> callback) {
-        Observable<CreatOderResultBean> observable = service.getCreatOder(headers,creatOrderParamBean);
+    public Subscription getStoreInfoList(Map<String, String> headers, int currentPage, final ResponseCallback<StoreInfoListResultBean> callback) {
+        Observable<StoreInfoListResultBean> observable = service.getStoreInfoList(headers,currentPage);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<CreatOderResultBean>() {
+                .subscribe(new Action1<StoreInfoListResultBean>() {
                     @Override
-                    public void call(CreatOderResultBean result) {
+                    public void call(StoreInfoListResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {
@@ -57,16 +60,16 @@ public class OrderInitModel implements OrderInitBase.IModel {
     }
 
     @Override
-    public Subscription getPayInit(Map<String, String> headers, PayInitParamBean payInitParamBean,final ResponseCallback<PayInitResultBean> callback) {
-        Observable<PayInitResultBean> observable = service.getPayInit(headers,payInitParamBean);
+    public Subscription getStoreCarNum(Map<String, String> headers,final ResponseCallback<StoreCarNumResultBean> callback) {
+        Observable<StoreCarNumResultBean> observable = service.getStoreCarNum(headers);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<PayInitResultBean>() {
+                .subscribe(new Action1<StoreCarNumResultBean>() {
                     @Override
-                    public void call(PayInitResultBean result) {
+                    public void call(StoreCarNumResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {
@@ -79,16 +82,16 @@ public class OrderInitModel implements OrderInitBase.IModel {
     }
 
     @Override
-    public Subscription getStorePayInit(Map<String, String> headers, PayInitParamBean payInitParamBean, final ResponseCallback<PayInitResultBean> callback) {
-        Observable<PayInitResultBean> observable = service.getStorePayInit(headers,payInitParamBean);
+    public Subscription addStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans, final ResponseCallback<AddStoreCarResultBean> callback) {
+        Observable<AddStoreCarResultBean> observable = service.addStoreCar(headers,addStoreCarParamBeans);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))
                 //总共重试3次，重试间隔3秒
-                .subscribe(new Action1<PayInitResultBean>() {
+                .subscribe(new Action1<AddStoreCarResultBean>() {
                     @Override
-                    public void call(PayInitResultBean result) {
+                    public void call(AddStoreCarResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

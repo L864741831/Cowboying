@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class StoreSureOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
+public class StoreSureOrderAdapter extends BaseQuickAdapter<NowBuyOrderResultBean.BizDataBean.ProductsBean,BaseViewHolder> {
     private Context context;
     public StoreSureOrderAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -26,17 +27,17 @@ public class StoreSureOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolde
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, Object item) {
+    protected void convert(final BaseViewHolder helper, NowBuyOrderResultBean.BizDataBean.ProductsBean item) {
 
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        Glide.with(context).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.store_img));
-        helper.setText(R.id.store_name,"牛胸肉")
-                .setText(R.id.type_id,"20克X2快装")
-                .setText(R.id.money_id,"￥1")
-                .setText(R.id.num_id,"X1");
+        Glide.with(context).load(Constant.imageDomain+item.getProductMainImage()).apply(options).into((ImageView) helper.getView(R.id.store_img));
+        helper.setText(R.id.store_name,item.getName())
+                .setText(R.id.type_id,item.getSpecification())
+                .setText(R.id.money_id,"￥"+item.getPrice())
+                .setText(R.id.num_id,"X"+item.getQuantity());
     }
 }

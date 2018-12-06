@@ -343,6 +343,11 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     }
 
     @Override
+    public void getStorePayInit(PayInitResultBean payInitResultBean) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();

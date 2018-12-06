@@ -13,18 +13,25 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.GoodsAddrAdapter;
+import com.ibeef.cowboying.base.ModifyAddressBase;
+import com.ibeef.cowboying.bean.DeleteCarResultBean;
+import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.ModifyAddressPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,ModifyAddressBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -36,15 +43,19 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
     RecyclerView ryId;
     @Bind(R.id.rv_order)
     RelativeLayout rvOrder;
+    @Bind(R.id.add_address_rv)
+    RelativeLayout addaddressRv;
     @Bind(R.id.swipe_ly)
     SwipeRefreshLayout swipeLy;
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
-    private List<Object> objectList;
+    private List<ShowAddressResultBean.BizDataBean> objectList;
 
     private String token;
     private GoodsAddrAdapter goodsAddrAdapter;
+    private ModifyAddressPresenter modifyAddressPresenter;
+    private   Map<String, String> reqData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,26 +71,29 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
         objectList=new ArrayList<>();
-        for (int i=0;i<10;i++){
-            objectList.add(new Object());
-        }
         goodsAddrAdapter=new GoodsAddrAdapter(objectList,this);
+//        ryId.setHasFixedSize(true);
+//        ryId.setNestedScrollingEnabled(false);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         goodsAddrAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(goodsAddrAdapter);
-
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
         goodsAddrAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                ShowAddressResultBean.BizDataBean item=goodsAddrAdapter.getItem(position);
                 switch (view.getId()){
-                    case R.id.add_address_rv:
-                        startActivity(EditAddressActivity.class);
-                        break;
                     case R.id.delete_addr:
                         //执行删除操作
+                        modifyAddressPresenter.deleteAddress(reqData,item.getId());
                         break;
                     case R.id.addr_edit:
-                        startActivity(EditAddressActivity.class);
+                        Intent intent=new Intent(AddressActivity.this,EditAddressActivity.class);
+                        intent.putExtra("addaddress",false);
+                        intent.putExtra("infos",item);
+                        startActivity(intent);
                         break;
                     default:
                         break;
@@ -90,25 +104,40 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
         goodsAddrAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ShowAddressResultBean.BizDataBean item=goodsAddrAdapter.getItem(position);
                 Intent intent1=new Intent();
                 intent1.setAction("com.ibeef.cowboying.chooseaddr");
-                intent1.putExtra("info","item");
+                intent1.putExtra("info",item);
                 sendBroadcast(intent1);
                 finish();
             }
         });
+        modifyAddressPresenter=new ModifyAddressPresenter(this);
+        modifyAddressPresenter.showAddressList(reqData,currentPage);
     }
 
-    @OnClick(R.id.back_id)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.back_id,R.id.add_address_rv})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.add_address_rv:
+                Intent intent=new Intent(AddressActivity.this,EditAddressActivity.class);
+                intent.putExtra("addaddress",true);
+                startActivity(intent);
+                break;
+            case R.id.back_id:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void onRefresh() {
         currentPage = 1;
         isFirst = true;
-//        objectList.clear();
+        objectList.clear();
+        modifyAddressPresenter.showAddressList(reqData,currentPage);
         swipeLy.setRefreshing(false);
     }
 
@@ -116,10 +145,85 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
     public void onLoadMoreRequested() {
         isMoreLoad = true;
         currentPage += 1;
+        modifyAddressPresenter.showAddressList(reqData,currentPage);
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void addAddress(DeleteCarResultBean deleteCarResultBean) {
+
+    }
+
+    @Override
+    public void showAddressList(ShowAddressResultBean showAddressResultBean) {
+        if ("000000".equals(showAddressResultBean.getCode())) {
+            if (SDCardUtil.isNullOrEmpty(showAddressResultBean.getBizData())) {
+                if (isFirst) {
+                    rvOrder.setVisibility(View.VISIBLE);
+                    ryId.setVisibility(View.GONE);
+                } else {
+                    rvOrder.setVisibility(View.GONE);
+                    ryId.setVisibility(View.VISIBLE);
+                }
+                goodsAddrAdapter.loadMoreEnd();
+            } else {
+                isFirst = false;
+                objectList.addAll(showAddressResultBean.getBizData());
+                goodsAddrAdapter.setNewData(this.objectList);
+                goodsAddrAdapter.loadMoreComplete();
+            }
+        } else {
+            showToast(showAddressResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void updateAddress(DeleteCarResultBean deleteCarResultBean) {
+
+    }
+
+    @Override
+    public void deleteAddress(DeleteCarResultBean deleteCarResultBean) {
+
+        if("000000".equals(deleteCarResultBean.getCode())){
+            currentPage = 1;
+            isFirst = true;
+            objectList.clear();
+            isMoreLoad=false;
+            modifyAddressPresenter.showAddressList(reqData,currentPage);
+            showToast("地址删除成功！");
+        }else {
+            showToast(deleteCarResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (isMoreLoad) {
+            loadingLayout.setVisibility(View.GONE);
+            ryId.setVisibility(View.VISIBLE);
+            isMoreLoad = false;
+        } else {
+            loadingLayout.setVisibility(View.VISIBLE);
+            ryId.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        ryId.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(modifyAddressPresenter!=null){
+            modifyAddressPresenter.detachView();
+        }
     }
 }

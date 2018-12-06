@@ -15,6 +15,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.OrderInitBase;
 import com.ibeef.cowboying.base.UseCouponListBase;
 import com.ibeef.cowboying.base.UserInfoBase;
+import com.ibeef.cowboying.bean.CouponNumParamBean;
 import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.CreatOrderParamBean;
@@ -106,7 +107,12 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
-            useCouponListPresenter.getCouponNum(reqData,schemeId+"",quantity);
+            CouponNumParamBean couponNumParamBean=new CouponNumParamBean();
+            couponNumParamBean.setSchemeId(schemeId+"");
+            couponNumParamBean.setUseType("1");
+            couponNumParamBean.setQuantity(quantity+"");
+            couponNumParamBean.setProductQuantityReqDtos(null);
+            useCouponListPresenter.getCouponNum(reqData,couponNumParamBean);
         }
     }
 
@@ -225,6 +231,11 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
 
     @Override
     public void getPayInit(PayInitResultBean payInitResultBean) {
+
+    }
+
+    @Override
+    public void getStorePayInit(PayInitResultBean payInitResultBean) {
 
     }
 

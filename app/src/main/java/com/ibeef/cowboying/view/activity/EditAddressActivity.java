@@ -13,23 +13,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.ModifyAddressBase;
+import com.ibeef.cowboying.bean.AddAddressParamBean;
 import com.ibeef.cowboying.bean.CityBean;
+import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.DistrictBean;
 import com.ibeef.cowboying.bean.ProvinceBean;
+import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.citywhell.CityConfig;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.ModifyAddressPresenter;
 import com.ibeef.cowboying.utils.Base64Util;
 import com.ibeef.cowboying.utils.TimeUtils;
 import com.ibeef.cowboying.view.customview.CityPickerView;
 import com.ibeef.cowboying.view.customview.OnCityItemClickListener;
 import com.orhanobut.hawk.Hawk;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-public class EditAddressActivity extends BaseActivity {
+public class EditAddressActivity extends BaseActivity implements ModifyAddressBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -52,10 +60,13 @@ public class EditAddressActivity extends BaseActivity {
     @Bind(R.id.action_new_question_tv)
     TextView actionNewQuestionTv;
     private String token;
-
+    private ModifyAddressPresenter modifyAddressPresenter;
     CityPickerView mCityPickerView = new CityPickerView();
     private boolean isChckAddr=false;
     private String provinceId,cityId,districtId;
+    private Map<String, String> reqData;
+    private boolean addaddress;
+    private   ShowAddressResultBean.BizDataBean infos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +76,27 @@ public class EditAddressActivity extends BaseActivity {
     }
 
     private void init(){
+        addaddress=getIntent().getBooleanExtra("addaddress",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("添加收货地址");
         actionNewQuestionTv.setText("保存");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
         //预先加载仿iOS滚轮实现的全部数据
         mCityPickerView.init(this);
+        modifyAddressPresenter=new ModifyAddressPresenter(this);
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+
+        if(!addaddress){
+            infos= (ShowAddressResultBean.BizDataBean) getIntent().getSerializableExtra("infos");
+            etName.setText(infos.getName());
+            etTell.setText(infos.getMobile());
+            showAddr.setText(infos.getProvince()+infos.getCity()+infos.getRegion()+infos.getDetailAddress());
+            etAddrDescribe.setText(infos.getDetailAddress());
+
+        }
+
     }
 
     @OnClick({R.id.back_id, R.id.lv_addrs,R.id.action_new_question_tv})
@@ -122,6 +148,32 @@ public class EditAddressActivity extends BaseActivity {
                     return;
                 }
 
+                if(!isChckAddr){
+                    showToast("请选择收货地址");
+                }
+                AddAddressParamBean addAddressParamBean=new AddAddressParamBean();
+                addAddressParamBean.setCityId(cityId);
+                addAddressParamBean.setProvinceId(provinceId);
+                addAddressParamBean.setRegionId(districtId);
+                addAddressParamBean.setDetailAddress(etAddrDescribe.getText().toString().trim());
+                addAddressParamBean.setMobile(etTell.getText().toString().trim());
+                addAddressParamBean.setName(etName.getText().toString().trim());
+                if(ckId.isChecked()){
+                    //'是否默认地址（0：不是；1：是）'
+                    addAddressParamBean.setIsDefault(1);
+                }else {
+                    addAddressParamBean.setIsDefault(0);
+                }
+                if(!addaddress){
+                    addAddressParamBean.setId(infos.getId());
+                    modifyAddressPresenter.updateAddress(reqData,addAddressParamBean);
+
+                }else {
+                    addAddressParamBean.setId(null);
+                    modifyAddressPresenter.addAddress(reqData,addAddressParamBean);
+
+                }
+
                 break;
             default:
                 break;
@@ -157,4 +209,57 @@ public class EditAddressActivity extends BaseActivity {
         mCityPickerView.showCityPicker();
     }
 
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void addAddress(DeleteCarResultBean deleteCarResultBean) {
+
+        if("000000".equals(deleteCarResultBean.getCode())){
+            showToast("地址添加成功！");
+            finish();
+        }else {
+            showToast(deleteCarResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void showAddressList(ShowAddressResultBean showAddressResultBean) {
+
+    }
+
+    @Override
+    public void updateAddress(DeleteCarResultBean deleteCarResultBean) {
+        if("000000".equals(deleteCarResultBean.getCode())){
+            showToast("地址更新成功！");
+            finish();
+        }else {
+            showToast(deleteCarResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteAddress(DeleteCarResultBean deleteCarResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(modifyAddressPresenter!=null){
+            modifyAddressPresenter.detachView();
+        }
+    }
 }

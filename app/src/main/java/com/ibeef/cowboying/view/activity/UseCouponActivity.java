@@ -15,6 +15,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.UseCouponListAdapter;
 import com.ibeef.cowboying.base.UseCouponListBase;
+import com.ibeef.cowboying.bean.AddStoreCarParamBean;
+import com.ibeef.cowboying.bean.CouponNumParamBean;
 import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.config.HawkKey;
@@ -64,6 +66,9 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
     private  UseCouponListResultBean.BizDataBean item;
+    private   Map<String, String> reqData;
+    private boolean isStore;
+    private List<AddStoreCarParamBean> storeCarResultBeans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +78,12 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void init() {
+        isStore=getIntent().getBooleanExtra("isStore",false);
         token= Hawk.get(HawkKey.TOKEN);
         info.setText("我的优惠券");
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
-
-        schemeId=getIntent().getIntExtra("schemeId",0);
-        quantity=getIntent().getIntExtra("quantity",0);
 
         objectList=new ArrayList<>();
         useCouponListPresenter=new UseCouponListPresenter(this);
@@ -131,10 +134,21 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         });
 
 
-        Map<String, String> reqData = new HashMap<>();
+        reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",quantity,currentPage);
+        CouponNumParamBean couponNumParamBean=new CouponNumParamBean();
+        if(isStore){
+            storeCarResultBeans= (List<AddStoreCarParamBean>) getIntent().getSerializableExtra("infos");
+            couponNumParamBean.setProductQuantityReqDtos(storeCarResultBeans);
+        }else {
+            schemeId=getIntent().getIntExtra("schemeId",0);
+            quantity=getIntent().getIntExtra("quantity",0);
+            couponNumParamBean.setSchemeId(schemeId+"");
+            couponNumParamBean.setQuantity(quantity+"");
+        }
+        couponNumParamBean.setUseType("3");
+        useCouponListPresenter.getUseCouponList(reqData,couponNumParamBean);
 
     }
 
@@ -189,10 +203,15 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         currentPage = 1;
         isFirst = true;
         objectList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",quantity,currentPage);
+        CouponNumParamBean couponNumParamBean=new CouponNumParamBean();
+        if(isStore){
+            couponNumParamBean.setProductQuantityReqDtos(storeCarResultBeans);
+        }else {
+            couponNumParamBean.setSchemeId(schemeId+"");
+            couponNumParamBean.setQuantity(quantity+"");
+        }
+        couponNumParamBean.setUseType("3");
+        useCouponListPresenter.getUseCouponList(reqData,couponNumParamBean);
         swipeLy.setRefreshing(false);
     }
 
@@ -200,10 +219,15 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
     public void onLoadMoreRequested() {
         isMoreLoad = true;
         currentPage += 1;
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        useCouponListPresenter.getUseCouponList(reqData,schemeId+"",quantity,currentPage);
+        CouponNumParamBean couponNumParamBean=new CouponNumParamBean();
+        if(isStore){
+            couponNumParamBean.setProductQuantityReqDtos(storeCarResultBeans);
+        }else {
+            couponNumParamBean.setSchemeId(schemeId+"");
+            couponNumParamBean.setQuantity(quantity+"");
+        }
+        couponNumParamBean.setUseType("3");
+        useCouponListPresenter.getUseCouponList(reqData,couponNumParamBean);
     }
 
     @Override

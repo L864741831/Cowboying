@@ -4,9 +4,6 @@ import android.content.Context;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.MyContractListBean;
-import com.ibeef.cowboying.utils.SDCardUtil;
 
 import java.util.List;
 

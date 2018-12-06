@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
+import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.view.customview.AmountViewWhite;
 
@@ -24,7 +24,7 @@ import java.util.List;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class StoreCarAdapter extends BaseQuickAdapter<StoreCarResultBean,BaseViewHolder> {
+public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public StoreCarAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -32,7 +32,7 @@ public class StoreCarAdapter extends BaseQuickAdapter<StoreCarResultBean,BaseVie
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, StoreCarResultBean item) {
+    protected void convert(final BaseViewHolder helper, CarListResultBean.BizDataBean item) {
 
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         if(0==item.getDefautChoose()){
@@ -47,14 +47,14 @@ public class StoreCarAdapter extends BaseQuickAdapter<StoreCarResultBean,BaseVie
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        Glide.with(context).load(Constant.imageDomain).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
+        Glide.with(context).load(Constant.imageDomain+item.getProductMainImage()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
 
-        helper.setText(R.id.name_beef_id,"位置"+helper.getAdapterPosition())
-                .setText(R.id.price_id,"￥1")
+        helper.setText(R.id.name_beef_id,item.getName())
+                .setText(R.id.price_id,"￥"+item.getPrice())
                 ;
         final AmountViewWhite amountViewWhite=helper.getView(R.id.amout_num_id);
-        amountViewWhite.setGoods_storage(1000000);
-        amountViewWhite.intEdit(item.getNum()+"");
+        amountViewWhite.setGoods_storage(item.getStock());
+        amountViewWhite.intEdit(item.getQuantity()+"");
         amountViewWhite.setOnAmountChangeListener(new AmountViewWhite.OnAmountChangeListener() {
             @Override
             public void onAmountChange(View view, int amount) {
