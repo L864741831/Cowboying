@@ -20,7 +20,7 @@ public class MyOrderListCancelBean {
      */
 
     private String code;
-    private Object message;
+    private String message;
     private int pageNo;
     private int pageSize;
     private int totalRows;
@@ -35,11 +35,11 @@ public class MyOrderListCancelBean {
         this.code = code;
     }
 
-    public Object getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Object message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

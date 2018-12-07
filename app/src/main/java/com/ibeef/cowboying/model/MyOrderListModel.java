@@ -79,6 +79,27 @@ public class MyOrderListModel implements MyOrderListBase.IModel {
     }
 
     @Override
+    public Subscription getMyOrderListDelete(Map<String, String> headers, String orderCode, final ResponseCallback<MyOrderListCancelBean> callback) {
+        Observable<MyOrderListCancelBean> observable = service.getMyOrderListDelete(headers,orderCode);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyOrderListCancelBean>() {
+                    @Override
+                    public void call(MyOrderListCancelBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
     public Subscription getMyOrderListCancel(Map<String, String> headers, String orderId, final ResponseCallback<MyOrderListCancelBean> callback) {
         Observable<MyOrderListCancelBean> observable = service.getMyOrderListCancel(headers,orderId);
         Subscription sub = observable.subscribeOn(Schedulers.io())
@@ -98,94 +119,4 @@ public class MyOrderListModel implements MyOrderListBase.IModel {
                 });
         return sub;
     }
-
-//    @Override
-//    public Subscription geMyCowsOrderList(Map<String, String> headers, int currentPage, String status, final ResponseCallback<MyCowsOrderListBean> callback) {
-
-//    }
-//
-//    @Override
-//    public Subscription geMyCowsOrderListDetail(Map<String, String> headers, String orderCode, final ResponseCallback<MyCowsOrderListDetailBean> callback) {
-//        Observable<MyCowsOrderListDetailBean> observable = service.geMyCowsOrderListDetail(headers,orderCode);
-//        Subscription sub = observable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .retryWhen(new RetryWithDelay(2, 3000))
-//                //总共重试3次，重试间隔3秒
-//                .subscribe(new Action1<MyCowsOrderListDetailBean>() {
-//                    @Override
-//                    public void call(MyCowsOrderListDetailBean result) {
-//                        callback.onSuccess(result);
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        callback.onFaild(ResponseHandler.get(throwable));
-//                    }
-//                });
-//        return sub;
-//    }
-//
-//    @Override
-//    public Subscription getMyCowsOrderDelete(Map<String, String> headers, String orderCode, final ResponseCallback<MyCowsOrderDeleteBean> callback) {
-//        Observable<MyCowsOrderDeleteBean> observable = service.getMyCowsOrderDelete(headers,orderCode);
-//        Subscription sub = observable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .retryWhen(new RetryWithDelay(2, 3000))
-//                //总共重试3次，重试间隔3秒
-//                .subscribe(new Action1<MyCowsOrderDeleteBean>() {
-//                    @Override
-//                    public void call(MyCowsOrderDeleteBean result) {
-//                        callback.onSuccess(result);
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        callback.onFaild(ResponseHandler.get(throwable));
-//                    }
-//                });
-//        return sub;
-//    }
-//
-//    @Override
-//    public Subscription getMyCowsOrderCancel(Map<String, String> headers, String orderCode, final ResponseCallback<MyCowsOrderDeleteBean> callback) {
-//        Observable<MyCowsOrderDeleteBean> observable = service.getMyCowsOrderCancel(headers,orderCode);
-//        Subscription sub = observable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .retryWhen(new RetryWithDelay(2, 3000))
-//                //总共重试3次，重试间隔3秒
-//                .subscribe(new Action1<MyCowsOrderDeleteBean>() {
-//                    @Override
-//                    public void call(MyCowsOrderDeleteBean result) {
-//                        callback.onSuccess(result);
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        callback.onFaild(ResponseHandler.get(throwable));
-//                    }
-//                });
-//        return sub;
-//    }
-//
-//    @Override
-//    public Subscription getMyCowsToPay(Map<String, String> headers, String orderCode, final ResponseCallback<CreatOderResultBean> callback) {
-//        Observable<CreatOderResultBean> observable = service.getMyCowsToPay(headers,orderCode);
-//        Subscription sub = observable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .retryWhen(new RetryWithDelay(2, 3000))
-//                //总共重试3次，重试间隔3秒
-//                .subscribe(new Action1<CreatOderResultBean>() {
-//                    @Override
-//                    public void call(CreatOderResultBean result) {
-//                        callback.onSuccess(result);
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        callback.onFaild(ResponseHandler.get(throwable));
-//                    }
-//                });
-//        return sub;
-//    }
-
 }

@@ -382,6 +382,16 @@ public class MyOrderListBean {
             private String imageUrl;
             private int quantity;
             private double buyPrice;
+            private String specification;
+
+            public String getSpecification() {
+                return specification;
+            }
+
+            public void setSpecification(String specification) {
+                this.specification = specification;
+            }
+
 
             public String getProductId() {
                 return productId;

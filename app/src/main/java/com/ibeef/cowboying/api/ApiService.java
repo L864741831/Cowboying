@@ -677,4 +677,11 @@ public interface ApiService {
     @GET("shop/order/cancel")
     Observable<MyOrderListCancelBean> getMyOrderListCancel(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
 
+    /**
+     * 删除商城订单
+     * @return
+     */
+    @GET("shop/order/remove")
+    Observable<MyOrderListCancelBean> getMyOrderListDelete(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
 }

@@ -36,6 +36,8 @@ import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.MyCowsProgressDialog;
+import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
+import com.ibeef.cowboying.view.activity.MyorderListCancelDialog;
 import com.ibeef.cowboying.view.activity.SellCowsFirstActivity;
 import com.ibeef.cowboying.view.activity.SureOderActivity;
 import com.ibeef.cowboying.view.activity.SureOrderBackDialog;
@@ -52,7 +54,7 @@ import rxfamily.view.BaseFragment;
 
 
 /**
- * 我的牛只
+ * 我的商城订单列表
  *
  * @author lalala
  */
@@ -109,9 +111,9 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
         myOrderListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-//                intent.putExtra("orderId",myOrderListAdapter.getItem(position).getOrderId()+"");
-//                startActivity(intent);
+                Intent intent = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
+                intent.putExtra("orderId",myOrderListAdapter.getItem(position).getShopOrderResVo().getOrderId()+"");
+                startActivity(intent);
             }
         });
 
@@ -237,6 +239,47 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
             myOrderListAdapter.setNewData(this.listData);
             myOrderListAdapter.loadMoreComplete();
         }
+
+        myOrderListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                MyOrderListBean.BizDataBean dataBean= myOrderListAdapter.getItem(position);
+                switch (view.getId()){
+                    case R.id.btn_delet_order:
+                        //删除订单
+                        showDeleteOrder(dataBean.getShopOrderResVo().getOrderId());
+                        break;
+                    case R.id.btn_see_order_progress:
+                        //查看物流信息
+
+                        break;
+                    case  R.id.btn_confirm_receipt:
+                        //确认收货
+
+                        break;
+                    case  R.id.btn_cancle_order:
+                        //取消订单
+                        Intent intent2 = new Intent(getHoldingActivity(),MyorderListCancelDialog.class);
+                        intent2.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId());
+                        startActivity(intent2);
+                        break;
+                    case  R.id.btn_apply_return:
+                        //申请退款
+
+                        break;
+                    case  R.id.btn_to_detail:
+                        //查看详情
+
+                        break;
+                    case  R.id.to_pay:
+                        //去支付
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -245,73 +288,24 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
     }
 
     @Override
+    public void getMyOrderListDelete(MyOrderListCancelBean msg) {
+        if("000000".equals(msg.getCode())){
+            page = 1;
+            listData.clear();
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
+            Toast.makeText(getHoldingActivity(),"删除订单成功", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
 
     }
-
-//    @Override
-//    public void geMyCowsOrderList(MyCowsOrderListBean myCowsOrderListBean) {
-
-//
-//        myCowsListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                MyCowsOrderListBean.BizDataBean dataBean= myCowsListAdapter.getItem(position);
-//                switch (view.getId()){
-//                    case R.id.delet_order:
-//                        //删除订单
-//                        showDeleteOrder(dataBean.getOrderId()+"");
-//                        break;
-//                    case R.id.see_order_progress:
-//                        //查看进度
-//                        Intent intent1 = new Intent(getHoldingActivity(),MyCowsProgressDialog.class);
-//                        intent1.putExtra("status",myCowsListAdapter.getItem(position).getStatus());
-//                        intent1.putExtra("LockMonths",myCowsListAdapter.getItem(position).getLockMonths());
-//                        intent1.putExtra("UnlockTime",myCowsListAdapter.getItem(position).getUnlockTime());
-//                        startActivity(intent1);
-//                        break;
-//                    case  R.id.sell_want:
-//                        //我要卖牛
-//                        Calendar cal = Calendar.getInstance();
-//                        int i = cal.get(Calendar.DAY_OF_WEEK);
-//                        int hour = cal.get(Calendar.HOUR_OF_DAY);// 获取小时
-//                        int minute = cal.get(Calendar.MINUTE);// 获取分钟
-//                        int minuteOfDay = hour * 60 + minute;// 从0:00分开是到目前为止的分钟数
-//                        final int start = 10* 60;// 起始时间 10:00的分钟数
-//                        final int end = 22 * 60;// 结束时间 22:00的分钟数
-//                        if (i==2){
-//                            if (minuteOfDay >= start && minuteOfDay <= end) {
-//                                Intent intent = new Intent(getHoldingActivity(), SellCowsFirstActivity.class);
-//                                intent.putExtra("orderId",myCowsListAdapter.getItem(position).getOrderId()+"");
-//                                startActivity(intent);
-//                            } else {
-//                                showWantShellOrder();
-//                            }
-//                        }else{
-//                            showWantShellOrder();
-//                        }
-//                        break;
-//                    case  R.id.cancle_order:
-//                        //取消订单
-//                        Intent intent2 = new Intent(getHoldingActivity(),SureOrderBackDialog.class);
-//                        intent2.putExtra("orderCode",dataBean.getOrderId()+"");
-//                        startActivity(intent2);
-//                        break;
-//                    case  R.id.to_pay:
-//                        //去支付
-//                        if (!TextUtils.isEmpty(token)) {
-//                            Map<String, String> reqData = new HashMap<>();
-//                            reqData.put("Authorization", token);
-//                            reqData.put("version", getVersionCodes());
-//                            myCowsOrderPresenter.getMyCowsToPay(reqData, dataBean.getOrderId()+"");
-//                        }
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
-//    }
 
     public  void showDeleteOrder(final String orderId){
         final NormalDialog dialog = new NormalDialog(getHoldingActivity());
@@ -338,10 +332,10 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                     @Override
                     public void onBtnClick() {
                         if (!TextUtils.isEmpty(token)) {
-//                            Map<String, String> reqData = new HashMap<>();
-//                            reqData.put("Authorization", token);
-//                            reqData.put("version", getVersionCodes());
-//                            myCowsOrderPresenter.getMyCowsOrderDelete(reqData, orderId);
+                            Map<String, String> reqData = new HashMap<>();
+                            reqData.put("Authorization", token);
+                            reqData.put("version", getVersionCodes());
+                            myOrderListPresenter.getMyOrderListDelete(reqData, orderId);
                         }
                         dialog.dismiss();
                     }
