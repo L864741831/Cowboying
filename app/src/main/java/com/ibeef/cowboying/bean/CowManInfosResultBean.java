@@ -1,5 +1,7 @@
 package com.ibeef.cowboying.bean;
 
+import java.math.BigDecimal;
+
 /**
  * @author ls
  * @date on 2018/11/12 14:05
@@ -53,9 +55,9 @@ public class CowManInfosResultBean {
          */
 
         private int myCattleCount;
-        private double myTotalAssets;
-        private double myCreditAmount;
-        private double myBeefAmount;
+        private BigDecimal myTotalAssets;
+        private BigDecimal myCreditAmount;
+        private BigDecimal myBeefAmount;
         private int myCouponCount;
 
         public int getMyCattleCount() {
@@ -66,27 +68,27 @@ public class CowManInfosResultBean {
             this.myCattleCount = myCattleCount;
         }
 
-        public double getMyTotalAssets() {
+        public BigDecimal getMyTotalAssets() {
             return myTotalAssets;
         }
 
-        public void setMyTotalAssets(double myTotalAssets) {
+        public void setMyTotalAssets(BigDecimal myTotalAssets) {
             this.myTotalAssets = myTotalAssets;
         }
 
-        public double getMyCreditAmount() {
+        public BigDecimal getMyCreditAmount() {
             return myCreditAmount;
         }
 
-        public void setMyCreditAmount(double myCreditAmount) {
+        public void setMyCreditAmount(BigDecimal myCreditAmount) {
             this.myCreditAmount = myCreditAmount;
         }
 
-        public double getMyBeefAmount() {
+        public BigDecimal getMyBeefAmount() {
             return myBeefAmount;
         }
 
-        public void setMyBeefAmount(double myBeefAmount) {
+        public void setMyBeefAmount(BigDecimal myBeefAmount) {
             this.myBeefAmount = myBeefAmount;
         }
 

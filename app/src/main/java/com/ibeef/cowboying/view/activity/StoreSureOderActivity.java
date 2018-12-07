@@ -266,10 +266,10 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 }
                 NowPayOrderParamBean noPayOrderParamBean=new NowPayOrderParamBean();
                 if(!SDCardUtil.isNullOrEmpty(item)){
-                    noPayOrderParamBean.setAddressDetail(item.getDetailAddress());
+                    noPayOrderParamBean.setAddressDetail(item.getProvince()+item.getCity()+item.getRegion()+item.getDetailAddress());
                     noPayOrderParamBean.setAddressId(item.getId());
                 }else {
-                    noPayOrderParamBean.setAddressDetail(nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
+                    noPayOrderParamBean.setAddressDetail(nowBuyOrderResultBean.getBizData().getAddress().getProvince()+nowBuyOrderResultBean.getBizData().getAddress().getCity()+nowBuyOrderResultBean.getBizData().getAddress().getRegion()+nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
                     noPayOrderParamBean.setAddressId(nowBuyOrderResultBean.getBizData().getAddress().getId());
                 }
                 if(selectId!=0){

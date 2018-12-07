@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.StoreCarActivity;
+import com.ibeef.cowboying.view.customview.ViewPagerLayoutManager;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private String token;
     private List<StoreInfoListResultBean.BizDataBean> baseBeans;
     private StoreTopAdapter storeTopAdapter;
-    private LinearLayoutManager layoutManager;
+    private ViewPagerLayoutManager layoutManager;
     private RelativeLayout storecars_rv;
     private RelativeLayout loadingLayout;
     private BroadcastReceiver receiver1,receiver;
@@ -72,7 +74,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
         txt1_id=view.findViewById(R.id.txt1_id);
 
-        layoutManager=new LinearLayoutManager(getHoldingActivity(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new ViewPagerLayoutManager(getHoldingActivity(), OrientationHelper.HORIZONTAL);
         ryId.setLayoutManager(layoutManager);
         token = Hawk.get(HawkKey.TOKEN);
 
