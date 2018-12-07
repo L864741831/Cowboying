@@ -1,7 +1,6 @@
 package com.ibeef.cowboying.base;
 
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
-import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
@@ -9,7 +8,6 @@ import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
 
-import java.util.List;
 import java.util.Map;
 
 import rx.Subscription;

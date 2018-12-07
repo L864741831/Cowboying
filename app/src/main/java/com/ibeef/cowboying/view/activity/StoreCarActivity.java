@@ -155,6 +155,11 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 position=intent.getIntExtra("position",0);
                 lists.get(position).setQuantity(num);
                 lists.get(position).setChoose(true);
+                if(1==lists.get(position).getDefautChoose()){
+                    allMoney=0;
+                    allMoney=lists.get(position).getPrice()*lists.get(position).getQuantity();
+                    allCownumId.setText("合计：￥"+allMoney);
+                }
             }
         };
        registerReceiver(receiver1, intentFilter1);
@@ -256,7 +261,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                         lvsId.setVisibility(View.VISIBLE);
                         infosId.setText("您确定要删除这"+chooseNum+"件商品吗？");
                     }else {
-                        showToast("请选中要删除的商品？");
+                        showToast("请选中要删除的商品!");
                     }
 
                 }else {
@@ -275,7 +280,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                         addShopCarResultBean1.setShopCartReqVos(storeCarResultBeans);
                         storeCarPayPresenter.nowBuyOrder(reqData,addShopCarResultBean1);
                     }else {
-                        showToast("请选中要购买的商品？");
+                        showToast("请选中要购买的商品!");
                     }
                 }
                 break;

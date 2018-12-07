@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreResultOrderAdapter;
-import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
@@ -155,6 +154,11 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
             oderAllMoneyId.setText("￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getOrderAmount());
             realPayMoneyId.setText("￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount());
         }
+    }
+
+    @Override
+    public void getMyOrderListDelete(MyOrderListCancelBean myOrderListCancelBean) {
+
     }
 
     @Override

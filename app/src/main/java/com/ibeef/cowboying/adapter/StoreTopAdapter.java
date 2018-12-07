@@ -100,13 +100,17 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
         ryBottomId.setHasFixedSize(true);
         ryBottomId.setNestedScrollingEnabled(false);
         ryBottomId.setLayoutManager(new GridLayoutManager(context,2));
+
+        final TextView seeMore=helper.getView(R.id.see_more_id);
        final List<StoreInfoListResultBean.BizDataBean.ProductVideoResVosBean> baseBeans = new ArrayList<>();
        if(item.getProductVideoResVos().size()>2){
            for (int i=0;i<2;i++){
                baseBeans.add(item.getProductVideoResVos().get(i));
            }
+           seeMore.setVisibility(View.VISIBLE);
        }else {
            baseBeans.addAll(item.getProductVideoResVos());
+           seeMore.setVisibility(View.INVISIBLE);
        }
 
         final StoreBottomAdapter storeBottomAdapter=new StoreBottomAdapter(baseBeans,context,R.layout.item_store_bottm);
@@ -123,7 +127,7 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
                 context.startActivity(intent);
             }
         });
-        final TextView seeMore=helper.getView(R.id.see_more_id);
+
         seeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

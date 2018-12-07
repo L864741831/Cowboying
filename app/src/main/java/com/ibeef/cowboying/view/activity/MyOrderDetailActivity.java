@@ -17,7 +17,6 @@ import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.orhanobut.hawk.Hawk;
 

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.ibeef.cowboying.base.StoreCarPayBase;
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
-import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
@@ -13,7 +12,6 @@ import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.model.StoreCarPayModel;
 
-import java.util.List;
 import java.util.Map;
 
 import rxfamily.mvp.BasePresenter;

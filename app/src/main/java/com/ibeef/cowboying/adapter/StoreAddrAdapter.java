@@ -8,9 +8,7 @@ import android.widget.CheckBox;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
 
 import java.util.List;
 

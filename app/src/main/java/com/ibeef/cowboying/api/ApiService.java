@@ -8,7 +8,6 @@ import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.AddAddressParamBean;
 import com.ibeef.cowboying.bean.AddMoneyResultBean;
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
-import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.AdoptInfosResultBean;
 import com.ibeef.cowboying.bean.BindMobileParamBean;
@@ -55,17 +54,18 @@ import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.bean.MyFeedbackResultBean;
-import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
-import com.ibeef.cowboying.bean.NowPayOrderParamBean;
-import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
+import com.ibeef.cowboying.bean.NowPayOrderParamBean;
+import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.OssResultBean;
 import com.ibeef.cowboying.bean.PastureAllResultBean;
 import com.ibeef.cowboying.bean.PastureDetelResultBean;
 import com.ibeef.cowboying.bean.PayInitParamBean;
 import com.ibeef.cowboying.bean.PayInitResultBean;
+import com.ibeef.cowboying.bean.PayPwdResultBean;
 import com.ibeef.cowboying.bean.QiniuUploadImg;
 import com.ibeef.cowboying.bean.RanchBottomVideoResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
@@ -693,5 +693,12 @@ public interface ApiService {
      */
     @GET("shop/order/remove")
     Observable<MyOrderListCancelBean> getMyOrderListDelete(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
+    /**
+     * 是否设置支付密码
+     * @return
+     */
+    @GET("wallet/have/password")
+    Observable<PayPwdResultBean> isPayPwd(@HeaderMap Map<String, String> headers);
 
 }

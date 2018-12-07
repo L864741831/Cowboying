@@ -9,18 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.MyCowsOrderBase;
-import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.base.MyOrderListBase;
-import com.ibeef.cowboying.bean.CreatOderResultBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.orhanobut.hawk.Hawk;
 

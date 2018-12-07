@@ -3,7 +3,6 @@ package com.ibeef.cowboying.model;
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.StoreCarPayBase;
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
-import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
@@ -13,7 +12,6 @@ import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
-import java.util.List;
 import java.util.Map;
 
 import rx.Observable;

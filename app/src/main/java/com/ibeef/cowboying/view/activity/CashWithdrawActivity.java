@@ -21,6 +21,7 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.CashMoneyBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
+import com.ibeef.cowboying.base.PayPwdBase;
 import com.ibeef.cowboying.bean.AuthResult;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
@@ -28,6 +29,7 @@ import com.ibeef.cowboying.bean.CashMoneyParamBean;
 import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.CashMoneyResultBean;
 import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
+import com.ibeef.cowboying.bean.PayPwdResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
@@ -35,6 +37,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.CashMoneyPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
+import com.ibeef.cowboying.presenter.IsPayPwdPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
 import com.orhanobut.hawk.Hawk;
@@ -52,7 +55,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 钱包提现
  */
-public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.IView ,AccountSecurityBase.IView ,InitThirdLoginBase.IView{
+public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.IView ,AccountSecurityBase.IView ,InitThirdLoginBase.IView,PayPwdBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -91,6 +94,9 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     private static final int SDK_AUTH_FLAG = 1000;
     private AccountSecurityPresenter accountSecurityPresenter;
     private boolean isGetMoney=true;
+    private IsPayPwdPresenter isPayPwdPresenter;
+    private Map<String, String> reqData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +108,11 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     private void init() {
         token= Hawk.get(HawkKey.TOKEN);
         withdrawmoney=getIntent().getStringExtra("withdrawmoney");
+
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+
         withdrawMoneyId.setText(withdrawmoney);
         info.setText("钱包提现");
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
@@ -127,15 +138,14 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
             }
         });
         cashMoneyPresenter=new CashMoneyPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
+
         cashMoneyPresenter.getCashMoneyUserInfo(reqData);
 
         api = WXAPIFactory.createWXAPI(this,  Constant.WeixinAppId,true);
         api.registerApp(Constant.WeixinAppId);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
         accountSecurityPresenter=new AccountSecurityPresenter(this);
+        isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
 
@@ -180,9 +190,8 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
                 }
 
                 if(chooseAccoutCk.isChecked()){
-                    accountPayShowRv.setVisibility(View.VISIBLE);
-                    sureOutMoneyBtn.setVisibility(View.GONE);
-
+                    //判断是否设置密码
+                    isPayPwdPresenter.isPayPwd(reqData);
                 }else {
                     showToast("请选择提现支付宝");
                 }
@@ -219,6 +228,21 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     }
     @Override
     public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void isPayPwd(PayPwdResultBean payPwdResultBean) {
+        if("000000".equals(payPwdResultBean.getCode())){
+            if(payPwdResultBean.isBizData()){
+                accountPayShowRv.setVisibility(View.VISIBLE);
+                sureOutMoneyBtn.setVisibility(View.GONE);
+            }else {
+                startActivity(AddPayPwdActivity.class);
+            }
+        }else {
+            showToast(payPwdResultBean.getMessage());
+        }
 
     }
 
@@ -370,6 +394,9 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     protected void onDestroy() {
         if(cashMoneyPresenter!=null){
             cashMoneyPresenter.detachView();
+        }
+        if(isPayPwdPresenter!=null){
+            isPayPwdPresenter.detachView();
         }
         super.onDestroy();
     }

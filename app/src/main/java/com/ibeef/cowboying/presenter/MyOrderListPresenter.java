@@ -2,16 +2,10 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.MyCowsOrderBase;
-import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.base.MyOrderListBase;
-import com.ibeef.cowboying.bean.CreatOderResultBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
-import com.ibeef.cowboying.model.MyCowsOrderModel;
 import com.ibeef.cowboying.model.MyOrderListModel;
 
 import java.util.Map;

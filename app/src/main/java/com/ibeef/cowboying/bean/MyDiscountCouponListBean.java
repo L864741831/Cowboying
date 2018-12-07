@@ -102,7 +102,9 @@ public class MyDiscountCouponListBean {
         private int userId;
         private String code;
         private int activityId;
+        private Integer useProductId;
         private String type;
+        private String useProductName;
         private String useType;
         private String name;
         private String status;
@@ -115,6 +117,22 @@ public class MyDiscountCouponListBean {
         private Object useLockMonths;
         private Object orderCode;
         private Object useTime;
+
+        public String getUseProductName() {
+            return useProductName;
+        }
+
+        public void setUseProductName(String useProductName) {
+            this.useProductName = useProductName;
+        }
+
+        public Integer getUseProductId() {
+            return useProductId;
+        }
+
+        public void setUseProductId(Integer useProductId) {
+            this.useProductId = useProductId;
+        }
 
         public int getCouponId() {
             return couponId;
