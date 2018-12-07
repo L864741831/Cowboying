@@ -56,7 +56,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private List<AddStoreCarParamBean> storeCarResultBeans;
     private StoreCarPresenter storeCarPresenter;
 
-
     /**
      * 滑动到指定位置
      */
@@ -139,7 +138,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 public void onReceive(Context context, Intent intent) {
                     if(isClick){
                         storeCarResultBeans.clear();
-                        isClick=false;
                         //跳到购物车
                         for(int i=0;i<baseBeans.size();i++){
                             if(baseBeans.get(i).getShopProductResVo().isChoose()){
@@ -148,6 +146,9 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                                 addStoreCarParamBean.setQuantity(baseBeans.get(i).getShopProductResVo().getNum());
                                 storeCarResultBeans.add(addStoreCarParamBean);
                             }
+                        }
+                        for(int i=0;i<baseBeans.size();i++){
+                            baseBeans.get(i).getShopProductResVo().setChoose(false);
                         }
                         Map<String, String> reqData = new HashMap<>();
                         reqData.put("Authorization",token);
@@ -301,9 +302,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             }else {
                 txt1_id.setVisibility(View.GONE);
             }
-            if(isClick){
-                startActivity(StoreCarActivity.class);
-            }
+
         }
 
     }
@@ -311,10 +310,12 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void addStoreCar(AddStoreCarResultBean addStoreCarResultBean) {
         if("000000".equals(addStoreCarResultBean.getCode())){
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
-            storeCarPresenter.getStoreCarNum(reqData);
+            if(isClick){
+                isClick=false;
+                startActivity(StoreCarActivity.class);
+            }
+        }else {
+            showToast(addStoreCarResultBean.getMessage());
         }
     }
 

@@ -313,6 +313,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
      * 购物车内商品改变通知后台
      */
     private void addCar(){
+        storeCarResultBeans.clear();
         for(int i=0;i<lists.size();i++){
             if(lists.get(i).isChoose()){
                 AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
