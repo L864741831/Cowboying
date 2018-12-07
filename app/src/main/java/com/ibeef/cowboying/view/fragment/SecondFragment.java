@@ -116,7 +116,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 public void onReceive(Context context, Intent intent) {
                     num=intent.getIntExtra("num",0);
                     position=intent.getIntExtra("position",0);
-                    baseBeans.get(position).getShopProductResVo().setNum(num);
+                    baseBeans.get(position).setCartProductNum(num);
                     baseBeans.get(position).getShopProductResVo().setChoose(true);
                     isClick=true;
                     if(num>0){
@@ -145,7 +145,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                             if(baseBeans.get(i).getShopProductResVo().isChoose()){
                                 AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
                                 addStoreCarParamBean.setProductId(baseBeans.get(i).getShopProductResVo().getProductId());
-                                addStoreCarParamBean.setQuantity(baseBeans.get(i).getShopProductResVo().getNum());
+                                addStoreCarParamBean.setQuantity(baseBeans.get(i).getCartProductNum());
                                 storeCarResultBeans.add(addStoreCarParamBean);
                             }
                         }
@@ -218,7 +218,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                         if(baseBeans.get(i).getShopProductResVo().isChoose()){
                             AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
                             addStoreCarParamBean.setProductId(baseBeans.get(i).getShopProductResVo().getProductId());
-                            addStoreCarParamBean.setQuantity(baseBeans.get(i).getShopProductResVo().getNum());
+                            addStoreCarParamBean.setQuantity(baseBeans.get(i).getCartProductNum());
                             storeCarResultBeans.add(addStoreCarParamBean);
                             Log.e(Constant.TAG,addStoreCarParamBean.getQuantity()+"购物车？？"+addStoreCarParamBean.getProductId());
                         }

@@ -46,7 +46,7 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
 
         final AmountViewStoreBeef amountViewStoreBeef=helper.getView(R.id.amout_num_id);
         amountViewStoreBeef.setGoods_storage(item.getShopProductResVo().getStock());
-        amountViewStoreBeef.intEdit(item.getShopProductResVo().getNum()+"");
+        amountViewStoreBeef.intEdit(item.getCartProductNum()+"");
 
         amountViewStoreBeef.setOnAmountChangeListener(new AmountViewStoreBeef.OnAmountChangeListener() {
             @Override
