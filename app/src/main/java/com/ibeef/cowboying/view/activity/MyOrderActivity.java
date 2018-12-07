@@ -60,14 +60,15 @@ public class MyOrderActivity extends BaseActivity {
     private void init() {
         from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
-        info.setText("我的牛只");
+        info.setText("我的订单");
 
         fragmentList = new ArrayList<>();
 
 //（0：未支付；1：已支付；2：已发货；3：确认收货；4：退款中；5：已退款；6：已取消；7:待取货（库中无此值，仅用于查询时表示线下门店取货方式））如果取所以的，则传空
+        //"全部-空", "待付款-0", "待发货"-8, "待收货-2", "待取货7","退款中4"
         fragment_0 = MyOrderListFragment.newInstance("");
         fragment_1 = MyOrderListFragment.newInstance("0");
-        fragment_2 = MyOrderListFragment.newInstance("1");
+        fragment_2 = MyOrderListFragment.newInstance("8");
         fragment_3 = MyOrderListFragment.newInstance("2");
         fragment_4 = MyOrderListFragment.newInstance("7");
         fragment_5 = MyOrderListFragment.newInstance("4");

@@ -73,6 +73,26 @@ public class MyOrderListPresenter extends BasePresenter implements MyOrderListBa
     }
 
     @Override
+    public void getMyOrderListDelete(Map<String, String> headers, String orderId) {
+        mView.showLoading();
+        addSubscription(mModel.getMyOrderListDelete(headers,orderId,new ResponseCallback<MyOrderListCancelBean>() {
+            @Override
+            public void onSuccess(MyOrderListCancelBean result) {
+                mView.hideLoading();
+                mView.getMyOrderListDelete(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
     public void getMyOrderListCancel(Map<String, String> headers, String orderId) {
         mView.showLoading();
         addSubscription(mModel.getMyOrderListCancel(headers,orderId,new ResponseCallback<MyOrderListCancelBean>() {

@@ -15,19 +15,33 @@
         android:layout_below="@+id/tv_service_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="5dp"
-            android:src="@mipmap/ic_launcher"
-            />
+        <FrameLayout
+            android:id="@+id/fl_img"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                />
+            <ImageView
+               android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/iv_my_cows_xianxia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_my_cows_xianxia"
+                />
+        </FrameLayout>
         <TextView
             android:id="@+id/tv_goods_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="澳洲牛眼肉"
-            android:layout_toRightOf="@+id/iv_icon"
+            android:layout_toRightOf="@+id/fl_img"
             android:textColor="@color/wenzi_hei"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="5dp"
@@ -37,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="M7 500克  250克×2块装"
-            android:layout_toRightOf="@+id/iv_icon"
+            android:layout_toRightOf="@+id/fl_img"
             android:textColor="@color/gray_666666"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_below="@+id/tv_goods_name"
@@ -49,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.5kg"
-            android:layout_toRightOf="@+id/iv_icon"
+            android:layout_toRightOf="@+id/fl_img"
             android:textColor="@color/wenzi_hei"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_below="@+id/tv_goods_norm"

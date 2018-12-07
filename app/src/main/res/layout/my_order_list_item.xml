@@ -56,6 +56,7 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:visibility="gone"
                 android:textColor="@color/colorhometxt"
                 android:id="@+id/btn_delet_order"
                 android:layout_width="wrap_content"
@@ -68,8 +69,23 @@
                 android:background="@drawable/shape_white_cicle"
                 android:text="删除订单"
                 android:textSize="13sp" />
+            <TextView
+               android:visibility="gone"
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_apply_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/shape_white_cicle"
+                android:text="申请退款"
+                android:textSize="13sp" />
 
             <TextView
+                android:visibility="gone"
                 android:textColor="@color/colorhometxt"
                 android:id="@+id/btn_see_order_progress"
                 android:layout_width="wrap_content"
@@ -83,6 +99,7 @@
                 android:text="查看物流"
                 android:textSize="13sp" />
             <TextView
+                android:visibility="gone"
                 android:textColor="@color/colorhometxt"
                 android:id="@+id/btn_confirm_receipt"
                 android:layout_width="wrap_content"
@@ -96,6 +113,7 @@
                 android:text="确认收货"
                 android:textSize="13sp" />
             <TextView
+                android:visibility="gone"
                 android:textColor="@color/colorhometxt"
                 android:id="@+id/btn_cancle_order"
                 android:background="@drawable/shape_white_cicle"
@@ -110,6 +128,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:visibility="gone"
                 android:textColor="@color/colorhometxt"
                 android:id="@+id/btn_to_pay"
                 android:background="@drawable/shape_white_cicle"
@@ -121,6 +140,20 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="去付款"
+                android:textSize="13sp" />
+            <TextView
+                android:visibility="gone"
+                android:textColor="@color/colorhometxt"
+                android:id="@+id/btn_to_detail"
+                android:background="@drawable/shape_white_cicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="查看详情"
                 android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
