@@ -72,8 +72,8 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
         swipeLy.setEnabled(true);
         objectList=new ArrayList<>();
         goodsAddrAdapter=new GoodsAddrAdapter(objectList,this);
-//        ryId.setHasFixedSize(true);
-//        ryId.setNestedScrollingEnabled(false);
+        ryId.setHasFixedSize(true);
+        ryId.setNestedScrollingEnabled(false);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         goodsAddrAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(goodsAddrAdapter);
@@ -113,6 +113,14 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
             }
         });
         modifyAddressPresenter=new ModifyAddressPresenter(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentPage = 1;
+        isFirst = true;
+        objectList.clear();
         modifyAddressPresenter.showAddressList(reqData,currentPage);
     }
 

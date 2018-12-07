@@ -3,12 +3,14 @@ package com.ibeef.cowboying.presenter;
 import android.util.Log;
 
 import com.ibeef.cowboying.base.StoreCarPayBase;
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
+import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.model.StoreCarPayModel;
 
 import java.util.List;
@@ -34,8 +36,8 @@ public class StoreCarPayPresenter extends BasePresenter implements StoreCarPayBa
     }
 
     @Override
-    public void nowBuyOrder(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans) {
-        addSubscription(mModel.nowBuyOrder(headers,addStoreCarParamBeans,new ResponseCallback<NowBuyOrderResultBean>() {
+    public void nowBuyOrder(Map<String, String> headers,AddShopCarResultBean addShopCarResultBean) {
+        addSubscription(mModel.nowBuyOrder(headers,addShopCarResultBean,new ResponseCallback<NowBuyOrderResultBean>() {
             @Override
             public void onSuccess(NowBuyOrderResultBean result) {
                 mView.nowBuyOrder(result);
@@ -51,8 +53,8 @@ public class StoreCarPayPresenter extends BasePresenter implements StoreCarPayBa
     }
 
     @Override
-    public void deleteStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans) {
-        addSubscription(mModel.deleteStoreCar(headers,addStoreCarParamBeans,new ResponseCallback<DeleteCarResultBean>() {
+    public void deleteStoreCar(Map<String, String> headers, AddShopCarResultBean addShopCarResultBean) {
+        addSubscription(mModel.deleteStoreCar(headers,addShopCarResultBean,new ResponseCallback<DeleteCarResultBean>() {
             @Override
             public void onSuccess(DeleteCarResultBean result) {
                 mView.deleteStoreCar(result);
@@ -100,6 +102,23 @@ public class StoreCarPayPresenter extends BasePresenter implements StoreCarPayBa
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
                 mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void storeAddrList(Map<String, String> headers) {
+        addSubscription(mModel.storeAddrList(headers,new ResponseCallback<StoreAddrResultBean>() {
+            @Override
+            public void onSuccess(StoreAddrResultBean result) {
+                mView.storeAddrList(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
                 mView.showMsg(msg);
             }
         }));

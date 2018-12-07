@@ -89,12 +89,20 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
         reqData.put("version",getVersionCodes());
 
         if(!addaddress){
+            isChckAddr=true;
             infos= (ShowAddressResultBean.BizDataBean) getIntent().getSerializableExtra("infos");
             etName.setText(infos.getName());
             etTell.setText(infos.getMobile());
-            showAddr.setText(infos.getProvince()+infos.getCity()+infos.getRegion()+infos.getDetailAddress());
+            showAddr.setText(infos.getProvince()+infos.getCity()+infos.getRegion());
             etAddrDescribe.setText(infos.getDetailAddress());
-
+            provinceId=infos.getProvinceId()+"";
+            cityId=infos.getCityId()+"";
+            districtId=infos.getRegionId()+"";
+            if("1".equals(infos.getIsDefault())){
+                ckId.setChecked(true);
+            }else {
+                ckId.setChecked(false);
+            }
         }
 
     }
@@ -171,9 +179,7 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
                 }else {
                     addAddressParamBean.setId(null);
                     modifyAddressPresenter.addAddress(reqData,addAddressParamBean);
-
                 }
-
                 break;
             default:
                 break;

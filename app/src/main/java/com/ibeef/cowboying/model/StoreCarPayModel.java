@@ -2,12 +2,14 @@ package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
 import com.ibeef.cowboying.base.StoreCarPayBase;
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
+import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -40,8 +42,8 @@ public class StoreCarPayModel implements StoreCarPayBase.IModel {
 
 
     @Override
-    public Subscription nowBuyOrder(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans,final ResponseCallback<NowBuyOrderResultBean> callback) {
-        Observable<NowBuyOrderResultBean> observable = service.nowBuyOrder(headers,addStoreCarParamBeans);
+    public Subscription nowBuyOrder(Map<String, String> headers, AddShopCarResultBean addShopCarResultBean, final ResponseCallback<NowBuyOrderResultBean> callback) {
+        Observable<NowBuyOrderResultBean> observable = service.nowBuyOrder(headers,addShopCarResultBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,8 +64,8 @@ public class StoreCarPayModel implements StoreCarPayBase.IModel {
     }
 
     @Override
-    public Subscription deleteStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans,final ResponseCallback<DeleteCarResultBean> callback) {
-        Observable<DeleteCarResultBean> observable = service.deleteStoreCar(headers,addStoreCarParamBeans);
+    public Subscription deleteStoreCar(Map<String, String> headers,AddShopCarResultBean addShopCarResultBean,final ResponseCallback<DeleteCarResultBean> callback) {
+        Observable<DeleteCarResultBean> observable = service.deleteStoreCar(headers,addShopCarResultBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -116,6 +118,28 @@ public class StoreCarPayModel implements StoreCarPayBase.IModel {
                 .subscribe(new Action1<CarListResultBean>() {
                     @Override
                     public void call(CarListResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription storeAddrList(Map<String, String> header, final ResponseCallback<StoreAddrResultBean> callback) {
+        Observable<StoreAddrResultBean> observable = service.storeAddrList(header);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<StoreAddrResultBean>() {
+                    @Override
+                    public void call(StoreAddrResultBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

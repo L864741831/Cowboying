@@ -11,18 +11,25 @@ import java.util.List;
 public class NowPayOrderParamBean {
 
 
-    private int addressId;
+    private Integer addressId;
     private Integer couponId;
+    private Integer storeId;
     private String receiveType;
     private String addressDetail;
-
     private List<AddStoreCarParamBean> productQuantityReqDtos;
+    public Integer getStoreId() {
+        return storeId;
+    }
 
-    public int getAddressId() {
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
+
+    public Integer getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(int addressId) {
+    public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
 

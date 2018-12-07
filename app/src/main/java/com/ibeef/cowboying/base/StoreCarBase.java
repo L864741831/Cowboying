@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.base;
 
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
@@ -31,12 +32,12 @@ public class StoreCarBase {
     public interface IPresenter {
         void getStoreInfoList(Map<String, String> headers, int currentPage);
         void getStoreCarNum(Map<String, String> headers);
-        void addStoreCar(Map<String, String> headers,List<AddStoreCarParamBean> addStoreCarParamBeans);
+        void addStoreCar(Map<String, String> headers,AddShopCarResultBean addShopCarResultBean);
     }
 
     public interface IModel {
         Subscription getStoreInfoList(Map<String, String> headers,int currentPage, ResponseCallback<StoreInfoListResultBean> callback);
         Subscription getStoreCarNum(Map<String, String> headers, ResponseCallback<StoreCarNumResultBean> callback);
-        Subscription addStoreCar(Map<String, String> headers, List<AddStoreCarParamBean> addStoreCarParamBeans, ResponseCallback<AddStoreCarResultBean> callback);
+        Subscription addStoreCar(Map<String, String> headers, AddShopCarResultBean addShopCarResultBean, ResponseCallback<AddStoreCarResultBean> callback);
     }
 }

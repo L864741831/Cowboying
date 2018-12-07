@@ -33,7 +33,7 @@ public class StoreBottomAdapter extends BaseQuickAdapter<StoreInfoListResultBean
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        Glide.with(context).load(Constant.imageDomain+item.getVideoUrl()).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
+        Glide.with(context).load(item.getVideoCoverUrl()).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
         helper.setText(R.id.img_txt_id,item.getName());
     }
 }

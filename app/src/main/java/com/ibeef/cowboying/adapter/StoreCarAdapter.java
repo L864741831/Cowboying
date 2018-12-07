@@ -63,6 +63,7 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
                 intent1.putExtra("num",amount);
                 intent1.putExtra("position",helper.getAdapterPosition());
                 context.sendBroadcast(intent1);
+
             }
         });
 

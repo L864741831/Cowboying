@@ -18,14 +18,21 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreCarAdapter;
+import com.ibeef.cowboying.base.StoreCarBase;
 import com.ibeef.cowboying.base.StoreCarPayBase;
+import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarParamBean;
+import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
+import com.ibeef.cowboying.bean.StoreAddrResultBean;
+import com.ibeef.cowboying.bean.StoreCarNumResultBean;
+import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
+import com.ibeef.cowboying.presenter.StoreCarPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
@@ -43,7 +50,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城购物车
  */
-public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView{
+public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView,StoreCarBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -75,6 +82,8 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     LinearLayout lvsId;
     @Bind(R.id.infos_id)
     TextView infosId;
+    @Bind(R.id.rv_bottom_id)
+    RelativeLayout rvBottomId;
 
     private String token;
 
@@ -88,7 +97,11 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     private  List<CarListResultBean.BizDataBean> lists;
     private StoreCarPayPresenter storeCarPayPresenter;
     private List<AddStoreCarParamBean> storeCarResultBeans;
-    private    Map<String, String> reqData;
+    private double allMoney;
+    private CarListResultBean.BizDataBean item;
+    private StoreCarPresenter storeCarPresenter;
+    private   Map<String, String> reqData;
+    private boolean isBuy=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +111,10 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     }
     private void init(){
         token = Hawk.get(HawkKey.TOKEN);
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+
         lists=new ArrayList<>();
         storeCarResultBeans=new ArrayList<>();
         info.setText("购物车");
@@ -137,6 +154,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 num=intent.getIntExtra("num",1);
                 position=intent.getIntExtra("position",0);
                 lists.get(position).setQuantity(num);
+                lists.get(position).setChoose(true);
             }
         };
        registerReceiver(receiver1, intentFilter1);
@@ -144,13 +162,18 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         storeCarAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                 item=storeCarAdapter.getItem(position);
                 switch (view.getId()){
                     case R.id.all_ck_id:
                         if(0==lists.get(position).getDefautChoose()){
                             lists.get(position).setDefautChoose(1);
                             chooseNum++;
+                            allMoney+=item.getPrice()*item.getQuantity();
+                            allCownumId.setText("合计：￥"+allMoney);
                         }else{
                             chooseNum--;
+                            allMoney-=item.getPrice()*item.getQuantity();
+                            allCownumId.setText("合计：￥"+allMoney);
                             lists.get(position).setDefautChoose(0);
                         }
                        storeCarAdapter.notifyItemChanged(position);
@@ -161,17 +184,20 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             }
         });
 
+        storeCarPresenter=new StoreCarPresenter(this);
         storeCarPayPresenter=new StoreCarPayPresenter(this);
-        reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
+
         storeCarPayPresenter.getCarList(reqData,currentPage);
+
     }
 
     @OnClick({R.id.back_id,R.id.action_new_question_tv,R.id.go_store_btn,R.id.now_claim_btn_id,R.id.all_ck_id,R.id.refuce_id,R.id.sure_id,R.id.lvs_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                //跳到购物车
+                isBuy=false;
+                addCar();
                 finish();
                 break;
             case R.id.go_store_btn:
@@ -188,6 +214,8 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 //编辑，批量删除
                 lvsId.setVisibility(View.GONE);
                 chooseNum=0;
+                allMoney=0;
+                allCownumId.setText("合计：￥"+allMoney);
                 int size = lists.size();
                 storeCarResultBeans.clear();
                 for(int i=size-1;i>=0;i--){
@@ -199,23 +227,30 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
 
                     }
                 }
-
-                storeCarPayPresenter.deleteStoreCar(reqData,storeCarResultBeans);
+                AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
+                addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
+                storeCarPayPresenter.deleteStoreCar(reqData,addShopCarResultBean);
                 allCkId.setChecked(false);
                 break;
             case R.id.all_ck_id:
               //全选
+                allMoney=0;
                 for (int i=0;i<lists.size();i++){
                     if(allCkId.isChecked()){
                         lists.get(i).setDefautChoose(1);
+                        allMoney+=lists.get(i).getPrice()*lists.get(i).getQuantity();
                     }else {
                         lists.get(i).setDefautChoose(0);
+                        allMoney=0;
                     }
                     storeCarAdapter.notifyItemChanged(i);
                 }
+                allCownumId.setText("合计：￥"+allMoney);
                 chooseNum=lists.size();
                 break;
             case R.id.now_claim_btn_id:
+                isBuy=true;
+                addCar();
                 if(isclick){
                     if(chooseNum>0){
                         lvsId.setVisibility(View.VISIBLE);
@@ -236,7 +271,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                                 storeCarResultBeans.add(addStoreCarParamBean);
                             }
                         }
-                        storeCarPayPresenter.nowBuyOrder(reqData,storeCarResultBeans);
+                        AddShopCarResultBean addShopCarResultBean1=new AddShopCarResultBean();
+                        addShopCarResultBean1.setShopCartReqVos(storeCarResultBeans);
+                        storeCarPayPresenter.nowBuyOrder(reqData,addShopCarResultBean1);
                     }else {
                         showToast("请选中要购买的商品？");
                     }
@@ -264,10 +301,37 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 }
                 allCkId.setChecked(false);
                 chooseNum=0;
+                allMoney=0;
+                allCownumId.setText("合计：￥"+allMoney);
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 购物车内商品改变通知后台
+     */
+    private void addCar(){
+        for(int i=0;i<lists.size();i++){
+            if(lists.get(i).isChoose()){
+                AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
+                addStoreCarParamBean.setProductId(lists.get(i).getProductId());
+                addStoreCarParamBean.setQuantity(lists.get(i).getQuantity());
+                storeCarResultBeans.add(addStoreCarParamBean);
+            }
+        }
+
+        if(storeCarResultBeans.size()>0){
+            AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
+            addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
+            storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
+        }else {
+            if(!isBuy){
+                finish();
+            }
+        }
+
     }
     @Override
     public void onRefresh() {
@@ -288,6 +352,28 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getStoreInfoList(StoreInfoListResultBean storeInfoListResultBean) {
+
+    }
+
+    @Override
+    public void getStoreCarNum(StoreCarNumResultBean storeCarNumResultBean) {
+
+    }
+
+    @Override
+    public void addStoreCar(AddStoreCarResultBean addStoreCarResultBean) {
+        if("000000".equals(addStoreCarResultBean.getCode())){
+        }else {
+            showToast(addStoreCarResultBean.getMessage());
+        }
+        if(!isBuy){
+            finish();
+        }
 
     }
 
@@ -316,9 +402,11 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 if (isFirst) {
                     rvOrder.setVisibility(View.VISIBLE);
                     ryId.setVisibility(View.GONE);
+                    rvBottomId.setVisibility(View.GONE);
                 } else {
                     rvOrder.setVisibility(View.GONE);
                     ryId.setVisibility(View.VISIBLE);
+                    rvBottomId.setVisibility(View.VISIBLE);
                 }
                 storeCarAdapter.loadMoreEnd();
             } else {
@@ -342,6 +430,11 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         }else {
             showToast(deleteCarResultBean.getMessage());
         }
+
+    }
+
+    @Override
+    public void storeAddrList(StoreAddrResultBean storeAddrResultBean) {
 
     }
 
@@ -372,5 +465,14 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         if(storeCarPayPresenter!=null){
             storeCarPayPresenter.detachView();
         }
+        if(storeCarPresenter!=null){
+            storeCarPresenter.detachView();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        isBuy=false;
+        addCar();
     }
 }

@@ -410,6 +410,15 @@ public class StoreInfoListResultBean {
             private String videoCode;
             private String type;
             private String videoUrl;
+            private String videoCoverUrl;
+
+            public String getVideoCoverUrl() {
+                return videoCoverUrl;
+            }
+
+            public void setVideoCoverUrl(String videoCoverUrl) {
+                this.videoCoverUrl = videoCoverUrl;
+            }
 
             public int getId() {
                 return id;
