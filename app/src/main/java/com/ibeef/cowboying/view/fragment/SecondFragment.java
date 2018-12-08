@@ -273,6 +273,9 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             }
         }else if (isClickCar){
             startActivity(StoreCarActivity.class);
+        }else if(isRefresh){
+            //如果是刷新，刷新列表，购物车数据
+            refreshData();
         }
     }
 
