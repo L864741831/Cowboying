@@ -408,7 +408,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             }
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String times=   sdf.format( new Date());
-            long time= DateUtils.getReduce(times,DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
+            long time= DateUtils.getReduce(times,DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01)+1800000);
             Log.i("htht", "CreateTime::::::: "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
             Log.i("htht", "time::::::::: "+time);
             //两时间差,精确到毫秒

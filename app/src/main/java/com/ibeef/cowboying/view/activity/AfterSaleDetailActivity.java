@@ -299,8 +299,6 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
         tvApplyId.setText(""+myAfterSaleDetailBean.getBizData().getOrderProductResVos().size());
         txtApplyTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCreateTime(), DateUtils.TYPE_01));
         tvReturnId.setText(""+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCode());
-
-
 //        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String times=   sdf.format( new Date());
 //        long time= DateUtils.getReduce(times,DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
