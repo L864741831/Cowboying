@@ -3,6 +3,7 @@ package com.ibeef.cowboying.base;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 
 import java.util.Map;
 
@@ -22,7 +23,8 @@ public class MyOrderListBase {
         void getMyOrderList(MyOrderListBean myOrderListBean);
         void getMyOrderListDetail(MyOrderListDetailBean MyOrderListDetailBean);
         void getMyOrderListDelete(MyOrderListCancelBean myOrderListCancelBean);
-       void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean);
+        void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean);
+        void showDelevery(ShowDeleveryResultBean showDeleveryResultBean);
     }
 
     public interface IPresenter {
@@ -30,6 +32,7 @@ public class MyOrderListBase {
         void getMyOrderListDetail(Map<String, String> headers, String orderId);
         void getMyOrderListDelete(Map<String, String> headers, String orderCode);
         void getMyOrderListCancel(Map<String, String> headers, String orderId);
+        void showDelevery(Map<String, String> headers, String orderId);
     }
 
     public interface IModel {
@@ -37,5 +40,6 @@ public class MyOrderListBase {
        Subscription getMyOrderListDetail(Map<String, String> headers, String orderId, ResponseCallback<MyOrderListDetailBean> callback);
        Subscription getMyOrderListDelete(Map<String, String> headers, String orderCode, ResponseCallback<MyOrderListCancelBean> callback);
        Subscription getMyOrderListCancel(Map<String, String> headers, String orderId, ResponseCallback<MyOrderListCancelBean> callback);
+       Subscription showDelevery(Map<String, String> headers, String orderId, ResponseCallback<ShowDeleveryResultBean> callback);
     }
 }

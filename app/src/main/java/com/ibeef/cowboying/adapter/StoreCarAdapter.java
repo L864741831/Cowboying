@@ -42,6 +42,8 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
         }
 
         helper.addOnClickListener(R.id.all_ck_id);
+        helper.addOnClickListener(R.id.btnDecrease);
+        helper.addOnClickListener(R.id.btnIncrease);
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)
@@ -51,21 +53,8 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
 
         helper.setText(R.id.name_beef_id,item.getName())
                 .setText(R.id.price_id,"￥"+item.getPrice())
+                .setText(R.id.etAmount, item.getQuantity()+"")
                 ;
-        final AmountViewWhite amountViewWhite=helper.getView(R.id.amout_num_id);
-        amountViewWhite.setGoods_storage(item.getStock());
-        amountViewWhite.intEdit(item.getQuantity()+"");
-        amountViewWhite.setOnAmountChangeListener(new AmountViewWhite.OnAmountChangeListener() {
-            @Override
-            public void onAmountChange(View view, int amount) {
-                Intent intent1=new Intent();
-                intent1.setAction("com.ibeef.cowboying.storecarnum");
-                intent1.putExtra("num",amount);
-                intent1.putExtra("position",helper.getAdapterPosition());
-                context.sendBroadcast(intent1);
-
-            }
-        });
 
     }
 

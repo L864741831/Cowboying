@@ -43,21 +43,10 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
 
         helper.addOnClickListener(R.id.last_go_img);
         helper.addOnClickListener(R.id.first_go_img);
+        helper.addOnClickListener(R.id.btnDecrease);
+        helper.addOnClickListener(R.id.btnIncrease);
 
-        final AmountViewStoreBeef amountViewStoreBeef=helper.getView(R.id.amout_num_id);
-        amountViewStoreBeef.setGoods_storage(item.getShopProductResVo().getStock());
-        amountViewStoreBeef.intEdit(item.getCartProductNum()+"");
-
-        amountViewStoreBeef.setOnAmountChangeListener(new AmountViewStoreBeef.OnAmountChangeListener() {
-            @Override
-            public void onAmountChange(View view, int amount) {
-                Intent intent1=new Intent();
-                intent1.setAction("com.ibeef.cowboying.storenum");
-                intent1.putExtra("num",amount);
-                intent1.putExtra("position",helper.getAdapterPosition());
-                context.sendBroadcast(intent1);
-            }
-        });
+        helper.setText(R.id.etAmount,item.getCartProductNum()+"");
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)

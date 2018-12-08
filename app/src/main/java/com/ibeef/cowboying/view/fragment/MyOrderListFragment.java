@@ -24,11 +24,13 @@ import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.MyorderListCancelDialog;
+import com.ibeef.cowboying.view.activity.ShowOrderDeleveryActivity;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -238,7 +240,9 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         break;
                     case R.id.btn_see_order_progress:
                         //查看物流信息
-
+                        Intent intent=new Intent(getHoldingActivity(),ShowOrderDeleveryActivity.class);
+                        intent.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());
+                        startActivity(intent);
                         break;
                     case  R.id.btn_confirm_receipt:
                         //确认收货
@@ -291,6 +295,11 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
 
     @Override
     public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 

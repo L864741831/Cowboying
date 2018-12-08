@@ -13,6 +13,7 @@ import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
@@ -108,6 +109,11 @@ public class MyorderListCancelDialog extends AppCompatActivity implements View.O
             Toast.makeText(this, msg.getMessage(), Toast.LENGTH_SHORT).show();
             Log.i("/adopt/order/cancel", "msg.getMessage()"+msg.getMessage());
         }
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
+
     }
 
 }

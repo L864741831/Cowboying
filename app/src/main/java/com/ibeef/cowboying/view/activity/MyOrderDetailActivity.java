@@ -16,6 +16,7 @@ import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.orhanobut.hawk.Hawk;
@@ -218,6 +219,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
 
     @Override
     public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 }

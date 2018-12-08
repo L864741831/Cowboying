@@ -15,6 +15,7 @@ import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
@@ -164,6 +165,11 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
     @Override
     public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
 
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 

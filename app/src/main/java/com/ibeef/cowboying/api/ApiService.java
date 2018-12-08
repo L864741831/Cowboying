@@ -80,6 +80,7 @@ import com.ibeef.cowboying.bean.SellCowsResultBean;
 import com.ibeef.cowboying.bean.SetPayPwdParamBean;
 import com.ibeef.cowboying.bean.SetPayPwdResultBean;
 import com.ibeef.cowboying.bean.ShowAddressResultBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.SmsCodeParamBean;
 import com.ibeef.cowboying.bean.SmsCodeResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
@@ -700,5 +701,12 @@ public interface ApiService {
      */
     @GET("wallet/have/password")
     Observable<PayPwdResultBean> isPayPwd(@HeaderMap Map<String, String> headers);
+
+    /**
+     * 查询订单快递详情
+     * @return
+     */
+    @GET("express/get/detail")
+    Observable<ShowDeleveryResultBean> showDelevery(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
 
 }

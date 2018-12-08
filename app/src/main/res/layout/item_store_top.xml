@@ -46,15 +46,13 @@
                     android:gravity="center" android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp" android:textColor="@color/colorAccent"
                     android:textSize="15sp"/>
-                <com.ibeef.cowboying.view.customview.AmountViewStoreBeef
-                    android:layout_width="90dp" android:id="@+id/amout_num_id"
-                    android:layout_height="45dp"    app:btnWidth="20dp"
-                    app:tvWidth="26dp"
-                    android:layout_gravity="center_horizontal" android:gravity="center"/>
+                <include layout="@layout/view_amount_storebeef"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="horizontal">
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
                     <TextView
                         android:layout_width="0dp" android:id="@+id/beef_size_id"
                         android:layout_weight="0.33" android:textSize="12sp"

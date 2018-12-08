@@ -31,6 +31,7 @@ import com.ibeef.cowboying.bean.PayInitParamBean;
 import com.ibeef.cowboying.bean.PayInitResultBean;
 import com.ibeef.cowboying.bean.PayPwdResultBean;
 import com.ibeef.cowboying.bean.PayResult;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
@@ -324,6 +325,11 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         }else {
             showToast(myOrderListCancelBean.getMessage());
         }
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 

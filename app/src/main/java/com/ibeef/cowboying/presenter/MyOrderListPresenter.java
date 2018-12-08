@@ -6,6 +6,7 @@ import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.model.MyOrderListModel;
 
 import java.util.Map;
@@ -94,6 +95,26 @@ public class MyOrderListPresenter extends BasePresenter implements MyOrderListBa
             public void onSuccess(MyOrderListCancelBean result) {
                 mView.hideLoading();
                 mView.getMyOrderListCancel(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void showDelevery(Map<String, String> headers, String orderId) {
+        mView.showLoading();
+        addSubscription(mModel.showDelevery(headers,orderId,new ResponseCallback<ShowDeleveryResultBean>() {
+            @Override
+            public void onSuccess(ShowDeleveryResultBean result) {
+                mView.hideLoading();
+                mView.showDelevery(result);
 
             }
 
