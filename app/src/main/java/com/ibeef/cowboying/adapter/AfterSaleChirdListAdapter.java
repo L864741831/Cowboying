@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.adapter;
 
+
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,30 +10,24 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.MyAfterSaleListBean;
+import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
 
-import rxfamily.bean.BaseBean;
 
-/**
- * @author ls
- * @date on 2018/10/7 14:10
- * @describe
- * @package com.ranhan.cowboying.adapter
- **/
-public class AfterSaleDetailAdapter extends BaseQuickAdapter<MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean,BaseViewHolder> {
+public class AfterSaleChirdListAdapter extends BaseQuickAdapter<MyAfterSaleListBean.BizDataBean.OrderProductResVosBean, BaseViewHolder> {
     private Context context;
     private String status;
-    public AfterSaleDetailAdapter(List data,String status, Context context, int layout) {
-        super(layout, data);
+    public AfterSaleChirdListAdapter(List data, String status, Context context) {
+        super(R.layout.item_after_sale_detail, data);
         this.context=context;
         this.status=status;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean item) {
+    protected void convert(BaseViewHolder helper, final MyAfterSaleListBean.BizDataBean.OrderProductResVosBean item) {
         helper.setText(R.id.tv_goods_name,item.getName())
                 .setText(R.id.tv_goods_norm,""+item.getSpecification())
                 .setText(R.id.tv_goods_weight,"￥"+item.getBuyPrice())
@@ -52,3 +47,4 @@ public class AfterSaleDetailAdapter extends BaseQuickAdapter<MyOrderListDetailBe
         }
     }
 }
+

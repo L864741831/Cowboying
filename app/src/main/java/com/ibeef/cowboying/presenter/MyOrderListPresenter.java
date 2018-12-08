@@ -2,10 +2,14 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
+import com.ibeef.cowboying.base.GetApplyReturnParameterBean;
+import com.ibeef.cowboying.base.GetEditApplyReturnParameterBean;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
+import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
+import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
@@ -112,103 +116,124 @@ public class MyOrderListPresenter extends BasePresenter implements MyOrderListBa
         }));
     }
 
-//    @Override
-//    public void geMyCowsOrderList(Map<String, String> headers, int currentPage, String status) {
-//        mView.showLoading();
-//        addSubscription(mModel.geMyCowsOrderList(headers,currentPage,status,new ResponseCallback<MyCowsOrderListBean>() {
-//            @Override
-//            public void onSuccess(MyCowsOrderListBean result) {
-//                mView.hideLoading();
-//                mView.geMyCowsOrderList(result);
-//
-//            }
-//
-//            @Override
-//            public void onFaild(String msg) {
-//                Log.e("onFaild", msg + "");
-//                mView.hideLoading();
-//                mView.showMsg(msg);
-//            }
-//        }));
-//    }
-//
-//    @Override
-//    public void geMyCowsOrderListDetail(Map<String, String> headers, String orderCode) {
-//        mView.showLoading();
-//        addSubscription(mModel.geMyCowsOrderListDetail(headers,orderCode,new ResponseCallback<MyCowsOrderListDetailBean>() {
-//            @Override
-//            public void onSuccess(MyCowsOrderListDetailBean result) {
-//                mView.hideLoading();
-//                mView.geMyCowsOrderListDetail(result);
-//
-//            }
-//
-//            @Override
-//            public void onFaild(String msg) {
-//                Log.e("onFaild", msg + "");
-//                mView.hideLoading();
-//                mView.showMsg(msg);
-//            }
-//        }));
-//    }
-//
-//    @Override
-//    public void getMyCowsOrderDelete(Map<String, String> headers, String orderCode) {
-//        mView.showLoading();
-//        addSubscription(mModel.getMyCowsOrderDelete(headers,orderCode,new ResponseCallback<MyCowsOrderDeleteBean>() {
-//            @Override
-//            public void onSuccess(MyCowsOrderDeleteBean result) {
-//                mView.hideLoading();
-//                mView.getMyCowsOrderDelete(result);
-//
-//            }
-//
-//            @Override
-//            public void onFaild(String msg) {
-//                Log.e("onFaild", msg + "");
-//                mView.hideLoading();
-//                mView.showMsg(msg);
-//            }
-//        }));
-//    }
-//
-//    @Override
-//    public void getMyCowsOrderCancel(Map<String, String> headers, String orderCode) {
-//        mView.showLoading();
-//        addSubscription(mModel.getMyCowsOrderCancel(headers,orderCode,new ResponseCallback<MyCowsOrderDeleteBean>() {
-//            @Override
-//            public void onSuccess(MyCowsOrderDeleteBean result) {
-//                mView.hideLoading();
-//                mView.getMyCowsOrderCancel(result);
-//
-//            }
-//
-//            @Override
-//            public void onFaild(String msg) {
-//                Log.e("onFaild", msg + "");
-//                mView.hideLoading();
-//                mView.showMsg(msg);
-//            }
-//        }));
-//    }
-//
-//    @Override
-//    public void getMyCowsToPay(Map<String, String> headers, String orderCode) {
-//        mView.showLoading();
-//        addSubscription(mModel.getMyCowsToPay(headers,orderCode,new ResponseCallback<CreatOderResultBean>() {
-//            @Override
-//            public void onSuccess(CreatOderResultBean result) {
-//                mView.hideLoading();
-//                mView.getMyCowsToPay(result);
-//
-//            }
-//
-//            @Override
-//            public void onFaild(String msg) {
-//                Log.e("onFaild", msg + "");
-//                mView.hideLoading();
-//                mView.showMsg(msg);
-//            }
-//        }));
-//    }
+    @Override
+    public void getMyOrderListOk(Map<String, String> headers, String orderId) {
+        mView.showLoading();
+        addSubscription(mModel.getMyOrderListOk(headers,orderId,new ResponseCallback<MyOrderListCancelBean>() {
+            @Override
+            public void onSuccess(MyOrderListCancelBean result) {
+                mView.hideLoading();
+                mView.getMyOrderListOk(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getAfterSaleList(Map<String, String> headers, int pageSize, int curPage) {
+        mView.showLoading();
+        addSubscription(mModel.getAfterSaleList(headers,pageSize,curPage,new ResponseCallback<MyAfterSaleListBean>() {
+            @Override
+            public void onSuccess(MyAfterSaleListBean result) {
+                mView.hideLoading();
+                mView.getAfterSaleList(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getAfterSaleDetail(Map<String, String> headers, String refundId) {
+        mView.showLoading();
+        addSubscription(mModel.getAfterSaleDetail(headers,refundId,new ResponseCallback<MyAfterSaleDetailBean>() {
+            @Override
+            public void onSuccess(MyAfterSaleDetailBean result) {
+                mView.hideLoading();
+                mView.getAfterSaleDetail(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getApplyReturn(Map<String, String> headers, GetApplyReturnParameterBean getApplyReturnParameterBean) {
+        mView.showLoading();
+        addSubscription(mModel.getApplyReturn(headers,getApplyReturnParameterBean,new ResponseCallback<MyOrderListCancelBean>() {
+            @Override
+            public void onSuccess(MyOrderListCancelBean result) {
+                mView.hideLoading();
+                mView.getApplyReturn(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getCancelApplyReturn(Map<String, String> headers, String refundId) {
+        mView.showLoading();
+        addSubscription(mModel.getCancelApplyReturn(headers,refundId,new ResponseCallback<MyOrderListCancelBean>() {
+            @Override
+            public void onSuccess(MyOrderListCancelBean result) {
+                mView.hideLoading();
+                mView.getCancelApplyReturn(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getEditApplyReturn(Map<String, String> headers, GetEditApplyReturnParameterBean getEditApplyReturnParameterBean) {
+        mView.showLoading();
+        addSubscription(mModel.getEditApplyReturn(headers,getEditApplyReturnParameterBean,new ResponseCallback<MyOrderListCancelBean>() {
+            @Override
+            public void onSuccess(MyOrderListCancelBean result) {
+                mView.hideLoading();
+                mView.getEditApplyReturn(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
 }

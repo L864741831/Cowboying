@@ -13,6 +13,8 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreResultOrderAdapter;
 import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
+import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
+import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
@@ -158,8 +160,43 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
     }
 
     @Override
+    public void getMyOrderListDelete(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
     public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
 
+
+    }
+
+    @Override
+    public void getMyOrderListOk(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getAfterSaleList(MyAfterSaleListBean myAfterSaleListBean) {
+
+    }
+
+    @Override
+    public void getAfterSaleDetail(MyAfterSaleDetailBean myAfterSaleDetailBean) {
+
+    }
+
+    @Override
+    public void getApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getCancelApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
 
     }
 

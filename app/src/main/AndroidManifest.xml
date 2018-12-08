@@ -217,6 +217,7 @@
         <activity android:name=".view.activity.MyOrderActivity"/>
         <activity android:name=".view.activity.MyorderListCancelDialog"
             android:theme="@style/myTransparent"/>
+        <activity android:name=".view.activity.MyOrderDetailActivity"/>
     </application>
 
 </manifest>

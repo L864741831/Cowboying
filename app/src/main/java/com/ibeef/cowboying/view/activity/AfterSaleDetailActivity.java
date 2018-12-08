@@ -1,24 +1,38 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.adapter.AfterSaleDetailAdapter;
+import com.ibeef.cowboying.adapter.AfterSaleoneDetailAdapter;
+import com.ibeef.cowboying.base.MyOrderListBase;
+import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
+import com.ibeef.cowboying.bean.MyAfterSaleListBean;
+import com.ibeef.cowboying.bean.MyOrderListBean;
+import com.ibeef.cowboying.bean.MyOrderListCancelBean;
+import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.MyOrderListPresenter;
+import com.ibeef.cowboying.utils.DateUtils;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
 /**
@@ -26,7 +40,7 @@ import rxfamily.view.BaseActivity;
  *
  * @author Administrator
  */
-public class AfterSaleDetailActivity extends BaseActivity {
+public class AfterSaleDetailActivity extends BaseActivity implements MyOrderListBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -72,8 +86,24 @@ public class AfterSaleDetailActivity extends BaseActivity {
     TextView btnApplyReturn;
     @Bind(R.id.ll_bottom_btn)
     LinearLayout llBottomBtn;
-    private List<BaseBean> beanList;
-    private AfterSaleDetailAdapter afterSaleAdapter;
+    @Bind(R.id.tv_return_money_num)
+    TextView tvReturnMoneyNum;
+    @Bind(R.id.tv_return_money_way)
+    TextView tvReturnMoneyWay;
+    @Bind(R.id.tv_return__way)
+    TextView tv_return__way;
+    @Bind(R.id.tv_cancel_time)
+    TextView tv_cancel_time;
+    @Bind(R.id.rl_cancel)
+    RelativeLayout llCancel;
+    private List<MyAfterSaleDetailBean.BizDataBean.OrderProductResVosBean> beanList;
+    private String token;
+    private AfterSaleoneDetailAdapter afterSaleAdapter;
+    private MyOrderListPresenter myOrderListPresenter;
+    private String orderId;
+    private MyAfterSaleDetailBean myAfterSaleDetailBean;
+    private String status;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,18 +114,27 @@ public class AfterSaleDetailActivity extends BaseActivity {
     }
 
     private void init() {
+        orderId = getIntent().getStringExtra("orderId");
         info.setText("售后详情");
-        beanList=new ArrayList<>();
-        for (int i=0;i<3;i++){
-            BaseBean baseBean=new BaseBean();
-            beanList.add(baseBean);
-        }
+        token = Hawk.get(HawkKey.TOKEN);
+        beanList = new ArrayList<>();
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setHasFixedSize(true);
         rvList.setNestedScrollingEnabled(false);
-        afterSaleAdapter=new AfterSaleDetailAdapter(beanList,this,R.layout.item_after_sale_detail);
+        afterSaleAdapter = new AfterSaleoneDetailAdapter(beanList, this, R.layout.item_after_sale_detail);
         rvList.setAdapter(afterSaleAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myOrderListPresenter = new MyOrderListPresenter(this);
+        if (!TextUtils.isEmpty(token)) {
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myOrderListPresenter.getAfterSaleDetail(reqData, orderId);
+        }
     }
 
     @OnClick({R.id.back_id, R.id.bt_change_apply, R.id.bt_see_detail, R.id.btn_logistics_info, R.id.btn_apply_return})
@@ -106,10 +145,17 @@ public class AfterSaleDetailActivity extends BaseActivity {
                 break;
             case R.id.bt_change_apply:
                 //修改申请
-                startActivity(AfterSaleApplyActivity.class);
+                Intent intent3 = new Intent(this,AfterSaleApplyActivity.class);
+                intent3.putExtra("id",id+"");
+                intent3.putExtra("orderCode",orderId);
+                startActivity(intent3);
                 break;
             case R.id.bt_see_detail:
                 //撤销申请
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization", token);
+                reqData.put("version", getVersionCodes());
+                myOrderListPresenter.getCancelApplyReturn(reqData, id+"");
                 break;
             case R.id.btn_logistics_info:
                 //查看物流
@@ -121,5 +167,155 @@ public class AfterSaleDetailActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void getMyOrderList(MyOrderListBean myOrderListBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListDetail(MyOrderListDetailBean MyOrderListDetailBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListDelete(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListCancel(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListOk(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getAfterSaleList(MyAfterSaleListBean myAfterSaleListBean) {
+
+    }
+
+    @Override
+    public void getAfterSaleDetail(MyAfterSaleDetailBean myAfterSaleDetailBean) {
+
+        if ("000000".equals(myAfterSaleDetailBean.getCode())) {
+            this.myAfterSaleDetailBean = myAfterSaleDetailBean;
+            beanList.clear();
+            rvList.setAdapter(afterSaleAdapter);
+            this.beanList.addAll(myAfterSaleDetailBean.getBizData().getOrderProductResVos());
+            afterSaleAdapter.setNewData(beanList);
+            status = myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getStatus();
+            id = myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getId();
+        } else {
+            Toast.makeText(this, myAfterSaleDetailBean.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+//退款单状态（1：申请退款；2：退款完成；3：退款拒绝；4：退款取消）',
+        if ("1".equals(status)) {
+            tvApplyTopStatus.setText("请等待商家处理");
+            tvApplyTopTime.setText("还剩2天23小时");
+            llApplyIng.setVisibility(View.VISIBLE);
+            rlReturnSuccess1.setVisibility(View.GONE);
+            rlReturnRefuse.setVisibility(View.GONE);
+            rlReturnSuccess2.setVisibility(View.GONE);
+        } else if ("2".equals(status)) {
+            tvApplyTopStatus.setText("退款成功");
+            tvApplyTopTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefundTime(), DateUtils.TYPE_01));
+            rlReturnSuccess1.setVisibility(View.VISIBLE);
+            llApplyIng.setVisibility(View.GONE);
+            rlReturnRefuse.setVisibility(View.GONE);
+            rlReturnSuccess2.setVisibility(View.VISIBLE);
+            tvReturnMoneyNum.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
+            tvReturnMoneyWay.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
+        } else if ("3".equals(status)) {
+            tvApplyTopStatus.setText("审核拒绝");
+            tvApplyTopTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
+            llApplyIng.setVisibility(View.GONE);
+            rlReturnSuccess1.setVisibility(View.GONE);
+            rlReturnRefuse.setVisibility(View.VISIBLE);
+            rlReturnSuccess2.setVisibility(View.GONE);
+        } else if ("4".equals(status)) {
+            tvApplyTopStatus.setText("已撤销退款申请");
+            tvApplyTopTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
+            rlReturnSuccess1.setVisibility(View.VISIBLE);
+            llApplyIng.setVisibility(View.GONE);
+            rlReturnRefuse.setVisibility(View.GONE);
+            tvReturnMoneyNum.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
+            tvReturnMoneyWay.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
+            llCancel.setVisibility(View.VISIBLE);
+            rlReturnSuccess2.setVisibility(View.VISIBLE);
+            tv_cancel_time.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
+        }
+//'支付方式（1：支付宝；2：微信；3：银联；4：钱包；5：会员卡；6：会员卡+钱包；7：白条）'
+        switch(myAfterSaleDetailBean.getBizData().getPayType()){
+            case "1":
+                tv_return__way.setText("退回支付宝");
+                break;
+            case "2":
+                tv_return__way.setText("退回微信");
+                break;
+            case "3":
+                tv_return__way.setText("退回银联");
+                break;
+            case "4":
+                tv_return__way.setText("退回钱包");
+                break;
+            case "5":
+                tv_return__way.setText("退回会员卡");
+                break;
+            case "6":
+                tv_return__way.setText("退回会员卡+钱包");
+                break;
+            case "7":
+                tv_return__way.setText("退回白条");
+                break;
+                default:
+                    break;
+        }
+        tvPeriodNumber.setText(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getReason());
+        tvReturnMoney.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
+        tvApplyId.setText(""+myAfterSaleDetailBean.getBizData().getOrderProductResVos().size());
+        txtApplyTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCreateTime(), DateUtils.TYPE_01));
+        tvReturnId.setText(""+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCode());
+
+
+    }
+
+    @Override
+    public void getApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getCancelApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+        if ("000000".equals(myOrderListCancelBean.getCode())) {
+            finish();
+            Toast.makeText(this, "撤销申请成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, myOrderListCancelBean.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
     }
 }

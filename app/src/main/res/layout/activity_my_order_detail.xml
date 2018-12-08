@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_countdown"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
@@ -50,11 +51,15 @@
                 android:layout_height="wrap_content"
                 android:text="订单状态：待收货"
                 android:textSize="15sp"
-                android:layout_marginLeft="15dp"
+                android:textColor="@color/wenzi_hei"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="@dimen/dp_10"
                 />
            <View
-               android:layout_width="345dp"
+               android:id="@+id/v_line"
+               android:layout_width="match_parent"
+               android:layout_marginLeft="15dp"
+               android:layout_marginRight="15dp"
                android:layout_height="1dp"
                android:layout_marginBottom="15dp"
                android:layout_marginTop="@dimen/dp_10"
@@ -88,7 +93,7 @@
                     android:id="@+id/tv_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1234***********"
+                    android:text=""
                     android:layout_marginTop="10dp"
                     android:textSize="15sp"
                     android:layout_centerHorizontal="true"
@@ -128,11 +133,11 @@
                     android:id="@+id/tv_wuliu_ing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="郑州转运公司从中心，下一站。周党"
+                    android:text=""
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:textSize="15sp"
-                    android:textColor="@color/qian_red"
+                    android:textColor="@color/wenzi_hei"
                     />
                 <TextView
                     android:id="@+id/tv_wuliu_ing_time"
@@ -148,6 +153,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_address_locast"
+
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
                 <TextView
@@ -155,10 +161,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="减肥的"
+                    android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/showaddbg"
-                    android:drawablePadding="20dp"
+                    android:drawablePadding="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
+                    android:textSize="15sp"
                     android:textColor="@color/wenzi_hei"
                     />
                 <TextView
@@ -179,7 +187,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="河南省郑州市二七区京广路长江路东北角你家在那里呀，我家在这里"
-                    android:layout_alignParentRight="true"
                     android:layout_marginRight="60dp"
                     android:layout_marginLeft="55dp"
                     android:layout_below="@+id/tv_address_name"
@@ -188,7 +195,9 @@
             </RelativeLayout>
 
             <View
-                android:layout_width="345dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/gray_666666"/>
@@ -196,8 +205,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_list"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
             <RelativeLayout
@@ -369,6 +379,38 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
                 android:textSize="13sp"
+                android:textColor="@color/gray_666666"
+                />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_order_tuikuan_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退款时间：21212152323125152"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="13sp"
+                android:textColor="@color/gray_666666"
+                />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_order_guanbi_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭时间：21212152323125152"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="13sp"
+                android:textColor="@color/gray_666666"
+                />
+            <TextView
+                android:id="@+id/tv_order_shouhuo_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收货时间：21212152323125152"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="13sp"
                 android:layout_marginBottom="50dp"
                 android:textColor="@color/gray_666666"
                 />
@@ -382,6 +424,7 @@
         android:gravity="right|center_vertical"
         android:orientation="horizontal">
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_delete"
             android:layout_width="wrap_content"
@@ -395,6 +438,7 @@
             android:text="删除订单"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_cancel"
             android:layout_width="wrap_content"
@@ -408,6 +452,7 @@
             android:text="取消订单"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_pay"
             android:layout_width="wrap_content"
@@ -421,6 +466,7 @@
             android:text="去付款"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_apply_back"
             android:layout_width="wrap_content"
@@ -434,6 +480,7 @@
             android:text="申请退款"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_see_wuliu"
             android:layout_width="wrap_content"
@@ -447,6 +494,7 @@
             android:text="查看物流"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_ok"
             android:layout_width="wrap_content"
@@ -460,6 +508,7 @@
             android:text="确认收货"
             android:textSize="13sp" />
         <TextView
+            android:visibility="gone"
             android:textColor="@color/white"
             android:id="@+id/btn_order_detail"
             android:layout_width="wrap_content"

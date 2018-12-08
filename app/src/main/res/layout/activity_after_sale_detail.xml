@@ -34,7 +34,7 @@
                 android:id="@+id/tv_apply_top_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="还剩2天23小时"
+                android:text=""
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/gray_666666"
@@ -49,6 +49,7 @@
             <!--申请中-->
             <LinearLayout
                 android:id="@+id/ll_apply_ing"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
@@ -148,6 +149,7 @@
                     android:textColor="@color/wenzi_hei_2"
                     />
                 <TextView
+                    android:id="@+id/tv_return_money_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥88.0"
@@ -169,6 +171,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="42dp">
                 <TextView
+                    android:id="@+id/tv_return__way"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="退回微信"
@@ -177,6 +180,7 @@
                     android:textColor="@color/wenzi_hei_2"
                     />
                 <TextView
+                    android:id="@+id/tv_return_money_way"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥88.0"
@@ -308,6 +312,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2017-08-25 18:25"
+                    android:textSize="13sp"
+                    android:textColor="@color/wenzi_hei"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_cancel"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="撤销时间："
+                    android:textSize="13sp"
+                    android:textColor="@color/wenzi_hei"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:id="@+id/tv_cancel_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1546545646556415415"
                     android:textSize="13sp"
                     android:textColor="@color/wenzi_hei"
                     android:layout_centerVertical="true"

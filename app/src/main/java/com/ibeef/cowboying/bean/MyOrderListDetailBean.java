@@ -45,21 +45,32 @@ public class MyOrderListDetailBean {
 
     public  class BizDataBean {
         /**
-         * latestState : null
+         * latestState :{\"context\":\"[上海市]快件已发车\",\"status\":\"在途\",\"time\":\"2018-12-03 15:59:41\"}
          * shopOrderResVo : {"orderId":25,"code":"120198223028352","status":"0","payStatus":"1","payAmount":0.01,"orderAmount":1,"discountAmount":0,"carrageAmount":null,"payTime":1544081278000,"receiveType":"1","receiveCode":"1229289425","storeId":null,"deliveryTime":null,"receiveTime":null,"refundAmount":null,"refundTime":null,"receiverName":"屠龙记","receiverMobile":"18703643373","receiverProvince":330000,"receiverCity":330100,"receiverRegion":330108,"receiverAddress":"下午","cancelReason":null,"createTime":1544081269000}
          * shopOrderProductResVos : [{"productId":19,"code":"201812040013","name":"来两块的吗","status":"1","imageUrl":"images/1cf94a995c9d32b694afb7b245e2f997","quantity":1,"buyPrice":0.01}]
          */
+//        "storeInfoResVo":{"storeId":1,"name":"啊啊啊","address":"嘻嘻嘻","status":"1","imageUrl":"images/ca09570497f14175b29cc0be930be12c.png"}
 
-        private Object latestState;
+        private ExpressResvo expressResvo;
         private ShopOrderResVoBean shopOrderResVo;
+        private StoreInfoResVo storeInfoResVo;
         private List<ShopOrderProductResVosBean> shopOrderProductResVos;
+        private String refundId;
 
-        public Object getLatestState() {
-            return latestState;
+        public String getRefundId() {
+            return refundId;
         }
 
-        public void setLatestState(Object latestState) {
-            this.latestState = latestState;
+        public void setRefundId(String refundId) {
+            this.refundId = refundId;
+        }
+
+        public ExpressResvo getLatestState() {
+            return expressResvo;
+        }
+
+        public void setExpressResvo(ExpressResvo expressResvo) {
+            this.expressResvo = expressResvo;
         }
 
         public ShopOrderResVoBean getShopOrderResVo() {
@@ -76,6 +87,14 @@ public class MyOrderListDetailBean {
 
         public void setShopOrderProductResVos(List<ShopOrderProductResVosBean> shopOrderProductResVos) {
             this.shopOrderProductResVos = shopOrderProductResVos;
+        }
+
+        public StoreInfoResVo getStoreInfoResVo() {
+            return storeInfoResVo;
+        }
+
+        public void setStoreInfoResVo(StoreInfoResVo storeInfoResVo) {
+            this.storeInfoResVo = storeInfoResVo;
         }
 
         public  class ShopOrderResVoBean {
@@ -118,10 +137,10 @@ public class MyOrderListDetailBean {
             private String receiveType;
             private String receiveCode;
             private Object storeId;
-            private Object deliveryTime;
-            private Object receiveTime;
+            private long deliveryTime;
+            private long receiveTime;
             private Object refundAmount;
-            private Object refundTime;
+            private long refundTime;
             private String receiverName;
             private String receiverMobile;
             private int receiverProvince;
@@ -130,6 +149,16 @@ public class MyOrderListDetailBean {
             private String receiverAddress;
             private Object cancelReason;
             private long createTime;
+
+            public String getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(String updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            private String updateTime;
 
             public int getOrderId() {
                 return orderId;
@@ -227,19 +256,19 @@ public class MyOrderListDetailBean {
                 this.storeId = storeId;
             }
 
-            public Object getDeliveryTime() {
+            public long getDeliveryTime() {
                 return deliveryTime;
             }
 
-            public void setDeliveryTime(Object deliveryTime) {
+            public void setDeliveryTime(long deliveryTime) {
                 this.deliveryTime = deliveryTime;
             }
 
-            public Object getReceiveTime() {
+            public long getReceiveTime() {
                 return receiveTime;
             }
 
-            public void setReceiveTime(Object receiveTime) {
+            public void setReceiveTime(long receiveTime) {
                 this.receiveTime = receiveTime;
             }
 
@@ -251,11 +280,11 @@ public class MyOrderListDetailBean {
                 this.refundAmount = refundAmount;
             }
 
-            public Object getRefundTime() {
+            public long getRefundTime() {
                 return refundTime;
             }
 
-            public void setRefundTime(Object refundTime) {
+            public void setRefundTime(long refundTime) {
                 this.refundTime = refundTime;
             }
 
@@ -322,6 +351,96 @@ public class MyOrderListDetailBean {
             public void setCreateTime(long createTime) {
                 this.createTime = createTime;
             }
+        }
+
+        public  class ExpressResvo {
+
+//          {\"context\":\"[上海市]快件已发车\",\"status\":\"在途\",\"time\":\"2018-12-03 15:59:41\"}
+
+            private String context;
+            private String status;
+            private String time;
+
+            public String getContext() {
+                return context;
+            }
+
+            public void setContext(String context) {
+                this.context = context;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getTime() {
+                return time;
+            }
+
+            public void setTime(String time) {
+                this.time = time;
+            }
+
+
+
+        }
+
+        public  class StoreInfoResVo {
+
+//         "storeInfoResVo":{"storeId":1,"name":"啊啊啊","address":"嘻嘻嘻","status":"1","imageUrl":"images/ca09570497f14175b29cc0be930be12c.png"}}
+
+            public String getStoreId() {
+                return storeId;
+            }
+
+            public void setStoreId(String storeId) {
+                this.storeId = storeId;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAddress() {
+                return address;
+            }
+
+            public void setAddress(String address) {
+                this.address = address;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getImageUrl() {
+                return imageUrl;
+            }
+
+            public void setImageUrl(String imageUrl) {
+                this.imageUrl = imageUrl;
+            }
+
+            private String storeId;
+            private String name;
+            private String address;
+            private String status;
+            private String imageUrl;
+
+
+
         }
 
         public  class ShopOrderProductResVosBean {

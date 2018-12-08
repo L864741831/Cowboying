@@ -116,7 +116,6 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="27dp"
-        android:src="@mipmap/mycontract_icon"
         android:layout_below="@+id/weizhi_goods_status"/>
     <TextView
         android:id="@+id/tv_code"

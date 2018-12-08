@@ -1,10 +1,14 @@
 package com.ibeef.cowboying.model;
 
 import com.ibeef.cowboying.api.ApiService;
+import com.ibeef.cowboying.base.GetApplyReturnParameterBean;
+import com.ibeef.cowboying.base.GetEditApplyReturnParameterBean;
 import com.ibeef.cowboying.base.MyCowsOrderBase;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
+import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
+import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListBean;
 import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
@@ -102,6 +106,132 @@ public class MyOrderListModel implements MyOrderListBase.IModel {
     @Override
     public Subscription getMyOrderListCancel(Map<String, String> headers, String orderId, final ResponseCallback<MyOrderListCancelBean> callback) {
         Observable<MyOrderListCancelBean> observable = service.getMyOrderListCancel(headers,orderId);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyOrderListCancelBean>() {
+                    @Override
+                    public void call(MyOrderListCancelBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getMyOrderListOk(Map<String, String> headers, String orderId, final ResponseCallback<MyOrderListCancelBean> callback) {
+        Observable<MyOrderListCancelBean> observable = service.getMyOrderListOk(headers,orderId);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyOrderListCancelBean>() {
+                    @Override
+                    public void call(MyOrderListCancelBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getAfterSaleList(Map<String, String> headers, int pageSize, int curPage, final ResponseCallback<MyAfterSaleListBean> callback) {
+        Observable<MyAfterSaleListBean> observable = service.getAfterSaleList(headers,pageSize,curPage);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyAfterSaleListBean>() {
+                    @Override
+                    public void call(MyAfterSaleListBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getAfterSaleDetail(Map<String, String> headers, String refundId, final ResponseCallback<MyAfterSaleDetailBean> callback) {
+        Observable<MyAfterSaleDetailBean> observable = service.getAfterSaleDetail(headers,refundId);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyAfterSaleDetailBean>() {
+                    @Override
+                    public void call(MyAfterSaleDetailBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getApplyReturn(Map<String, String> headers, GetApplyReturnParameterBean getApplyReturnParameterBean, final ResponseCallback<MyOrderListCancelBean> callback) {
+        Observable<MyOrderListCancelBean> observable = service.getApplyReturn(headers,getApplyReturnParameterBean);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyOrderListCancelBean>() {
+                    @Override
+                    public void call(MyOrderListCancelBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getCancelApplyReturn(Map<String, String> headers, String refundId, final ResponseCallback<MyOrderListCancelBean> callback) {
+        Observable<MyOrderListCancelBean> observable = service.getCancelApplyReturn(headers,refundId);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<MyOrderListCancelBean>() {
+                    @Override
+                    public void call(MyOrderListCancelBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getEditApplyReturn(Map<String, String> headers, GetEditApplyReturnParameterBean getEditApplyReturnParameterBean, final ResponseCallback<MyOrderListCancelBean> callback) {
+        Observable<MyOrderListCancelBean> observable = service.getEditApplyReturn(headers,getEditApplyReturnParameterBean);
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))

@@ -48,7 +48,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         helper.addOnClickListener(R.id.btn_apply_return);
         helper.addOnClickListener(R.id.btn_to_detail);
 
-        helper.setText(R.id.order_id,"订单编号："+item.getShopOrderResVo().getOrderId())
+        helper.setText(R.id.order_id,"订单编号："+item.getShopOrderResVo().getCode())
               .setText(R.id.tv_total,"共"+item.getShopOrderProductResVos().size()+"件，合计：￥"+item.getShopOrderResVo().getPayAmount());
 
         RecyclerView ry_id=helper.getView(R.id.ry_id);
@@ -105,17 +105,21 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 textView5.setVisibility(View.GONE);
                 textView7.setVisibility(View.GONE);
             } else if ("3".equals(item.getShopOrderResVo().getStatus())) {
-                //交易成功
+                //交易成功{包含快递和线下门店}
                 helper.setText(R.id.stadus_id,"交易成功");
                 textView1.setVisibility(View.VISIBLE);
-                textView2.setVisibility(View.VISIBLE);
-
                 textView6.setVisibility(View.GONE);
                 textView3.setVisibility(View.GONE);
                 textView4.setVisibility(View.GONE);
                 textView5.setVisibility(View.GONE);
                 textView7.setVisibility(View.GONE);
-
+                if ("1".equals(item.getShopOrderResVo().getReceiveType())){
+                    //快递
+                    textView2.setVisibility(View.VISIBLE);
+                }else if ("2".equals(item.getShopOrderResVo().getReceiveType())){
+                    //门店自取
+                    textView2.setVisibility(View.GONE);
+                }
             } else if ("6".equals(item.getShopOrderResVo().getStatus())) {
                 //交易关闭
                 helper.setText(R.id.stadus_id,"交易关闭");
