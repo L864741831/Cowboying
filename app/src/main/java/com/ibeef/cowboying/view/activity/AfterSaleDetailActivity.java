@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +27,9 @@ import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.orhanobut.hawk.Hawk;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -296,7 +299,24 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
         tvApplyId.setText(""+myAfterSaleDetailBean.getBizData().getOrderProductResVos().size());
         txtApplyTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCreateTime(), DateUtils.TYPE_01));
         tvReturnId.setText(""+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCode());
-
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String times=   sdf.format( new Date());
+//        long time= DateUtils.getReduce(times,DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
+//        Log.i("htht", "CreateTime::::::: "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
+//        Log.i("htht", "time::::::::: "+time);
+//        //两时间差,精确到毫秒
+//        long hour = time  / 3600000;
+//        //以小时为单位取整
+//        long min = time  % 3600000 / 60000;
+//        //以分钟为单位取整
+//        long seconds = time  % 3600000 % 60000 / 1000;
+//        //以秒为单位取整
+//        if(time>0){
+//            time_show_id.initTime(hour,min,seconds);
+//            time_show_id.start();
+//        }else {
+//            time_show_id.setVisibility(View.GONE);
+//        }
 
     }
 

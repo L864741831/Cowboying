@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,10 +31,13 @@ import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
+import com.ibeef.cowboying.view.customview.CountDownView;
 import com.king.zxing.util.CodeUtils;
 import com.orhanobut.hawk.Hawk;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,8 +60,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     TextView info;
     @Bind(R.id.action_new_question_tv)
     TextView actionNewQuestionTv;
-    @Bind(R.id.tv_countdown)
-    TextView tvCountdown;
     @Bind(R.id.ll_countdown)
     LinearLayout llCountdown;
     @Bind(R.id.tv_order_status)
@@ -134,6 +136,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     TextView tvOrderGuanbiTime;
     @Bind(R.id.v_line)
     View vLine;
+    @Bind(R.id.time_show_id)
+    CountDownView time_show_id;
     private List<MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean> beanList;
     private AfterSaleDetailAdapter afterSaleAdapter;
     private String orderId;
@@ -170,6 +174,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             reqData.put("version", getVersionCodes());
             myOrderListPresenter.getMyOrderListDetail(reqData, orderId);
         }
+
     }
 
 
@@ -191,7 +196,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 break;
             case R.id.btn_order_pay:
                 //去付款
-                Intent intent5 = new Intent(this,MyorderListCancelDialog.class);
+                Intent intent5 = new Intent(this,StorePayTypeActivity.class);
                 intent5.putExtra("orderId",orderId);
                 startActivity(intent5);
                 break;
@@ -203,6 +208,9 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 break;
             case R.id.btn_order_see_wuliu:
                 //查看物流
+                Intent intent=new Intent(this,ShowOrderDeleveryActivity.class);
+                intent.putExtra("orderId",orderId);
+                startActivity(intent);
                 break;
             case R.id.btn_order_ok:
                 //确认收货
@@ -368,7 +376,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 tvOrderGuanbiTime.setVisibility(View.VISIBLE);
                 tvOrderStatus.setText("订单状态：交易关闭");
             }
-            if (myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveCode()!=null){
+            if (myOrderListDetailBean.getBizData().getStoreInfoResVo()!=null){
                 Bitmap barCode = CodeUtils.createBarCode(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveCode(), BarcodeFormat.CODE_128, 800, 200);
                 ivIcon.setImageBitmap(barCode);
                 tvCode.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveCode().substring(0,4)+"******查看数字");
@@ -388,14 +396,35 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             tvOrderTuikuanTime.setText("退款时间:   "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getRefundTime(),DateUtils.TYPE_01));
             tvOrderGuanbiTime.setText("关闭时间:   "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getUpdateTime(),DateUtils.TYPE_01));
             tvOrderShouhuoTime.setText("收货时间:   "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(),DateUtils.TYPE_01));
-            tvWuliuIng.setText(myOrderListDetailBean.getBizData().getLatestState().getContext());
-            tvWuliuIngTime.setText(myOrderListDetailBean.getBizData().getLatestState().getTime());
+            if (myOrderListDetailBean.getBizData().getLatestState()!=null){
+                tvWuliuIng.setText(myOrderListDetailBean.getBizData().getLatestState().getContext());
+                tvWuliuIngTime.setText(myOrderListDetailBean.getBizData().getLatestState().getTime());
+            }
             //如果没有优惠券就不显示优惠券一栏
             if (myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount()==0.0){
                 rlDiscountCoupon.setVisibility(View.GONE);
             }else{
                 tvDiscountCoupon.setText("-￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount());
             }
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String times=   sdf.format( new Date());
+            long time= DateUtils.getReduce(times,DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01)+1800000);
+            Log.i("htht", "CreateTime::::::: "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
+            Log.i("htht", "time::::::::: "+time);
+            //两时间差,精确到毫秒
+            long hour = time  / 3600000;
+            //以小时为单位取整
+            long min = time  % 3600000 / 60000;
+            //以分钟为单位取整
+            long seconds = time  % 3600000 % 60000 / 1000;
+            //以秒为单位取整
+            if(time>0){
+                time_show_id.initTime(hour,min,seconds);
+                time_show_id.start();
+            }else {
+                time_show_id.setVisibility(View.GONE);
+            }
+
         } else {
             Toast.makeText(this, myOrderListDetailBean.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -459,5 +488,14 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     @Override
     public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(myOrderListPresenter != null){
+            myOrderListPresenter.detachView();
+        }
+        time_show_id.onPause();
+        super.onDestroy();
     }
 }

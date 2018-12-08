@@ -38,7 +38,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         helper.addOnClickListener(R.id.btn_cancle_order);
         helper.addOnClickListener(R.id.btn_to_pay);
         helper.addOnClickListener(R.id.btn_apply_return);
-        helper.addOnClickListener(R.id.btn_to_detail);
 
         helper.setText(R.id.order_id,"订单编号："+item.getShopOrderResVo().getCode())
               .setText(R.id.tv_total,"共"+item.getShopOrderProductResVos().size()+"件，合计：￥"+item.getShopOrderResVo().getPayAmount());
