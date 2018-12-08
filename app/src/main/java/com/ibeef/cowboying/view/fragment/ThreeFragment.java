@@ -323,13 +323,13 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 cattleNumId.setText("");
             }
 
-            if(cowManInfosResultBean.getBizData().getMyTotalAssets().floatValue()>0){
+            if(cowManInfosResultBean.getBizData().getMyTotalAssets()>0){
                 allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
             }else {
                 allMoneyId.setText("");
             }
 
-            if (cowManInfosResultBean.getBizData().getMyCreditAmount().floatValue() > 0) {
+            if (cowManInfosResultBean.getBizData().getMyCreditAmount() > 0) {
                 writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount() + "元");
             } else {
                 writeMoneyId.setText("");

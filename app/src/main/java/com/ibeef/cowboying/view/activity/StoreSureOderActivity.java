@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.UseCouponListResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.UseCouponListPresenter;
@@ -249,8 +251,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 intent1.putExtra("check",check);
                 intent1.putExtra("isStore",true);
                 intent1.putExtra("infos",(Serializable) storeCarResultBeans);
-                intent1.putExtra("schemeId",1);
-                intent1.putExtra("quantity",1);
+                intent1.putExtra("schemeId",0);
+                intent1.putExtra("quantity",0);
                 startActivityForResult(intent1,REQUESTCODE);
                 break;
             case R.id.now_pay_id:

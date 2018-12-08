@@ -14,8 +14,8 @@ public class NowBuyOrderResultBean implements Serializable {
 
     /**
      * code : 000000
-     * message :
-     * bizData : {"address":{"id":null,"name":null,"mobile":null,"provinceId":null,"cityId":null,"regionId":null,"detailAddress":null,"isDefualt":null},"products":[{"productId":12,"name":"牛头肉","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":600,"stock":1000,"quantity":3,"productAmount":1800},{"productId":19,"name":"来两块的吗","productMainImage":"images/1cf94a995c9d32b694afb7b245e2f997","specification":"333","weight":null,"price":1,"stock":10000,"quantity":5,"productAmount":5}],"carrageAmount":0,"orderAmount":18.05,"totalQuantity":8}
+     * message : “”
+     * bizData : {"address":{"id":9,"name":"李","mobile":"18703643373","province":"浙江省","provinceId":330000,"city":"杭州市","cityId":330100,"region":"滨江区","regionId":330108,"detailAddress":"河南财经政法大学","isDefault":"1"},"products":[{"productId":3,"name":"牛头肉","productMainImage":null,"specification":"269*2","weight":null,"price":6,"stock":998,"quantity":3,"productAmount":18,"status":"1","carriage":0.01,"carriageAmount":0.03},{"productId":12,"name":"牛头肉","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":6,"stock":1000,"quantity":3,"productAmount":18,"status":"1","carriage":0.01,"carriageAmount":0.03},{"productId":25,"name":"牛头肉也不错啊啊","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":6,"stock":999,"quantity":2,"productAmount":12,"status":"1","carriage":1,"carriageAmount":2},{"productId":35,"name":"啦啦啦啦啦啦啦啦啦啦啦","productMainImage":"images/e71ff25f949b9d1c9d83f99e0ed99329","specification":"500kg","weight":null,"price":0.5,"stock":489,"quantity":1,"productAmount":0.5,"status":"1","carriage":2000,"carriageAmount":2000},{"productId":44,"name":"ddd","productMainImage":"images/051cb18bfc2cac1b5d25229cb41423e6","specification":"111*20g","weight":null,"price":10,"stock":979,"quantity":1,"productAmount":10,"status":"1","carriage":12,"carriageAmount":12},{"productId":46,"name":"这是牛啊","productMainImage":"images/051cb18bfc2cac1b5d25229cb41423e6","specification":"300g","weight":null,"price":300,"stock":9999,"quantity":2,"productAmount":600,"status":"1","carriage":1,"carriageAmount":2},{"productId":49,"name":"你确定这是牛排","productMainImage":"images/051cb18bfc2cac1b5d25229cb41423e6","specification":"300g","weight":null,"price":199,"stock":94,"quantity":2,"productAmount":398,"status":"1","carriage":1,"carriageAmount":2}],"carriageAmount":2018.06,"orderAmount":1056.5,"totalQuantity":14}
      */
 
     private String code;
@@ -48,15 +48,15 @@ public class NowBuyOrderResultBean implements Serializable {
 
     public  class BizDataBean implements Serializable{
         /**
-         * address : {"id":null,"name":null,"mobile":null,"provinceId":null,"cityId":null,"regionId":null,"detailAddress":null,"isDefualt":null}
-         * products : [{"productId":12,"name":"牛头肉","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":600,"stock":1000,"quantity":3,"productAmount":1800},{"productId":19,"name":"来两块的吗","productMainImage":"images/1cf94a995c9d32b694afb7b245e2f997","specification":"333","weight":null,"price":1,"stock":10000,"quantity":5,"productAmount":5}]
-         * carrageAmount : 0
-         * orderAmount : 18.05
-         * totalQuantity : 8
+         * address : {"id":9,"name":"李","mobile":"18703643373","province":"浙江省","provinceId":330000,"city":"杭州市","cityId":330100,"region":"滨江区","regionId":330108,"detailAddress":"河南财经政法大学","isDefault":"1"}
+         * products : [{"productId":3,"name":"牛头肉","productMainImage":null,"specification":"269*2","weight":null,"price":6,"stock":998,"quantity":3,"productAmount":18,"status":"1","carriage":0.01,"carriageAmount":0.03},{"productId":12,"name":"牛头肉","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":6,"stock":1000,"quantity":3,"productAmount":18,"status":"1","carriage":0.01,"carriageAmount":0.03},{"productId":25,"name":"牛头肉也不错啊啊","productMainImage":"images/ca09570497f14175b29cc0be930be12c.png","specification":"269*3","weight":null,"price":6,"stock":999,"quantity":2,"productAmount":12,"status":"1","carriage":1,"carriageAmount":2},{"productId":35,"name":"啦啦啦啦啦啦啦啦啦啦啦","productMainImage":"images/e71ff25f949b9d1c9d83f99e0ed99329","specification":"500kg","weight":null,"price":0.5,"stock":489,"quantity":1,"productAmount":0.5,"status":"1","carriage":2000,"carriageAmount":2000},{"productId":44,"name":"ddd","productMainImage":"images/051cb18bfc2cac1b5d25229cb41423e6","specification":"111*20g","weight":null,"price":10,"stock":979,"quantity":1,"productAmount":10,"status":"1","carriage":12,"carriageAmount":12},{"productId":46,"name":"这是牛啊","productMainImage":"images/051cb18bfc2cac1b5d25229cb41423e6","specification":"300g","weight":null,"price":300,"stock":9999,"quantity":2,"productAmount":600,"status":"1","carriage":1,"carriageAmount":2},{"productId":49,"name":"你确定这是牛排","productMainImage":"images/051cb18bfc2cac1b5d25229cb41423e6","specification":"300g","weight":null,"price":199,"stock":94,"quantity":2,"productAmount":398,"status":"1","carriage":1,"carriageAmount":2}]
+         * carriageAmount : 2018.06
+         * orderAmount : 1056.5
+         * totalQuantity : 14
          */
 
         private AddressBean address;
-        private int carriageAmount;
+        private double carriageAmount;
         private double orderAmount;
         private int totalQuantity;
         private List<ProductsBean> products;
@@ -69,12 +69,12 @@ public class NowBuyOrderResultBean implements Serializable {
             this.address = address;
         }
 
-        public int getCarrageAmount() {
+        public double getCarriageAmount() {
             return carriageAmount;
         }
 
-        public void setCarrageAmount(int carrageAmount) {
-            this.carriageAmount = carrageAmount;
+        public void setCarriageAmount(double carriageAmount) {
+            this.carriageAmount = carriageAmount;
         }
 
         public double getOrderAmount() {
@@ -103,24 +103,30 @@ public class NowBuyOrderResultBean implements Serializable {
 
         public  class AddressBean implements Serializable{
             /**
-             * id : null
-             * name : null
-             * mobile : null
-             * provinceId : null
-             * cityId : null
-             * regionId : null
-             * detailAddress : null
-             * isDefualt : null
+             * id : 9
+             * name : 李
+             * mobile : 18703643373
+             * province : 浙江省
+             * provinceId : 330000
+             * city : 杭州市
+             * cityId : 330100
+             * region : 滨江区
+             * regionId : 330108
+             * detailAddress : 河南财经政法大学
+             * isDefault : 1
              */
 
             private int id;
             private String name;
             private String mobile;
             private String province;
+            private int provinceId;
             private String city;
+            private int cityId;
             private String region;
+            private int regionId;
             private String detailAddress;
-            private int isDefualt;
+            private String isDefault;
 
             public int getId() {
                 return id;
@@ -154,12 +160,28 @@ public class NowBuyOrderResultBean implements Serializable {
                 this.province = province;
             }
 
+            public int getProvinceId() {
+                return provinceId;
+            }
+
+            public void setProvinceId(int provinceId) {
+                this.provinceId = provinceId;
+            }
+
             public String getCity() {
                 return city;
             }
 
             public void setCity(String city) {
                 this.city = city;
+            }
+
+            public int getCityId() {
+                return cityId;
+            }
+
+            public void setCityId(int cityId) {
+                this.cityId = cityId;
             }
 
             public String getRegion() {
@@ -170,6 +192,14 @@ public class NowBuyOrderResultBean implements Serializable {
                 this.region = region;
             }
 
+            public int getRegionId() {
+                return regionId;
+            }
+
+            public void setRegionId(int regionId) {
+                this.regionId = regionId;
+            }
+
             public String getDetailAddress() {
                 return detailAddress;
             }
@@ -178,26 +208,29 @@ public class NowBuyOrderResultBean implements Serializable {
                 this.detailAddress = detailAddress;
             }
 
-            public int getIsDefualt() {
-                return isDefualt;
+            public String getIsDefault() {
+                return isDefault;
             }
 
-            public void setIsDefualt(int isDefualt) {
-                this.isDefualt = isDefualt;
+            public void setIsDefault(String isDefault) {
+                this.isDefault = isDefault;
             }
         }
 
         public  class ProductsBean implements Serializable{
             /**
-             * productId : 12
+             * productId : 3
              * name : 牛头肉
-             * productMainImage : images/ca09570497f14175b29cc0be930be12c.png
-             * specification : 269*3
+             * productMainImage : null
+             * specification : 269*2
              * weight : null
-             * price : 600.0
-             * stock : 1000
+             * price : 6.0
+             * stock : 998
              * quantity : 3
-             * productAmount : 1800.0
+             * productAmount : 18.0
+             * status : 1
+             * carriage : 0.01
+             * carriageAmount : 0.03
              */
 
             private int productId;
@@ -207,9 +240,12 @@ public class NowBuyOrderResultBean implements Serializable {
             private Object weight;
             private double price;
             private int stock;
+            private int defautChoose;
             private int quantity;
             private double productAmount;
-            private int defautChoose;
+            private String status;
+            private double carriage;
+            private double carriageAmount;
 
             public int getDefautChoose() {
                 return defautChoose;
@@ -289,6 +325,30 @@ public class NowBuyOrderResultBean implements Serializable {
 
             public void setProductAmount(double productAmount) {
                 this.productAmount = productAmount;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public double getCarriage() {
+                return carriage;
+            }
+
+            public void setCarriage(double carriage) {
+                this.carriage = carriage;
+            }
+
+            public double getCarriageAmount() {
+                return carriageAmount;
+            }
+
+            public void setCarriageAmount(double carriageAmount) {
+                this.carriageAmount = carriageAmount;
             }
         }
     }
