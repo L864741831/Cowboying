@@ -9,12 +9,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;
-
-import rxfamily.bean.BaseBean;
 
 /**
  * @author ls
@@ -22,17 +21,15 @@ import rxfamily.bean.BaseBean;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class AfterSaleDetailAdapter extends BaseQuickAdapter<MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean,BaseViewHolder> {
+public class AfterSaleoneDetailAdapter extends BaseQuickAdapter<MyAfterSaleDetailBean.BizDataBean.OrderProductResVosBean,BaseViewHolder> {
     private Context context;
-    private String status;
-    public AfterSaleDetailAdapter(List data,String status, Context context, int layout) {
+    public AfterSaleoneDetailAdapter(List data, Context context, int layout) {
         super(layout, data);
         this.context=context;
-        this.status=status;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean item) {
+    protected void convert(BaseViewHolder helper, MyAfterSaleDetailBean.BizDataBean.OrderProductResVosBean item) {
         helper.setText(R.id.tv_goods_name,item.getName())
                 .setText(R.id.tv_goods_norm,""+item.getSpecification())
                 .setText(R.id.tv_goods_weight,"￥"+item.getBuyPrice())
@@ -44,11 +41,11 @@ public class AfterSaleDetailAdapter extends BaseQuickAdapter<MyOrderListDetailBe
                 //跳过内存缓存
                 ;
         Glide.with(mContext).load(Constant.imageDomain+item.getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.iv_icon));
-        //取货方式（1：快递；2：门店自提）
-        if ("1".equals(status)) {
-            imageView.setVisibility(View.GONE);
-        } else  if ("2".equals(status)){
-            imageView.setVisibility(View.VISIBLE);
-        }
+//        //取货方式（1：快递；2：门店自提）
+//        if ("1".equals(status)) {
+//            imageView.setVisibility(View.GONE);
+//        } else  if ("2".equals(status)){
+//            imageView.setVisibility(View.VISIBLE);
+//        }
     }
 }

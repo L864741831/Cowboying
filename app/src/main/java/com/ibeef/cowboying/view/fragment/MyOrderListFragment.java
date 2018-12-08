@@ -21,6 +21,8 @@ import com.flyco.dialog.widget.NormalDialog;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyOrderListAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
+import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
+import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
@@ -28,11 +30,11 @@ import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.AfterSaleApplyActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.MyorderListCancelDialog;
 import com.ibeef.cowboying.view.activity.ShowOrderDeleveryActivity;
 import com.orhanobut.hawk.Hawk;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,14 +132,12 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
             reqData.put("version", getVersionCodes());
             myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
         }
-
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my_cows_list;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,7 +146,6 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
         if (args != null) {
             stadus = args.getString("stadus");
         }
-
     }
 
     @Override
@@ -246,7 +245,10 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         break;
                     case  R.id.btn_confirm_receipt:
                         //确认收货
-
+                        Map<String, String> reqData = new HashMap<>();
+                        reqData.put("Authorization", token);
+                        reqData.put("version", getVersionCodes());
+                        myOrderListPresenter.getMyOrderListOk(reqData, dataBean.getShopOrderResVo().getOrderId());
                         break;
                     case  R.id.btn_cancle_order:
                         //取消订单
@@ -256,7 +258,9 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         break;
                     case  R.id.btn_apply_return:
                         //申请退款
-
+                        Intent intent3 = new Intent(getHoldingActivity(),AfterSaleApplyActivity.class);
+                        intent3.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId());
+                        startActivity(intent3);
                         break;
                     case  R.id.btn_to_detail:
                         //查看详情
@@ -264,7 +268,9 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         break;
                     case  R.id.to_pay:
                         //去支付
-
+                        Intent intent5 = new Intent(getHoldingActivity(),MyorderListCancelDialog.class);
+                        intent5.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());
+                        startActivity(intent5);
                         break;
                     default:
                         break;
@@ -300,6 +306,46 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
 
     @Override
     public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
+
+    }
+
+    @Override
+    public void getMyOrderListOk(MyOrderListCancelBean myOrderListCancelBean) {
+        if("000000".equals(myOrderListCancelBean.getCode())){
+            page = 1;
+            listData.clear();
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
+            Toast.makeText(getHoldingActivity(),"确认收货成功", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getHoldingActivity(), myOrderListCancelBean.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getAfterSaleList(MyAfterSaleListBean myAfterSaleListBean) {
+
+    }
+
+    @Override
+    public void getAfterSaleDetail(MyAfterSaleDetailBean myAfterSaleDetailBean) {
+
+    }
+
+    @Override
+    public void getApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getCancelApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
 
     }
 
@@ -411,9 +457,9 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
 
     @Override
     public void onDestroy() {
-//        if(myCowsOrderPresenter!=null){
-//            myCowsOrderPresenter.detachView();
-//        }
+        if(myOrderListPresenter!=null){
+            myOrderListPresenter.detachView();
+        }
         super.onDestroy();
     }
 }

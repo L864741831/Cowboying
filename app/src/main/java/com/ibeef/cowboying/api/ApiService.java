@@ -1,7 +1,10 @@
 package com.ibeef.cowboying.api;
 
+import com.ibeef.cowboying.base.GetApplyReturnParameterBean;
+import com.ibeef.cowboying.base.GetEditApplyReturnParameterBean;
 import com.ibeef.cowboying.base.MdUploadImgBean;
 import com.ibeef.cowboying.base.MyCowsOrderDeleteBean;
+import com.ibeef.cowboying.bean.*;
 import com.ibeef.cowboying.bean.AccountRegisterParamBean;
 import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
@@ -668,7 +671,7 @@ public interface ApiService {
     Observable<DeleteCarResultBean> deleteAddress(@HeaderMap Map<String, String> headers,@Query("addressId") int addressId);
 
     /**
-     * 我的商城订单列表（包含售后列表）
+     * 我的商城订单列表
      * @return
      */
     @GET("shop/order/get/orderList")
@@ -694,6 +697,48 @@ public interface ApiService {
      */
     @GET("shop/order/remove")
     Observable<MyOrderListCancelBean> getMyOrderListDelete(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
+    /**
+     * 商城订单确认收货
+     * @return
+     */
+    @GET("shop/order/confirm/receive")
+    Observable<MyOrderListCancelBean> getMyOrderListOk(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
+    /**
+     * 我的售后列表
+     * @return
+     */
+    @GET("shop/refund/list")
+    Observable<MyAfterSaleListBean> getAfterSaleList(@HeaderMap Map<String, String> headers, @Query("pageSize") int pageSize, @Query("curPage") int curPage);
+
+    /**
+     * 售后详情
+     * @return
+     */
+    @GET("shop/refund/get/detail")
+    Observable<MyAfterSaleDetailBean> getAfterSaleDetail(@HeaderMap Map<String, String> headers, @Query("refundId") String refundId);
+
+    /**
+     * 申请退款
+     * @return
+     */
+    @POST("shop/refund/apply")
+    Observable<MyOrderListCancelBean> getApplyReturn(@HeaderMap Map<String, String> headers, @Body GetApplyReturnParameterBean getApplyReturnParameterBean);
+
+    /**
+     * 撤销申请退款
+     * @return
+     */
+    @GET("shop/refund/cancel")
+    Observable<MyOrderListCancelBean> getCancelApplyReturn(@HeaderMap Map<String, String> headers,  @Query("refundId") String refundId);
+
+    /**
+     * 修改申请退款
+     * @return
+     */
+    @POST("shop/refund/modify")
+    Observable<MyOrderListCancelBean> getEditApplyReturn(@HeaderMap Map<String, String> headers, @Body GetEditApplyReturnParameterBean getEditApplyReturnParameterBean);
 
     /**
      * 是否设置支付密码

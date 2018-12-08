@@ -32,7 +32,7 @@
                 <ImageView
                     android:id="@+id/tv_text_null"
                     android:layout_centerInParent="true"
-                    android:layout_width="wrap_content" android:background="@mipmap/myconstact"
+                    android:layout_width="wrap_content" android:background="@mipmap/pick_up_null"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
 
