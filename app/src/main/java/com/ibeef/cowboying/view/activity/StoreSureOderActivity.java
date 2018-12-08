@@ -139,6 +139,12 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
         nowBuyOrderResultBean= (NowBuyOrderResultBean) getIntent().getSerializableExtra("infos");
         storeCarResultBeans= (List<AddStoreCarParamBean>) getIntent().getSerializableExtra("goodlists");
 
+        if(nowBuyOrderResultBean.getBizData().getCarriageAmount()>0){
+            freightMoneyId.setText("￥"+nowBuyOrderResultBean.getBizData().getCarriageAmount());
+            freightMoneyId.setVisibility(View.VISIBLE);
+        }else {
+            freightMoneyId.setVisibility(View.GONE);
+        }
         bizDataBeans=new ArrayList<>();
         token = Hawk.get(HawkKey.TOKEN);
         reqData = new HashMap<>();
@@ -321,6 +327,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                     if(couponmoney>0){
                         coupponMoneyId.setText("-"+couponmoney);
                         coupponMoneyId.setTextColor(getResources().getColor(R.color.red));
+                        allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(nowBuyOrderResultBean.getBizData().getOrderAmount()-couponmoney)+"");
                     }else {
                         coupponMoneyId.setText("无可用");
                         coupponMoneyId.setTextColor(getResources().getColor(R.color.txthui));

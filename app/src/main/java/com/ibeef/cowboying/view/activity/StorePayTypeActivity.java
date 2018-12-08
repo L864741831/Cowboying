@@ -278,11 +278,13 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     @Override
     public void isPayPwd(PayPwdResultBean payPwdResultBean) {
         if("000000".equals(payPwdResultBean.getCode())){
-            if(payPwdResultBean.isBizData()){
+            if(payPwdResultBean.getBizData().isHavePayPassword()){
                 accountPayShowRv.setVisibility(View.VISIBLE);
                 isComplet=true;
             }else {
-                startActivity(AddPayPwdActivity.class);
+                Intent intent=new Intent(StorePayTypeActivity.this,AddPayPwdActivity.class);
+                intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
+                startActivity(intent);
             }
         }else {
             showToast(payPwdResultBean.getMessage());

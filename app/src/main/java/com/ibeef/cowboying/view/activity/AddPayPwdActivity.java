@@ -65,6 +65,7 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
     private SmsCodePresenter smsCodePresenter;
     private SetPayPwdPresenter setPayPwdPresenter;
     private String token;
+    private String tell;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +77,10 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
     private void init() {
         info.setText("设置支付密码");
         token= Hawk.get(HawkKey.TOKEN);
+        tell=getIntent().getStringExtra("tell");
+        String str = tell.substring(0, tell.length() - (tell.substring(3)).length()) + "****" + tell.substring(7);
+
+        etMobile.setText(str);
         addPayPwd.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
         surePayPwd.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
         smsCodePresenter=new SmsCodePresenter(this);
@@ -89,11 +94,11 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
                 finish();
                 break;
             case R.id.btn_code:
-                if (TextUtils.isEmpty(etMobile.getText().toString().trim())) {
+                if (TextUtils.isEmpty(tell)) {
                     showToast("手机号码不能为空！");
                     return;
                 }
-                if (!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN, etMobile.getText().toString().trim())) {
+                if (!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN, tell)) {
                     showToast("请输入正确的手机号码！");
                     return;
                 }
@@ -148,14 +153,14 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
 
             SmsCodeParamBean smsCodeParamBean=new SmsCodeParamBean();
             smsCodeParamBean.setPlatform("2");
-            smsCodeParamBean.setPhone(etMobile.getText().toString().trim());
+            smsCodeParamBean.setPhone(tell);
             smsCodeParamBean.setTime(times);
             smsCodeParamBean.setUniqueCode(Md5Util.getIMEI(AddPayPwdActivity.this));
 
             Map<String, String> reqData = new HashMap<>();
             smsCodeParamBean.setSmsType("setPayPassWord");
             reqData.put("smsType", "setPayPassWord");
-            reqData.put("phone", etMobile.getText().toString().trim());
+            reqData.put("phone", tell);
             reqData.put("uniqueCode", Md5Util.getIMEI(AddPayPwdActivity.this));
             reqData.put("platform", "2");
             reqData.put("time", times);
@@ -169,7 +174,7 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
 
     private void validade(){
         ValidateSmsCodeParamBean validateSmsCodeParamBean=new ValidateSmsCodeParamBean();
-        validateSmsCodeParamBean.setPhone(etMobile.getText().toString().trim());
+        validateSmsCodeParamBean.setPhone(tell);
         validateSmsCodeParamBean.setSmsCode(etCode.getText().toString().trim());
         validateSmsCodeParamBean.setSmsType("setPayPassWord");
         smsCodePresenter.getValidateSms(getVersionCodes(),validateSmsCodeParamBean);
