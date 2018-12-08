@@ -22,6 +22,7 @@ import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.orhanobut.hawk.Hawk;
@@ -234,5 +235,10 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
         } else {
             Toast.makeText(this, myOrderListCancelBean.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
+
     }
 }

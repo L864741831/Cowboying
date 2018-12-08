@@ -34,6 +34,7 @@ import com.ibeef.cowboying.view.activity.AfterSaleApplyActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.MyorderListCancelDialog;
 import com.ibeef.cowboying.view.activity.ShowOrderDeleveryActivity;
+import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
 import com.orhanobut.hawk.Hawk;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -262,13 +263,9 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         intent3.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId());
                         startActivity(intent3);
                         break;
-                    case  R.id.btn_to_detail:
-                        //查看详情
-
-                        break;
                     case  R.id.to_pay:
                         //去支付
-                        Intent intent5 = new Intent(getHoldingActivity(),MyorderListCancelDialog.class);
+                        Intent intent5 = new Intent(getHoldingActivity(),StorePayTypeActivity.class);
                         intent5.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());
                         startActivity(intent5);
                         break;
