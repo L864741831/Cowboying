@@ -254,7 +254,6 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 intent1.putExtra("schemeId",0);
                 intent1.putExtra("quantity",0);
                 startActivityForResult(intent1,REQUESTCODE);
-                Log.e(Constant.TAG,selectId+"?????????????");
                 break;
             case R.id.now_pay_id:
                 if(SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean.getBizData().getAddress())){
