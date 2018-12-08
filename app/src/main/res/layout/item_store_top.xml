@@ -94,14 +94,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical"
             android:background="@color/white" android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:src="@mipmap/sign"
-                android:layout_marginTop="50dp" android:layout_marginBottom="50dp"/>
+
             <jp.wasabeef.richeditor.RichEditor
                 android:id="@+id/rich_edit_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" android:layout_marginTop="10dp"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="wrap_content" android:id="@+id/ry_bottom_id"

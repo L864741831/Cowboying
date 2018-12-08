@@ -86,7 +86,7 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
         Glide.with(context).load(Constant.imageDomain+item.getCategoryResVo().getImageUrl()).apply(options1).into((ImageView) helper.getView(R.id.cow_nine_img));
         helper.setText(R.id.nane_beef_id,item.getShopProductResVo().getName())
                 .setText(R.id.beef_price_id,"价格："+item.getShopProductResVo().getPrice()+"元")
-                .setText(R.id.beef_stock_id,"库存："+item.getShopProductResVo().getStock()+"/袋")
+                .setText(R.id.beef_stock_id,"库存："+item.getShopProductResVo().getStock()+"袋")
                 .setText(R.id.beef_size_id,"规格："+item.getShopProductResVo().getSpecification()+"/袋");
         RichEditor   richEditId=helper.getView(R.id.rich_edit_id);
         richEditId.setEditorFontSize(16);
