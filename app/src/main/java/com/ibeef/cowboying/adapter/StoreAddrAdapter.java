@@ -8,9 +8,7 @@ import android.widget.CheckBox;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
-import com.ibeef.cowboying.bean.StoreCarResultBean;
 
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class StoreAddrAdapter extends BaseQuickAdapter<StoreAddrResultBean.BizDa
         }else {
             all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.hascheck));
         }
-        helper.setText(R.id.store_addr_id,"dizhidhiz");
+        helper.setText(R.id.store_addr_id,item.getAddress());
     }
 }
 

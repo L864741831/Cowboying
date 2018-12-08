@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -172,6 +173,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
             R.id.beef_house_rv, R.id.write_money_rv, R.id.coupon_num_rv, R.id.contract_id_rv, R.id.invite_friend_id_rv,
             R.id.tell_us_id_rv,R.id.after_sale_goods_id})
     public void onViewClicked(View view) {
+        Intent intent=new Intent(getHoldingActivity(),MyOrderActivity.class);
         switch (view.getId()) {
             case R.id.messege_id:
                 if(TextUtils.isEmpty(token)){
@@ -221,19 +223,23 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 break;
             case R.id.wait_to_pay_id:
                 //待付款
-
+                intent.putExtra("index",1);
+                startActivity(intent);
                 break;
             case R.id.wait_to_delevery_id:
                 //待发货
-
+                intent.putExtra("index",2);
+                startActivity(intent);
                 break;
             case R.id.wait_get_goods_id:
                 //待收货
-
+                intent.putExtra("index",3);
+                startActivity(intent);
                 break;
             case R.id.wait_push_goods_id:
                 //待提货
-
+                intent.putExtra("index",4);
+                startActivity(intent);
                 break;
             case R.id.me_cattle_rv:
                 //我的牛只
@@ -317,13 +323,13 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 cattleNumId.setText("");
             }
 
-            if(cowManInfosResultBean.getBizData().getMyTotalAssets()>0){
+            if(cowManInfosResultBean.getBizData().getMyTotalAssets().floatValue()>0){
                 allMoneyId.setText(cowManInfosResultBean.getBizData().getMyTotalAssets()+"元");
             }else {
                 allMoneyId.setText("");
             }
 
-            if (cowManInfosResultBean.getBizData().getMyCreditAmount() > 0) {
+            if (cowManInfosResultBean.getBizData().getMyCreditAmount().floatValue() > 0) {
                 writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount() + "元");
             } else {
                 writeMoneyId.setText("");

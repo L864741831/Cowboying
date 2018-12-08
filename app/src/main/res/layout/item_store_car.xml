@@ -35,11 +35,11 @@
             android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"
             android:textColor="@color/colorAccent" android:textSize="14sp"
             android:textStyle="bold"/>
-        <com.ibeef.cowboying.view.customview.AmountViewWhite
-            android:layout_width="wrap_content" android:id="@+id/amout_num_id"
-            android:layout_height="32dp"    app:btnWidth="36dp"
-            app:tvWidth="80dp"  android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"/>
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+        <include layout="@layout/view_amount_white"/>
+    </RelativeLayout>
 
 </LinearLayout>

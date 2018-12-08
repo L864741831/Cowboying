@@ -17,7 +17,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreAddrAdapter;
 import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
-import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.base.StoreCarPayBase;
 import com.ibeef.cowboying.base.UseCouponListBase;
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
@@ -26,9 +25,6 @@ import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.CouponNumParamBean;
 import com.ibeef.cowboying.bean.CouponNumResultBean;
 import com.ibeef.cowboying.bean.DeleteCarResultBean;
-import com.ibeef.cowboying.bean.MyOrderListBean;
-import com.ibeef.cowboying.bean.MyOrderListCancelBean;
-import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.NowBuyOrderResultBean;
 import com.ibeef.cowboying.bean.NowPayOrderParamBean;
 import com.ibeef.cowboying.bean.NowPayOrderResultBean;
@@ -36,7 +32,6 @@ import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.UseCouponListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
@@ -259,23 +254,22 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 startActivityForResult(intent1,REQUESTCODE);
                 break;
             case R.id.now_pay_id:
-                if(type==0){
-                    showToast("请选择配送方式！");
-                    return;
-                }
                 if(SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean.getBizData().getAddress())){
                     if(SDCardUtil.isNullOrEmpty(item)){
                         showToast("请添加收货地址！");
                         return;
                     }
                 }
-
+                if(type==0){
+                    showToast("请选择配送方式！");
+                    return;
+                }
                 NowPayOrderParamBean noPayOrderParamBean=new NowPayOrderParamBean();
                 if(!SDCardUtil.isNullOrEmpty(item)){
-                    noPayOrderParamBean.setAddressDetail(item.getDetailAddress());
+                    noPayOrderParamBean.setAddressDetail(item.getProvince()+item.getCity()+item.getRegion()+item.getDetailAddress());
                     noPayOrderParamBean.setAddressId(item.getId());
                 }else {
-                    noPayOrderParamBean.setAddressDetail(nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
+                    noPayOrderParamBean.setAddressDetail(nowBuyOrderResultBean.getBizData().getAddress().getProvince()+nowBuyOrderResultBean.getBizData().getAddress().getCity()+nowBuyOrderResultBean.getBizData().getAddress().getRegion()+nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
                     noPayOrderParamBean.setAddressId(nowBuyOrderResultBean.getBizData().getAddress().getId());
                 }
                 if(selectId!=0){

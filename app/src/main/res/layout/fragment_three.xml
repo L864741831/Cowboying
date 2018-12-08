@@ -180,7 +180,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:textSize="14sp"
-                        android:text="待提货" android:textColor="@color/black"
+                        android:text="待取货" android:textColor="@color/black"
                         android:layout_gravity="center" />
                 </LinearLayout>
                 <LinearLayout

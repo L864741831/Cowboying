@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.StoreCarActivity;
+import com.ibeef.cowboying.view.customview.ViewPagerLayoutManager;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private String token;
     private List<StoreInfoListResultBean.BizDataBean> baseBeans;
     private StoreTopAdapter storeTopAdapter;
-    private LinearLayoutManager layoutManager;
+    private ViewPagerLayoutManager layoutManager;
     private RelativeLayout storecars_rv;
     private RelativeLayout loadingLayout;
     private BroadcastReceiver receiver1,receiver;
@@ -55,7 +57,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private boolean isClick=false;
     private List<AddStoreCarParamBean> storeCarResultBeans;
     private StoreCarPresenter storeCarPresenter;
-
+    private boolean isClickCar=false;
+    private boolean isRefresh=false;
 
     /**
      * 滑动到指定位置
@@ -72,7 +75,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
         txt1_id=view.findViewById(R.id.txt1_id);
 
-        layoutManager=new LinearLayoutManager(getHoldingActivity(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new ViewPagerLayoutManager(getHoldingActivity(), OrientationHelper.HORIZONTAL);
         ryId.setLayoutManager(layoutManager);
         token = Hawk.get(HawkKey.TOKEN);
 
@@ -86,19 +89,48 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
         storeTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
+                Intent intent1=new Intent();
+                intent1.setAction("com.ibeef.cowboying.storenum");
                 if(view.getId()==R.id.first_go_img){
-                    if(position!=baseBeans.size()-1){
-                        MoveToPosition(layoutManager,ryId,position+1);
+                    if(positions!=baseBeans.size()-1){
+                        MoveToPosition(layoutManager,ryId,positions+1);
                     }else {
-                        MoveToPosition(layoutManager,ryId,position);
+                        MoveToPosition(layoutManager,ryId,positions);
                     }
                 }else if(view.getId()==R.id.last_go_img){
-                    if(position!=0){
-                        MoveToPosition(layoutManager,ryId,position-1);
+                    if(positions!=0){
+                        MoveToPosition(layoutManager,ryId,positions-1);
                     }else {
-                        MoveToPosition(layoutManager,ryId,position);
+                        MoveToPosition(layoutManager,ryId,positions);
                     }
+                }else if(view.getId()==R.id.btnDecrease){
+                    position=positions;
+                    //为0不能再减
+                    if(baseBeans.get(positions).getCartProductNum()==0){
+                        return;
+                    }
+                    int nums=baseBeans.get(positions).getCartProductNum();
+                    num=num-nums;
+                    num+=nums-1;
+                    baseBeans.get(positions).setCartProductNum(nums-1);
+                    baseBeans.get(positions).getShopProductResVo().setChoose(true);
+
+                    storeTopAdapter.notifyItemChanged(positions);
+                    getHoldingActivity().sendBroadcast(intent1);
+                }else if(view.getId()==R.id.btnIncrease){
+                    //达到库存数
+                    if(baseBeans.get(positions).getCartProductNum()==baseBeans.get(positions).getShopProductResVo().getStock()){
+                        return;
+                    }
+                    int nums=baseBeans.get(positions).getCartProductNum();
+                     num=num-nums;
+                     num+=nums+1;
+                    baseBeans.get(positions).setCartProductNum(nums+1);
+                    baseBeans.get(positions).getShopProductResVo().setChoose(true);
+
+                    storeTopAdapter.notifyItemChanged(positions);
+                    getHoldingActivity().sendBroadcast(intent1);
                 }
 
             }
@@ -109,15 +141,11 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         swipeLy.setEnabled(true);
 
         if (receiver1 == null) {
-            // 设置广播接收器,动态修改布局
+            // 点击商品加减时动态更新购物车数量的广播接收器
             IntentFilter intentFilter1 = new IntentFilter("com.ibeef.cowboying.storenum");
             receiver1 = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    num=intent.getIntExtra("num",0);
-                    position=intent.getIntExtra("position",0);
-                    baseBeans.get(position).getShopProductResVo().setNum(num);
-                    baseBeans.get(position).getShopProductResVo().setChoose(true);
                     isClick=true;
                     if(num>0){
                         //网络请求改变购物车
@@ -132,32 +160,13 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         }
 
         if(receiver==null){
-            // 设置广播接收器,动态修改布局
+            // 点击底部icon时 动态执行假如购物车操作的广播接收器
             IntentFilter intentFilter = new IntentFilter("com.ibeef.cowboying.storeaddcar");
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if(isClick){
-                        storeCarResultBeans.clear();
-                        isClick=false;
-                        //跳到购物车
-                        for(int i=0;i<baseBeans.size();i++){
-                            if(baseBeans.get(i).getShopProductResVo().isChoose()){
-                                AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
-                                addStoreCarParamBean.setProductId(baseBeans.get(i).getShopProductResVo().getProductId());
-                                addStoreCarParamBean.setQuantity(baseBeans.get(i).getShopProductResVo().getNum());
-                                storeCarResultBeans.add(addStoreCarParamBean);
-                            }
-                        }
-                        Map<String, String> reqData = new HashMap<>();
-                        reqData.put("Authorization",token);
-                        reqData.put("version",getVersionCodes());
-                        AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
-                        addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
-                        storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
-
-                        Log.e(Constant.TAG,storeCarResultBeans.size()+"广播？？");
-                    }
+                    isRefresh=false;
+                    addCar(false);
                 }
             };
             getHoldingActivity().registerReceiver(receiver, intentFilter);
@@ -207,30 +216,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.storecars_rv:
-                if(isClick){
-                    storeCarResultBeans.clear();
-                    //跳到购物车
-                    for(int i=0;i<baseBeans.size();i++){
-                        if(baseBeans.get(i).getShopProductResVo().isChoose()){
-                            AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
-                            addStoreCarParamBean.setProductId(baseBeans.get(i).getShopProductResVo().getProductId());
-                            addStoreCarParamBean.setQuantity(baseBeans.get(i).getShopProductResVo().getNum());
-                            storeCarResultBeans.add(addStoreCarParamBean);
-                            Log.e(Constant.TAG,addStoreCarParamBean.getQuantity()+"购物车？？"+addStoreCarParamBean.getProductId());
-                        }
-                    }
-                    for(int i=0;i<baseBeans.size();i++){
-                        baseBeans.get(i).getShopProductResVo().setChoose(false);
-                    }
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("Authorization",token);
-                    reqData.put("version",getVersionCodes());
-                    AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
-                    addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
-                    storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
-                }else {
-                    startActivity(StoreCarActivity.class);
-                }
+                isRefresh=false;
+                addCar(true);
                 break;
             default:
                 break;
@@ -241,16 +228,52 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onRefresh() {
-        currentPage = 1;
-        isFirst = true;
-        baseBeans.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        storeCarPresenter.getStoreInfoList(reqData,currentPage);
-        storeCarPresenter.getStoreCarNum(reqData);
+        isRefresh=true;
+        addCar(false);
         swipeLy.setRefreshing(false);
 
+    }
+
+    /**
+     * isAddCar 是否点击的是购物车
+     * @param isAddCar
+     */
+    private void addCar(boolean isAddCar){
+        isClickCar=isAddCar;
+        //isClick 是否执行了商品数量加减的操作
+        if(isClick){
+            //清空数据，避免数据重复加
+            storeCarResultBeans.clear();
+            for(int i=0;i<baseBeans.size();i++){
+                if(baseBeans.get(i).getShopProductResVo().isChoose()){
+                    AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
+                    addStoreCarParamBean.setProductId(baseBeans.get(i).getShopProductResVo().getProductId());
+                    addStoreCarParamBean.setQuantity(baseBeans.get(i).getCartProductNum());
+                    storeCarResultBeans.add(addStoreCarParamBean);
+                    Log.e(Constant.TAG,addStoreCarParamBean.getQuantity()+"购物车？？"+addStoreCarParamBean.getProductId());
+                }
+            }
+            //如果有数据，则执行加入购物车的操作
+            if(storeCarResultBeans.size()>0){
+                for(int i=0;i<baseBeans.size();i++){
+                    baseBeans.get(i).getShopProductResVo().setChoose(false);
+                }
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
+                AddShopCarResultBean addShopCarResultBean=new AddShopCarResultBean();
+                addShopCarResultBean.setShopCartReqVos(storeCarResultBeans);
+                storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
+            }else if (isClickCar){
+                //点击购物车
+                startActivity(StoreCarActivity.class);
+            }else if(isRefresh){
+                //如果是刷新，刷新列表，购物车数据
+                refreshData();
+            }
+        }else if (isClickCar){
+            startActivity(StoreCarActivity.class);
+        }
     }
 
     @Override
@@ -297,24 +320,48 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             if(storeCarNumResultBean.getBizData()>0){
                 //网络请求改变购物车
                 txt1_id.setVisibility(View.VISIBLE);
-                txt1_id.setText(storeCarNumResultBean.getBizData()+"");
+                //重置购物车的数量，避免累加
+                num=0;
+                num=storeCarNumResultBean.getBizData();
+                txt1_id.setText(num+"");
             }else {
                 txt1_id.setVisibility(View.GONE);
             }
-            if(isClick){
-                startActivity(StoreCarActivity.class);
-            }
+
         }
 
     }
 
+    /**
+     * 刷新的时候，加入购物车成功，再刷新数据
+     */
+    private void refreshData(){
+        //先加入购物车在刷新
+        currentPage = 1;
+        isFirst = true;
+        baseBeans.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        storeCarPresenter.getStoreInfoList(reqData,currentPage);
+        storeCarPresenter.getStoreCarNum(reqData);
+    }
     @Override
     public void addStoreCar(AddStoreCarResultBean addStoreCarResultBean) {
         if("000000".equals(addStoreCarResultBean.getCode())){
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
-            storeCarPresenter.getStoreCarNum(reqData);
+            //点的的购物车
+            if(isClickCar){
+                startActivity(StoreCarActivity.class);
+            }
+            //执行的刷新
+            if(isRefresh){
+                refreshData();
+            }
+            //添加成功，重置数据
+            isClick=false;
+            isClickCar=false;
+        }else {
+            showToast(addStoreCarResultBean.getMessage());
         }
     }
 

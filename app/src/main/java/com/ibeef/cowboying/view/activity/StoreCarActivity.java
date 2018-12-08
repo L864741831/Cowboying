@@ -146,38 +146,81 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             }
         });
 
-        // 设置广播接收器,动态修改布局
+        // 点击商品加减时动态更新购物车数量的广播接收器
         IntentFilter intentFilter1 = new IntentFilter("com.ibeef.cowboying.storecarnum");
         receiver1 = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                num=intent.getIntExtra("num",1);
-                position=intent.getIntExtra("position",0);
-                lists.get(position).setQuantity(num);
-                lists.get(position).setChoose(true);
+                allCownumId.setText("合计：￥"+allMoney);
             }
         };
        registerReceiver(receiver1, intentFilter1);
 
         storeCarAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                 item=storeCarAdapter.getItem(position);
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
+                 item=storeCarAdapter.getItem(positions);
+                 position=positions;
+                Intent intent1=new Intent();
+                intent1.setAction("com.ibeef.cowboying.storecarnum");
                 switch (view.getId()){
                     case R.id.all_ck_id:
-                        if(0==lists.get(position).getDefautChoose()){
-                            lists.get(position).setDefautChoose(1);
+                        //选中
+                        if(0==lists.get(positions).getDefautChoose()){
+                            lists.get(positions).setDefautChoose(1);
                             chooseNum++;
                             allMoney+=item.getPrice()*item.getQuantity();
                             allCownumId.setText("合计：￥"+allMoney);
                         }else{
+                            //取消选中
                             chooseNum--;
                             allMoney-=item.getPrice()*item.getQuantity();
                             allCownumId.setText("合计：￥"+allMoney);
-                            lists.get(position).setDefautChoose(0);
+                            lists.get(positions).setDefautChoose(0);
                         }
-                       storeCarAdapter.notifyItemChanged(position);
+                       storeCarAdapter.notifyItemChanged(positions);
                         break;
+                    case R.id.btnDecrease:
+                        position=positions;
+                        //最小数量为1
+                        if(lists.get(positions).getQuantity()==1){
+                            return;
+                        }
+                        int nums1=lists.get(positions).getQuantity();
+                        num=num-nums1;
+                        num+=nums1-1;
+
+                        lists.get(positions).setQuantity(nums1-1);
+                        lists.get(positions).setChoose(true);
+
+                        storeCarAdapter.notifyItemChanged(positions);
+                        //选中才执行价格的计算
+                        if(1==lists.get(positions).getDefautChoose()){
+                            allMoney=allMoney-nums1*lists.get(positions).getPrice();
+                            allMoney+=(nums1-1)*lists.get(positions).getPrice();
+                            sendBroadcast(intent1);
+                        }
+                        break;
+                    case R.id.btnIncrease:
+                        //达到库存数
+                        if(lists.get(positions).getQuantity()==lists.get(positions).getStock()){
+                            return;
+                        }
+                        int nums=lists.get(positions).getQuantity();
+                        num=num-nums;
+                        num+=nums+1;
+
+                        lists.get(positions).setQuantity(nums+1);
+                        lists.get(positions).setChoose(true);
+
+                        storeCarAdapter.notifyItemChanged(positions);
+                        //选中才执行价格的计算
+                        if(1==lists.get(positions).getDefautChoose()){
+                            allMoney=allMoney-nums*lists.get(positions).getPrice();
+                            allMoney+=(nums+1)*lists.get(positions).getPrice();
+                            sendBroadcast(intent1);
+                        }
+                       break;
                     default:
                         break;
                 }
@@ -218,6 +261,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 allCownumId.setText("合计：￥"+allMoney);
                 int size = lists.size();
                 storeCarResultBeans.clear();
+                //避免删除错乱
                 for(int i=size-1;i>=0;i--){
                     if(1==lists.get(i).getDefautChoose()) {
                         AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();
@@ -256,7 +300,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                         lvsId.setVisibility(View.VISIBLE);
                         infosId.setText("您确定要删除这"+chooseNum+"件商品吗？");
                     }else {
-                        showToast("请选中要删除的商品？");
+                        showToast("请选中要删除的商品!");
                     }
 
                 }else {
@@ -275,7 +319,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                         addShopCarResultBean1.setShopCartReqVos(storeCarResultBeans);
                         storeCarPayPresenter.nowBuyOrder(reqData,addShopCarResultBean1);
                     }else {
-                        showToast("请选中要购买的商品？");
+                        showToast("请选中要购买的商品!");
                     }
                 }
                 break;
@@ -313,6 +357,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
      * 购物车内商品改变通知后台
      */
     private void addCar(){
+        storeCarResultBeans.clear();
         for(int i=0;i<lists.size();i++){
             if(lists.get(i).isChoose()){
                 AddStoreCarParamBean addStoreCarParamBean=new AddStoreCarParamBean();

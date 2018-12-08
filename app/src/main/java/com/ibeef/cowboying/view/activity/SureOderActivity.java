@@ -24,13 +24,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.OrderInitBase;
+import com.ibeef.cowboying.base.PayPwdBase;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.PayInitParamBean;
 import com.ibeef.cowboying.bean.PayInitResultBean;
+import com.ibeef.cowboying.bean.PayPwdResultBean;
 import com.ibeef.cowboying.bean.PayResult;
 import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.IsPayPwdPresenter;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
@@ -51,7 +54,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 买牛确认订单界面
  */
-public class SureOderActivity extends BaseActivity implements OrderInitBase.IView {
+public class SureOderActivity extends BaseActivity implements OrderInitBase.IView,PayPwdBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -108,6 +111,8 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     private CreatOderResultBean infos;
     private OrderInitPresenter orderInitPresenter;
     private boolean isComplet=true;
+    private IsPayPwdPresenter isPayPwdPresenter;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -204,6 +209,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         });
 
         orderInitPresenter=new OrderInitPresenter(this);
+        isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
     @OnClick({R.id.back_id, R.id.custom_txt_id, R.id.sure_pay_btn, R.id.pay_back_id, R.id.foret_pwd_id, R.id.account_balance_ck, R.id.weixin_check, R.id.zfb_check})
@@ -242,14 +248,13 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 startActivity(AddPayPwdActivity.class);
                 break;
             case R.id.sure_pay_btn:
+                Map<String, String> reqData = new HashMap<>();
+                reqData.put("Authorization",token);
+                reqData.put("version",getVersionCodes());
                 if (chooseType==3){
-                    accountPayShowRv.setVisibility(View.VISIBLE);
-                    surePayBtn.setVisibility(View.GONE);
-                    isComplet=true;
+                    //判断是否设置密码
+                    isPayPwdPresenter.isPayPwd(reqData);
                 }else {
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("Authorization",token);
-                    reqData.put("version",getVersionCodes());
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
                     payInitParamBean.setOrderId(infos.getBizData().getOrderId());
                     payInitParamBean.setPayType(chooseType+"");
@@ -280,6 +285,21 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     @Override
     public void showMsg(String msg) {
 
+    }
+
+    @Override
+    public void isPayPwd(PayPwdResultBean payPwdResultBean) {
+        if("000000".equals(payPwdResultBean.getCode())){
+            if(payPwdResultBean.isBizData()){
+                accountPayShowRv.setVisibility(View.VISIBLE);
+                surePayBtn.setVisibility(View.GONE);
+                isComplet=true;
+            }else {
+                startActivity(AddPayPwdActivity.class);
+            }
+        }else {
+            showToast(payPwdResultBean.getMessage());
+        }
     }
 
     @Override
@@ -352,6 +372,9 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     protected void onDestroy() {
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
+        }
+        if(isPayPwdPresenter!=null){
+            isPayPwdPresenter.detachView();
         }
         super.onDestroy();
     }

@@ -206,7 +206,8 @@
         <activity android:name=".view.activity.AddressActivity" />
         <activity android:name=".view.activity.EditAddressActivity" />
         <activity android:name=".view.activity.StorePayTypeActivity" />
-        <activity android:name=".view.activity.StorePayResultActivity"
+        <activity
+            android:name=".view.activity.StorePayResultActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.activity.PickUpCodeActivity"/>
         <activity android:name=".view.activity.AfterSaleActivity"/>
@@ -218,6 +219,8 @@
         <activity android:name=".view.activity.MyorderListCancelDialog"
             android:theme="@style/myTransparent"/>
         <activity android:name=".view.activity.MyOrderDetailActivity"/>
+        <activity android:name=".view.activity.ShowOrderDeleveryActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreResultOrderAdapter;
-import com.ibeef.cowboying.adapter.StoreSureOrderAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
@@ -197,6 +197,11 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
 
     @Override
     public void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 

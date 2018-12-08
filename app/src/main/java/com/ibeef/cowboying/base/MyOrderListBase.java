@@ -8,6 +8,7 @@ import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class MyOrderListBase {
         void getApplyReturn(MyOrderListCancelBean myOrderListCancelBean);
         void getCancelApplyReturn(MyOrderListCancelBean myOrderListCancelBean);
         void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean);
+        void showDelevery(ShowDeleveryResultBean showDeleveryResultBean);
     }
 
     public interface IPresenter {
@@ -41,6 +43,7 @@ public class MyOrderListBase {
         void getMyOrderListDetail(Map<String, String> headers, String orderId);
         void getMyOrderListDelete(Map<String, String> headers, String orderCode);
         void getMyOrderListCancel(Map<String, String> headers, String orderId);
+        void showDelevery(Map<String, String> headers, String orderId);
         void getMyOrderListOk(Map<String, String> headers, String orderId);
         void getAfterSaleList(Map<String, String> headers, int pageSize, int curPage);
         void getAfterSaleDetail(Map<String, String> headers,String refundId);
@@ -60,5 +63,6 @@ public class MyOrderListBase {
         Subscription getApplyReturn(Map<String, String> headers, GetApplyReturnParameterBean getApplyReturnParameterBean, ResponseCallback<MyOrderListCancelBean> callback);
         Subscription getCancelApplyReturn(Map<String, String> headers, String refundId, ResponseCallback<MyOrderListCancelBean> callback);
         Subscription getEditApplyReturn(Map<String, String> headers, GetEditApplyReturnParameterBean getEditApplyReturnParameterBean, ResponseCallback<MyOrderListCancelBean> callback);
+       Subscription showDelevery(Map<String, String> headers, String orderId, ResponseCallback<ShowDeleveryResultBean> callback);
     }
 }

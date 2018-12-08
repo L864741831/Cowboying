@@ -4,13 +4,11 @@ import android.util.Log;
 
 import com.ibeef.cowboying.base.StoreCarBase;
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
-import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.model.StoreCarModel;
 
-import java.util.List;
 import java.util.Map;
 
 import rxfamily.mvp.BasePresenter;

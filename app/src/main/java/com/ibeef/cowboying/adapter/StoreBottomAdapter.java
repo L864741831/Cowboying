@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
-import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.utils.SDCardUtil;
 
 import java.util.List;
 
@@ -34,6 +34,11 @@ public class StoreBottomAdapter extends BaseQuickAdapter<StoreInfoListResultBean
                 //跳过内存缓存
                 ;
         Glide.with(context).load(item.getVideoCoverUrl()).apply(options).into((ImageView) helper.getView(R.id.show_img_id));
-        helper.setText(R.id.img_txt_id,item.getName());
+        if(SDCardUtil.isNullOrEmpty(item.getName())){
+            helper.setVisible(R.id.img_txt_id,false);
+        }else {
+            helper.setVisible(R.id.img_txt_id,true);
+            helper.setText(R.id.img_txt_id,item.getName());
+        }
     }
 }

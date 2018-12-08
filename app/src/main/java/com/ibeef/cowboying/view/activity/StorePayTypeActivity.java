@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.base.OrderInitBase;
+import com.ibeef.cowboying.base.PayPwdBase;
 import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
@@ -30,10 +31,13 @@ import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.PayInitParamBean;
 import com.ibeef.cowboying.bean.PayInitResultBean;
+import com.ibeef.cowboying.bean.PayPwdResultBean;
 import com.ibeef.cowboying.bean.PayResult;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.WeinXinBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.IsPayPwdPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
@@ -54,7 +58,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城支付方式
  */
-public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView, MyOrderListBase.IView{
+public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView, MyOrderListBase.IView,PayPwdBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -95,6 +99,8 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     private OrderInitPresenter orderInitPresenter;
     private MyOrderListPresenter myOrderListPresenter;
     private  Map<String, String> reqData;
+    private IsPayPwdPresenter isPayPwdPresenter;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -184,6 +190,8 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
+
+        isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
     @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.zfb_check,R.id.weixin_check, R.id.foret_pwd_id, R.id.pay_back_id,R.id.wallet_check,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id})
@@ -231,8 +239,8 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 break;
             case R.id.sure_pay_id:
                 if (type==3){
-                    accountPayShowRv.setVisibility(View.VISIBLE);
-                    isComplet=true;
+                    //判断是否设置密码
+                    isPayPwdPresenter.isPayPwd(reqData);
                 }else {
                    //网络请求
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
@@ -264,6 +272,21 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
 
     @Override
     public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void isPayPwd(PayPwdResultBean payPwdResultBean) {
+        if("000000".equals(payPwdResultBean.getCode())){
+            if(payPwdResultBean.isBizData()){
+                accountPayShowRv.setVisibility(View.VISIBLE);
+                isComplet=true;
+            }else {
+                startActivity(AddPayPwdActivity.class);
+            }
+        }else {
+            showToast(payPwdResultBean.getMessage());
+        }
 
     }
 
@@ -304,6 +327,11 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         }else {
             showToast(myOrderListCancelBean.getMessage());
         }
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 
@@ -367,6 +395,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                     }
                 };
                 // 必须异步调用
+
                 Thread payThread = new Thread(payRunnable);
                 payThread.start();
             } else if (type == 2) {
@@ -403,6 +432,9 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     protected void onDestroy() {
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
+        }
+        if(isPayPwdPresenter!=null){
+            isPayPwdPresenter.detachView();
         }
         super.onDestroy();
     }

@@ -11,7 +11,6 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.view.fragment.MyCowsListFragment;
 import com.ibeef.cowboying.view.fragment.MyOrderListFragment;
 import com.orhanobut.hawk.Hawk;
 
@@ -58,6 +57,7 @@ public class MyOrderActivity extends BaseActivity {
     }
 
     private void init() {
+        index=getIntent().getIntExtra("index",0);
         from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我的订单");

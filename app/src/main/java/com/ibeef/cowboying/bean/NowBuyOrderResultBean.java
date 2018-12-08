@@ -56,7 +56,7 @@ public class NowBuyOrderResultBean implements Serializable {
          */
 
         private AddressBean address;
-        private int carrageAmount;
+        private int carriageAmount;
         private double orderAmount;
         private int totalQuantity;
         private List<ProductsBean> products;
@@ -70,11 +70,11 @@ public class NowBuyOrderResultBean implements Serializable {
         }
 
         public int getCarrageAmount() {
-            return carrageAmount;
+            return carriageAmount;
         }
 
         public void setCarrageAmount(int carrageAmount) {
-            this.carrageAmount = carrageAmount;
+            this.carriageAmount = carrageAmount;
         }
 
         public double getOrderAmount() {

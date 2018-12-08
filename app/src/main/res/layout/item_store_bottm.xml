@@ -11,11 +11,15 @@
             android:layout_height="120dp" android:src="@mipmap/cowbeefimg"
             android:scaleType="fitXY" android:layout_gravity="center"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:src="@mipmap/vediostart"
+            android:layout_gravity="center"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/img_txt_id"
-            android:layout_height="wrap_content" android:drawableTop="@mipmap/vediostart"
+            android:layout_height="wrap_content"  android:visibility="gone"
             android:layout_gravity="center" android:text="牛排作法1"
-            android:textStyle="bold" android:textSize="13sp"
+            android:textStyle="bold" android:textSize="13sp"  android:layout_marginTop="30dp"
             android:drawablePadding="10dp" android:textColor="@color/white"/>
     </FrameLayout>
 

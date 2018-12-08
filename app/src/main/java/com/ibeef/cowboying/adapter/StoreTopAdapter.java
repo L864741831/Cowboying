@@ -43,21 +43,10 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
 
         helper.addOnClickListener(R.id.last_go_img);
         helper.addOnClickListener(R.id.first_go_img);
+        helper.addOnClickListener(R.id.btnDecrease);
+        helper.addOnClickListener(R.id.btnIncrease);
 
-        final AmountViewStoreBeef amountViewStoreBeef=helper.getView(R.id.amout_num_id);
-        amountViewStoreBeef.setGoods_storage(item.getShopProductResVo().getStock());
-        amountViewStoreBeef.intEdit(item.getShopProductResVo().getNum()+"");
-
-        amountViewStoreBeef.setOnAmountChangeListener(new AmountViewStoreBeef.OnAmountChangeListener() {
-            @Override
-            public void onAmountChange(View view, int amount) {
-                Intent intent1=new Intent();
-                intent1.setAction("com.ibeef.cowboying.storenum");
-                intent1.putExtra("num",amount);
-                intent1.putExtra("position",helper.getAdapterPosition());
-                context.sendBroadcast(intent1);
-            }
-        });
+        helper.setText(R.id.etAmount,item.getCartProductNum()+"");
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)
@@ -86,7 +75,7 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
         Glide.with(context).load(Constant.imageDomain+item.getCategoryResVo().getImageUrl()).apply(options1).into((ImageView) helper.getView(R.id.cow_nine_img));
         helper.setText(R.id.nane_beef_id,item.getShopProductResVo().getName())
                 .setText(R.id.beef_price_id,"价格："+item.getShopProductResVo().getPrice()+"元")
-                .setText(R.id.beef_stock_id,"库存："+item.getShopProductResVo().getStock()+"/袋")
+                .setText(R.id.beef_stock_id,"库存："+item.getShopProductResVo().getStock()+"袋")
                 .setText(R.id.beef_size_id,"规格："+item.getShopProductResVo().getSpecification()+"/袋");
         RichEditor   richEditId=helper.getView(R.id.rich_edit_id);
         richEditId.setEditorFontSize(16);
@@ -100,13 +89,17 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
         ryBottomId.setHasFixedSize(true);
         ryBottomId.setNestedScrollingEnabled(false);
         ryBottomId.setLayoutManager(new GridLayoutManager(context,2));
+
+        final TextView seeMore=helper.getView(R.id.see_more_id);
        final List<StoreInfoListResultBean.BizDataBean.ProductVideoResVosBean> baseBeans = new ArrayList<>();
        if(item.getProductVideoResVos().size()>2){
            for (int i=0;i<2;i++){
                baseBeans.add(item.getProductVideoResVos().get(i));
            }
+           seeMore.setVisibility(View.VISIBLE);
        }else {
            baseBeans.addAll(item.getProductVideoResVos());
+           seeMore.setVisibility(View.INVISIBLE);
        }
 
         final StoreBottomAdapter storeBottomAdapter=new StoreBottomAdapter(baseBeans,context,R.layout.item_store_bottm);
@@ -123,7 +116,7 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
                 context.startActivity(intent);
             }
         });
-        final TextView seeMore=helper.getView(R.id.see_more_id);
+
         seeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

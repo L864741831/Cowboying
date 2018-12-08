@@ -26,6 +26,7 @@ import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
+import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
@@ -452,6 +453,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
 
     @Override
     public void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
+
+    }
+
+    @Override
+    public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
 }

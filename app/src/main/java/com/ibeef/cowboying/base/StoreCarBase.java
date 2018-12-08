@@ -1,12 +1,10 @@
 package com.ibeef.cowboying.base;
 
 import com.ibeef.cowboying.bean.AddShopCarResultBean;
-import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 
-import java.util.List;
 import java.util.Map;
 
 import rx.Subscription;

@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.utils.DateUtils;
+import com.ibeef.cowboying.utils.SDCardUtil;
 
 import java.util.List;
 
@@ -56,7 +57,12 @@ public class DiscountCoupondapter extends BaseQuickAdapter<MyDiscountCouponListB
           }else  if("2".equals(item.getUseType())){
               helper.setText(R.id.tv_condition_2_id,"仅可参与拼牛使用");
           }else  if("3".equals(item.getUseType())){
-              helper.setText(R.id.tv_condition_2_id,"仅可购买牛肉使用");
+              if(SDCardUtil.isNullOrEmpty(item.getUseProductId())){
+                  helper.setText(R.id.tv_condition_2_id,"仅可购买牛肉使用");
+              }else {
+                  helper.setText(R.id.tv_condition_2_id,"仅可购买"+item.getUseProductName()+"使用");
+              }
+
           }
 
           TextView tv_commit_id=helper.getView(R.id.tv_commit_id);
