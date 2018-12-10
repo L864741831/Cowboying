@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,7 +36,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
 /**
@@ -43,7 +43,7 @@ import rxfamily.view.BaseActivity;
  *
  * @author Administrator
  */
-public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListBase.IView{
+public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -71,6 +71,8 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
     EditText tvReturnInfo;
     @Bind(R.id.btn_commit)
     TextView btnCommit;
+    @Bind(R.id.tv_return_reason)
+    TextView tvReturnReason;
     private List<MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean> beanList;
     private AfterSaleDetailAdapter afterSaleAdapter;
     private String orderCode;
@@ -78,6 +80,8 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
     private MyOrderListPresenter myOrderListPresenter;
     private MyOrderListDetailBean myOrderListDetailBean;
     private String id;
+    private String selectText;
+    private String refundId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +101,7 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setHasFixedSize(true);
         rvList.setNestedScrollingEnabled(false);
-        myOrderListPresenter=new MyOrderListPresenter(this);
+        myOrderListPresenter = new MyOrderListPresenter(this);
         if (!TextUtils.isEmpty(token)) {
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
@@ -115,29 +119,32 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
                 break;
             case R.id.btn_return_reason:
                 Intent intent = new Intent(this, AfterSaleApplyReasonDialog.class);
-                startActivityForResult(intent,666);
+                startActivityForResult(intent, 666);
                 break;
             case R.id.btn_commit:
-                if (orderCode!=null){
+                if (tvReturnReason.getText().toString().length()==0||"".equals(tvReturnReason.getText().toString())){
+                    Toast.makeText(this,"原因不能为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (orderCode != null) {
                     //申请退款
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization", token);
                     reqData.put("version", getVersionCodes());
                     GetApplyReturnParameterBean getApplyReturnParameterBean = new GetApplyReturnParameterBean();
                     getApplyReturnParameterBean.setOrderId(orderCode);
-                    getApplyReturnParameterBean.setReason("不想要");
+                    getApplyReturnParameterBean.setReason(selectText + tvReturnInfo.getText().toString());
                     myOrderListPresenter.getApplyReturn(reqData, getApplyReturnParameterBean);
-                }else if (id!=null){
-                   //修改申请退款
+                } else if (id != null) {
+                    //修改申请退款
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization", token);
                     reqData.put("version", getVersionCodes());
                     GetEditApplyReturnParameterBean getEditApplyReturnParameterBean = new GetEditApplyReturnParameterBean();
                     getEditApplyReturnParameterBean.setId(id);
-                    getEditApplyReturnParameterBean.setReason("我就是不想要");
+                    getEditApplyReturnParameterBean.setReason(selectText + tvReturnInfo.getText().toString());
                     myOrderListPresenter.getEditApplyReturn(reqData, getEditApplyReturnParameterBean);
                 }
-
                 break;
             default:
                 break;
@@ -147,7 +154,11 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if (requestCode == 666 && resultCode == 555) {
+            selectText = data.getStringExtra("selectText");
+            tvReturnReason.setText(selectText);
+            Log.i("htht", "selectText=============" + selectText);
+        }
     }
 
 
@@ -181,9 +192,11 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
             rvList.setAdapter(afterSaleAdapter);
             this.beanList.addAll(myOrderListDetailBean.getBizData().getShopOrderProductResVos());
             afterSaleAdapter.setNewData(beanList);
-            tvReturnMoney.setText("￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount());
+            tvReturnMoney.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount());
+            refundId = myOrderListDetailBean.getBizData().getRefundId();
         }
     }
+
     @Override
     public void getMyOrderListDelete(MyOrderListCancelBean myOrderListCancelBean) {
 
@@ -212,9 +225,10 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
     @Override
     public void getApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
         if ("000000".equals(myOrderListCancelBean.getCode())) {
-            Intent intent3 = new Intent(this,AfterSaleDetailActivity.class);
-            intent3.putExtra("orderId",orderCode);
-            startActivity(intent3);
+//            Intent intent3 = new Intent(this, AfterSaleDetailActivity.class);
+//            intent3.putExtra("orderId", refundId);
+//            startActivity(intent3);
+            //todo refundId为空   跳不到退款详情界面
             finish();
             Toast.makeText(this, "申请退款成功", Toast.LENGTH_SHORT).show();
         } else {
@@ -231,7 +245,7 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
     public void getEditApplyReturn(MyOrderListCancelBean myOrderListCancelBean) {
         if ("000000".equals(myOrderListCancelBean.getCode())) {
             finish();
-            Toast.makeText(this, "申请退款成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, myOrderListCancelBean.getMessage(), Toast.LENGTH_SHORT).show();
         }

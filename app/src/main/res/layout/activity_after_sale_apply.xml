@@ -64,10 +64,11 @@
                     android:textColor="@color/wenzi_hei_2"
                     />
                 <TextView
+                    android:id="@+id/tv_return_reason"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:text="其他"
+                    android:hint="请选择退款原因"
                     android:layout_marginTop="-5dp"
                     android:drawableRight="@mipmap/enterright"
                     android:layout_alignParentRight="true"
@@ -146,7 +147,7 @@
                     android:hint="选填"
                     android:background="@null"
                     android:textSize="19sp"
-                    android:textColor="@color/qian_red"
+                    android:textColor="@color/gray_999999"
                     />
             </LinearLayout>
         </LinearLayout>

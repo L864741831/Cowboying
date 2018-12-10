@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.RadioButton;
@@ -35,6 +36,9 @@ public class AfterSaleApplyReasonDialog extends AppCompatActivity {
     TextView btnCpmmit;
     @Bind(R.id.rvs_id)
     RelativeLayout rvsId;
+    private Intent intent;
+    private RadioButton radioButton;
+    private String selectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +49,26 @@ public class AfterSaleApplyReasonDialog extends AppCompatActivity {
     }
 
     private void init() {
+        intent = new Intent();
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
-
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                selectRadioBtn();
+            }
+        });
     }
+
+    private void selectRadioBtn(){
+        radioButton = (RadioButton)findViewById(rg.getCheckedRadioButtonId());
+        selectText = radioButton.getText().toString();
+    }
+
 
     @OnClick(R.id.btn_cpmmit)
     public void onViewClicked() {
+        intent.putExtra("selectText", selectText);
+        setResult(555, intent);
         finish();
     }
 }

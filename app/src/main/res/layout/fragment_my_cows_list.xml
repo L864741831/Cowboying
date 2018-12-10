@@ -29,7 +29,7 @@
             <ImageView
                 android:id="@+id/tv_text_null"
                 android:layout_centerInParent="true"
-                android:layout_width="wrap_content" android:background="@mipmap/img_my_cows_null"
+                android:layout_width="wrap_content" android:background="@mipmap/order_list_null"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
