@@ -2,6 +2,7 @@ package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -234,11 +235,13 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     @Override
     public void isPayPwd(PayPwdResultBean payPwdResultBean) {
         if("000000".equals(payPwdResultBean.getCode())){
-            if(payPwdResultBean.isBizData()){
+            if(payPwdResultBean.getBizData().isHavePayPassword()){
                 accountPayShowRv.setVisibility(View.VISIBLE);
                 sureOutMoneyBtn.setVisibility(View.GONE);
             }else {
-                startActivity(AddPayPwdActivity.class);
+                Intent intent=new Intent(CashWithdrawActivity.this,AddPayPwdActivity.class);
+                intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
+                startActivity(intent);
             }
         }else {
             showToast(payPwdResultBean.getMessage());

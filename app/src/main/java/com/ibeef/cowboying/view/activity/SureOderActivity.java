@@ -290,12 +290,14 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     @Override
     public void isPayPwd(PayPwdResultBean payPwdResultBean) {
         if("000000".equals(payPwdResultBean.getCode())){
-            if(payPwdResultBean.isBizData()){
+            if(payPwdResultBean.getBizData().isHavePayPassword()){
                 accountPayShowRv.setVisibility(View.VISIBLE);
                 surePayBtn.setVisibility(View.GONE);
                 isComplet=true;
             }else {
-                startActivity(AddPayPwdActivity.class);
+                Intent intent=new Intent(SureOderActivity.this,AddPayPwdActivity.class);
+                intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
+                startActivity(intent);
             }
         }else {
             showToast(payPwdResultBean.getMessage());
