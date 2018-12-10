@@ -32,7 +32,6 @@
             android:layout_marginLeft="19dp"
             android:layout_marginRight="18dp"
             android:drawableRight="@android:drawable/btn_radio"
-            android:checked="true"
             android:paddingLeft="10dp"
             android:text="多拍/错拍/不想要"
             />

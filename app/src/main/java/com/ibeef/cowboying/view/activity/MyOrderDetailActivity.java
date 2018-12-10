@@ -383,6 +383,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 tvOrderShouhuoTime.setVisibility(View.GONE);
                 tvOrderGuanbiTime.setVisibility(View.VISIBLE);
                 tvOrderStatus.setText("订单状态：交易关闭");
+                tvOrderPayTime.setVisibility(View.GONE);
             }
             if (myOrderListDetailBean.getBizData().getStoreInfoResVo()!=null){
                 Bitmap barCode = CodeUtils.createBarCode(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveCode(), BarcodeFormat.CODE_128, 800, 200);
@@ -431,6 +432,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 time_show_id.start();
             }else {
                 time_show_id.setVisibility(View.GONE);
+            }
+            if ("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())){
+                tvPeisongType.setText("顺丰冷运");
+            }else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())){
+                tvPeisongType.setText("到店提货");
             }
 
         } else {
