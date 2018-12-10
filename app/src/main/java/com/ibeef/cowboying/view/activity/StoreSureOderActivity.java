@@ -139,11 +139,10 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
         nowBuyOrderResultBean= (NowBuyOrderResultBean) getIntent().getSerializableExtra("infos");
         storeCarResultBeans= (List<AddStoreCarParamBean>) getIntent().getSerializableExtra("goodlists");
 
-        if(nowBuyOrderResultBean.getBizData().getCarriageAmount()>0){
-            freightMoneyId.setText("￥"+nowBuyOrderResultBean.getBizData().getCarriageAmount());
-            freightMoneyId.setVisibility(View.VISIBLE);
+        if(nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()>0){
+            freightMoneyId.setText("￥"+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount());
         }else {
-            freightMoneyId.setVisibility(View.GONE);
+            freightMoneyId.setText("包邮");
         }
         bizDataBeans=new ArrayList<>();
         token = Hawk.get(HawkKey.TOKEN);
@@ -167,7 +166,13 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
             @Override
             public void onReceive(Context context, Intent intent) {
                 //获取选中的地址
-                item= (ShowAddressResultBean.BizDataBean) intent.getSerializableExtra("info");
+                boolean isNoData=intent.getBooleanExtra("isNoData",false);
+                if(isNoData){
+                    item= null;
+                }else {
+                    item= (ShowAddressResultBean.BizDataBean) intent.getSerializableExtra("info");
+                }
+
             }
         };
         registerReceiver(receiver, intentFilter);
@@ -400,7 +405,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     public void nowPayOrder(NowPayOrderResultBean nowPayOrderResultBean) {
         if("000000".equals(nowPayOrderResultBean.getCode())){
             Intent intent=new Intent(StoreSureOderActivity.this,StorePayTypeActivity.class);
-            intent.putExtra("orderId",nowPayOrderResultBean.getBizData());
+            intent.putExtra("orderId",nowPayOrderResultBean.getBizData()+"");
             startActivity(intent);
         }else {
             showToast(nowPayOrderResultBean.getMessage());

@@ -95,7 +95,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     private String token, contents;
     private IWXAPI api;
     private static final int SDK_PAY_FLAG = 1;
-    private int orderId;
+    private String orderId;
     private OrderInitPresenter orderInitPresenter;
     private MyOrderListPresenter myOrderListPresenter;
     private  Map<String, String> reqData;
@@ -143,7 +143,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     }
 
     private void init() {
-        orderId=getIntent().getIntExtra("orderId",0);
+        orderId=getIntent().getStringExtra("orderId");
 
         info.setText("支付方式");
         long time= 1800000;
@@ -170,7 +170,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                     reqData.put("Authorization",token);
                     reqData.put("version",getVersionCodes());
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
-                    payInitParamBean.setOrderId(orderId);
+                    payInitParamBean.setOrderId(Integer.parseInt(orderId));
                     payInitParamBean.setPayType(type+"");
                     payInitParamBean.setSecret(contents);
                     orderInitPresenter.getStorePayInit(reqData,payInitParamBean);
@@ -185,7 +185,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         myOrderListPresenter=new MyOrderListPresenter(this);
         Constant.PAY_RESULT_TYPE=1;
         //WXPayEntryActivity 的orderId赋值
-        Constant.orderId=orderId;
+        Constant.orderId=Integer.parseInt(orderId);
 
         reqData = new HashMap<>();
         reqData.put("Authorization",token);
@@ -198,7 +198,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                lvsId.setVisibility(View.VISIBLE);
+                 finish();
                 break;
             case R.id.lvs_id:
                 //重写取消订单dialog
@@ -244,7 +244,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 }else {
                    //网络请求
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
-                    payInitParamBean.setOrderId(orderId);
+                    payInitParamBean.setOrderId(Integer.parseInt(orderId));
                     payInitParamBean.setPayType(type+"");
                     orderInitPresenter.getStorePayInit(reqData,payInitParamBean);
                 }
@@ -441,8 +441,5 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         super.onDestroy();
     }
 
-    @Override
-    public void onBackPressed() {
-        lvsId.setVisibility(View.VISIBLE);
-    }
+
 }

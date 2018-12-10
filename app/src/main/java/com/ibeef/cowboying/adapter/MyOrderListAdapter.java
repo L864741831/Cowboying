@@ -2,6 +2,7 @@ package com.ibeef.cowboying.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyOrderListBean;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
+import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
+import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
     public MyOrderListAdapter(List data, Context context) {
         super(R.layout.my_order_list_item, data);
         this.context=context;
+
     }
 
     @Override
@@ -46,14 +51,14 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
-        MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(item.getShopOrderProductResVos(),item.getShopOrderResVo().getReceiveType(),context);
+       final MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(item.getShopOrderProductResVos(),item.getShopOrderResVo().getReceiveType(),context);
         ry_id.setAdapter(myOrderChirdListAdapter);
         myOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                    Intent intent = new Intent(context, MyCowsDetailActivity.class);
-//                    intent.putExtra("orderId",item.getOrderId()+"");
-//                    context.startActivity(intent);
+                    Intent intent5 = new Intent(context,MyOrderDetailActivity.class);
+                    intent5.putExtra("orderId",item.getShopOrderResVo().getOrderId());
+                    context.startActivity(intent5);
                 }
             });
 //        订单状态（0：未支付；1：已支付；2：已发货；3：确认收货；4：退款中；5：已退款；6：已取消；）'

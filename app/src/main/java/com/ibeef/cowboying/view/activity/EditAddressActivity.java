@@ -105,6 +105,7 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
             }
         }
 
+
     }
 
     @OnClick({R.id.back_id, R.id.lv_addrs,R.id.action_new_question_tv})
@@ -153,6 +154,10 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
 
                 if(etAddrDescribe.getText().toString().trim().length()>40){
                     Toast.makeText(EditAddressActivity.this, "详细地址不能多于40个字！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(etAddrDescribe.getText().toString().trim().length()<5){
+                    Toast.makeText(EditAddressActivity.this, "详细地址不能少于5个字！", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

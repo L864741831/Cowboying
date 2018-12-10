@@ -99,9 +99,8 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
                 break;
             case R.id.rv_bottom_id:
                 //跳到订单列表
-                Intent intent1=new Intent(StorePayResultActivity.this,MyOrderActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent1=new Intent(StorePayResultActivity.this,MyOrderDetailActivity.class);
+                intent1.putExtra("orderId",orderId+"");
                 intent1.putExtra("from",true);
                 startActivity(intent1);
                 break;

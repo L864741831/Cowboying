@@ -263,7 +263,7 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         intent3.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId());
                         startActivity(intent3);
                         break;
-                    case  R.id.to_pay:
+                    case  R.id.btn_to_pay:
                         //去支付
                         Intent intent5 = new Intent(getHoldingActivity(),StorePayTypeActivity.class);
                         intent5.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());

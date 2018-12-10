@@ -41,96 +41,19 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
     @Override
     protected void convert(final BaseViewHolder helper, final StoreInfoListResultBean.BizDataBean item) {
 
-        helper.addOnClickListener(R.id.last_go_img);
-        helper.addOnClickListener(R.id.first_go_img);
-        helper.addOnClickListener(R.id.btnDecrease);
-        helper.addOnClickListener(R.id.btnIncrease);
-
-        helper.setText(R.id.etAmount,item.getCartProductNum()+"");
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)
                 //跳过内存缓存
                 ;
-        RequestOptions options1 = new RequestOptions()
-                .skipMemoryCache(true)
-                .error(R.mipmap.cowone)
-                //跳过内存缓存
-                ;
-        RequestOptions options2 = new RequestOptions()
-                .skipMemoryCache(true)
-                .error(R.mipmap.des_info_img)
-                //跳过内存缓存
-                ;
-        if(item.getProductImages().size()!=0){
-            if(item.getProductImages().size()==1){
-                Glide.with(context).load(Constant.imageDomain+item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
+
+        if (item.getProductImages().size() != 0) {
+            if (item.getProductImages().size() == 1) {
+                Glide.with(context).load(Constant.imageDomain + item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
             }
-            if(item.getProductImages().size()==2){
-                Glide.with(context).load(Constant.imageDomain+item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
-                Glide.with(context).load(Constant.imageDomain+item.getProductImages().get(1).getImageUrl()).apply(options2).into((ImageView) helper.getView(R.id.show_des_img));
+            if (item.getProductImages().size() == 2) {
+                Glide.with(context).load(Constant.imageDomain + item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
             }
         }
-
-        Glide.with(context).load(Constant.imageDomain+item.getCategoryResVo().getImageUrl()).apply(options1).into((ImageView) helper.getView(R.id.cow_nine_img));
-        helper.setText(R.id.nane_beef_id,item.getShopProductResVo().getName())
-                .setText(R.id.beef_price_id,"价格："+item.getShopProductResVo().getPrice()+"元")
-                .setText(R.id.beef_stock_id,"库存："+item.getShopProductResVo().getStock()+"袋")
-                .setText(R.id.beef_size_id,"规格："+item.getShopProductResVo().getSpecification()+"/袋");
-        RichEditor   richEditId=helper.getView(R.id.rich_edit_id);
-        richEditId.setEditorFontSize(16);
-        richEditId.setEditorFontColor(Color.BLACK);
-        richEditId.setInputEnabled(false);
-        richEditId.setPadding(3, 5, 5, 5);
-        richEditId.loadCSS("file:///android_asset/img.css");
-        richEditId.setHtml(item.getShopProductResVo().getDescribes());
-
-        RecyclerView  ryBottomId=helper.getView(R.id.ry_bottom_id);
-        ryBottomId.setHasFixedSize(true);
-        ryBottomId.setNestedScrollingEnabled(false);
-        ryBottomId.setLayoutManager(new GridLayoutManager(context,2));
-
-        final TextView seeMore=helper.getView(R.id.see_more_id);
-       final List<StoreInfoListResultBean.BizDataBean.ProductVideoResVosBean> baseBeans = new ArrayList<>();
-       if(item.getProductVideoResVos().size()>2){
-           for (int i=0;i<2;i++){
-               baseBeans.add(item.getProductVideoResVos().get(i));
-           }
-           seeMore.setVisibility(View.VISIBLE);
-       }else {
-           baseBeans.addAll(item.getProductVideoResVos());
-           seeMore.setVisibility(View.INVISIBLE);
-       }
-
-        final StoreBottomAdapter storeBottomAdapter=new StoreBottomAdapter(baseBeans,context,R.layout.item_store_bottm);
-        ryBottomId.setAdapter(storeBottomAdapter);
-
-        storeBottomAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                StoreInfoListResultBean.BizDataBean.ProductVideoResVosBean items=storeBottomAdapter.getItem(position);
-                Intent intent = new Intent(context, PlayerVideoActivity.class);
-                intent.putExtra("video_url",items.getVideoUrl());
-                intent.putExtra("title",items.getName());
-                intent.putExtra("coverUrl",items.getVideoCode());
-                context.startActivity(intent);
-            }
-        });
-
-        seeMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //视频查看更多
-                if(item.getProductVideoResVos().size()>2){
-                    for (int j=0;j<item.getProductVideoResVos().size()-2;j++){
-                        baseBeans.add(j+2,item.getProductVideoResVos().get(j));
-                        storeBottomAdapter.notifyDataSetChanged();
-                    }
-                }else {
-                    Toast.makeText(context,"没有更多视频~",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
     }
 }
