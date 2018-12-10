@@ -126,7 +126,7 @@ public class MyAfterSaleListBean {
             private String reason;
             private String status;
             private long refundTime;
-            private long amount;
+            private double amount;
             private String orderStatus;
             private String refuseReason;
 
@@ -178,11 +178,11 @@ public class MyAfterSaleListBean {
                 this.refundTime = refundTime;
             }
 
-            public long getAmount() {
+            public double getAmount() {
                 return amount;
             }
 
-            public void setAmount(long amount) {
+            public void setAmount(double amount) {
                 this.amount = amount;
             }
 
