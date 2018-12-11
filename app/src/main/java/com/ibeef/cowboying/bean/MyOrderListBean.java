@@ -375,7 +375,7 @@ public class MyOrderListBean {
              * buyPrice : 6.0
              */
 
-            private String productId;
+            private int productId;
             private String code;
             private String name;
             private String status;
@@ -393,11 +393,11 @@ public class MyOrderListBean {
             }
 
 
-            public String getProductId() {
+            public int getProductId() {
                 return productId;
             }
 
-            public void setProductId(String productId) {
+            public void setProductId(int productId) {
                 this.productId = productId;
             }
 
