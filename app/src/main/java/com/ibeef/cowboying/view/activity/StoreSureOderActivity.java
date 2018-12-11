@@ -99,6 +99,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     TextView refuceId;
     @Bind(R.id.sure_id)
     TextView sureId;
+    @Bind(R.id.show_title_id)
+    TextView showTitleId;
     @Bind(R.id.ry_store_id)
     RecyclerView ryStoreId;
     @Bind(R.id.img_choose1_id)
@@ -439,6 +441,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     public void storeAddrList(StoreAddrResultBean storeAddrResultBean) {
         if ("000000".equals(storeAddrResultBean.getCode())) {
             if (!SDCardUtil.isNullOrEmpty(storeAddrResultBean.getBizData())) {
+                showTitleId.setText(storeAddrResultBean.getBizData().get(0).getName());
                 this.storeAddrResultBean=storeAddrResultBean;
                 bizDataBeans.addAll(storeAddrResultBean.getBizData());
                 storeAddrAdapter.setNewData(bizDataBeans);

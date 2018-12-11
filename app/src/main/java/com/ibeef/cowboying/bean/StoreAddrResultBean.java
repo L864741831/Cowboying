@@ -99,6 +99,15 @@ public class StoreAddrResultBean {
         private String address;
         private String status;
         private String imageUrl;
+        private int defautChoose;
+
+        public int getDefautChoose() {
+            return defautChoose;
+        }
+
+        public void setDefautChoose(int defautChoose) {
+            this.defautChoose = defautChoose;
+        }
 
         public int getStoreId() {
             return storeId;
