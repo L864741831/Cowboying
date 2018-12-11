@@ -31,6 +31,8 @@ import com.ibeef.cowboying.bean.AddStoreCarParamBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
+import com.ibeef.cowboying.bean.StoreOneResultBean;
+import com.ibeef.cowboying.bean.StorePriductIdParamBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
@@ -51,12 +53,11 @@ import java.util.Map;
 import jp.wasabeef.richeditor.RichEditor;
 import rxfamily.view.BaseFragment;
 
-public class SecondFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarBase.IView {
+public class SecondFragment extends BaseFragment implements View.OnClickListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarBase.IView {
 
     private RecyclerView ryId;
-    private SwipeRefreshLayout swipeLy;
     private TextView txt1_id;
-    private int currentPage=3;
+    private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
     private String token;
@@ -65,13 +66,12 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private ViewPagerLayoutManager layoutManager;
     private RelativeLayout storecars_rv;
     private RelativeLayout loadingLayout;
-    private BroadcastReceiver receiver;
+    private BroadcastReceiver receiver,receiver1;
     private int num,position;
     private boolean isClick=false;
     private List<AddStoreCarParamBean> storeCarResultBeans;
     private StoreCarPresenter storeCarPresenter;
     private boolean isClickCar=false;
-    private boolean isRefresh=false;
     private ImageView show_des_img;
     private ImageView cow_nine_img;
     private ImageView last_go_img;
@@ -87,7 +87,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private AmountViewStoreBeef amountViewBeef;
     private boolean isLoadFirst=true;
     private boolean isNoData=false;
-
+    private List<Integer> productIds;
     /**
      * 滑动到指定位置
      */
@@ -98,7 +98,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         ryId=view.findViewById(R.id.ry_id);
         ryId.setHasFixedSize(true);
         ryId.setNestedScrollingEnabled(false);
-        swipeLy=view.findViewById(R.id.swipe_ly);
         loadingLayout=view.findViewById(R.id.loading_layout);
         cow_nine_img=view.findViewById(R.id.cow_nine_img);
         show_des_img=view.findViewById(R.id.show_des_img);
@@ -121,22 +120,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         layoutManager = new ViewPagerLayoutManager(getHoldingActivity(), OrientationHelper.HORIZONTAL);
         ryId.setLayoutManager(layoutManager);
         token = Hawk.get(HawkKey.TOKEN);
-        ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if(!ryId.canScrollVertically(-1)){
-                    swipeLy.setEnabled(true);
-                }else {
-                    swipeLy.setEnabled(false);
-                }
-            }
-        });
+        productIds=new ArrayList<>();
 
         /**
          * 手势滑动图片
@@ -174,7 +158,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         ryId.setAdapter(storeTopAdapter);
         storeTopAdapter.loadMoreEnd();
 
-
         storeTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
@@ -182,29 +165,66 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
-
-
         if(receiver==null){
             // 点击底部icon时 动态执行假如购物车操作的广播接收器
             IntentFilter intentFilter = new IntentFilter("com.ibeef.cowboying.storeaddcar");
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    isRefresh=false;
                     addCar(false);
                 }
             };
             getHoldingActivity().registerReceiver(receiver, intentFilter);
         }
+
+        if(receiver1==null){
+            // 点击底部icon时 动态执行假如购物车操作的广播接收器
+            IntentFilter intentFilter = new IntentFilter("com.ibeef.cowboying.refreshstore");
+            receiver1 = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    //购物车删除商拼，添加商品时刷新数据
+                    isClick=false;
+                    isClickCar=false;
+                    refreshData();
+                }
+            };
+            getHoldingActivity().registerReceiver(receiver1, intentFilter);
+        }
+
+
         storeCarPresenter=new StoreCarPresenter(this);
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        storeCarPresenter.getStoreInfoList(reqData,currentPage);
+        StorePriductIdParamBean storePriductIdParamBean=new StorePriductIdParamBean();
+        if(Constant.PRODUCR_ID==0){
+            if(productIds.size()>0){
+                storePriductIdParamBean.setProductIds(productIds);
+                storePriductIdParamBean.setCurrentPage(currentPage);
+                storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+            }else {
+                storePriductIdParamBean.setCurrentPage(currentPage);
+                storePriductIdParamBean.setProductIds(null);
+                storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+            }
+        }else {
+            //数据清空重新加载，详情的数据放在第一个
+            isClick=false;
+            isClickCar=false;
+            baseBeans.clear();
+            productIds.clear();
+            currentPage = 1;
+            isFirst = true;
+            position=0;
+            isNoData=false;
+            isMoreLoad=false;
+            isLoadFirst=true;
+            storeCarPresenter.getStoreOneInfo(reqData,Constant.PRODUCR_ID);
+        }
         storeCarPresenter.getStoreCarNum(reqData);
+
+
     }
 
 
@@ -237,14 +257,16 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         } else {
             mRecyclerView.scrollToPosition(n);
         }
-        initData();
+        if(baseBeans.size()>0){
+            initData();
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.storecars_rv:
-                isRefresh=false;
                 addCar(true);
                 break;
             case R.id.last_go_img:
@@ -263,16 +285,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     }
 
 
-
-    @Override
-    public void onRefresh() {
-        isRefresh=true;
-        addCar(false);
-        swipeLy.setRefreshing(false);
-
-    }
-
-
     /**
      * 往右划显示数据
      */
@@ -287,11 +299,22 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                     MoveToPosition(layoutManager,ryId,position);
                 }
             }else {
-                currentPage += 1;
+                currentPage = 1;
                 Map<String, String> reqData = new HashMap<>();
                 reqData.put("Authorization", token);
                 reqData.put("version", getVersionCodes());
-                storeCarPresenter.getStoreInfoList(reqData, currentPage);
+
+                StorePriductIdParamBean storePriductIdParamBean=new StorePriductIdParamBean();
+                if(productIds.size()>0){
+                    storePriductIdParamBean.setProductIds(productIds);
+                    storePriductIdParamBean.setCurrentPage(currentPage);
+                    storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+                }else {
+                    storePriductIdParamBean.setCurrentPage(currentPage);
+                    storePriductIdParamBean.setProductIds(null);
+                    storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+                }
+
             }
 
         } else {
@@ -333,15 +356,9 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             }else if (isClickCar){
                 //点击购物车
                 startActivity(StoreCarActivity.class);
-            }else if(isRefresh){
-                //如果是刷新，刷新列表，购物车数据
-                refreshData();
             }
         }else if (isClickCar){
             startActivity(StoreCarActivity.class);
-        }else if(isRefresh){
-            //如果是刷新，刷新列表，购物车数据
-            refreshData();
         }
 
     }
@@ -349,11 +366,22 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onLoadMoreRequested() {
         isMoreLoad = true;
-        currentPage += 1;
+        currentPage = 1;
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        storeCarPresenter.getStoreInfoList(reqData,currentPage);
+        StorePriductIdParamBean storePriductIdParamBean=new StorePriductIdParamBean();
+        if(productIds.size()>0){
+            storePriductIdParamBean.setProductIds(productIds);
+            storePriductIdParamBean.setCurrentPage(currentPage);
+            storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+        }else {
+            storePriductIdParamBean.setCurrentPage(currentPage);
+            storePriductIdParamBean.setProductIds(null);
+            storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+        }
+
+
     }
 
 
@@ -376,8 +404,12 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 }
                 storeTopAdapter.loadMoreEnd();
             } else {
+
                 isFirst = false;
                 baseBeans.addAll(storeInfoListResultBean.getBizData());
+                for(int i=0;i<baseBeans.size();i++){
+                    productIds.add(baseBeans.get(i).getShopProductResVo().getProductId());
+                }
                 storeTopAdapter.setNewData(this.baseBeans);
                 if(isLoadFirst){
                     isLoadFirst=false;
@@ -415,8 +447,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onAmountChange(View view, int amount) {
                 isClick=true;
-                if(amount>baseBeans.get(position).getShopProductResVo().getStock()){
-                    showToast("已达到最大库存！");
+                if(amount>=baseBeans.get(position).getShopProductResVo().getStock()){
+//                    showToast("已达到最大库存！");
                 }else {
                     if(baseBeans.get(position).getCartProductNum()>amount){
                         //为0不能再减
@@ -524,14 +556,13 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 if(isClickCar){
                     startActivity(StoreCarActivity.class);
                 }
-                //执行的刷新
-                if(isRefresh){
+                if(isClick){
+                    //添加购物车成功，执行的刷新
                     refreshData();
                 }
                 //添加成功，重置数据
                 isClick=false;
                 isClickCar=false;
-                isRefresh=false;
                 //网络请求改变购物车
                 txt1_id.setVisibility(View.VISIBLE);
                 //重置购物车的数量，避免累加
@@ -554,12 +585,25 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         currentPage = 1;
         isFirst = true;
         baseBeans.clear();
+        productIds.clear();
         position=0;
         isNoData=false;
+        isMoreLoad=false;
+        isLoadFirst=true;
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        storeCarPresenter.getStoreInfoList(reqData,currentPage);
+        StorePriductIdParamBean storePriductIdParamBean=new StorePriductIdParamBean();
+        if(productIds.size()>0){
+            storePriductIdParamBean.setProductIds(productIds);
+            storePriductIdParamBean.setCurrentPage(currentPage);
+            storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+        }else {
+            storePriductIdParamBean.setCurrentPage(currentPage);
+            storePriductIdParamBean.setProductIds(null);
+            storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+        }
+
         storeCarPresenter.getStoreCarNum(reqData);
     }
     @Override
@@ -573,6 +617,26 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
         }else {
             showToast(addStoreCarResultBean.getMessage());
+        }
+    }
+
+    @Override
+    public void getStoreOneInfo(StoreOneResultBean storeOneResultBean) {
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        StorePriductIdParamBean storePriductIdParamBean=new StorePriductIdParamBean();
+        if("000000".equals(storeOneResultBean.getCode())){
+            productIds.add(storeOneResultBean.getBizData().getShopProductResVo().getProductId());
+            baseBeans.add(storeOneResultBean.getBizData());
+
+            storePriductIdParamBean.setProductIds(productIds);
+            storePriductIdParamBean.setCurrentPage(currentPage);
+            storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+        }else {
+            storePriductIdParamBean.setCurrentPage(currentPage);
+            storeCarPresenter.getStoreInfoList(reqData,storePriductIdParamBean);
+            showToast(storeOneResultBean.getMessage());
         }
     }
 
@@ -597,10 +661,13 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         if (receiver != null) {
             getHoldingActivity().unregisterReceiver(receiver);
         }
+        if (receiver1 != null) {
+            getHoldingActivity().unregisterReceiver(receiver1);
+        }
+
         if(storeCarPresenter!=null){
             storeCarPresenter.detachView();
         }

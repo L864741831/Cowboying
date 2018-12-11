@@ -195,6 +195,18 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 }
             }
         });
+
+        storeSureOrderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                NowBuyOrderResultBean.BizDataBean.ProductsBean items=storeSureOrderAdapter.getItem(position);
+                Constant.PRODUCR_ID=items.getProductId();
+                Intent intent1=new Intent(StoreSureOderActivity.this,MainActivity.class);
+                intent1.putExtra("index",1);
+                startActivity(intent1);
+
+            }
+        });
         storeCarPayPresenter=new StoreCarPayPresenter(this);
 
         useCouponListPresenter=new UseCouponListPresenter(this);
@@ -405,7 +417,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     public void nowPayOrder(NowPayOrderResultBean nowPayOrderResultBean) {
         if("000000".equals(nowPayOrderResultBean.getCode())){
             Intent intent=new Intent(StoreSureOderActivity.this,StorePayTypeActivity.class);
-            intent.putExtra("orderId",nowPayOrderResultBean.getBizData()+"");
+            intent.putExtra("orderId",nowPayOrderResultBean.getBizData());
             startActivity(intent);
         }else {
             showToast(nowPayOrderResultBean.getMessage());

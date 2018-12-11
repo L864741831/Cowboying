@@ -171,7 +171,7 @@
         android:layout_height="match_parent"  android:background="#70000000"
         android:gravity="center"  android:visibility="gone">
         <LinearLayout
-            android:layout_width="300dp" android:background="@drawable/cicle_write_bg"
+            android:layout_width="300dp" android:background="@color/white"
             android:layout_height="wrap_content" android:layout_centerInParent="true"
             android:orientation="vertical">
             <LinearLayout
@@ -180,12 +180,13 @@
                 android:orientation="vertical" android:padding="15dp">
                 <TextView
                     android:layout_width="match_parent" android:id="@+id/show_title_id"
-                    android:layout_height="wrap_content" android:text="确定要取消订单吗？"
+                    android:layout_height="wrap_content" android:text="确认要取消订单吗？"
                     android:textSize="18sp"
                     android:textColor="@color/black" android:gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content" android:layout_marginTop="10dp"
-                    android:gravity="center"
+                    android:gravity="center" android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" android:lineSpacingExtra="5dp"
                     android:layout_height="wrap_content" android:textColor="@color/black"
                     android:text="正宗澳洲牛肉近在咫尺，真的要放弃吗？" android:layout_gravity="center"
                     android:id="@+id/infos_id"/>
@@ -213,5 +214,52 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lvs_back_id"
+        android:layout_width="match_parent"  android:orientation="vertical"
+        android:layout_height="match_parent"  android:background="#70000000"
+        android:gravity="center"   android:visibility="gone">
+        <LinearLayout
+            android:layout_width="300dp" android:background="@color/white"
+            android:layout_height="wrap_content" android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="15dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="确认放弃付款吗？"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_marginTop="10dp"
+                    android:gravity="center" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="未支付订单将在不久后自动关闭，请尽快支付" android:layout_gravity="center"
+                    android:lineSpacingExtra="5dp"/>
 
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"   android:layout_marginTop="10dp"
+                android:layout_height="1dp" android:background="#f3f3f3"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="暂时放弃" android:gravity="center"
+                    android:id="@+id/my_order_id" android:textSize="16sp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" android:background="#f3f3f3"/>
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="0.5"
+                    android:layout_height="match_parent" android:background="@mipmap/sureorderbg"
+                    android:text="继续支付" android:gravity="center" android:id="@+id/dialog_close_id"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

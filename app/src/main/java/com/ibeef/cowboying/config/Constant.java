@@ -7,9 +7,9 @@ public class Constant {
     /**
      * 殷俊杰服务
      */
-    public static final String BASE_URL = "http://192.168.0.122:8090/";
+//    public static final String BASE_URL = "http://192.168.0.122:8090/";
 //    public static final String BASE_URL = "http://192.168.0.162:9001/";
-//      public static final String BASE_URL = "http://192.168.0.162:8090/";
+      public static final String BASE_URL = "http://192.168.0.162:8090/";
 //    public static final String BASE_URL = "http://192.168.1.100:8090/";
 //    public static final String BASE_URL = "http://120.27.12.205:9001/";
     /**
@@ -102,4 +102,8 @@ public class Constant {
      * 2是拼牛
      */
     public static  int PAY_RESULT_TYPE = 0;
+    /**
+     * 是否是商城商品id
+     */
+    public static  int PRODUCR_ID = 0;
 }

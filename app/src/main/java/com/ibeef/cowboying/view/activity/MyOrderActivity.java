@@ -88,15 +88,13 @@ public class MyOrderActivity extends BaseActivity {
         ntsTop.setTabIndex(index, true);
     }
 
-
     @OnClick({R.id.back_id, R.id.action_new_question_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 if(from){
+                    removeALLActivity();//执行移除所以Activity方法
                     Intent intent1=new Intent(MyOrderActivity.this,MainActivity.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent1);
                 }else {
                     finish();
@@ -110,9 +108,8 @@ public class MyOrderActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (from){
+            removeALLActivity();//执行移除所以Activity方法
             Intent intent1=new Intent(MyOrderActivity.this,MainActivity.class);
-            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent1);
         }
     }

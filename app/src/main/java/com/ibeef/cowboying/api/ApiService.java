@@ -589,8 +589,8 @@ public interface ApiService {
      * 获取商城商品信息
      * @return
      */
-    @GET("shop/product/getAll/info")
-    Observable<StoreInfoListResultBean> getStoreInfoList(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage);
+    @POST("shop/product/getAll/info")
+    Observable<StoreInfoListResultBean> getStoreInfoList(@HeaderMap Map<String, String> headers, @Body StorePriductIdParamBean storePriductIdParamBean);
 
     /**
      * 获取当前用户购车商品数量
@@ -753,5 +753,12 @@ public interface ApiService {
      */
     @GET("express/get/detail")
     Observable<ShowDeleveryResultBean> showDelevery(@HeaderMap Map<String, String> headers, @Query("orderId") String orderId);
+
+    /**
+     * 获取单个商品信息
+     * @return
+     */
+    @GET("shop/product/getInfo/{productId}")
+    Observable<StoreOneResultBean> getStoreOneInfo(@HeaderMap Map<String, String> headers, @Path("productId") int productId);
 
 }

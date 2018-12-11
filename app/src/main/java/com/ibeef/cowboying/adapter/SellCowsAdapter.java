@@ -32,7 +32,7 @@ public class SellCowsAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDat
 
         helper.setText(R.id.order_code_txt,"订单编号："+item.getOrderCode())
                 .setText(R.id.cow_num_id,"共"+item.getCattleCount()+"头，合计认领金额：")
-                .setText(R.id.all_money_id,item.getPayAmount()+"");
+                .setText(R.id.all_money_id,"￥"+item.getPayAmount());
         RecyclerView ry_id=helper.getView(R.id.ry_id);
         ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);

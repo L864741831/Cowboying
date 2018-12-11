@@ -6,6 +6,8 @@ import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
+import com.ibeef.cowboying.bean.StoreOneResultBean;
+import com.ibeef.cowboying.bean.StorePriductIdParamBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -37,8 +39,30 @@ public class StoreCarModel implements StoreCarBase.IModel {
 
 
     @Override
-    public Subscription getStoreInfoList(Map<String, String> headers, int currentPage, final ResponseCallback<StoreInfoListResultBean> callback) {
-        Observable<StoreInfoListResultBean> observable = service.getStoreInfoList(headers,currentPage);
+    public Subscription getStoreOneInfo(Map<String, String> headers, int productId, final ResponseCallback<StoreOneResultBean> callback) {
+        Observable<StoreOneResultBean> observable = service.getStoreOneInfo(headers,productId);
+
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<StoreOneResultBean>() {
+                    @Override
+                    public void call(StoreOneResultBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription getStoreInfoList(Map<String, String> headers,  StorePriductIdParamBean storePriductIdParamBean,final ResponseCallback<StoreInfoListResultBean> callback) {
+        Observable<StoreInfoListResultBean> observable = service.getStoreInfoList(headers,storePriductIdParamBean);
 
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

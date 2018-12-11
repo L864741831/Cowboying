@@ -13,15 +13,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.DiscountCoupondapter;
 import com.ibeef.cowboying.base.MyContractBase;
+import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
+import com.ibeef.cowboying.view.activity.StoreSureOderActivity;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -105,9 +108,8 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
                             Intent intent1=new Intent(getHoldingActivity(),FightCattleActivity.class);
                             startActivity(intent1);
                         }else  if("3".equals(item.getUseType())){
+                            Constant.PRODUCR_ID=item.getUseProductId();
                             Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
-                            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent1.putExtra("index",1);
                             startActivity(intent1);
                         }

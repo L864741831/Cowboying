@@ -57,7 +57,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     Intent intent5 = new Intent(context,MyOrderDetailActivity.class);
-                    intent5.putExtra("orderId",item.getShopOrderResVo().getOrderId());
+                    intent5.putExtra("orderId",item.getShopOrderResVo().getOrderId()+"");
                     context.startActivity(intent5);
                 }
             });

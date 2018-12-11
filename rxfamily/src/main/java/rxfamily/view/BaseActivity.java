@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import rxfamily.R;
+import rxfamily.application.RxApplication;
 import rxfamily.utils.StatusBarUtils;
 public class    BaseActivity extends RxAppCompatActivity{
 
@@ -42,6 +43,8 @@ public class    BaseActivity extends RxAppCompatActivity{
     private Boolean hasMenu = false;
     private int menuLayout;
     private MaterialDialog loadingDialog;
+    private RxApplication application;
+    private BaseActivity oContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,40 @@ public class    BaseActivity extends RxAppCompatActivity{
         if (!isAllowScreenRoate) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
+        if (application == null) {
+           // 得到Application对象
+            application = (RxApplication) getApplication();
+        }
+        // 把当前的上下文对象赋值给BaseActivity
+        oContext = this;
+        // 调用添加方法
+        addActivity();
+
+    }
+
+    /**
+     * 添加Activity方法
+     */
+    public void addActivity() {
+        // 调用myApplication的添加Activity方法
+        application.addActivity_(oContext);
+    }
+
+    /**
+     * 销毁当个Activity方法
+     */
+    public void removeActivity() {
+        // 调用myApplication的销毁单个Activity方法
+        application.removeActivity_(oContext);
+    }
+
+    /**
+     * 销毁所有Activity方法
+     */
+    public void removeALLActivity() {
+        // 调用myApplication的销毁所有Activity方法
+        application.removeALLActivity_();
     }
 
     public void initDialog() {

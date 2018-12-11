@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.application;
 
+import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -7,12 +8,16 @@ import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.jpush.android.api.JPushInterface;
 import rxfamily.application.RxApplication;
 
 public class CowboyingApplication extends RxApplication {
     private static CowboyingApplication sInstance;
     public static String registrationId;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,6 +37,7 @@ public class CowboyingApplication extends RxApplication {
         JPushInterface.init(this);
         registrationId= JPushInterface.getRegistrationID(this);
         Log.e("--main--",registrationId+"????????");
+
     }
 
     public synchronized static CowboyingApplication getInstance(){

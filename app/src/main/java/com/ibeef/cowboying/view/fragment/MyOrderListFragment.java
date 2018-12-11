@@ -236,7 +236,7 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                 switch (view.getId()){
                     case R.id.btn_delet_order:
                         //删除订单
-                        showDeleteOrder(dataBean.getShopOrderResVo().getOrderId());
+                        showDeleteOrder(dataBean.getShopOrderResVo().getOrderId()+"");
                         break;
                     case R.id.btn_see_order_progress:
                         //查看物流信息
@@ -249,7 +249,7 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                         Map<String, String> reqData = new HashMap<>();
                         reqData.put("Authorization", token);
                         reqData.put("version", getVersionCodes());
-                        myOrderListPresenter.getMyOrderListOk(reqData, dataBean.getShopOrderResVo().getOrderId());
+                        myOrderListPresenter.getMyOrderListOk(reqData, dataBean.getShopOrderResVo().getOrderId()+"");
                         break;
                     case  R.id.btn_cancle_order:
                         //取消订单
