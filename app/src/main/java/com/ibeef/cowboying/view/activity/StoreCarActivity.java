@@ -39,6 +39,7 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,7 +154,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         receiver1 = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                allCownumId.setText("合计：￥"+allMoney);
+                DecimalFormat df = new DecimalFormat("#####0.00");
+                String str = df.format(allMoney);
+                allCownumId.setText("合计：￥"+str);
             }
         };
        registerReceiver(receiver1, intentFilter1);
@@ -182,12 +185,16 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                             lists.get(positions).setDefautChoose(1);
                             chooseNum++;
                             allMoney+=item.getPrice()*item.getQuantity();
-                            allCownumId.setText("合计：￥"+allMoney);
+                            DecimalFormat df = new DecimalFormat("#####0.00");
+                            String str = df.format(allMoney);
+                            allCownumId.setText("合计：￥"+str);
                         }else{
                             //取消选中
                             chooseNum--;
                             allMoney-=item.getPrice()*item.getQuantity();
-                            allCownumId.setText("合计：￥"+allMoney);
+                            DecimalFormat df = new DecimalFormat("#####0.00");
+                            String str = df.format(allMoney);
+                            allCownumId.setText("合计：￥"+str);
                             lists.get(positions).setDefautChoose(0);
                         }
                        storeCarAdapter.notifyItemChanged(positions);
@@ -270,7 +277,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 lvsId.setVisibility(View.GONE);
                 chooseNum=0;
                 allMoney=0;
-                allCownumId.setText("合计：￥"+allMoney);
+                DecimalFormat df = new DecimalFormat("#####0.00");
+                String str = df.format(allMoney);
+                allCownumId.setText("合计：￥"+str);
                 int size = lists.size();
                 storeCarResultBeans.clear();
                 //避免删除错乱
@@ -301,7 +310,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                     }
                     storeCarAdapter.notifyItemChanged(i);
                 }
-                allCownumId.setText("合计：￥"+allMoney);
+                DecimalFormat df1 = new DecimalFormat("#####0.00");
+                String str1 = df1.format(allMoney);
+                allCownumId.setText("合计：￥"+str1);
                 chooseNum=lists.size();
                 break;
             case R.id.now_claim_btn_id:
@@ -358,7 +369,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 allCkId.setChecked(false);
                 chooseNum=0;
                 allMoney=0;
-                allCownumId.setText("合计：￥"+allMoney);
+                DecimalFormat df2 = new DecimalFormat("#####0.00");
+                String str2 = df2.format(allMoney);
+                allCownumId.setText("合计：￥"+str2);
                 break;
             default:
                 break;
@@ -401,7 +414,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         }else {
             chooseNum=0;
             allMoney=0;
-            allCownumId.setText("合计：￥"+allMoney);
+            DecimalFormat df = new DecimalFormat("#####0.00");
+            String str = df.format(allMoney);
+            allCownumId.setText("合计：￥"+str);
             currentPage = 1;
             isFirst = true;
             lists.clear();

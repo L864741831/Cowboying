@@ -10,10 +10,11 @@ import java.util.List;
  **/
 public class StoreAddrResultBean {
 
+
     /**
      * code : 000000
      * message :
-     * bizData : [{"storeId":1,"name":"啊啊啊","address":"嘻嘻嘻","status":"1","imageUrl":"images/ca09570497f14175b29cc0be930be12c.png"}]
+     * bizData : [{"storeId":1,"name":"口袋牧场门店","address":"河南省郑州市二七区京莎B座","status":"1","imageUrl":"images/ca09570497f14175b29cc0be930be12c.png"}]
      * pageNo : 1
      * pageSize : null
      * totalRows : null
@@ -87,8 +88,8 @@ public class StoreAddrResultBean {
     public  class BizDataBean {
         /**
          * storeId : 1
-         * name : 啊啊啊
-         * address : 嘻嘻嘻
+         * name : 口袋牧场门店
+         * address : 河南省郑州市二七区京莎B座
          * status : 1
          * imageUrl : images/ca09570497f14175b29cc0be930be12c.png
          */
@@ -98,15 +99,6 @@ public class StoreAddrResultBean {
         private String address;
         private String status;
         private String imageUrl;
-        private int defautChoose;
-
-        public int getDefautChoose() {
-            return defautChoose;
-        }
-
-        public void setDefautChoose(int defautChoose) {
-            this.defautChoose = defautChoose;
-        }
 
         public int getStoreId() {
             return storeId;
