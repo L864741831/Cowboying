@@ -32,10 +32,13 @@ public class PickUpCodeAdapter extends BaseQuickAdapter<MyOrderListBean.BizDataB
 
     @Override
     protected void convert(final BaseViewHolder helper, final MyOrderListBean.BizDataBean item) {
-
+        int quantity=0;
+        for (int i=0;i<item.getShopOrderProductResVos().size();i++){
+            quantity=item.getShopOrderProductResVos().get(i).getQuantity()+quantity;
+        }
            helper.setText(R.id.tv_goods_name,"订单编号"+item.getShopOrderResVo().getCode())
                    .setText(R.id.tv_goods_norm,item.getShopOrderProductResVos().get(0).getSpecification())
-                   .setText(R.id.tv_goods_num,""+item.getShopOrderProductResVos().size())
+                   .setText(R.id.tv_goods_num,""+quantity)
                    .setText(R.id.tv_goods_price,"￥"+item.getShopOrderResVo().getPayAmount())
                    .setText(R.id.tv_code,item.getShopOrderResVo().getReceiveCode().substring(0,4)+"******查看数字");
         helper.getView(R.id.tv_code).setOnClickListener(new View.OnClickListener() {

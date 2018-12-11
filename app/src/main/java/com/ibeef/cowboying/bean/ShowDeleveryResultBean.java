@@ -54,7 +54,18 @@ public class ShowDeleveryResultBean {
 
         private String expressName;
         private String expressCode;
+        private String expressNumber;
         private List<ExpressResVosBean> expressResVos;
+
+        public String getExpressNumber() {
+            return expressNumber;
+        }
+
+        public void setExpressNumber(String expressNumber) {
+            this.expressNumber = expressNumber;
+        }
+
+
 
         public String getExpressName() {
             return expressName;

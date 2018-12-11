@@ -183,7 +183,7 @@ public class ShowOrderDeleveryActivity extends BaseActivity  implements SwipeRef
             }
 
             if(!SDCardUtil.isNullOrEmpty(showDeleveryResultBean.getBizData().getExpressCode())){
-                deleveryCodeId.setText("运单编号："+showDeleveryResultBean.getBizData().getExpressCode());
+                deleveryCodeId.setText("运单编号："+showDeleveryResultBean.getBizData().getExpressNumber());
             }
         }else {
             showToast(showDeleveryResultBean.getMessage());

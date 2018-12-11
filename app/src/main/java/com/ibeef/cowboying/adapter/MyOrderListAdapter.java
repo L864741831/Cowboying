@@ -2,6 +2,7 @@ package com.ibeef.cowboying.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyOrderListBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.view.activity.MainActivity;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 
 import java.util.List;
 
@@ -51,9 +55,10 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         myOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                    Intent intent = new Intent(context, MyCowsDetailActivity.class);
-//                    intent.putExtra("orderId",item.getOrderId()+"");
-//                    context.startActivity(intent);
+                    Constant.PRODUCR_ID=item.getShopOrderProductResVos().get(position).getProductId();
+                    Intent intent1=new Intent(context,MainActivity.class);
+                    intent1.putExtra("index",1);
+                    context.startActivity(intent1);
                 }
             });
 //        订单状态（0：未支付；1：已支付；2：已发货；3：确认收货；4：退款中；5：已退款；6：已取消；）'

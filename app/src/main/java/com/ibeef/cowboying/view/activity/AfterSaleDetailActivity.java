@@ -99,7 +99,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
     @Bind(R.id.tv_cancel_time)
     TextView tv_cancel_time;
     @Bind(R.id.rl_cancel)
-    RelativeLayout llCancel;
+    LinearLayout llCancel;
     private List<MyAfterSaleDetailBean.BizDataBean.OrderProductResVosBean> beanList;
     private String token;
     private AfterSaleoneDetailAdapter afterSaleAdapter;
@@ -108,6 +108,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
     private MyAfterSaleDetailBean myAfterSaleDetailBean;
     private String status;
     private int id;
+    private int orderIdnew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +152,8 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
                 //修改申请
                 Intent intent3 = new Intent(this,AfterSaleApplyActivity.class);
                 intent3.putExtra("id",id+"");
-                intent3.putExtra("orderCode",orderId);
+                intent3.putExtra("orderCode",orderIdnew+"");
+                Log.i("htht", "orderId:::::发送 "+orderIdnew);
                 startActivity(intent3);
                 break;
             case R.id.bt_see_detail:
@@ -229,6 +231,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             afterSaleAdapter.setNewData(beanList);
             status = myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getStatus();
             id = myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getId();
+            orderIdnew = myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getOrderId();
         } else {
             Toast.makeText(this, myAfterSaleDetailBean.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -255,6 +258,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             llApplyIng.setVisibility(View.GONE);
             rlReturnSuccess1.setVisibility(View.GONE);
             rlReturnRefuse.setVisibility(View.VISIBLE);
+            rlReturnRefuse.setText(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefuseReason());
             rlReturnSuccess2.setVisibility(View.GONE);
         } else if ("4".equals(status)) {
             tvApplyTopStatus.setText("已撤销退款申请");

@@ -115,13 +115,13 @@
                     android:layout_height="40dp">
                     <TextView
                         android:id="@+id/bt_change_apply"
-                        android:background="@drawable/shape_oval_line_2"
+                        android:background="@drawable/shape_oval_line_gold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="修改申请"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="20dp"
-                        android:textColor="@color/gray_666666"
+                        android:textColor="@color/colorGold_2"
                         android:padding="6dp"
                         />
                     <TextView
@@ -229,13 +229,15 @@
                 android:layout_marginRight="15dp"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_height="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="退款原因："
+                    android:text="退款原因:   "
                     android:textSize="13sp"
                     android:textColor="@color/wenzi_hei"
                     android:layout_marginLeft="20dp"
@@ -252,14 +254,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
-            </RelativeLayout>
-            <RelativeLayout
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_height="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="退款金额："
+                    android:text="退款金额：   "
                     android:textSize="13sp"
                     android:textColor="@color/wenzi_hei"
                     android:layout_marginLeft="20dp"
@@ -276,14 +280,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
-            </RelativeLayout>
-            <RelativeLayout
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_height="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="申请件数："
+                    android:text="申请件数：   "
                     android:textSize="13sp"
                     android:textColor="@color/wenzi_hei"
                     android:layout_marginLeft="20dp"
@@ -300,14 +306,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
-            </RelativeLayout>
-            <RelativeLayout
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_height="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="申请时间："
+                    android:text="申请时间：   "
                     android:textSize="13sp"
                     android:textColor="@color/wenzi_hei"
                     android:layout_marginLeft="20dp"
@@ -324,16 +332,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
-            </RelativeLayout>
-            <RelativeLayout
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/rl_cancel"
                 android:visibility="gone"
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_height="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="撤销时间："
+                    android:text="撤销时间：  "
                     android:textSize="13sp"
                     android:textColor="@color/wenzi_hei"
                     android:layout_marginLeft="20dp"
@@ -350,15 +360,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginBottom="30dp"
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_height="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="退款编号："
+                    android:text="退款编号：   "
                     android:textSize="13sp" android:id="@+id/discount_type_id"
                     android:textColor="@color/wenzi_hei"
                     android:layout_marginLeft="20dp"
@@ -375,7 +386,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
     <LinearLayout
