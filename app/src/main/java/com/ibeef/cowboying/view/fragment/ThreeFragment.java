@@ -259,11 +259,11 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 break;
             case R.id.beef_house_rv:
                 //牛肉仓库
-                if(TextUtils.isEmpty(token)){
-                    startActivity(LoginActivity.class);
-                }else {
-                    startActivity(BeefStoreHouseActivity.class);
-                }
+//                if(TextUtils.isEmpty(token)){
+//                    startActivity(LoginActivity.class);
+//                }else {
+//                    startActivity(BeefStoreHouseActivity.class);
+//                }
                 break;
             case R.id.write_money_rv:
                 //白条额度

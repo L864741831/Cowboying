@@ -485,13 +485,14 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         Glide.with(getHoldingActivity()).load(Constant.imageDomain+baseBeans.get(position).getCategoryResVo().getImageUrl()).apply(options1).into(cow_nine_img);
         nane_beef_id.setText(baseBeans.get(position).getShopProductResVo().getName());
         beef_price_id.setText("价格："+baseBeans.get(position).getShopProductResVo().getPrice()+"元");
-        if(baseBeans.get(position).getShopProductResVo().getStock()<20){
-            beef_stock_id.setVisibility(View.GONE);
-        }else {
+        if(baseBeans.get(position).getShopProductResVo().getStock()<=20){
             beef_stock_id.setVisibility(View.VISIBLE);
-            beef_stock_id.setText("库存："+baseBeans.get(position).getShopProductResVo().getStock()+"袋");
+            beef_stock_id.setText("仅剩"+baseBeans.get(position).getShopProductResVo().getStock()+"件");
+            beef_stock_id.setTextColor(getHoldingActivity().getResources().getColor(R.color.qreds));
+        }else {
+            beef_stock_id.setVisibility(View.GONE);
         }
-        beef_size_id.setText("规格："+baseBeans.get(position).getShopProductResVo().getSpecification()+"/袋");
+        beef_size_id.setText("规格："+baseBeans.get(position).getShopProductResVo().getSpecification());
         richEditId.setEditorFontSize(16);
         richEditId.setEditorFontColor(Color.BLACK);
         richEditId.setInputEnabled(false);
@@ -539,6 +540,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                     for (int j=0;j<baseBeans.get(position).getProductVideoResVos().size()-2;j++){
                         baseBean.add(j+2,baseBeans.get(position).getProductVideoResVos().get(j));
                         storeBottomAdapter.notifyDataSetChanged();
+                        see_more_id.setVisibility(View.INVISIBLE);
                     }
                 }else {
                     Toast.makeText(getHoldingActivity(),"没有更多视频~",Toast.LENGTH_SHORT).show();

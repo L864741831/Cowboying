@@ -117,23 +117,23 @@
                                 <TextView
                                     android:layout_width="0dp" android:id="@+id/beef_stock_id"
                                     android:layout_weight="0.33" android:textSize="12sp"
-                                    android:layout_height="wrap_content" android:text="库存：00/袋"
+                                    android:layout_height="wrap_content" android:text=""
                                     android:gravity="left"/>
                             </LinearLayout>
 
                             <ImageView
                                 android:layout_width="match_parent" android:id="@+id/show_des_img"
-                                android:layout_height="wrap_content"  android:scaleType="fitXY"
+                                android:layout_height="100dp"  android:scaleType="fitXY"
                                 android:src="@mipmap/des_info_img"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="125dp"/>
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="120dp"/>
 
 
                         </LinearLayout>
 
                         <ImageView
                             android:layout_width="match_parent" android:id="@+id/cow_nine_img"
-                            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                            android:layout_height="160dp" android:layout_gravity="center_horizontal"
                             android:layout_marginTop="-130dp"  android:layout_marginLeft="30dp"
                             android:layout_marginRight="30dp" android:src="@mipmap/cowone"
                             android:scaleType="fitXY" android:layout_marginBottom="15dp"/>

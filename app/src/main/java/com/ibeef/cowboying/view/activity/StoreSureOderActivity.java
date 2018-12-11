@@ -101,6 +101,10 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     TextView sureId;
     @Bind(R.id.show_title_id)
     TextView showTitleId;
+    @Bind(R.id.show_store_id)
+    TextView showStoreId;
+    @Bind(R.id.show_store_addr_id)
+    TextView showStoreAddrId;
     @Bind(R.id.ry_store_id)
     RecyclerView ryStoreId;
     @Bind(R.id.img_choose1_id)
@@ -109,6 +113,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     ImageView imgChoose2Id;
     @Bind(R.id.lv_choose_id)
     LinearLayout lvChooseId;
+    @Bind(R.id.rv_storeaddr_id)
+    RelativeLayout rvStoreaddrId;
     private StoreSureOrderAdapter storeSureOrderAdapter;
     private String token;
     private BroadcastReceiver receiver;
@@ -250,6 +256,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 type=1;
                 lvChooseId.setVisibility(View.GONE);
                 deleveryTypeId.setText("顺丰配送");
+                rvStoreaddrId.setVisibility(View.GONE);
+                addressRv.setVisibility(View.VISIBLE);
                 break;
             case R.id.img_choose2_id:
                 type=2;
@@ -264,11 +272,13 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 lvsId.setVisibility(View.GONE);
                 type=0;
                 deleveryTypeId.setText("请选择配送方式");
+                rvStoreaddrId.setVisibility(View.GONE);
+                addressRv.setVisibility(View.VISIBLE);
                 break;
             case R.id.sure_id:
-                //todo 接口自取门店地址
                 lvsId.setVisibility(View.GONE);
-
+                rvStoreaddrId.setVisibility(View.VISIBLE);
+                addressRv.setVisibility(View.GONE);
                 break;
             case R.id.cuppon_rv:
                 Intent intent1=new Intent(StoreSureOderActivity.this,UseCouponActivity.class);
@@ -409,6 +419,14 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 rightImgShow.setVisibility(View.GONE);
             }
 
+            if(type==2){
+                rvStoreaddrId.setVisibility(View.VISIBLE);
+                addressRv.setVisibility(View.GONE);
+            }else {
+                rvStoreaddrId.setVisibility(View.GONE);
+                addressRv.setVisibility(View.VISIBLE);
+            }
+
         }else {
             showToast(nowBuyOrderResultBean.getMessage());
         }
@@ -442,6 +460,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
         if ("000000".equals(storeAddrResultBean.getCode())) {
             if (!SDCardUtil.isNullOrEmpty(storeAddrResultBean.getBizData())) {
                 showTitleId.setText(storeAddrResultBean.getBizData().get(0).getName());
+                showStoreId.setText(storeAddrResultBean.getBizData().get(0).getName());
+                showStoreAddrId.setText(storeAddrResultBean.getBizData().get(0).getAddress());
                 this.storeAddrResultBean=storeAddrResultBean;
                 bizDataBeans.addAll(storeAddrResultBean.getBizData());
                 storeAddrAdapter.setNewData(bizDataBeans);
