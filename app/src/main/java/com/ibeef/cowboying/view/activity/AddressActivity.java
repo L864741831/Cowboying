@@ -108,6 +108,7 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
                 Intent intent1=new Intent();
                 intent1.setAction("com.ibeef.cowboying.chooseaddr");
                 intent1.putExtra("info",item);
+                intent1.putExtra("isNoData",false);
                 sendBroadcast(intent1);
                 finish();
             }
@@ -173,6 +174,10 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
                 if (isFirst) {
                     rvOrder.setVisibility(View.VISIBLE);
                     ryId.setVisibility(View.GONE);
+                    Intent intent1=new Intent();
+                    intent1.setAction("com.ibeef.cowboying.chooseaddr");
+                    intent1.putExtra("isNoData",true);
+                    sendBroadcast(intent1);
                 } else {
                     rvOrder.setVisibility(View.GONE);
                     ryId.setVisibility(View.VISIBLE);

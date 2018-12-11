@@ -57,7 +57,7 @@ public class DiscountCoupondapter extends BaseQuickAdapter<MyDiscountCouponListB
           }else  if("2".equals(item.getUseType())){
               helper.setText(R.id.tv_condition_2_id,"仅可参与拼牛使用");
           }else  if("3".equals(item.getUseType())){
-              if(SDCardUtil.isNullOrEmpty(item.getUseProductId())){
+              if(SDCardUtil.isNullOrEmpty(item.getUseProductName())){
                   helper.setText(R.id.tv_condition_2_id,"仅可购买牛肉使用");
               }else {
                   helper.setText(R.id.tv_condition_2_id,"仅可购买"+item.getUseProductName()+"使用");

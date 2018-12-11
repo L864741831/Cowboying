@@ -83,7 +83,7 @@ public class MyOrderListBean {
         this.bizData = bizData;
     }
 
-    public static class BizDataBean {
+    public  class BizDataBean {
         /**
          * latestState : null
          * shopOrderResVo : {"orderId":14,"code":"120145063002240","status":"0","payStatus":"0","payAmount":5.4,"orderAmount":54,"discountAmount":0,"carrageAmount":0.3,"payTime":null,"receiveType":"1","receiveCode":"2015296363","storeId":"","deliveryTime":"","receiveTime":"","refundAmount":0,"refundTime":"\u201c\u201d","receiverName":"兔兔咯","receiverMobile":"18503876318","receiverProvince":330000,"receiverCity":330100,"receiverRegion":330108,"receiverAddress":"监控","cancelReason":"\u201c\u201d","createTime":"\u201c1544068291000\u201d"}
@@ -118,7 +118,7 @@ public class MyOrderListBean {
             this.shopOrderProductResVos = shopOrderProductResVos;
         }
 
-        public static class ShopOrderResVoBean {
+        public  class ShopOrderResVoBean {
             /**
              * orderId : 14
              * code : 120145063002240
@@ -146,7 +146,7 @@ public class MyOrderListBean {
              * createTime : “1544068291000”
              */
 
-            private String orderId;
+            private int orderId;
             private String code;
             private String status;
             private String payStatus;
@@ -171,11 +171,11 @@ public class MyOrderListBean {
             private String cancelReason;
             private String createTime;
 
-            public String getOrderId() {
+            public int getOrderId() {
                 return orderId;
             }
 
-            public void setOrderId(String orderId) {
+            public void setOrderId(int orderId) {
                 this.orderId = orderId;
             }
 
@@ -364,7 +364,7 @@ public class MyOrderListBean {
             }
         }
 
-        public static class ShopOrderProductResVosBean {
+        public  class ShopOrderProductResVosBean {
             /**
              * productId : “39”
              * code : 201812060001

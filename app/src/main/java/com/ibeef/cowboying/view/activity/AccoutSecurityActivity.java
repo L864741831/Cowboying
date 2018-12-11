@@ -19,15 +19,18 @@ import com.alipay.sdk.app.AuthTask;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.AccountSecurityBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
+import com.ibeef.cowboying.base.PayPwdBase;
 import com.ibeef.cowboying.bean.AuthResult;
 import com.ibeef.cowboying.bean.BindThirdCountParamBean;
 import com.ibeef.cowboying.bean.BindThirdCountResultBean;
+import com.ibeef.cowboying.bean.PayPwdResultBean;
 import com.ibeef.cowboying.bean.SafeInfoResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.AccountSecurityPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
+import com.ibeef.cowboying.presenter.IsPayPwdPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -47,7 +50,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 账号安全界面
  */
-public class AccoutSecurityActivity extends BaseActivity implements AccountSecurityBase.IView ,InitThirdLoginBase.IView {
+public class AccoutSecurityActivity extends BaseActivity implements AccountSecurityBase.IView ,InitThirdLoginBase.IView ,PayPwdBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -87,6 +90,8 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     private InitThirdLoginPresenter initThirdLoginPresenter;
     private IWXAPI api;
     private String type;
+    private IsPayPwdPresenter isPayPwdPresenter;
+    private  Map<String, String> reqData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,18 +103,21 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     private void init(){
         info.setText("账号安全");
         token= Hawk.get(HawkKey.TOKEN);
+
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+
         api = WXAPIFactory.createWXAPI(this,  Constant.WeixinAppId,true);
         api.registerApp(Constant.WeixinAppId);
         accountSecurityPresenter=new AccountSecurityPresenter(this);
         initThirdLoginPresenter=new InitThirdLoginPresenter(this);
+        isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
         accountSecurityPresenter.getSafeInfo(reqData);
     }
 
@@ -120,11 +128,8 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
                 finish();
                 break;
             case R.id.add_pay_rv:
-                if(isSetPayPwd){
-                    startActivity(ModifyPayPwdActivity.class);
-                }else {
-                    startActivity(AddPayPwdActivity.class);
-                }
+                //判断是否设置密码
+                isPayPwdPresenter.isPayPwd(reqData);
                 break;
             case R.id.phone_txt_id:
                 if(!isMobie){
@@ -255,6 +260,21 @@ public class AccoutSecurityActivity extends BaseActivity implements AccountSecur
     @Override
     public void showMsg(String msg) {
 
+    }
+
+    @Override
+    public void isPayPwd(PayPwdResultBean payPwdResultBean) {
+        if("000000".equals(payPwdResultBean.getCode())){
+            if(payPwdResultBean.getBizData().isHavePayPassword()){
+                startActivity(ModifyPayPwdActivity.class);
+            }else {
+                Intent intent=new Intent(AccoutSecurityActivity.this,AddPayPwdActivity.class);
+                intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
+                startActivity(intent);
+            }
+        }else {
+            showToast(payPwdResultBean.getMessage());
+        }
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
+import com.ibeef.cowboying.bean.StoreOneResultBean;
+import com.ibeef.cowboying.bean.StorePriductIdParamBean;
 
 import java.util.Map;
 
@@ -23,18 +25,21 @@ public class StoreCarBase {
         void getStoreInfoList(StoreInfoListResultBean storeInfoListResultBean);
         void getStoreCarNum(StoreCarNumResultBean storeCarNumResultBean);
         void addStoreCar(AddStoreCarResultBean addStoreCarResultBean);
+        void getStoreOneInfo(StoreOneResultBean storeOneResultBean);
         void showLoading();
         void hideLoading();
     }
 
     public interface IPresenter {
-        void getStoreInfoList(Map<String, String> headers, int currentPage);
+        void getStoreOneInfo(Map<String, String> headers,int productId);
+        void getStoreInfoList(Map<String, String> headers, StorePriductIdParamBean storePriductIdParamBean);
         void getStoreCarNum(Map<String, String> headers);
         void addStoreCar(Map<String, String> headers,AddShopCarResultBean addShopCarResultBean);
     }
 
     public interface IModel {
-        Subscription getStoreInfoList(Map<String, String> headers,int currentPage, ResponseCallback<StoreInfoListResultBean> callback);
+        Subscription getStoreOneInfo(Map<String, String> headers,int productId, ResponseCallback<StoreOneResultBean> callback);
+        Subscription getStoreInfoList(Map<String, String> headers,StorePriductIdParamBean storePriductIdParamBean, ResponseCallback<StoreInfoListResultBean> callback);
         Subscription getStoreCarNum(Map<String, String> headers, ResponseCallback<StoreCarNumResultBean> callback);
         Subscription addStoreCar(Map<String, String> headers, AddShopCarResultBean addShopCarResultBean, ResponseCallback<AddStoreCarResultBean> callback);
     }

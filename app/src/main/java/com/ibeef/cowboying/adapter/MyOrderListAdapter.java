@@ -15,6 +15,9 @@ import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
+import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
+import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
     public MyOrderListAdapter(List data, Context context) {
         super(R.layout.my_order_list_item, data);
         this.context=context;
+
     }
 
     @Override
@@ -50,7 +54,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
-        MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(item.getShopOrderProductResVos(),item.getShopOrderResVo().getReceiveType(),context);
+       final MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(item.getShopOrderProductResVos(),item.getShopOrderResVo().getReceiveType(),context);
         ry_id.setAdapter(myOrderChirdListAdapter);
         myOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override

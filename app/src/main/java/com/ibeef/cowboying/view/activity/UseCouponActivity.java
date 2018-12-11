@@ -140,13 +140,15 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         if(isStore){
             storeCarResultBeans= (List<AddStoreCarParamBean>) getIntent().getSerializableExtra("infos");
             couponNumParamBean.setProductQuantityReqDtos(storeCarResultBeans);
+            couponNumParamBean.setUseType("3");
         }else {
             schemeId=getIntent().getIntExtra("schemeId",0);
             quantity=getIntent().getIntExtra("quantity",0);
             couponNumParamBean.setSchemeId(schemeId+"");
             couponNumParamBean.setQuantity(quantity+"");
+            couponNumParamBean.setUseType("1");
         }
-        couponNumParamBean.setUseType("3");
+
         useCouponListPresenter.getUseCouponList(reqData,couponNumParamBean);
 
     }

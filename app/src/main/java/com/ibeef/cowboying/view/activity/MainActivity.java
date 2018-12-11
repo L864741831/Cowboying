@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.ibeef.cowboying.R;
@@ -12,6 +13,7 @@ import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.base.CheckVersionBase;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CheckVersionPresenter;
 import com.ibeef.cowboying.view.customview.NoScrollViewPager;
@@ -73,6 +75,9 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
         bnve.setupWithViewPager(vp);
 
         index=getIntent().getIntExtra("index",0);
+
+        bnve.setSelectedItemId(bnve.getMenu().getItem(index).getItemId());
+
 //        bnve.setCurrentItem(index);
 
         checkVersionPresenter=new CheckVersionPresenter(this);
@@ -129,6 +134,32 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
         if(checkVersionPresenter!=null){
             checkVersionPresenter.detachView();
         }
+        Constant.PRODUCR_ID=0;
         super.onDestroy();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //判断当点击的是返回键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();//退出方法
+        }
+        return true;
+    }
+
+    private long time = 0;
+
+    //退出方法
+    private void exit() {
+        //如果在两秒大于2秒
+        if (System.currentTimeMillis() - time > 2000) {
+            //获得当前的时间
+            time = System.currentTimeMillis();
+            showToast("再点击一次退出应用程序");
+        } else {
+            //点击在两秒以内
+            removeALLActivity();//执行移除所以Activity方法
+        }
+    }
+
 }

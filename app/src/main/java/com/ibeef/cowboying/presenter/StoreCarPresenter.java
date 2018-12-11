@@ -7,6 +7,8 @@ import com.ibeef.cowboying.bean.AddShopCarResultBean;
 import com.ibeef.cowboying.bean.AddStoreCarResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
+import com.ibeef.cowboying.bean.StoreOneResultBean;
+import com.ibeef.cowboying.bean.StorePriductIdParamBean;
 import com.ibeef.cowboying.model.StoreCarModel;
 
 import java.util.Map;
@@ -31,9 +33,26 @@ public class StoreCarPresenter extends BasePresenter implements StoreCarBase.IPr
     }
 
     @Override
-    public void getStoreInfoList(Map<String, String> headers, int currentPage) {
+    public void getStoreOneInfo(Map<String, String> headers, int productId) {
+        addSubscription(mModel.getStoreOneInfo(headers,productId,new ResponseCallback<StoreOneResultBean>() {
+            @Override
+            public void onSuccess(StoreOneResultBean result) {
+                mView.getStoreOneInfo(result);
+
+            }
+
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void getStoreInfoList(Map<String, String> headers, StorePriductIdParamBean storePriductIdParamBean) {
         mView.showLoading();
-        addSubscription(mModel.getStoreInfoList(headers,currentPage,new ResponseCallback<StoreInfoListResultBean>() {
+        addSubscription(mModel.getStoreInfoList(headers,storePriductIdParamBean,new ResponseCallback<StoreInfoListResultBean>() {
             @Override
             public void onSuccess(StoreInfoListResultBean result) {
                 mView.hideLoading();

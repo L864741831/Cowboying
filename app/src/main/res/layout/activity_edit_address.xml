@@ -29,7 +29,7 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="50dp" android:maxLines="1"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom" android:inputType="text"
             android:layout_marginRight="20dp" android:singleLine="true"
             android:background="@null" android:textColor="@color/colorAccent"
             android:textSize="14sp" android:hint="填写你的真实姓名"
@@ -116,7 +116,7 @@
         android:layout_marginRight="10dp" android:layout_marginTop="40dp">
         <EditText
             android:id="@+id/et_addr_describe"
-            android:layout_width="match_parent"
+            android:layout_width="match_parent"  android:inputType="text"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" android:hint="请填写详细地址，不少于5个字"
             android:layout_marginRight="20dp"

@@ -94,9 +94,8 @@ public class MyCowsActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.back_id:
                 if(from){
+                    removeALLActivity();//执行移除所以Activity方法
                     Intent intent1=new Intent(MyCowsActivity.this,MainActivity.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent1);
                 }else {
                     finish();
@@ -115,9 +114,8 @@ public class MyCowsActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (from){
+            removeALLActivity();//执行移除所以Activity方法
             Intent intent1=new Intent(MyCowsActivity.this,MainActivity.class);
-            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent1);
         }
     }

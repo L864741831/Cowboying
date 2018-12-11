@@ -102,4 +102,8 @@ public class Constant {
      * 2是拼牛
      */
     public static  int PAY_RESULT_TYPE = 0;
+    /**
+     * 是否是商城商品id
+     */
+    public static  int PRODUCR_ID = 0;
 }

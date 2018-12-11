@@ -149,7 +149,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     private String token;
     private MyOrderListDetailBean myOrderListDetailBean;
     private String refundId;
-
+    private boolean from;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,6 +159,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     }
 
     private void init() {
+        from=getIntent().getBooleanExtra("from",false);
+
         orderId = getIntent().getStringExtra("orderId");
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("订单详情");
@@ -187,7 +189,13 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                finish();
+                if(from){
+                    Intent intent1=new Intent(MyOrderDetailActivity.this,MyOrderActivity.class);
+                    intent1.putExtra("from",true);
+                    startActivity(intent1);
+                }else {
+                    finish();
+                }
                 break;
             case R.id.btn_order_delete:
                 //删除订单
@@ -551,5 +559,15 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
         }
         time_show_id.onPause();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (from){
+            Intent intent1=new Intent(MyOrderDetailActivity.this,MyOrderActivity.class);
+            intent1.putExtra("from",true);
+            startActivity(intent1);
+        }
     }
 }

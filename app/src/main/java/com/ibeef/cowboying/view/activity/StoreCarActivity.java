@@ -30,6 +30,8 @@ import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
+import com.ibeef.cowboying.bean.StoreOneResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
@@ -156,6 +158,16 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         };
        registerReceiver(receiver1, intentFilter1);
 
+       storeCarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+           @Override
+           public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+               CarListResultBean.BizDataBean items=storeCarAdapter.getItem(position);
+               Constant.PRODUCR_ID=items.getProductId();
+               Intent intent1=new Intent(StoreCarActivity.this,MainActivity.class);
+               intent1.putExtra("index",1);
+               startActivity(intent1);
+           }
+       });
         storeCarAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
@@ -353,6 +365,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         }
     }
 
+
     /**
      * 购物车内商品改变通知后台
      */
@@ -373,6 +386,9 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             storeCarPresenter.addStoreCar(reqData,addShopCarResultBean);
         }else {
             if(!isBuy){
+                Intent intent1=new Intent();
+                intent1.setAction("com.ibeef.cowboying.refreshstore");
+                sendBroadcast(intent1);
                 finish();
             }
         }
@@ -380,10 +396,18 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     }
     @Override
     public void onRefresh() {
-        currentPage = 1;
-        isFirst = true;
-        lists.clear();
-        storeCarPayPresenter.getCarList(reqData,currentPage);
+        if(allCkId.isChecked()){
+            //选中不刷新数据
+        }else {
+            chooseNum=0;
+            allMoney=0;
+            allCownumId.setText("合计：￥"+allMoney);
+            currentPage = 1;
+            isFirst = true;
+            lists.clear();
+            storeCarPayPresenter.getCarList(reqData,currentPage);
+        }
+
         swipeLy.setRefreshing(false);
     }
 
@@ -413,12 +437,20 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void addStoreCar(AddStoreCarResultBean addStoreCarResultBean) {
         if("000000".equals(addStoreCarResultBean.getCode())){
+            Intent intent1=new Intent();
+            intent1.setAction("com.ibeef.cowboying.refreshstore");
+            sendBroadcast(intent1);
         }else {
             showToast(addStoreCarResultBean.getMessage());
         }
         if(!isBuy){
             finish();
         }
+
+    }
+
+    @Override
+    public void getStoreOneInfo(StoreOneResultBean storeOneResultBean) {
 
     }
 

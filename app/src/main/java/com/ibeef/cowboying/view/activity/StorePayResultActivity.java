@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreResultOrderAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
+import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
@@ -19,6 +21,7 @@ import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.orhanobut.hawk.Hawk;
@@ -99,9 +102,8 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
                 break;
             case R.id.rv_bottom_id:
                 //跳到订单列表
-                Intent intent1=new Intent(StorePayResultActivity.this,MyOrderActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent1=new Intent(StorePayResultActivity.this,MyOrderDetailActivity.class);
+                intent1.putExtra("orderId",orderId+"");
                 intent1.putExtra("from",true);
                 startActivity(intent1);
                 break;
@@ -138,11 +140,22 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
             mobileTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverMobile());
             delAddrTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverProvince()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverCity()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverRegion()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
             storeResultOrderAdapter.setNewData(myOrderListDetailBean.getBizData().getShopOrderProductResVos());
+
+            storeResultOrderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean items=storeResultOrderAdapter.getItem(position);
+                    Constant.PRODUCR_ID=items.getProductId();
+                    Intent intent1=new Intent(StorePayResultActivity.this,MainActivity.class);
+                    intent1.putExtra("index",1);
+                    startActivity(intent1);
+                }
+            });
             //取货方式（1：快递；2：门店自提）
             if("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())){
-                deleveryTypeId.setText("快递");
+                deleveryTypeId.setText("顺丰配送");
             }else {
-                deleveryTypeId.setText("门店自提");
+                deleveryTypeId.setText("门店自取");
             }
             if(myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount()>0){
                 coupponMoneyId.setText("-￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount());
