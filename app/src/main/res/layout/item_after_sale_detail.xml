@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     tools:context=".view.activity.PickUpCodeActivity">
 
     <RelativeLayout
         android:id="@+id/rl_goods_list"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/homef7"
         android:layout_below="@+id/tv_service_id"
         android:layout_width="match_parent"
@@ -42,9 +45,10 @@
             android:layout_height="wrap_content"
             android:text="澳洲牛眼肉"
             android:layout_toRightOf="@+id/fl_img"
-            android:textColor="@color/wenzi_hei"
+            android:textColor="#222222"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="5dp"
+            android:textSize="15sp"
             />
         <TextView
             android:id="@+id/tv_goods_norm"
@@ -53,7 +57,7 @@
             android:text="M7 500克  250克×2块装"
             android:layout_toRightOf="@+id/fl_img"
             android:textColor="@color/gray_666666"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/tv_goods_name"
             android:layout_marginLeft="5dp"
             android:textSize="13sp"
@@ -64,11 +68,11 @@
             android:layout_height="wrap_content"
             android:text="0.5kg"
             android:layout_toRightOf="@+id/fl_img"
-            android:textColor="@color/wenzi_hei"
-            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/color_wenzi_black"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/tv_goods_norm"
             android:layout_marginLeft="5dp"
-            android:textSize="13sp"
+            android:textSize="@dimen/sp_16"
             />
         <TextView
             android:id="@+id/tv_goods_num"
@@ -78,7 +82,7 @@
             android:textColor="@color/gray_666666"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/tv_goods_norm"
             android:textSize="13sp"
             />

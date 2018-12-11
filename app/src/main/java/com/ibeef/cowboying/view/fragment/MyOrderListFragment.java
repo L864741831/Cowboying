@@ -266,7 +266,8 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                     case  R.id.btn_to_pay:
                         //去支付
                         Intent intent5 = new Intent(getHoldingActivity(),StorePayTypeActivity.class);
-                        intent5.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());
+                        int i = Integer.valueOf(dataBean.getShopOrderResVo().getOrderId()).intValue();
+                        intent5.putExtra("orderId",i);
                         startActivity(intent5);
                         break;
                     default:
@@ -380,77 +381,6 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                     }
                 });
     }
-
-    public  void showWantShellOrder(){
-        final NormalDialog dialog = new NormalDialog(getHoldingActivity());
-        dialog.isTitleShow(true)
-                .title("卖牛提示")
-                .content("亲爱的牛主人，还未到交易日哦，我们的交易日为每周一的10:00-22:00，到时候可别忘了来哦~")
-                .titleTextSize(18)
-                .titleTextColor(Color.parseColor("#101010"))
-                .titleLineColor(Color.parseColor("#B0957A"))
-                .contentGravity(Gravity.CENTER)
-                .contentTextColor(Color.parseColor("#808080"))
-                .dividerColor(Color.parseColor("#B0957A"))
-                .btnTextSize(15.5f, 15.5f)
-                .btnTextColor(Color.parseColor("#000000"), Color.parseColor("#B0957A"))
-                .show();
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {
-                    @Override
-                    public void onBtnClick() {
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {
-                    @Override
-                    public void onBtnClick() {
-                        dialog.dismiss();
-                    }
-                });
-    }
-
-
-//    @Override
-//    public void getMyCowsOrderDelete(MyCowsOrderDeleteBean msg) {
-//        if("000000".equals(msg.getCode())){
-//            page = 1;
-//            listData.clear();
-//            Map<String, String> reqData = new HashMap<>();
-//            reqData.put("Authorization", token);
-//            reqData.put("version", getVersionCodes());
-//            myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
-//            Toast.makeText(getHoldingActivity(),"删除订单成功", Toast.LENGTH_SHORT).show();
-//        }else {
-//            Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    @Override
-//    public void getMyCowsOrderCancel(MyCowsOrderDeleteBean msg) {
-//        if("000000".equals(msg.getCode())){
-//            page = 1;
-//            listData.clear();
-//            Map<String, String> reqData = new HashMap<>();
-//            reqData.put("Authorization", token);
-//            reqData.put("version", getVersionCodes());
-//            myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
-//            Toast.makeText(getHoldingActivity(),"取消订单成功", Toast.LENGTH_SHORT).show();
-//        }else {
-//            Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    @Override
-//    public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
-//        if("000000".equals(creatOderResultBean.getCode())){
-//            Intent intent=new Intent(getHoldingActivity(),SureOderActivity.class);
-//            intent.putExtra("infos",creatOderResultBean);
-//            startActivity(intent);
-//        }else {
-//            showToast(creatOderResultBean.getMessage());
-//        }
-//    }
 
     @Override
     public void onDestroy() {

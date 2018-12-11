@@ -39,7 +39,7 @@ import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
 /**
- * 售后详情
+ * 申请退款界面
  *
  * @author Administrator
  */
@@ -95,6 +95,7 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
         info.setText("申请售后");
         token = Hawk.get(HawkKey.TOKEN);
         orderCode = getIntent().getStringExtra("orderCode");
+        Log.i("htht", "orderCode:::::接收 "+orderCode);
         id = getIntent().getStringExtra("id");
         beanList = new ArrayList<>();
         beanList.clear();
@@ -126,7 +127,16 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
                     Toast.makeText(this,"原因不能为空",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (orderCode != null) {
+                if (id != null) {
+                    //修改申请退款
+                    Map<String, String> reqData1 = new HashMap<>();
+                    reqData1.put("Authorization", token);
+                    reqData1.put("version", getVersionCodes());
+                    GetEditApplyReturnParameterBean getEditApplyReturnParameterBean = new GetEditApplyReturnParameterBean();
+                    getEditApplyReturnParameterBean.setId(id);
+                    getEditApplyReturnParameterBean.setReason(selectText + tvReturnInfo.getText().toString());
+                    myOrderListPresenter.getEditApplyReturn(reqData1, getEditApplyReturnParameterBean);
+                } else {
                     //申请退款
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization", token);
@@ -135,15 +145,6 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
                     getApplyReturnParameterBean.setOrderId(orderCode);
                     getApplyReturnParameterBean.setReason(selectText + tvReturnInfo.getText().toString());
                     myOrderListPresenter.getApplyReturn(reqData, getApplyReturnParameterBean);
-                } else if (id != null) {
-                    //修改申请退款
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("Authorization", token);
-                    reqData.put("version", getVersionCodes());
-                    GetEditApplyReturnParameterBean getEditApplyReturnParameterBean = new GetEditApplyReturnParameterBean();
-                    getEditApplyReturnParameterBean.setId(id);
-                    getEditApplyReturnParameterBean.setReason(selectText + tvReturnInfo.getText().toString());
-                    myOrderListPresenter.getEditApplyReturn(reqData, getEditApplyReturnParameterBean);
                 }
                 break;
             default:
@@ -194,6 +195,7 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
             afterSaleAdapter.setNewData(beanList);
             tvReturnMoney.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount());
             refundId = myOrderListDetailBean.getBizData().getRefundId();
+            tvReturnGrayInfo.setText("最多￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount()+"含发货运费￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getCarrageAmount());
         }
     }
 
