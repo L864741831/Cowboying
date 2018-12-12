@@ -47,13 +47,11 @@ public class StoreTopAdapter extends BaseQuickAdapter<StoreInfoListResultBean.Bi
                 //跳过内存缓存
                 ;
 
-        if (item.getProductImages().size() != 0) {
-            if (item.getProductImages().size() == 1) {
-                Glide.with(context).load(Constant.imageDomain + item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
-            }
-            if (item.getProductImages().size() == 2) {
-                Glide.with(context).load(Constant.imageDomain + item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
-            }
+        ImageView goods_info_img=helper.getView(R.id.goods_info_img);
+        if (item.getProductImages().size() >= 1) {
+            Glide.with(context).load(Constant.imageDomain + item.getProductImages().get(0).getImageUrl()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
+        }else {
+            goods_info_img.setImageResource(R.mipmap.cowbeefimg);
         }
     }
 }
