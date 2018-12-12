@@ -7,13 +7,10 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:background="@null"/>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="vertical"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,6 +39,6 @@
 
 
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
 
 </RelativeLayout>

@@ -20,6 +20,7 @@ import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 我的合同
  */
-public class MyContractActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener, MyContractBase.IView{
+public class MyContractActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener, MyContractBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -48,7 +49,7 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
     @Bind(R.id.rv_bg)
     RelativeLayout rvBg;
     @Bind(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
     private String token;
     private List<MyContractListBean.BizDataBean> beanList;
     private MyContractAdapter myContractAdapter;
@@ -68,15 +69,10 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
         token= Hawk.get(HawkKey.TOKEN);
         info.setText("我的合同");
         beanList=new ArrayList<>();
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setEnabled(true);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         myContractAdapter=new MyContractAdapter(beanList,this,R.layout.item_my_contract);
         myContractAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(myContractAdapter);
-        myContractAdapter.loadMoreEnd();
         myContractPresenter=new MyContractPresenter(this);
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
@@ -108,23 +104,17 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
                 startActivity(intent);
             }
         });
+
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
+
     }
 
     @OnClick(R.id.back_id)
     public void onViewClicked() {
         finish();
-    }
-
-    @Override
-    public void onRefresh() {
-        currentPage=1;
-        isFirst=true;
-        beanList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        myContractPresenter.getMyContrantList(reqData,currentPage);
-        swipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -158,6 +148,7 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        swipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -195,5 +186,27 @@ public class MyContractActivity extends BaseActivity implements SwipeRefreshLayo
             myContractPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        currentPage=1;
+        isFirst=true;
+        beanList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        myContractPresenter.getMyContrantList(reqData,currentPage);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

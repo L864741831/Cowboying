@@ -36,6 +36,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.io.Serializable;
@@ -53,7 +54,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城购物车
  */
-public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView,StoreCarBase.IView{
+public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,StoreCarPayBase.IView,StoreCarBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -64,7 +65,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     @Bind(R.id.action_new_question_tv)
     TextView actionNewQuestionTv;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.ry_id)
@@ -124,9 +125,10 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         actionNewQuestionTv.setVisibility(View.VISIBLE);
         actionNewQuestionTv.setText("编辑");
 
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
 
         ryId.setLayoutManager(new GridLayoutManager(this,2));
 
@@ -212,6 +214,8 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                CarListResultBean.BizDataBean items=storeCarAdapter.getItem(position);
                Constant.PRODUCR_ID=items.getProductId();
+               isBuy=false;
+               addCar();
                Intent intent1=new Intent(StoreCarActivity.this,MainActivity.class);
                intent1.putExtra("index",1);
                startActivity(intent1);
@@ -263,7 +267,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         storeCarPayPresenter=new StoreCarPayPresenter(this);
 
         storeCarPayPresenter.getCarList(reqData,currentPage);
-        swipeLy.setRefreshing(false);
 
     }
 
@@ -284,7 +287,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                 break;
             case R.id.refuce_id:
                 lvsId.setVisibility(View.GONE);
-                allCkId.setChecked(false);
                 break;
             case R.id.sure_id:
                 //编辑，批量删除
@@ -421,24 +423,6 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         }
 
     }
-    @Override
-    public void onRefresh() {
-        if(allCkId.isChecked()){
-            //选中不刷新数据
-        }else {
-            chooseNum=0;
-            allMoney=0;
-            DecimalFormat df = new DecimalFormat("#####0.00");
-            String str = df.format(allMoney);
-            allCownumId.setText("合计：￥"+str);
-            currentPage = 1;
-            isFirst = true;
-            lists.clear();
-            storeCarPayPresenter.getCarList(reqData,currentPage);
-        }
-
-        swipeLy.setRefreshing(false);
-    }
 
     @Override
     public void onLoadMoreRequested() {
@@ -560,6 +544,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -580,5 +565,32 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     public void onBackPressed() {
         isBuy=false;
         addCar();
+    }
+
+    @Override
+    public void onRefresh() {
+        if(allCkId.isChecked()){
+            //选中不刷新数据
+        }else {
+            chooseNum=0;
+            allMoney=0;
+            DecimalFormat df = new DecimalFormat("#####0.00");
+            String str = df.format(allMoney);
+            allCownumId.setText("合计：￥"+str);
+            currentPage = 1;
+            isFirst = true;
+            lists.clear();
+            storeCarPayPresenter.getCarList(reqData,currentPage);
+        }
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

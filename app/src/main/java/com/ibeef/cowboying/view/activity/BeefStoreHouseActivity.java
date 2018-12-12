@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.BeefHourseAdapter;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 牛肉仓库
  */
-public class BeefStoreHouseActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class BeefStoreHouseActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener, BaseQuickAdapter.RequestLoadMoreListener{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -50,7 +51,7 @@ public class BeefStoreHouseActivity extends BaseActivity implements SwipeRefresh
     @Bind(R.id.rv_bottom_id)
     RelativeLayout rvBottomId;
     @Bind(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
     private List<BaseBean> beanList;
     private BeefHourseAdapter beefHourseAdapter;
     private String token;
@@ -72,7 +73,12 @@ public class BeefStoreHouseActivity extends BaseActivity implements SwipeRefresh
         ryId.setLayoutManager(new LinearLayoutManager(this));
         ryId.setHasFixedSize(true);
         ryId.setNestedScrollingEnabled(false);
-        swipeLayout.setOnRefreshListener(this);
+
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
+
         beefHourseAdapter=new BeefHourseAdapter(beanList,this,R.layout.item_beef_hourse);
         beefHourseAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(beefHourseAdapter);
@@ -108,5 +114,15 @@ public class BeefStoreHouseActivity extends BaseActivity implements SwipeRefresh
     @Override
     public void onRefresh() {
         swipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

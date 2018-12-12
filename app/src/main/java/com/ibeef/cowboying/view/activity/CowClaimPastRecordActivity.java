@@ -19,6 +19,7 @@ import com.ibeef.cowboying.bean.HistorySchemeResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.BuyCowsSchemePresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -34,13 +35,13 @@ import rxfamily.view.BaseActivity;
 /**
  * 买牛往期记录
  */
-public class CowClaimPastRecordActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView {
+public class CowClaimPastRecordActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView {
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
     TextView info;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.ry_id)
@@ -66,9 +67,12 @@ public class CowClaimPastRecordActivity extends BaseActivity implements SwipeRef
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("往期记录");
         objectList=new ArrayList<>();
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
+
         ryId.setLayoutManager(new LinearLayoutManager(this));
         cowClaimPastRecordAdapter=new CowClaimPastRecordAdapter(objectList,this,R.layout.item_cows_cliam_pastrecord);
         cowClaimPastRecordAdapter.setOnLoadMoreListener(this, ryId);
@@ -117,17 +121,6 @@ public class CowClaimPastRecordActivity extends BaseActivity implements SwipeRef
             default:
                 break;
         }
-    }
-    @Override
-    public void onRefresh() {
-        currentPage = 1;
-        isFirst = true;
-        objectList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        buyCowsSchemePresenter.getHistorySchemeInfo(reqData,currentPage);
-        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -189,6 +182,7 @@ public class CowClaimPastRecordActivity extends BaseActivity implements SwipeRef
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -197,5 +191,27 @@ public class CowClaimPastRecordActivity extends BaseActivity implements SwipeRef
             buyCowsSchemePresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        currentPage = 1;
+        isFirst = true;
+        objectList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        buyCowsSchemePresenter.getHistorySchemeInfo(reqData,currentPage);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

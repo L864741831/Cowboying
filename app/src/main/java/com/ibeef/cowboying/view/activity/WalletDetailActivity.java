@@ -18,6 +18,7 @@ import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.IncomeInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 钱包明细
  */
-public class WalletDetailActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,IncomeInfoBase.IView {
+public class WalletDetailActivity extends BaseActivity  implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,IncomeInfoBase.IView {
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -41,7 +42,7 @@ public class WalletDetailActivity extends BaseActivity  implements SwipeRefreshL
     @Bind(R.id.message_ry)
     RecyclerView messageRy;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.rv_order)
@@ -68,9 +69,11 @@ public class WalletDetailActivity extends BaseActivity  implements SwipeRefreshL
         walletDetailListAdapter=new WalletDetailListAdapter(beanList,this,R.layout.item_assetdetail_notes);
         walletDetailListAdapter.setOnLoadMoreListener(this, messageRy);
         messageRy.setAdapter(walletDetailListAdapter);
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
 
         messageRy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -98,18 +101,6 @@ public class WalletDetailActivity extends BaseActivity  implements SwipeRefreshL
     @OnClick(R.id.back_id)
     public void onViewClicked() {
         finish();
-    }
-
-    @Override
-    public void onRefresh() {
-        page=1;
-        isFirst = true;
-        beanList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        incomeInfoPresenter.getWalletRecord(reqData,page,"1");
-        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -172,6 +163,7 @@ public class WalletDetailActivity extends BaseActivity  implements SwipeRefreshL
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         messageRy.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -180,5 +172,26 @@ public class WalletDetailActivity extends BaseActivity  implements SwipeRefreshL
             incomeInfoPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        page=1;
+        isFirst = true;
+        beanList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        incomeInfoPresenter.getWalletRecord(reqData,page,"1");
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

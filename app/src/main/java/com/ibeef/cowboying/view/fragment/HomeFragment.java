@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +40,7 @@ import com.ibeef.cowboying.view.activity.NewManwelfareActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -51,15 +55,16 @@ import java.util.Map;
 
 import rxfamily.view.BaseFragment;
 
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,HomeBannerBase.IView  {
+public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayout.OnPullRefreshListener,View.OnClickListener,HomeBannerBase.IView  {
 
     RecyclerView homeRyId;
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     private Banner banner;
     private HomeProductListAdapter homeProductListAdapter;
     private List<Object> objectList;
     private TextView sellCowNumId;
     private TextView sellCowNum2Id;
+
     private Banner specialbeefImgId;
     private ImageView newpeopleImgId;
     private ImageView ranchconsociationImgId;
@@ -83,10 +88,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
         rv_show_id=view.findViewById(R.id.rv_show_id);
+
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+        swipeLy.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
 
         objectList=new ArrayList<>();
         homeProductListAdapter=new HomeProductListAdapter(objectList,getHoldingActivity(),R.layout.activity_ad_webview);
@@ -213,19 +220,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
     }
 
-    @Override
-    public void onRefresh() {
-        beanList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        homeBannerPresenter.getHomeBanner(reqData);
-        homeBannerPresenter.getHomeVideo(reqData);
-        homeBannerPresenter.getHomeSellCowsNum(reqData);
-        swipeLy.setRefreshing(false);
-    }
-
-
 
     @Override
     public void onClick(View v) {
@@ -262,7 +256,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void getHomeBanner(final HomeBannerResultBean homeBannerResultBean) {
         this.homeBannerResultBean=homeBannerResultBean;
-
+        swipeLy.setRefreshing(false);
         //新人专享
         if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())) {
             RequestOptions options = new RequestOptions()
@@ -393,5 +387,26 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        beanList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getHomeBanner(reqData);
+        homeBannerPresenter.getHomeVideo(reqData);
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

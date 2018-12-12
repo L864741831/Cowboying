@@ -12,10 +12,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyMessegeListAdapter;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +29,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 我的消息界面
  */
-public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class MyMessegeActivity extends BaseActivity  implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -35,7 +38,7 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
     @Bind(R.id.message_ry)
     RecyclerView messageRy;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     private MyMessegeListAdapter myMessegeListAdapter;
@@ -61,10 +64,10 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
         myMessegeListAdapter=new MyMessegeListAdapter(beanList,this,R.layout.my_messege_item);
         myMessegeListAdapter.setOnLoadMoreListener(this, messageRy);
         messageRy.setAdapter(myMessegeListAdapter);
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
-
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
         messageRy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -88,13 +91,25 @@ public class MyMessegeActivity extends BaseActivity  implements SwipeRefreshLayo
         finish();
     }
 
+
+
+    @Override
+    public void onLoadMoreRequested() {
+
+    }
+
     @Override
     public void onRefresh() {
         swipeLy.setRefreshing(false);
     }
 
     @Override
-    public void onLoadMoreRequested() {
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
 
     }
 }

@@ -28,6 +28,7 @@ import com.ibeef.cowboying.presenter.PasturePresenter;
 import com.ibeef.cowboying.presenter.RanchBottomVideoPresenter;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -47,7 +48,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 当前选中的牧场
  */
-public class ChooseParsterActivity extends BaseActivity implements PastureBase.IView,SwipeRefreshLayout.OnRefreshListener ,RanchBottomVideoBase.IView{
+public class ChooseParsterActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,PastureBase.IView ,RanchBottomVideoBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -68,7 +69,7 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
     @Bind(R.id.nest_scroll_id)
     NestedScrollView nestScrollId;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.action_new_question_tv)
     TextView actionNewQuestionTv;
     private int id;
@@ -117,9 +118,12 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
         richEditextInfoTv.setInputEnabled(false);
         richEditextInfoTv.setPadding(3, 5, 5, 5);
         richEditextInfoTv.loadCSS("file:///android_asset/img.css");
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
+
         ranchBottomVideoPresenter=new RanchBottomVideoPresenter(this);
         pastureDetelBottomImgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -176,18 +180,6 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
         }
     }
 
-    @Override
-    public void onRefresh() {
-        banner.setVisibility(View.GONE);
-        beanList.clear();
-        //底部图片集合
-        pastureDetelBottomImgAdapter.notifyDataSetChanged();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        pasturePresenter.getPastureDetelVideo(reqData,id);
-        swipeLy.setRefreshing(false);
-    }
 
     @Override
     public void showMsg(String msg) {
@@ -252,6 +244,7 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
     public void hideLoading() {
         rvLoading.setVisibility(View.GONE);
         nestScrollId.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -263,5 +256,28 @@ public class ChooseParsterActivity extends BaseActivity implements PastureBase.I
             ranchBottomVideoPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        banner.setVisibility(View.GONE);
+        beanList.clear();
+        //底部图片集合
+        pastureDetelBottomImgAdapter.notifyDataSetChanged();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureDetelVideo(reqData,id);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

@@ -41,6 +41,7 @@ import com.ibeef.cowboying.view.activity.NormalQuestionActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.PickUpCodeActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
@@ -55,7 +56,7 @@ import rxfamily.view.BaseFragment;
 /**
  * 牛人界面
  */
-public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,UserInfoBase.IView,CowManInfoBase.IView {
+public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLayout.OnPullRefreshListener,UserInfoBase.IView,CowManInfoBase.IView {
 
     @Bind(R.id.messege_id)
     ImageView messegeId;
@@ -113,7 +114,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
     private String token;
     private UserInfoPresenter userInfoPresenter;
     private CowManInfoPresenter cowManInfoPresenter;
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
@@ -125,13 +126,14 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         allMoneyId=view.findViewById(R.id.all_money_id);
         couponNumId=view.findViewById(R.id.coupon_num_id);
         levelId=view.findViewById(R.id.level_id);
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
 
         userInfoPresenter=new UserInfoPresenter(this);
         cowManInfoPresenter=new CowManInfoPresenter(this);
-
     }
 
     @Override
@@ -259,11 +261,11 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
                 break;
             case R.id.beef_house_rv:
                 //牛肉仓库
-//                if(TextUtils.isEmpty(token)){
-//                    startActivity(LoginActivity.class);
-//                }else {
-//                    startActivity(BeefStoreHouseActivity.class);
-//                }
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(BeefStoreHouseActivity.class);
+                }
                 break;
             case R.id.write_money_rv:
                 //白条额度
@@ -394,7 +396,7 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         }else {
             Toast.makeText(getHoldingActivity(),userInfoResultBean.getMessage(),Toast.LENGTH_LONG).show();
         }
-
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -428,6 +430,15 @@ public class ThreeFragment extends BaseFragment  implements SwipeRefreshLayout.O
         reqData.put("version",getVersionCodes());
         userInfoPresenter.getUserInfo(reqData);
         cowManInfoPresenter.getCowManInfos(reqData);
-        swipeLy.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

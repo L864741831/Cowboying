@@ -25,6 +25,7 @@ import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyCowsOrderPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,MyCowsOrderBase.IView{
+public class SellCowsActivity extends BaseActivity  implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,MyCowsOrderBase.IView{
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -47,7 +48,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
     @Bind(R.id.ry_id)
     RecyclerView ryId;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout mSwipeLayout;
+    SuperSwipeRefreshLayout mSwipeLayout;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.rv_order)
@@ -85,9 +86,11 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
         sellCowsAdapter = new SellCowsAdapter( baseBeans,this, R.layout.item_sell_cows);
         sellCowsAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(sellCowsAdapter);
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setEnabled(true);
+
+        mSwipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mSwipeLayout.setHeaderView(createHeaderView());// add headerView
+        mSwipeLayout.setTargetScrollWithLayout(true);
+        mSwipeLayout.setOnPullRefreshListener(this);
 
         myCowsOrderPresenter = new MyCowsOrderPresenter(this);
         ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -130,6 +133,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
             }
         };
         registerReceiver(receiver, intentFilter);
+
     }
 
 
@@ -172,18 +176,6 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
                 break;
         }
     }
-    @Override
-    public void onRefresh() {
-        currentPage = 1;
-        isFirst = true;
-        baseBeans.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization", token);
-        reqData.put("version", getVersionCodes());
-        myCowsOrderPresenter.geMyCowsOrderList(reqData, currentPage,"3");
-
-        mSwipeLayout.setRefreshing(false);
-    }
 
     @Override
     public void onLoadMoreRequested() {
@@ -217,6 +209,7 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        mSwipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -274,5 +267,26 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
         if (receiver != null) {
             unregisterReceiver(receiver);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        currentPage = 1;
+        isFirst = true;
+        baseBeans.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        myCowsOrderPresenter.geMyCowsOrderList(reqData, currentPage,"3");
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

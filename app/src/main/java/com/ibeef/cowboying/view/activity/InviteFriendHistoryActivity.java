@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.InviteNotesAdapter;
 import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import rxfamily.view.BaseActivity;
  * @author Administrator
  * 全民推广》邀请记录界面
  */
-public class InviteFriendHistoryActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class InviteFriendHistoryActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -43,7 +44,7 @@ public class InviteFriendHistoryActivity extends BaseActivity implements SwipeRe
     @Bind(R.id.rv_bg)
     RelativeLayout rvBg;
     @Bind(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
     private InviteNotesAdapter inviteNotesAdapter;
     private List<BaseBean> beanList;
     private String token;
@@ -64,9 +65,11 @@ public class InviteFriendHistoryActivity extends BaseActivity implements SwipeRe
             BaseBean baseBean=new BaseBean();
             beanList.add(baseBean);
         }
-        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setEnabled(true);
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
+
         ryId.setLayoutManager(new LinearLayoutManager(this));
         inviteNotesAdapter=new InviteNotesAdapter(beanList,this,R.layout.item_invite_notes);
         ryId.setAdapter(inviteNotesAdapter);
@@ -95,8 +98,19 @@ public class InviteFriendHistoryActivity extends BaseActivity implements SwipeRe
         finish();
     }
 
+
     @Override
     public void onRefresh() {
         swipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }
