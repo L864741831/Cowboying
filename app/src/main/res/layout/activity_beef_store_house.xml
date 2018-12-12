@@ -8,11 +8,11 @@
     <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe_layout"
+        android:id="@+id/swipe_layout" android:background="@color/colorAccent"
         android:layout_above="@+id/rv_bottom_id">
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"  android:orientation="vertical"
-            android:scrollbars="vertical"
+            android:scrollbars="vertical" android:background="@color/white"
             android:fadingEdge="vertical"
             android:layout_height="match_parent"  >
 
