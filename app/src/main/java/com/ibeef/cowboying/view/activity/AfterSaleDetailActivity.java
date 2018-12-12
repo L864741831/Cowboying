@@ -25,6 +25,8 @@ import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
+import com.ibeef.cowboying.view.customview.CountDownView;
+import com.ibeef.cowboying.view.customview.CountDowntimeView;
 import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;
@@ -100,6 +102,8 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
     TextView tv_cancel_time;
     @Bind(R.id.rl_cancel)
     LinearLayout llCancel;
+    @Bind(R.id.time_show_id)
+    CountDowntimeView time_show_id;
     private List<MyAfterSaleDetailBean.BizDataBean.OrderProductResVosBean> beanList;
     private String token;
     private AfterSaleoneDetailAdapter afterSaleAdapter;
@@ -109,6 +113,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
     private String status;
     private int id;
     private int orderIdnew;
+    private String times;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +133,8 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
         rvList.setNestedScrollingEnabled(false);
         afterSaleAdapter = new AfterSaleoneDetailAdapter(beanList, this, R.layout.item_after_sale_detail);
         rvList.setAdapter(afterSaleAdapter);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        times = sdf.format( new Date());
     }
 
     @Override
@@ -237,14 +244,16 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
         }
 //退款单状态（1：申请退款；2：退款完成；3：退款拒绝；4：退款取消）',
         if ("1".equals(status)) {
+            time_show_id.setVisibility(View.VISIBLE);
             tvApplyTopStatus.setText("请等待商家处理");
-            tvApplyTopTime.setText("还剩2天23小时");
+            tvApplyTopTime.setVisibility(View.GONE);
             llApplyIng.setVisibility(View.VISIBLE);
             rlReturnSuccess1.setVisibility(View.GONE);
             rlReturnRefuse.setVisibility(View.GONE);
             rlReturnSuccess2.setVisibility(View.GONE);
         } else if ("2".equals(status)) {
             tvApplyTopStatus.setText("退款成功");
+            time_show_id.setVisibility(View.GONE);
             tvApplyTopTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefundTime(), DateUtils.TYPE_01));
             rlReturnSuccess1.setVisibility(View.VISIBLE);
             llApplyIng.setVisibility(View.GONE);
@@ -254,14 +263,16 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             tvReturnMoneyWay.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
         } else if ("3".equals(status)) {
             tvApplyTopStatus.setText("审核拒绝");
+            time_show_id.setVisibility(View.GONE);
             tvApplyTopTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
             llApplyIng.setVisibility(View.GONE);
             rlReturnSuccess1.setVisibility(View.GONE);
             rlReturnRefuse.setVisibility(View.VISIBLE);
-            rlReturnRefuse.setText(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefuseReason());
+            rlReturnRefuse.setText("拒绝原因："+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefuseReason());
             rlReturnSuccess2.setVisibility(View.GONE);
         } else if ("4".equals(status)) {
             tvApplyTopStatus.setText("已撤销退款申请");
+            time_show_id.setVisibility(View.GONE);
             tvApplyTopTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
             rlReturnSuccess1.setVisibility(View.VISIBLE);
             llApplyIng.setVisibility(View.GONE);
@@ -303,24 +314,21 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
         tvApplyId.setText(""+myAfterSaleDetailBean.getBizData().getOrderProductResVos().size());
         txtApplyTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCreateTime(), DateUtils.TYPE_01));
         tvReturnId.setText(""+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCode());
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String times=   sdf.format( new Date());
-//        long time= DateUtils.getReduce(times,DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
-//        Log.i("htht", "CreateTime::::::: "+DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(),DateUtils.TYPE_01));
-//        Log.i("htht", "time::::::::: "+time);
-//        //两时间差,精确到毫秒
-//        long hour = time  / 3600000;
-//        //以小时为单位取整
-//        long min = time  % 3600000 / 60000;
-//        //以分钟为单位取整
-//        long seconds = time  % 3600000 % 60000 / 1000;
-//        //以秒为单位取整
-//        if(time>0){
-//            time_show_id.initTime(hour,min,seconds);
-//            time_show_id.start();
-//        }else {
-//            time_show_id.setVisibility(View.GONE);
-//        }
+
+        long time= DateUtils.getReducenew(times,DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getEndTime(),DateUtils.TYPE_01));
+        Log.i("htht", "CreateTime::::::: "+DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getEndTime(),DateUtils.TYPE_01));
+        Log.i("htht", "time::::::::: "+time);
+        long day = time / 86400000;                         //以天数为单位取整
+        long hour = time % 86400000 / 3600000;               //以小时为单位取整
+        long min = time % 86400000 % 3600000 / 60000;       //以分钟为单位取整
+        long seconds = time % 86400000 % 3600000 % 60000 / 1000;   //以秒为单位取整
+        //以秒为单位取整
+        if(time>0){
+            time_show_id.initTime(day,hour,min,seconds);
+            time_show_id.start();
+        }else {
+            time_show_id.setVisibility(View.GONE);
+        }
 
     }
 

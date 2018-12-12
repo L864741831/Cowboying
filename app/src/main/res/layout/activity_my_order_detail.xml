@@ -34,7 +34,8 @@
                     android:layout_height="wrap_content"
                     android:text="您的订单已提交，请您在30分钟内完成支付，超时订单将自动取消"
                     android:layout_marginLeft="15dp"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
+                    android:layout_marginRight="20dp"
                     android:textColor="@color/gray_666666"
                     android:layout_marginTop="@dimen/dp_10"
                     />
@@ -56,13 +57,13 @@
                android:layout_marginLeft="15dp"
                android:layout_marginRight="15dp"
                android:layout_height="1dp"
-               android:layout_marginBottom="15dp"
                android:layout_marginTop="@dimen/dp_10"
                android:layout_gravity="center_horizontal"
                android:background="@color/gray_666666"/>
 
             <LinearLayout
                 android:id="@+id/ll_pick_up"
+                android:paddingTop="15dp"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,7 +153,6 @@
 
             <RelativeLayout
                 android:id="@+id/rl_address_locast"
-
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
                 <TextView
@@ -289,9 +289,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总金额："
+                    android:text="订单总价："
                     android:textSize="14sp"
-                    android:textColor="@color/wenzi_hei"
+                    android:textColor="@color/wenzi_hei_2"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"
                     />
@@ -301,12 +301,20 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="15sp"
-                    android:textColor="@color/wenzi_hei"
+                    android:textColor="@color/wenzi_hei_2"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#cccccc"
+                />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp">
@@ -315,7 +323,7 @@
                     android:layout_height="wrap_content"
                     android:text="实付金额："
                     android:textSize="14sp"
-                    android:textColor="@color/wenzi_hei"
+                    android:textColor="@color/wenzi_hei_2"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"
                     />
@@ -325,12 +333,20 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="15sp"
-                    android:textColor="@color/wenzi_hei"
+                    android:textColor="@color/wenzi_hei_2"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#cccccc"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -410,8 +426,12 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
                 android:textSize="13sp"
-                android:layout_marginBottom="50dp"
                 android:textColor="@color/gray_666666"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="50dp"
                 />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

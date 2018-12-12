@@ -129,6 +129,15 @@ public class MyAfterSaleListBean {
             private double amount;
             private String orderStatus;
             private String refuseReason;
+            private long endTime;
+
+            public long getEndTime() {
+                return endTime;
+            }
+
+            public void setEndTime(long endTime) {
+                this.endTime = endTime;
+            }
 
             public int getId() {
                 return id;

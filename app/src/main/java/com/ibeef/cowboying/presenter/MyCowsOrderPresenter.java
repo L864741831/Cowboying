@@ -109,13 +109,10 @@ public class MyCowsOrderPresenter extends BasePresenter implements MyCowsOrderBa
 
     @Override
     public void getMyCowsToPay(Map<String, String> headers, String orderCode) {
-        mView.showLoading();
         addSubscription(mModel.getMyCowsToPay(headers,orderCode,new ResponseCallback<CreatOderResultBean>() {
             @Override
             public void onSuccess(CreatOderResultBean result) {
-                mView.hideLoading();
                 mView.getMyCowsToPay(result);
-
             }
 
             @Override

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,6 +32,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.AfterSaleApplyActivity;
+import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.MyorderListCancelDialog;
 import com.ibeef.cowboying.view.activity.ShowOrderDeleveryActivity;
@@ -50,7 +52,7 @@ import rxfamily.view.BaseFragment;
  *
  * @author lalala
  */
-public class MyOrderListFragment extends BaseFragment implements MyOrderListBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class MyOrderListFragment extends BaseFragment implements View.OnClickListener,MyOrderListBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     RecyclerView mRView;
     ImageView tvTextNull;
@@ -66,6 +68,7 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
     private boolean isMoreLoad = false;
     private String groupId;
     private MyOrderListPresenter myOrderListPresenter;
+    private TextView btn_into_store;
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
@@ -74,6 +77,8 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
         tvTextNull=view.findViewById(R.id.tv_text_null);
         rv_order=view.findViewById(R.id.rv_order);
         mSwipeLayout=view.findViewById(R.id.swipe_layout);
+        btn_into_store = view.findViewById(R.id.btn_into_store);
+        btn_into_store.setOnClickListener(this);
 
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeLayout.setOnRefreshListener(this);
@@ -254,13 +259,13 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
                     case  R.id.btn_cancle_order:
                         //取消订单
                         Intent intent2 = new Intent(getHoldingActivity(),MyorderListCancelDialog.class);
-                        intent2.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId());
+                        intent2.putExtra("orderCode",""+dataBean.getShopOrderResVo().getOrderId());
                         startActivity(intent2);
                         break;
                     case  R.id.btn_apply_return:
                         //申请退款
                         Intent intent3 = new Intent(getHoldingActivity(),AfterSaleApplyActivity.class);
-                        intent3.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId());
+                        intent3.putExtra("orderCode",dataBean.getShopOrderResVo().getOrderId()+"");
                         startActivity(intent3);
                         break;
                     case  R.id.btn_to_pay:
@@ -388,5 +393,12 @@ public class MyOrderListFragment extends BaseFragment implements MyOrderListBase
             myOrderListPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+        intent1.putExtra("index",1);
+        startActivity(intent1);
     }
 }

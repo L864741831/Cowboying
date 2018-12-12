@@ -100,7 +100,15 @@ public class MyAfterSaleDetailBean {
             private String refuseReason;
             private long updateTime;
             private long createTime;
+            private long endTime;
 
+            public long getEndTime() {
+                return endTime;
+            }
+
+            public void setEndTime(long endTime) {
+                this.endTime = endTime;
+            }
 
             public long getCreateTime() {
                 return createTime;

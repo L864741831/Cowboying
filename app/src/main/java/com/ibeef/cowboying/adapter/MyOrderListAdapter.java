@@ -47,8 +47,13 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         helper.addOnClickListener(R.id.btn_to_pay);
         helper.addOnClickListener(R.id.btn_apply_return);
 
+        int quantity=0;
+        for (int i=0;i<item.getShopOrderProductResVos().size();i++){
+            quantity=item.getShopOrderProductResVos().get(i).getQuantity()+quantity;
+        }
+
         helper.setText(R.id.order_id,"订单编号："+item.getShopOrderResVo().getCode())
-              .setText(R.id.tv_total,"共"+item.getShopOrderProductResVos().size()+"件，合计：￥"+item.getShopOrderResVo().getPayAmount());
+              .setText(R.id.tv_total,"共"+quantity+"件，合计：￥"+item.getShopOrderResVo().getPayAmount());
 
         RecyclerView ry_id=helper.getView(R.id.ry_id);
         ry_id.setLayoutManager(new LinearLayoutManager(context));
@@ -59,10 +64,9 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         myOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Constant.PRODUCR_ID=item.getShopOrderProductResVos().get(position).getProductId();
-                    Intent intent1=new Intent(context,MainActivity.class);
-                    intent1.putExtra("index",1);
-                    context.startActivity(intent1);
+                    Intent intent = new Intent(context, MyOrderDetailActivity.class);
+                    intent.putExtra("orderId",item.getShopOrderResVo().getOrderId()+"");
+                    context.startActivity(intent);
                 }
             });
 //        订单状态（0：未支付；1：已支付；2：已发货；3：确认收货；4：退款中；5：已退款；6：已取消；）'
@@ -71,7 +75,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 helper.setText(R.id.stadus_id,"待付款");
                 textView4.setVisibility(View.VISIBLE);
                 textView5.setVisibility(View.VISIBLE);
-
                 textView1.setVisibility(View.GONE);
                 textView2.setVisibility(View.GONE);
                 textView3.setVisibility(View.GONE);
@@ -98,7 +101,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 helper.setText(R.id.stadus_id,"待收货");
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
-
                 textView1.setVisibility(View.GONE);
                 textView6.setVisibility(View.GONE);
                 textView4.setVisibility(View.GONE);
@@ -124,19 +126,16 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 //交易关闭
                 helper.setText(R.id.stadus_id,"交易关闭");
                 textView1.setVisibility(View.VISIBLE);
-
                 textView2.setVisibility(View.GONE);
                 textView3.setVisibility(View.GONE);
                 textView4.setVisibility(View.GONE);
                 textView5.setVisibility(View.GONE);
                 textView7.setVisibility(View.GONE);
                 textView6.setVisibility(View.GONE);
-
             } else if ("4".equals(item.getShopOrderResVo().getStatus())) {
                 //退款中
                 helper.setText(R.id.stadus_id,"退款中");
                 textView7.setVisibility(View.VISIBLE);
-
                 textView2.setVisibility(View.GONE);
                 textView3.setVisibility(View.GONE);
                 textView4.setVisibility(View.GONE);
@@ -147,7 +146,6 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 //已退款
                 helper.setText(R.id.stadus_id,"退款完成");
                 textView7.setVisibility(View.VISIBLE);
-
                 textView2.setVisibility(View.GONE);
                 textView3.setVisibility(View.GONE);
                 textView4.setVisibility(View.GONE);
