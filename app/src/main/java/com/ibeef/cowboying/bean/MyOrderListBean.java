@@ -169,7 +169,7 @@ public class MyOrderListBean {
             private int receiverRegion;
             private String receiverAddress;
             private String cancelReason;
-            private String createTime;
+            private long createTime;
 
             public int getOrderId() {
                 return orderId;
@@ -355,11 +355,11 @@ public class MyOrderListBean {
                 this.cancelReason = cancelReason;
             }
 
-            public String getCreateTime() {
+            public long getCreateTime() {
                 return createTime;
             }
 
-            public void setCreateTime(String createTime) {
+            public void setCreateTime(long createTime) {
                 this.createTime = createTime;
             }
         }

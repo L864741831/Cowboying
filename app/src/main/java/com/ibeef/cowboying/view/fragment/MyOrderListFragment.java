@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -246,7 +247,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
                     case R.id.btn_see_order_progress:
                         //查看物流信息
                         Intent intent=new Intent(getHoldingActivity(),ShowOrderDeleveryActivity.class);
-                        intent.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());
+                        intent.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId()+"");
                         startActivity(intent);
                         break;
                     case  R.id.btn_confirm_receipt:
@@ -259,7 +260,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
                     case  R.id.btn_cancle_order:
                         //取消订单
                         Intent intent2 = new Intent(getHoldingActivity(),MyorderListCancelDialog.class);
-                        intent2.putExtra("orderCode",""+dataBean.getShopOrderResVo().getOrderId());
+                        intent2.putExtra("orderCode",""+dataBean.getShopOrderResVo().getOrderId()+"");
                         startActivity(intent2);
                         break;
                     case  R.id.btn_apply_return:
@@ -271,8 +272,9 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
                     case  R.id.btn_to_pay:
                         //去支付
                         Intent intent5 = new Intent(getHoldingActivity(),StorePayTypeActivity.class);
-                        int i = Integer.valueOf(dataBean.getShopOrderResVo().getOrderId()).intValue();
-                        intent5.putExtra("orderId",i);
+                        intent5.putExtra("orderId",dataBean.getShopOrderResVo().getOrderId());
+                        intent5.putExtra("createTime", dataBean.getShopOrderResVo().getCreateTime());
+                        Log.i("htht", "去付款createTime::::: "+dataBean.getShopOrderResVo().getCreateTime());
                         startActivity(intent5);
                         break;
                     default:

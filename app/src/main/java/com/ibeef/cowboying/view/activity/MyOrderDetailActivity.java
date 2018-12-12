@@ -150,6 +150,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     private MyOrderListDetailBean myOrderListDetailBean;
     private String refundId;
     private boolean from;
+    private long createTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,7 +187,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
 
 
     @OnClick({R.id.back_id, R.id.btn_order_delete, R.id.btn_order_cancel, R.id.btn_order_pay, R.id.btn_order_apply_back,
-            R.id.btn_order_see_wuliu, R.id.btn_order_ok, R.id.btn_order_detail,R.id.tv_code})
+            R.id.btn_order_see_wuliu, R.id.btn_order_ok, R.id.btn_order_detail,R.id.tv_code,R.id.ll_wuliu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -212,6 +214,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 Intent intent5 = new Intent(this, StorePayTypeActivity.class);
                 int i = Integer.valueOf(orderId).intValue();
                 intent5.putExtra("orderId", i);
+                intent5.putExtra("createTime", createTime);
+                Log.i("htht", "去付款createTime::::: "+createTime);
                 startActivity(intent5);
                 break;
             case R.id.btn_order_apply_back:
@@ -241,6 +245,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 break;
             case R.id.tv_code:
                 tvCode.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveCode());
+                break;
+            case R.id.ll_wuliu:
+                Intent intent8 = new Intent(this, ShowOrderDeleveryActivity.class);
+                intent8.putExtra("orderId", orderId);
+                startActivity(intent8);
                 break;
             default:
                 break;
@@ -314,6 +323,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             this.beanList.addAll(myOrderListDetailBean.getBizData().getShopOrderProductResVos());
             afterSaleAdapter.setNewData(beanList);
             refundId = myOrderListDetailBean.getBizData().getRefundId();
+            createTime = myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime();
             afterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -361,6 +371,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     llPickUp.setVisibility(View.VISIBLE);
                     tvOrderStatus.setVisibility(View.VISIBLE);
                     tvOrderStatus.setText("订单状态：待取货");
+                    rlAddressLocast.setVisibility(View.GONE);
                     rlYunfei.setVisibility(View.GONE);
                 }
             } else if ("2".equals(status)) {
@@ -493,6 +504,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             if (myOrderListDetailBean.getBizData().getLatestState() != null) {
                 tvWuliuIng.setText(myOrderListDetailBean.getBizData().getLatestState().getContext());
                 tvWuliuIngTime.setText(myOrderListDetailBean.getBizData().getLatestState().getTime());
+            }else{
+                llWuliu.setVisibility(View.GONE);
             }
             //如果没有优惠券就不显示优惠券一栏
             if (myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount() == 0.0) {

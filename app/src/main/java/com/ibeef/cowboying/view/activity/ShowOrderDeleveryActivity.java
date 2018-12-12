@@ -176,6 +176,8 @@ public class ShowOrderDeleveryActivity extends BaseActivity  implements SwipeRef
             if(!SDCardUtil.isNullOrEmpty(showDeleveryResultBean.getBizData().getExpressResVos())){
                 beanList.addAll(showDeleveryResultBean.getBizData().getExpressResVos());
                 myWorkStepAdapter.setNewData(beanList);
+            }else{
+                rvOrder.setVisibility(View.VISIBLE);
             }
 
             if(!SDCardUtil.isNullOrEmpty(showDeleveryResultBean.getBizData().getExpressName())){

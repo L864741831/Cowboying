@@ -40,6 +40,7 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.IsPayPwdPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.presenter.OrderInitPresenter;
+import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.VerificationCodeInput;
 import com.ibeef.cowboying.view.customview.CountDownView;
 import com.orhanobut.hawk.Hawk;
@@ -47,6 +48,8 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -150,19 +153,40 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
 
     private void init() {
         orderId=getIntent().getIntExtra("orderId",0);
+        long createTime=getIntent().getLongExtra("createTime",0);
+        Log.i("htht", "createTime::::: "+createTime);
+        if (createTime==0){
+            info.setText("支付方式");
+            long time= 1800000;
+            //两时间差,精确到毫秒
+            long hour = time  / 3600000;
+            //以小时为单位取整
+            long min = time  % 3600000 / 60000;
+            //以分钟为单位取整
+            long seconds = time  % 3600000 % 60000 / 1000;
+            //以秒为单位取整
+            Log.e(Constant.TAG,time+"????????????");
+            timeShowId.initTime(hour,min,seconds);
+            timeShowId.start();
+        }else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String times = sdf.format(new Date());
+            long time = DateUtils.getReduce(times, DateUtils.formatDate(createTime+1800000, DateUtils.TYPE_01));
+            //两时间差,精确到毫秒
+            long hour = time / 3600000;
+            //以小时为单位取整
+            long min = time % 3600000 / 60000;
+            //以分钟为单位取整
+            long seconds = time % 3600000 % 60000 / 1000;
+            //以秒为单位取整
+            if (time > 0) {
+                timeShowId.initTime(hour, min, seconds);
+                timeShowId.start();
+            } else {
+                timeShowId.setVisibility(View.GONE);
+            }
+        }
 
-        info.setText("支付方式");
-        long time= 1800000;
-        //两时间差,精确到毫秒
-        long hour = time  / 3600000;
-        //以小时为单位取整
-        long min = time  % 3600000 / 60000;
-        //以分钟为单位取整
-        long seconds = time  % 3600000 % 60000 / 1000;
-        //以秒为单位取整
-        Log.e(Constant.TAG,time+"????????????");
-        timeShowId.initTime(hour,min,seconds);
-        timeShowId.start();
         verificationCodeInputId.setOnCompleteListener(new VerificationCodeInput.Listener() {
             @Override
             public void onComplete(String content) {
