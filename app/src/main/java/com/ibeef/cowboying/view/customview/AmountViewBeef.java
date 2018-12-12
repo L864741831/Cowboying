@@ -129,9 +129,9 @@ public class AmountViewBeef extends LinearLayout implements View.OnClickListener
             return;
         }
 
-        if (mListener != null) {
-            mListener.onAmountChange(this, amount);
-        }
+//        if (mListener != null) {
+//            mListener.onAmountChange(this, amount);
+//        }
     }
 
 

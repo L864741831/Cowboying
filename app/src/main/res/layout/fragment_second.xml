@@ -108,7 +108,7 @@
                                     android:layout_width="0dp" android:id="@+id/beef_size_id"
                                     android:layout_weight="0.33" android:textSize="12sp"
                                     android:layout_height="wrap_content" android:text="规格：00g/袋"
-                                    android:gravity="right"/>
+                                    android:gravity="center"/>
                                 <TextView
                                     android:layout_width="0dp" android:id="@+id/beef_price_id"
                                     android:layout_weight="0.33" android:textSize="12sp"
@@ -118,7 +118,7 @@
                                     android:layout_width="0dp" android:id="@+id/beef_stock_id"
                                     android:layout_weight="0.33" android:textSize="12sp"
                                     android:layout_height="wrap_content" android:text=""
-                                    android:gravity="left"/>
+                                    android:gravity="center" />
                             </LinearLayout>
 
                             <ImageView

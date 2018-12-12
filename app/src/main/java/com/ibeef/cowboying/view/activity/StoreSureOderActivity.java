@@ -121,7 +121,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     private StoreAddrAdapter storeAddrAdapter;
     private int currentPage=1;
     private boolean isMoreLoad=false;
-    private int type;
+    private int type=1;
     private   int selectId;
     private  boolean check;
     private final static int REQUESTCODE = 1; // 返回的结果码
@@ -270,8 +270,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 break;
             case R.id.refuce_id:
                 lvsId.setVisibility(View.GONE);
-                type=0;
-                deleveryTypeId.setText("请选择配送方式");
+                type=1;
+                deleveryTypeId.setText("顺丰配送");
                 rvStoreaddrId.setVisibility(View.GONE);
                 addressRv.setVisibility(View.VISIBLE);
                 break;

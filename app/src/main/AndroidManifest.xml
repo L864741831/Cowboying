@@ -199,7 +199,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity android:name=".view.activity.StoreCarActivity" />
+        <activity android:name=".view.activity.StoreCarActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.StoreSureOderActivity"
             android:windowSoftInputMode="adjustPan" />

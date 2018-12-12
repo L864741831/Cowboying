@@ -56,6 +56,8 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
     RelativeLayout rvBottomId;
     @Bind(R.id.all_cownum_id)
     TextView allCownumId;
+    @Bind(R.id.to_sell_cows)
+    TextView toSellCows;
     private SellCowsAdapter sellCowsAdapter;
     private List<MyCowsOrderListBean.BizDataBean> baseBeans;
     private String token;
@@ -147,10 +149,13 @@ public class SellCowsActivity extends BaseActivity  implements SwipeRefreshLayou
 
     }
 
-    @OnClick({R.id.back_id, R.id.now_claim_btn_id})
+    @OnClick({R.id.back_id, R.id.now_claim_btn_id,R.id.to_sell_cows})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                finish();
+                break;
+            case R.id.to_sell_cows:
                 finish();
                 break;
             case R.id.now_claim_btn_id:

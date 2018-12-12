@@ -18,7 +18,7 @@
             android:layout_height="wrap_content" android:orientation="vertical">
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent" android:id="@+id/ry_id"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
             <include
                 layout="@layout/loading_layout"
                 android:id="@+id/loading_layout"  />
@@ -28,9 +28,16 @@
                 android:layout_height="match_parent" android:visibility="gone">
                 <ImageView
                     android:id="@+id/tv_text_null"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:src="@mipmap/sellcowwhitebg"/>
+                <TextView
+                    android:layout_width="140dp" android:id="@+id/to_sell_cows"
+                    android:layout_height="wrap_content" android:text="去卖牛"
+                    android:background="@drawable/bg_amount_layout" android:paddingTop="10dp"
+                    android:paddingBottom="10dp" android:gravity="center_horizontal"
+                    android:layout_below="@+id/tv_text_null"
+                    android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 
         </LinearLayout>

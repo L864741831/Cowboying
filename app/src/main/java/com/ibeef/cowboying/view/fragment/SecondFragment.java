@@ -186,6 +186,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                     //购物车删除商拼，添加商品时刷新数据
                     isClick=false;
                     isClickCar=false;
+                    num=0;
                     refreshData();
                 }
             };
@@ -450,7 +451,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 if(amount>=baseBeans.get(position).getShopProductResVo().getStock()){
 //                    showToast("已达到最大库存！");
                 }else {
-                    if(baseBeans.get(position).getCartProductNum()>amount){
+                    if(baseBeans.get(position).getCartProductNum()>=amount){
                         //为0不能再减
                         if(baseBeans.get(position).getCartProductNum()==0){
                             return;

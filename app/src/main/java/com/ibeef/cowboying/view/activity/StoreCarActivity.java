@@ -96,11 +96,11 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
     private boolean isclick;
     private StoreCarAdapter storeCarAdapter;
     private BroadcastReceiver receiver1;
-    private int num,position,chooseNum;
+    private int num=0,position=0,chooseNum=0;
     private  List<CarListResultBean.BizDataBean> lists;
     private StoreCarPayPresenter storeCarPayPresenter;
     private List<AddStoreCarParamBean> storeCarResultBeans;
-    private double allMoney;
+    private double allMoney=0.00;
     private CarListResultBean.BizDataBean item;
     private StoreCarPresenter storeCarPresenter;
     private   Map<String, String> reqData;
@@ -121,17 +121,19 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         lists=new ArrayList<>();
         storeCarResultBeans=new ArrayList<>();
         info.setText("购物车");
-        actionNewQuestionTv.setText("编辑");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
+        actionNewQuestionTv.setText("编辑");
+
         swipeLy.setColorSchemeResources(R.color.colorAccent);
         swipeLy.setOnRefreshListener(this);
         swipeLy.setEnabled(true);
-        ryId.setHasFixedSize(true);
-        ryId.setNestedScrollingEnabled(false);
+
         ryId.setLayoutManager(new GridLayoutManager(this,2));
+
         storeCarAdapter=new StoreCarAdapter(lists,this,R.layout.item_store_car);
         storeCarAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(storeCarAdapter);
+
         ryId.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -154,6 +156,50 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         receiver1 = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+
+                position=intent.getIntExtra("position",0);
+                int amount=intent.getIntExtra("amount",0);
+
+                if(amount>=lists.get(position).getStock()){
+                    //                    showToast("已达到最大库存！");
+                }else {
+                    if(lists.get(position).getQuantity()>amount){
+                        //最小数量为1
+                        if(lists.get(position).getQuantity()==1){
+                            return;
+                        }
+                        int nums1=lists.get(position).getQuantity();
+                        num=num-nums1;
+                        num+=nums1-1;
+
+                        lists.get(position).setQuantity(nums1-1);
+                        lists.get(position).setChoose(true);
+
+                        //选中才执行价格的计算
+                        if(1==lists.get(position).getDefautChoose()){
+                            allMoney=allMoney-nums1*lists.get(position).getPrice();
+                            allMoney+=(nums1-1)*lists.get(position).getPrice();
+
+                        }
+                    }else {
+                        //达到库存数
+                        if(lists.get(position).getQuantity()==lists.get(position).getStock()){
+                            return;
+                        }
+                        int nums=lists.get(position).getQuantity();
+                        num=num-nums;
+                        num+=nums+1;
+
+                        lists.get(position).setQuantity(nums+1);
+                        lists.get(position).setChoose(true);
+                        //选中才执行价格的计算
+                        if(1==lists.get(position).getDefautChoose()){
+                            allMoney=allMoney-nums*lists.get(position).getPrice();
+                            allMoney+=(nums+1)*lists.get(position).getPrice();
+
+                        }
+                    }
+                }
                 DecimalFormat df = new DecimalFormat("#####0.00");
                 String str = df.format(allMoney);
                 allCownumId.setText("合计：￥"+str);
@@ -176,8 +222,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
                  item=storeCarAdapter.getItem(positions);
                  position=positions;
-                Intent intent1=new Intent();
-                intent1.setAction("com.ibeef.cowboying.storecarnum");
+
                 switch (view.getId()){
                     case R.id.all_ck_id:
                         //选中
@@ -197,49 +242,17 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
                             allCownumId.setText("合计：￥"+str);
                             lists.get(positions).setDefautChoose(0);
                         }
+                        int j=0;
+                        for(int i=0;i<lists.size();i++){
+                            if(1==lists.get(i).getDefautChoose()){
+                                j++;
+                            }
+                        }
+                        if(j==lists.size()){
+                            allCkId.setChecked(true);
+                        }
                        storeCarAdapter.notifyItemChanged(positions);
                         break;
-                    case R.id.btnDecrease:
-                        position=positions;
-                        //最小数量为1
-                        if(lists.get(positions).getQuantity()==1){
-                            return;
-                        }
-                        int nums1=lists.get(positions).getQuantity();
-                        num=num-nums1;
-                        num+=nums1-1;
-
-                        lists.get(positions).setQuantity(nums1-1);
-                        lists.get(positions).setChoose(true);
-
-                        storeCarAdapter.notifyItemChanged(positions);
-                        //选中才执行价格的计算
-                        if(1==lists.get(positions).getDefautChoose()){
-                            allMoney=allMoney-nums1*lists.get(positions).getPrice();
-                            allMoney+=(nums1-1)*lists.get(positions).getPrice();
-                            sendBroadcast(intent1);
-                        }
-                        break;
-                    case R.id.btnIncrease:
-                        //达到库存数
-                        if(lists.get(positions).getQuantity()==lists.get(positions).getStock()){
-                            return;
-                        }
-                        int nums=lists.get(positions).getQuantity();
-                        num=num-nums;
-                        num+=nums+1;
-
-                        lists.get(positions).setQuantity(nums+1);
-                        lists.get(positions).setChoose(true);
-
-                        storeCarAdapter.notifyItemChanged(positions);
-                        //选中才执行价格的计算
-                        if(1==lists.get(positions).getDefautChoose()){
-                            allMoney=allMoney-nums*lists.get(positions).getPrice();
-                            allMoney+=(nums+1)*lists.get(positions).getPrice();
-                            sendBroadcast(intent1);
-                        }
-                       break;
                     default:
                         break;
                 }
@@ -250,6 +263,7 @@ public class StoreCarActivity extends BaseActivity implements SwipeRefreshLayout
         storeCarPayPresenter=new StoreCarPayPresenter(this);
 
         storeCarPayPresenter.getCarList(reqData,currentPage);
+        swipeLy.setRefreshing(false);
 
     }
 

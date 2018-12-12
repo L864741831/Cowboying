@@ -10,7 +10,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_width="100dp" android:id="@+id/store_img"
                     android:layout_height="100dp" android:scaleType="centerCrop"
-                    android:src="@mipmap/cowbeefimg"  android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"/>
                 <ImageView
                     android:visibility="gone"
                     android:layout_marginLeft="5dp"
