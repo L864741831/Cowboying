@@ -62,12 +62,21 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
     TextView realPayMoneyId;
     @Bind(R.id.rv_bottom_id)
     RelativeLayout rvBottomId;
+    @Bind(R.id.rv_storeaddr_id)
+    RelativeLayout rvStoreaddrId;
+    @Bind(R.id.show_store_id)
+    TextView showStoreId;
+    @Bind(R.id.show_store_addr_id)
+    TextView showStoreAddrId;
+    @Bind(R.id.address_rv)
+    RelativeLayout addressRv;
     private int orderId;
     private List<StoreCarResultBean> objectList;
     private String token;
     private StoreResultOrderAdapter storeResultOrderAdapter;
     private MyOrderListPresenter myOrderListPresenter;
     private Map<String, String> reqData;
+    private String stadus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +93,6 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
         ryId.setNestedScrollingEnabled(false);
         ryId.setLayoutManager(new LinearLayoutManager(this));
         objectList=new ArrayList<>();
-
-        storeResultOrderAdapter=new StoreResultOrderAdapter(objectList,this,R.layout.item_sureorder_info);
-        ryId.setAdapter(storeResultOrderAdapter);
         myOrderListPresenter=new MyOrderListPresenter(this);
         reqData = new HashMap<>();
         reqData.put("Authorization",token);
@@ -136,9 +142,24 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
     @Override
     public void getMyOrderListDetail(MyOrderListDetailBean myOrderListDetailBean) {
         if("000000".equals(myOrderListDetailBean.getCode())){
-            showAddrId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverName());
-            mobileTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverMobile());
-            delAddrTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverProvince()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverCity()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverRegion()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
+            stadus=myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType();
+            storeResultOrderAdapter=new StoreResultOrderAdapter(objectList,this,R.layout.item_sureorder_info,stadus);
+            ryId.setAdapter(storeResultOrderAdapter);
+            //取货方式（1：快递；2：门店自提）
+            if ("1".equals(stadus)) {
+                rvStoreaddrId.setVisibility(View.GONE);
+                addressRv.setVisibility(View.VISIBLE);
+                showAddrId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverName());
+                mobileTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverMobile());
+                delAddrTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverProvince()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverCity()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverRegion()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
+            } else  if ("2".equals(stadus)){
+                rvStoreaddrId.setVisibility(View.VISIBLE);
+                addressRv.setVisibility(View.GONE);
+
+                showStoreId.setText(myOrderListDetailBean.getBizData().getStoreInfoResVo().getName());
+                showStoreAddrId.setText(myOrderListDetailBean.getBizData().getStoreInfoResVo().getAddress());
+            }
+
             storeResultOrderAdapter.setNewData(myOrderListDetailBean.getBizData().getShopOrderProductResVos());
 
             storeResultOrderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

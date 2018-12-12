@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".view.activity.MyMessegeActivity">
     <include layout="@layout/include_title"/>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +24,6 @@
                 android:layout_width="match_parent" android:id="@+id/message_ry"
                 android:layout_height="match_parent"/>
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
 
 </LinearLayout>

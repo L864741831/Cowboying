@@ -25,6 +25,7 @@ import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.StoreSureOderActivity;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ import rxfamily.view.BaseFragment;
 /**
  * @author htgg
  */
-public class DiscountCouponListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,MyContractBase.IView{
+public class DiscountCouponListFragment extends BaseFragment implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,MyContractBase.IView{
 
     private String token;
     private String stadus;
-    private SwipeRefreshLayout mSwipeLayout;
+    private SuperSwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRView;
     private RelativeLayout loadingLayout;
     private List<MyDiscountCouponListBean.BizDataBean> listData;
@@ -56,9 +57,10 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         mSwipeLayout = view.findViewById(R.id.swipe_layout);
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setEnabled(true);
+        mSwipeLayout.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
+        mSwipeLayout.setHeaderView(createHeaderView());// add headerView
+        mSwipeLayout.setTargetScrollWithLayout(true);
+        mSwipeLayout.setOnPullRefreshListener(this);
         listData=new ArrayList<>();
         loadingLayout = view.findViewById(R.id.loading_layout);
         rv_order = view.findViewById(R.id.rv_order);
@@ -88,6 +90,7 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
                 }
             }
         });
+
 
         discountCoupondapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -157,17 +160,7 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
             stadus = args.getString("stadus");
         }
     }
-    @Override
-    public void onRefresh() {
-        page = 1;
-        isFirst = true;
-        listData.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization", token);
-        reqData.put("version", getVersionCodes());
-        myContractPresenter.getMyDiscountCouponList(reqData,page,10,stadus);
-        mSwipeLayout.setRefreshing(false);
-    }
+
     @Override
     public void onLoadMoreRequested() {
         page+=1;
@@ -202,6 +195,7 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         mRView.setVisibility(View.VISIBLE);
+        mSwipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -243,5 +237,27 @@ public class DiscountCouponListFragment extends BaseFragment implements SwipeRef
             myContractPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        isFirst = true;
+        listData.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization", token);
+        reqData.put("version", getVersionCodes());
+        myContractPresenter.getMyDiscountCouponList(reqData,page,10,stadus);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

@@ -29,6 +29,7 @@ import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.TvLiveActivity;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -45,7 +46,7 @@ import rxfamily.view.BaseFragment;
 /**
  * 合作牧场主界面
  */
-public class RanchConsociationFragment extends BaseFragment implements PastureBase.IView,SwipeRefreshLayout.OnRefreshListener ,RanchBottomVideoBase.IView,View.OnClickListener {
+public class RanchConsociationFragment extends BaseFragment implements SuperSwipeRefreshLayout.OnPullRefreshListener,PastureBase.IView ,RanchBottomVideoBase.IView,View.OnClickListener {
     ImageView ivRanchConsociationLive;
     RecyclerView ryId;
     ImageView iv_ranch_canosciation;
@@ -53,7 +54,7 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
     RelativeLayout loadingLayout;
     NestedScrollView nestScrollId;
     RichEditor richEditextInfoTv;
-    SwipeRefreshLayout mSwipeLayout;
+    SuperSwipeRefreshLayout mSwipeLayout;
     private PasturePresenter pasturePresenter;
     private  List<RanchBottomVideoResultBean.BizDataBean> beanList;
     private PastureDetelBottomImgAdapter pastureDetelBottomImgAdapter;
@@ -104,9 +105,12 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
         richEditextInfoTv.setInputEnabled(false);
         richEditextInfoTv.setPadding(0, 0, 0, 0);
         richEditextInfoTv.loadCSS("file:///android_asset/img.css");
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setEnabled(true);
+
+        mSwipeLayout.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
+        mSwipeLayout.setHeaderView(createHeaderView());// add headerView
+        mSwipeLayout.setTargetScrollWithLayout(true);
+        mSwipeLayout.setOnPullRefreshListener(this);
+
         ranchBottomVideoPresenter=new RanchBottomVideoPresenter(this);
         pastureDetelBottomImgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -219,6 +223,7 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         nestScrollId.setVisibility(View.VISIBLE);
+        mSwipeLayout.setRefreshing(false);
     }
 
 
@@ -231,21 +236,6 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
             ranchBottomVideoPresenter.detachView();
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void onRefresh() {
-
-        banner.setVisibility(View.GONE);
-        beanList.clear();
-        //底部图片集合
-        pastureDetelBottomImgAdapter.notifyDataSetChanged();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        pasturePresenter.getPastureDetelVideo(reqData,ids);
-
-        mSwipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -279,5 +269,27 @@ public class RanchConsociationFragment extends BaseFragment implements PastureBa
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        banner.setVisibility(View.GONE);
+        beanList.clear();
+        //底部图片集合
+        pastureDetelBottomImgAdapter.notifyDataSetChanged();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pasturePresenter.getPastureDetelVideo(reqData,ids);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

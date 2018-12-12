@@ -205,12 +205,13 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         objectList.clear();
         CouponNumParamBean couponNumParamBean=new CouponNumParamBean();
         if(isStore){
+            couponNumParamBean.setUseType("3");
             couponNumParamBean.setProductQuantityReqDtos(storeCarResultBeans);
         }else {
+            couponNumParamBean.setUseType("1");
             couponNumParamBean.setSchemeId(schemeId+"");
             couponNumParamBean.setQuantity(quantity+"");
         }
-        couponNumParamBean.setUseType("3");
         useCouponListPresenter.getUseCouponList(reqData,couponNumParamBean);
         swipeLy.setRefreshing(false);
     }

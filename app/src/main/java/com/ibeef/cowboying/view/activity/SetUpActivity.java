@@ -54,6 +54,8 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
     RelativeLayout accoutSecurtyId;
     @Bind(R.id.modify_pwd_rv)
     RelativeLayout modifyPwdRv;
+    @Bind(R.id.goods_addr_rv)
+    RelativeLayout goodsAddrRv;
     @Bind(R.id.option_return_rv)
     RelativeLayout optionReturnRv;
     @Bind(R.id.version_code_txt)
@@ -111,11 +113,14 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
         initDialog();
     }
 
-    @OnClick({R.id.accout_securty_id, R.id.modify_pwd_rv, R.id.option_return_rv, R.id.release_cache_rv,R.id.back_id,R.id.unlogin_rv})
+    @OnClick({R.id.accout_securty_id, R.id.modify_pwd_rv, R.id.option_return_rv, R.id.release_cache_rv,R.id.back_id,R.id.unlogin_rv,R.id.goods_addr_rv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
+                break;
+            case R.id.goods_addr_rv:
+                startActivity(AddressActivity.class);
                 break;
             case R.id.accout_securty_id:
                 startActivity(AccoutSecurityActivity.class);

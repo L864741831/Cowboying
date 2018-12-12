@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import rxfamily.R;
@@ -27,7 +29,8 @@ public abstract class BaseFragment extends RxFragment {
     private TextView titleTv;
     private Boolean hasMenu = false;
     private int menuLayout;
-
+    private TextView text_view;
+    private ImageView image_view;
     public BaseFragment() {
 
     }
@@ -57,6 +60,20 @@ public abstract class BaseFragment extends RxFragment {
      */
     protected abstract int getLayoutId();
 
+    /**
+     * 下拉加载更多
+     * @return
+     */
+    public View createHeaderView() {
+        View headerView = LayoutInflater.from(mActivity)
+                .inflate(R.layout.layout_head, null);
+        text_view=headerView.findViewById(R.id.text_view);
+        image_view=headerView.findViewById(R.id.image_view);
+        text_view.setVisibility(View.VISIBLE);
+        text_view.setText("正在加载，请稍后...");
+        Glide.with(this).load(R.drawable.pushcows).into(image_view);
+        return headerView;
+    }
     /**
      * 获取宿主Activity
      * @return

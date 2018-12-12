@@ -9,12 +9,13 @@
         android:layout_height="wrap_content"  android:background="@color/homef7"
         android:paddingBottom="10dp" android:layout_marginTop="10dp">
         <TextView
-            android:layout_width="wrap_content" android:id="@+id/name_id"
+            android:layout_width="match_parent" android:id="@+id/name_id"
             android:layout_height="wrap_content" android:text="姓名"
             android:textColor="@color/black"   android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp" android:textSize="13sp"
-            android:drawableLeft="@mipmap/showaddbg" android:gravity="center"
-            android:drawablePadding="15dp"/>
+            android:drawableLeft="@mipmap/showaddbg"
+            android:drawablePadding="15dp" android:layout_toLeftOf="@+id/tell_id"
+            android:layout_marginRight="10dp"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/tell_id"
             android:layout_height="wrap_content" android:text="18733333333"

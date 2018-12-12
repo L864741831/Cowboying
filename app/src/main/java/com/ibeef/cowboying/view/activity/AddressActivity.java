@@ -19,6 +19,7 @@ import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.ModifyAddressPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,ModifyAddressBase.IView {
+public class AddressActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,ModifyAddressBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -46,7 +47,7 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
     @Bind(R.id.add_address_rv)
     RelativeLayout addaddressRv;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
@@ -67,9 +68,11 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
     private void init(){
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("收货地址");
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
+
         objectList=new ArrayList<>();
         goodsAddrAdapter=new GoodsAddrAdapter(objectList,this);
         ryId.setHasFixedSize(true);
@@ -139,15 +142,6 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        currentPage = 1;
-        isFirst = true;
-        objectList.clear();
-        modifyAddressPresenter.showAddressList(reqData,currentPage);
-        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -230,6 +224,7 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -238,5 +233,24 @@ public class AddressActivity extends BaseActivity implements SwipeRefreshLayout.
         if(modifyAddressPresenter!=null){
             modifyAddressPresenter.detachView();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        currentPage = 1;
+        isFirst = true;
+        objectList.clear();
+        modifyAddressPresenter.showAddressList(reqData,currentPage);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

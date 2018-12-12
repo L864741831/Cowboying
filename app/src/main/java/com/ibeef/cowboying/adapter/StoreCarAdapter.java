@@ -3,6 +3,7 @@ package com.ibeef.cowboying.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.view.customview.AmountViewStoreBeef;
 import com.ibeef.cowboying.view.customview.AmountViewWhite;
 
 import java.util.List;
@@ -34,6 +36,11 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
     @Override
     protected void convert(final BaseViewHolder helper, CarListResultBean.BizDataBean item) {
 
+        AmountViewWhite amountViewWhite=helper.getView(R.id.amout_num_white_id);
+        amountViewWhite.intEdit(item.getQuantity()+"");
+        Log.e(Constant.TAG,item.getQuantity()+"mayamyamay");
+        amountViewWhite.setGoods_storage(item.getStock());
+
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         if(0==item.getDefautChoose()){
             all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.unhascheck));
@@ -42,8 +49,7 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
         }
 
         helper.addOnClickListener(R.id.all_ck_id);
-        helper.addOnClickListener(R.id.btnDecrease);
-        helper.addOnClickListener(R.id.btnIncrease);
+
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
                 .error(R.mipmap.cowbeefimg)
@@ -53,8 +59,18 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
 
         helper.setText(R.id.name_beef_id,item.getName())
                 .setText(R.id.price_id,"￥"+item.getPrice())
-                .setText(R.id.etAmount, item.getQuantity()+"")
-                ;
+                .setText(R.id.etAmount,item.getQuantity()+"");
+
+        amountViewWhite.setOnAmountChangeListener(new AmountViewWhite.OnAmountChangeListener() {
+            @Override
+            public void onAmountChange(View view, int amount) {
+                Intent intent1=new Intent();
+                intent1.setAction("com.ibeef.cowboying.storecarnum");
+                intent1.putExtra("position",helper.getAdapterPosition());
+                intent1.putExtra("amount",amount);
+                context.sendBroadcast(intent1);
+            }
+        });
 
     }
 

@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="130dp" android:id="@+id/goods_info_img"
             android:layout_marginTop="10dp" android:layout_below="@+id/all_ck_id"
-            android:layout_height="130dp" android:src="@mipmap/cowbeefimg"
+            android:layout_height="130dp"
             android:scaleType="centerCrop"/>
     </RelativeLayout>
 
@@ -31,15 +31,15 @@
             android:textSize="14sp"/>
         <TextView
             android:layout_width="wrap_content" android:id="@+id/price_id"
-            android:layout_height="wrap_content" android:text="￥1"
+            android:layout_height="wrap_content" android:text=""
             android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"
             android:textColor="@color/colorAccent" android:textSize="14sp"
             android:textStyle="bold"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal">
-        <include layout="@layout/view_amount_white"/>
-    </RelativeLayout>
+
+        <com.ibeef.cowboying.view.customview.AmountViewWhite
+            android:layout_width="150dp" android:id="@+id/amout_num_white_id"
+            android:layout_height="33dp"    app:btnWidth="30dp"
+            app:tvWidth="80dp"  android:layout_marginTop="10dp"
+            android:layout_gravity="center" android:gravity="center"/>
 
 </LinearLayout>

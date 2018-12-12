@@ -21,6 +21,7 @@ import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import rxfamily.view.BaseActivity;
  * @author Administrator
  * 牧场动态主界面
  */
-public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,HomeBannerBase.IView {
+public class RanchDynamicActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,HomeBannerBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -46,7 +47,7 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
     @Bind(R.id.video_list_rv)
     RecyclerView videoListRv;
     @Bind(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
     @Bind(R.id.rv_order)
     RelativeLayout rvOrder;
     @Bind(R.id.loading_layout)
@@ -71,9 +72,12 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         info.setText("牧场动态");
         token= Hawk.get(HawkKey.TOKEN);
         listData=new ArrayList<>();
-        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setEnabled(true);
+
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
+
         videoListRv.setLayoutManager(new LinearLayoutManager(this));
         ranchDynamicdapter = new RanchDynamicdapter(listData,this);
         ranchDynamicdapter.setOnLoadMoreListener(this, videoListRv);
@@ -110,6 +114,7 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
                 startActivity(intent);
             }
         });
+
     }
 
     @OnClick(R.id.back_id)
@@ -117,17 +122,6 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         finish();
     }
 
-    @Override
-    public void onRefresh() {
-        currentPage=1;
-        isFirst=true;
-        listData.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        homeBannerPresenter.getAllVideo(reqData,currentPage);
-        swipeLayout.setRefreshing(false);
-    }
 
     @Override
     public void onLoadMoreRequested() {
@@ -192,6 +186,7 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         videoListRv.setVisibility(View.VISIBLE);
+        swipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -202,4 +197,25 @@ public class RanchDynamicActivity extends BaseActivity implements SwipeRefreshLa
         super.onDestroy();
     }
 
+    @Override
+    public void onRefresh() {
+        currentPage=1;
+        isFirst=true;
+        listData.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getAllVideo(reqData,currentPage);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
+    }
 }

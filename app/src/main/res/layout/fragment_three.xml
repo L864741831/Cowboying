@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:id="@+id/swipe_ly"
-    android:layout_height="match_parent" android:background="@color/white"
+    android:layout_height="match_parent" android:background="@color/colorAccent"
     tools:context=".view.fragment.ThreeFragment">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:orientation="vertical">
@@ -392,4 +392,4 @@
         </LinearLayout>
 
     </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+</com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>

@@ -128,6 +128,10 @@ public class EditAddressActivity extends BaseActivity implements ModifyAddressBa
                     Toast.makeText(EditAddressActivity.this, "收货人不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(etName.getText().toString().trim().length()>15){
+                    Toast.makeText(EditAddressActivity.this, "收货人姓名不能超过15个字~", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if(!TimeUtils.isMatchered(TimeUtils.PHONE_PATTERN,etTell.getText().toString().trim())){
                     Toast.makeText(EditAddressActivity.this, "手机号错误", Toast.LENGTH_SHORT).show();

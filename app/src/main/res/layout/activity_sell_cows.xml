@@ -6,19 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.SellCowsActivity">
     <include layout="@layout/include_title" android:id="@+id/title_show_id"/>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadingEdge="vertical"
-        android:orientation="vertical" android:layout_above="@+id/rv_bottom_id"
-        android:scrollbars="vertical" android:layout_below="@+id/title_show_id">
+        android:layout_above="@+id/rv_bottom_id"
+        android:layout_below="@+id/title_show_id">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical">
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent" android:id="@+id/ry_id"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
             <include
                 layout="@layout/loading_layout"
                 android:id="@+id/loading_layout"  />
@@ -28,13 +27,20 @@
                 android:layout_height="match_parent" android:visibility="gone">
                 <ImageView
                     android:id="@+id/tv_text_null"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:src="@mipmap/sellcowwhitebg"/>
+                <TextView
+                    android:layout_width="140dp" android:id="@+id/to_sell_cows"
+                    android:layout_height="wrap_content" android:text="去卖牛"
+                    android:background="@drawable/bg_amount_layout" android:paddingTop="10dp"
+                    android:paddingBottom="10dp" android:gravity="center_horizontal"
+                    android:layout_below="@+id/tv_text_null"
+                    android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
     <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/rv_bottom_id"
         android:layout_height="50dp" android:layout_alignParentBottom="true"

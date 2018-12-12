@@ -8,13 +8,10 @@
     tools:context=".view.activity.CashDepositActivity">
     <include layout="@layout/include_title"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="vertical"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent">
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"  android:orientation="vertical"
             android:scrollbars="vertical"
@@ -51,5 +48,5 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
 </LinearLayout>

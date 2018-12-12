@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,9 +22,11 @@ import java.util.List;
  **/
 public class StoreResultOrderAdapter extends BaseQuickAdapter<MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean,BaseViewHolder> {
     private Context context;
-    public StoreResultOrderAdapter(List data, Context context, int layout) {
+    private String status;
+    public StoreResultOrderAdapter(List data, Context context, int layout,String status) {
         super(layout, data);
         this.context=context;
+        this.status=status;
     }
 
     @Override
@@ -39,5 +42,12 @@ public class StoreResultOrderAdapter extends BaseQuickAdapter<MyOrderListDetailB
                 .setText(R.id.type_id,item.getSpecification())
                 .setText(R.id.money_id,"￥"+item.getBuyPrice())
                 .setText(R.id.num_id,"X"+item.getQuantity());
+        ImageView imageView= helper.getView(R.id.iv_my_cows_xianxia);//角标
+        //取货方式（1：快递；2：门店自提）
+        if ("1".equals(status)) {
+            imageView.setVisibility(View.GONE);
+        } else  if ("2".equals(status)){
+            imageView.setVisibility(View.VISIBLE);
+        }
     }
 }

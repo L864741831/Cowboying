@@ -19,6 +19,7 @@ import com.ibeef.cowboying.bean.CashMoneyUserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CashMoneyPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 提现记录
  */
-public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener, CashMoneyBase.IView{
+public class CashDepositActivity extends BaseActivity  implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener, CashMoneyBase.IView{
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -42,7 +43,7 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
     @Bind(R.id.message_ry)
     RecyclerView messageRy;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.rv_order)
@@ -73,9 +74,11 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
         cashDespositListAdapter=new CashDespositListAdapter(beanList,this,R.layout.item_cash_deposit);
         cashDespositListAdapter.setOnLoadMoreListener(this, messageRy);
         messageRy.setAdapter(cashDespositListAdapter);
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
 
         messageRy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -98,23 +101,12 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         cashMoneyPresenter.getCashMoneyRecord(reqData,page);
+
     }
 
     @OnClick(R.id.back_id)
     public void onViewClicked() {
         finish();
-    }
-
-    @Override
-    public void onRefresh() {
-        page=1;
-        isFirst = true;
-        beanList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        cashMoneyPresenter.getCashMoneyRecord(reqData,page);
-        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -187,6 +179,7 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
         loadingLayout.setVisibility(View.GONE);
         messageRy.setVisibility(View.VISIBLE);
         titleShowId.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -195,5 +188,27 @@ public class CashDepositActivity extends BaseActivity  implements SwipeRefreshLa
             cashMoneyPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        page=1;
+        isFirst = true;
+        beanList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        cashMoneyPresenter.getCashMoneyRecord(reqData,page);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

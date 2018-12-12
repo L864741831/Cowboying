@@ -20,6 +20,7 @@ import com.ibeef.cowboying.bean.SchemeDetailReultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.PastureDetailPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 参与人数
  */
-public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,PastureDetailBase.IView {
+public class JionPeopleNumActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,PastureDetailBase.IView {
     @Bind(R.id.back_id)
     ImageView backId;
     @Bind(R.id.info)
@@ -45,7 +46,7 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
     @Bind(R.id.show_time_id)
     TextView showTimeId;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.ry_id)
@@ -76,9 +77,12 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
         showTimeId.setText(infos.getStartTime());
         info.setText("参与人数");
         objectList=new ArrayList<>();
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
+
         ryId.setLayoutManager(new LinearLayoutManager(this));
         joinPeopleNumListAdapter=new JoinPeopleNumListAdapter(objectList,this,R.layout.item_join_people_num);
         joinPeopleNumListAdapter.setOnLoadMoreListener(this, ryId);
@@ -106,6 +110,7 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
         reqData.put("version",getVersionCodes());
         pastureDetailPresenter.getJionPersonInfo(reqData,infos.getSchemeId(),currentPage);
 
+
     }
     @OnClick({R.id.back_id})
     public void onViewClicked(View view) {
@@ -118,17 +123,6 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
         }
     }
 
-    @Override
-    public void onRefresh() {
-        currentPage = 1;
-        isFirst = true;
-        objectList.clear();
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        pastureDetailPresenter.getJionPersonInfo(reqData,infos.getSchemeId(),currentPage);
-        swipeLy.setRefreshing(false);
-    }
 
     @Override
     public void onLoadMoreRequested() {
@@ -197,6 +191,7 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
         lvShowId.setVisibility(View.VISIBLE);
+        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -205,5 +200,27 @@ public class JionPeopleNumActivity extends BaseActivity implements SwipeRefreshL
             pastureDetailPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        currentPage = 1;
+        isFirst = true;
+        objectList.clear();
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pastureDetailPresenter.getJionPersonInfo(reqData,infos.getSchemeId(),currentPage);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

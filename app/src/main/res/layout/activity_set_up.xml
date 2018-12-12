@@ -29,6 +29,24 @@
         <View
             style="@style/line2" android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp" android:id="@+id/goods_addr_rv">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="我的收货地址" android:layout_marginLeft="20dp"
+            android:textSize="14sp" android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+            android:gravity="center" android:layout_centerVertical="true"/>
+        <View
+            style="@style/line2" android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

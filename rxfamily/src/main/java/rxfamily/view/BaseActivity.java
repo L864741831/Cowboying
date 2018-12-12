@@ -10,14 +10,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 
 import rxfamily.R;
 import rxfamily.application.RxApplication;
@@ -45,11 +48,13 @@ public class    BaseActivity extends RxAppCompatActivity{
     private MaterialDialog loadingDialog;
     private RxApplication application;
     private BaseActivity oContext;
+    private TextView text_view;
+    private ImageView image_view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.staduss);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.qianblack);
         if (mAllowFullScreen) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
@@ -73,6 +78,20 @@ public class    BaseActivity extends RxAppCompatActivity{
 
     }
 
+    /**
+     * 下拉加载更多
+     * @return
+     */
+    public View createHeaderView() {
+        View headerView = LayoutInflater.from(this)
+                .inflate(R.layout.layout_head, null);
+        text_view=headerView.findViewById(R.id.text_view);
+        image_view=headerView.findViewById(R.id.image_view);
+        text_view.setVisibility(View.VISIBLE);
+        text_view.setText("正在加载，请稍后...");
+        Glide.with(this).load(R.drawable.pushcows).into(image_view);
+        return headerView;
+    }
     /**
      * 添加Activity方法
      */
