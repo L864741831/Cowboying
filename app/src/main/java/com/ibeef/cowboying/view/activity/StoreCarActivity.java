@@ -162,13 +162,19 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
                 position=intent.getIntExtra("position",0);
                 int amount=intent.getIntExtra("amount",0);
 
-                if(amount>=lists.get(position).getStock()){
+                if(amount>lists.get(position).getStock()){
                     //                    showToast("已达到最大库存！");
                 }else {
-                    if(lists.get(position).getQuantity()>amount){
+                    if(lists.get(position).getQuantity()>=amount){
                         //最小数量为1
                         if(lists.get(position).getQuantity()==1){
                             return;
+                        }
+                        //达到库存数
+                        if(lists.get(position).getQuantity()==lists.get(position).getStock()){
+                            if(amount==lists.get(position).getStock()){
+                                return;
+                            }
                         }
                         int nums1=lists.get(position).getQuantity();
                         num=num-nums1;
@@ -270,6 +276,7 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
 
     }
 
+
     @OnClick({R.id.back_id,R.id.action_new_question_tv,R.id.go_store_btn,R.id.now_claim_btn_id,R.id.all_ck_id,R.id.refuce_id,R.id.sure_id,R.id.lvs_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -277,10 +284,10 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
                 //跳到购物车
                 isBuy=false;
                 addCar();
-                finish();
                 break;
             case R.id.go_store_btn:
-                finish();
+                isBuy=false;
+                addCar();
                 break;
             case R.id.lvs_id:
 

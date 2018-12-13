@@ -40,6 +40,7 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,6 +135,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     private  Map<String, String> reqData;
     private List<StoreAddrResultBean.BizDataBean> bizDataBeans;
     private StoreAddrResultBean storeAddrResultBean;
+    private double couponmoney;
+    private  DecimalFormat df2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,8 +229,11 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
         couponNumParamBean.setProductQuantityReqDtos(storeCarResultBeans);
         useCouponListPresenter.getCouponNum(reqData,couponNumParamBean);
 
-        oderAllMoneyId.setText("￥"+nowBuyOrderResultBean.getBizData().getOrderAmount());
-        allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+nowBuyOrderResultBean.getBizData().getOrderAmount()+"");
+         df2 = new DecimalFormat("#####0.00");
+        String str2 = df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount());
+        oderAllMoneyId.setText("￥"+str2);
+        String str = df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount());
+        allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+str);
         storeCarPayPresenter.storeAddrList(reqData);
 
     }
@@ -258,12 +264,17 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 deleveryTypeId.setText("顺丰配送");
                 rvStoreaddrId.setVisibility(View.GONE);
                 addressRv.setVisibility(View.VISIBLE);
+
+                oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()));
+                allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
                 break;
             case R.id.img_choose2_id:
                 type=2;
                 lvChooseId.setVisibility(View.GONE);
                 lvsId.setVisibility(View.VISIBLE);
                 deleveryTypeId.setText("到店自取");
+                oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()));
+                allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney))+"");
                 break;
             case R.id.delevery_rv:
                 lvChooseId.setVisibility(View.VISIBLE);
@@ -274,6 +285,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 deleveryTypeId.setText("顺丰配送");
                 rvStoreaddrId.setVisibility(View.GONE);
                 addressRv.setVisibility(View.VISIBLE);
+                oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()));
+                allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
                 break;
             case R.id.sure_id:
                 lvsId.setVisibility(View.GONE);
@@ -291,10 +304,12 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 startActivityForResult(intent1,REQUESTCODE);
                 break;
             case R.id.now_pay_id:
-                if(SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean.getBizData().getAddress())){
-                    if(SDCardUtil.isNullOrEmpty(item)){
-                        showToast("请添加收货地址！");
-                        return;
+                if(type==1){
+                    if(SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean.getBizData().getAddress())){
+                        if(SDCardUtil.isNullOrEmpty(item)){
+                            showToast("请添加收货地址！");
+                            return;
+                        }
                     }
                 }
                 if(type==0){
@@ -302,12 +317,17 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                     return;
                 }
                 NowPayOrderParamBean noPayOrderParamBean=new NowPayOrderParamBean();
-                if(!SDCardUtil.isNullOrEmpty(item)){
-                    noPayOrderParamBean.setAddressDetail(item.getProvince()+item.getCity()+item.getRegion()+item.getDetailAddress());
-                    noPayOrderParamBean.setAddressId(item.getId());
+                if(type==1){
+                    if(!SDCardUtil.isNullOrEmpty(item)){
+                        noPayOrderParamBean.setAddressDetail(item.getProvince()+item.getCity()+item.getRegion()+item.getDetailAddress());
+                        noPayOrderParamBean.setAddressId(item.getId());
+                    }else {
+                        noPayOrderParamBean.setAddressDetail(nowBuyOrderResultBean.getBizData().getAddress().getProvince()+nowBuyOrderResultBean.getBizData().getAddress().getCity()+nowBuyOrderResultBean.getBizData().getAddress().getRegion()+nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
+                        noPayOrderParamBean.setAddressId(nowBuyOrderResultBean.getBizData().getAddress().getId());
+                    }
                 }else {
-                    noPayOrderParamBean.setAddressDetail(nowBuyOrderResultBean.getBizData().getAddress().getProvince()+nowBuyOrderResultBean.getBizData().getAddress().getCity()+nowBuyOrderResultBean.getBizData().getAddress().getRegion()+nowBuyOrderResultBean.getBizData().getAddress().getDetailAddress());
-                    noPayOrderParamBean.setAddressId(nowBuyOrderResultBean.getBizData().getAddress().getId());
+                    noPayOrderParamBean.setAddressDetail(bizDataBeans.get(0).getAddress());
+                    noPayOrderParamBean.setAddressId(bizDataBeans.get(0).getStoreId());
                 }
                 if(selectId!=0){
                     //使用了优惠券 selectId优惠券id
@@ -347,7 +367,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 selectId = data.getIntExtra("selectId",0);
                 check=data.getBooleanExtra("check",false);
                 //优惠金额
-                double couponmoney=data.getDoubleExtra("couponmoney",0);
+               couponmoney=data.getDoubleExtra("couponmoney",0);
                 if(check){
                     //不使用优惠券
                     coupponMoneyId.setText("未使用");
@@ -356,7 +376,16 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                     if(couponmoney>0){
                         coupponMoneyId.setText("-"+couponmoney);
                         coupponMoneyId.setTextColor(getResources().getColor(R.color.red));
-                        allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(nowBuyOrderResultBean.getBizData().getOrderAmount()-couponmoney)+"");
+                        if(!SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean)){
+                            if(type==1){
+                                oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()));
+                                allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
+                            }else {
+                                oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()));
+                                allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney))+"");
+                            }
+                        }
+
                     }else {
                         coupponMoneyId.setText("无可用");
                         coupponMoneyId.setTextColor(getResources().getColor(R.color.txthui));

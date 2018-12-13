@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.jiguang.api.SdkType;
 import rxfamily.view.BaseFragment;
 
 /**
@@ -111,10 +112,17 @@ public class DiscountCouponListFragment extends BaseFragment implements SuperSwi
                             Intent intent1=new Intent(getHoldingActivity(),FightCattleActivity.class);
                             startActivity(intent1);
                         }else  if("3".equals(item.getUseType())){
-                            Constant.PRODUCR_ID=item.getUseProductId();
-                            Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
-                            intent1.putExtra("index",1);
-                            startActivity(intent1);
+                            if(SDCardUtil.isNullOrEmpty(item.getUseProductName())){
+                                Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                                intent1.putExtra("index",1);
+                                startActivity(intent1);
+                            }else {
+                                Constant.PRODUCR_ID=item.getUseProductId();
+                                Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                                intent1.putExtra("index",1);
+                                startActivity(intent1);
+                            }
+
                         }
 
                     }

@@ -78,7 +78,15 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
         info.setText("设置支付密码");
         token= Hawk.get(HawkKey.TOKEN);
         tell=getIntent().getStringExtra("tell");
-        String str = tell.substring(0, tell.length() - (tell.substring(3)).length()) + "****" + tell.substring(7);
+        String str="";
+        if(TextUtils.isEmpty(tell)){
+            etMobile.setFocusable(true);
+            etMobile.setEnabled(true);
+        }else {
+            etMobile.setFocusable(false);
+            etMobile.setEnabled(false);
+            str = tell.substring(0, tell.length() - (tell.substring(3)).length()) + "****" + tell.substring(7);
+        }
 
         etMobile.setText(str);
         addPayPwd.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
@@ -94,6 +102,9 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
                 finish();
                 break;
             case R.id.btn_code:
+                if(TextUtils.isEmpty(tell)){
+                    tell=etMobile.getText().toString();
+                }
                 if (TextUtils.isEmpty(tell)) {
                     showToast("手机号码不能为空！");
                     return;

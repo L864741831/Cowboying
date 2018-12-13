@@ -116,7 +116,7 @@ public class ActiveSchemeResultBean implements Serializable {
         private String type;
         private String expectRate;
         private BigDecimal realRate;
-        private BigDecimal price;
+        private double price;
         private String vipLevel;
         private int totalStock;
         private int stock;
@@ -179,11 +179,11 @@ public class ActiveSchemeResultBean implements Serializable {
             this.realRate = realRate;
         }
 
-        public BigDecimal getPrice() {
+        public double getPrice() {
             return price;
         }
 
-        public void setPrice(BigDecimal price) {
+        public void setPrice(double price) {
             this.price = price;
         }
 

@@ -156,8 +156,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         storeTopAdapter = new StoreTopAdapter(baseBeans,getHoldingActivity(), R.layout.item_store_top);
         storeTopAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(storeTopAdapter);
-        storeTopAdapter.loadMoreEnd();
-
         storeTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
@@ -454,13 +452,19 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onAmountChange(View view, int amount) {
                 isClick=true;
-                if(amount>=baseBeans.get(position).getShopProductResVo().getStock()){
+                if(amount>baseBeans.get(position).getShopProductResVo().getStock()){
 //                    showToast("已达到最大库存！");
                 }else {
                     if(baseBeans.get(position).getCartProductNum()>=amount){
                         //为0不能再减
                         if(baseBeans.get(position).getCartProductNum()==0){
                             return;
+                        }
+                        //达到库存数
+                        if(baseBeans.get(position).getCartProductNum()==baseBeans.get(position).getShopProductResVo().getStock()){
+                            if(amount==baseBeans.get(position).getShopProductResVo().getStock()){
+                                return;
+                            }
                         }
                         int nums=baseBeans.get(position).getCartProductNum();
                         num=num-nums;
@@ -591,14 +595,16 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
      */
     private void refreshData(){
         //先加入购物车在刷新
+        token = Hawk.get(HawkKey.TOKEN);
         currentPage = 1;
         isFirst = true;
-        baseBeans.clear();
-        productIds.clear();
         position=0;
+        MoveToPosition(layoutManager,ryId,position);
         isNoData=false;
         isMoreLoad=false;
         isLoadFirst=true;
+        baseBeans.clear();
+        productIds.clear();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());

@@ -34,7 +34,7 @@
             android:id="@+id/et_mobile"    android:digits="0123456789"
             android:layout_width="match_parent"  android:inputType="number|numberDecimal"
             android:layout_height="50dp"   android:singleLine="true"
-            android:maxLength="11" android:focusable="false" android:editable="false"
+            android:maxLength="11"
             android:layout_gravity="bottom" android:hint="请输入手机号"
             android:layout_marginRight="20dp"
             android:background="@null" android:textSize="14sp"
