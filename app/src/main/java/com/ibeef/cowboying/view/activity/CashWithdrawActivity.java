@@ -97,6 +97,7 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     private boolean isGetMoney=true;
     private IsPayPwdPresenter isPayPwdPresenter;
     private Map<String, String> reqData;
+    private boolean isPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +193,7 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
 
                 if(chooseAccoutCk.isChecked()){
                     //判断是否设置密码
+                    isPwd=true;
                     isPayPwdPresenter.isPayPwd(reqData);
                 }else {
                     showToast("请选择提现支付宝");
@@ -202,8 +204,9 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
                 sureOutMoneyBtn.setVisibility(View.VISIBLE);
                 break;
             case R.id.foret_pwd_id:
-                //设置支付密码
-                startActivity(AddPayPwdActivity.class);
+                //判断是否设置密码
+                isPwd=false;
+                isPayPwdPresenter.isPayPwd(reqData);
                 break;
             default:
                 break;
@@ -235,14 +238,21 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
     @Override
     public void isPayPwd(PayPwdResultBean payPwdResultBean) {
         if("000000".equals(payPwdResultBean.getCode())){
-            if(payPwdResultBean.getBizData().isHavePayPassword()){
-                accountPayShowRv.setVisibility(View.VISIBLE);
-                sureOutMoneyBtn.setVisibility(View.GONE);
+            if(isPwd){
+                if(payPwdResultBean.getBizData().isHavePayPassword()){
+                    accountPayShowRv.setVisibility(View.VISIBLE);
+                    sureOutMoneyBtn.setVisibility(View.GONE);
+                }else {
+                    Intent intent=new Intent(CashWithdrawActivity.this,AddPayPwdActivity.class);
+                    intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
+                    startActivity(intent);
+                }
             }else {
                 Intent intent=new Intent(CashWithdrawActivity.this,AddPayPwdActivity.class);
                 intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
                 startActivity(intent);
             }
+
         }else {
             showToast(payPwdResultBean.getMessage());
         }

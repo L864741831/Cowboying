@@ -454,13 +454,19 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onAmountChange(View view, int amount) {
                 isClick=true;
-                if(amount>=baseBeans.get(position).getShopProductResVo().getStock()){
+                if(amount>baseBeans.get(position).getShopProductResVo().getStock()){
 //                    showToast("已达到最大库存！");
                 }else {
                     if(baseBeans.get(position).getCartProductNum()>=amount){
                         //为0不能再减
                         if(baseBeans.get(position).getCartProductNum()==0){
                             return;
+                        }
+                        //达到库存数
+                        if(baseBeans.get(position).getCartProductNum()==baseBeans.get(position).getShopProductResVo().getStock()){
+                            if(amount==baseBeans.get(position).getShopProductResVo().getStock()){
+                                return;
+                            }
                         }
                         int nums=baseBeans.get(position).getCartProductNum();
                         num=num-nums;

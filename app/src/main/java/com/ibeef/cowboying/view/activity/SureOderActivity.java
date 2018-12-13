@@ -112,6 +112,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     private OrderInitPresenter orderInitPresenter;
     private boolean isComplet=true;
     private IsPayPwdPresenter isPayPwdPresenter;
+    private boolean isPwd;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -244,8 +245,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 surePayBtn.setVisibility(View.VISIBLE);
                 break;
             case R.id.foret_pwd_id:
-                //设置支付密码
-                startActivity(AddPayPwdActivity.class);
+                isPwd=false;
                 break;
             case R.id.sure_pay_btn:
                 Map<String, String> reqData = new HashMap<>();
@@ -253,6 +253,7 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 reqData.put("version",getVersionCodes());
                 if (chooseType==3){
                     //判断是否设置密码
+                    isPwd=true;
                     isPayPwdPresenter.isPayPwd(reqData);
                 }else {
                     PayInitParamBean payInitParamBean=new PayInitParamBean();
@@ -290,15 +291,23 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     @Override
     public void isPayPwd(PayPwdResultBean payPwdResultBean) {
         if("000000".equals(payPwdResultBean.getCode())){
-            if(payPwdResultBean.getBizData().isHavePayPassword()){
-                accountPayShowRv.setVisibility(View.VISIBLE);
-                surePayBtn.setVisibility(View.GONE);
-                isComplet=true;
+            if(isPwd){
+                if(payPwdResultBean.getBizData().isHavePayPassword()){
+                    accountPayShowRv.setVisibility(View.VISIBLE);
+                    surePayBtn.setVisibility(View.GONE);
+                    isComplet=true;
+                }else {
+                    Intent intent=new Intent(SureOderActivity.this,AddPayPwdActivity.class);
+                    intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
+                    startActivity(intent);
+                }
             }else {
                 Intent intent=new Intent(SureOderActivity.this,AddPayPwdActivity.class);
                 intent.putExtra("tell",payPwdResultBean.getBizData().getMobile());
                 startActivity(intent);
             }
+
+
         }else {
             showToast(payPwdResultBean.getMessage());
         }

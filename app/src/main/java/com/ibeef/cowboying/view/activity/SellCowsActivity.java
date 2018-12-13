@@ -160,7 +160,9 @@ public class SellCowsActivity extends BaseActivity  implements SuperSwipeRefresh
                 finish();
                 break;
             case R.id.to_sell_cows:
-                finish();
+                removeALLActivity();//执行移除所以Activity方法
+                Intent intent1=new Intent(SellCowsActivity.this,MainActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.now_claim_btn_id:
                 if(TextUtils.isEmpty(orderId)){

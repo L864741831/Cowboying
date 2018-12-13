@@ -33,11 +33,12 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
 
     @Override
     protected void convert(BaseViewHolder helper, ActiveSchemeResultBean.BizDataBean item) {
-
+        Double d1 = new Double(item.getPrice());
+        int i1 = d1.intValue();
         helper.setText(R.id.parsture_addr_id,item.getPastureName())
                 .setText(R.id.periods_txt_id,item.getCode()+"期")
                 .setText(R.id.vip_level_txt_id,"· VIP"+item.getVipLevel()+" ·")
-                .setText(R.id.minlevle_txt_id,item.getPrice()+"起投")
+                .setText(R.id.minlevle_txt_id,i1+"起投")
                 .setText(R.id.percent_txt_id,item.getExpectRate());
         if("1".equals(item.getType())){
             helper.setText(R.id.percent_way_txt_id,"T+7");
