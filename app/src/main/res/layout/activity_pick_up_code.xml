@@ -6,15 +6,15 @@
     android:orientation="vertical"
     tools:context=".view.activity.MyContractActivity">
     <include layout="@layout/include_title"/>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/swipe_layout"
         android:layout_height="match_parent"
         android:orientation="vertical"  android:fadingEdge="vertical"
         android:scrollbars="vertical">
         <LinearLayout
+            android:id="@+id/ll_bg"
             android:layout_width="match_parent"
-            android:background="@mipmap/pick_up_bg"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -38,5 +38,5 @@
             </RelativeLayout>
 
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
 </LinearLayout>

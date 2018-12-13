@@ -82,7 +82,7 @@ public class AfterSaleAdapter extends BaseQuickAdapter<MyAfterSaleListBean.BizDa
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(context, AfterSaleDetailActivity.class);
-                intent.putExtra("orderId",item.getShopRefundOrderResVo().getOrderId());
+                intent.putExtra("orderId",item.getShopRefundOrderResVo().getId()+"");
                 context.startActivity(intent);
             }
         });

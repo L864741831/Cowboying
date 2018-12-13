@@ -39,7 +39,7 @@ public class MyOrderListBase {
     }
 
     public interface IPresenter {
-        void getMyOrderList(Map<String, String> headers, int pageSize, int curPage,String status);
+        void getMyOrderList(Map<String, String> headers, int curPage,String status);
         void getMyOrderListDetail(Map<String, String> headers, String orderId);
         void getMyOrderListDelete(Map<String, String> headers, String orderCode);
         void getMyOrderListCancel(Map<String, String> headers, String orderId);
@@ -53,7 +53,7 @@ public class MyOrderListBase {
     }
 
     public interface IModel {
-       Subscription getMyOrderList(Map<String, String> headers, int pageSize, int curPage, String status, ResponseCallback<MyOrderListBean> callback);
+       Subscription getMyOrderList(Map<String, String> headers, int curPage, String status, ResponseCallback<MyOrderListBean> callback);
        Subscription getMyOrderListDetail(Map<String, String> headers, String orderId, ResponseCallback<MyOrderListDetailBean> callback);
        Subscription getMyOrderListDelete(Map<String, String> headers, String orderCode, ResponseCallback<MyOrderListCancelBean> callback);
        Subscription getMyOrderListCancel(Map<String, String> headers, String orderId, ResponseCallback<MyOrderListCancelBean> callback);

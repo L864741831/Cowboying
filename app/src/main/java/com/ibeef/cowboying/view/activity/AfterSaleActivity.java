@@ -33,6 +33,7 @@ import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ import rxfamily.view.BaseActivity;
  * 售后列表
  * @author Administrator
  */
-public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.IView,SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -63,7 +64,7 @@ public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.I
     @Bind(R.id.rv_bg)
     RelativeLayout rvBg;
     @Bind(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
     private String token;
     private List<MyAfterSaleListBean.BizDataBean> beanList;
     private AfterSaleAdapter afterSaleAdapter;
@@ -82,9 +83,10 @@ public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.I
     private void init() {
         token= Hawk.get(HawkKey.TOKEN);
         info.setText("售后");
-        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setEnabled(true);
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
         beanList=new ArrayList<>();
         beanList.clear();
         ryId.setLayoutManager(new LinearLayoutManager(this));
@@ -145,6 +147,16 @@ public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.I
         reqData.put("version", getVersionCodes());
         myOrderListPresenter.getAfterSaleList(reqData,10,currentPage);
         swipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 
     @Override

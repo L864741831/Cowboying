@@ -175,7 +175,9 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
                 break;
             case R.id.btn_apply_return:
                 //申请退款
-                startActivity(AfterSaleApplyActivity.class);
+                Intent intent8 = new Intent(this, AfterSaleApplyActivity.class);
+                intent8.putExtra("orderCode", orderId);
+                startActivity(intent8);
                 break;
             default:
                 break;
@@ -270,6 +272,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             rlReturnRefuse.setVisibility(View.VISIBLE);
             rlReturnRefuse.setText("拒绝原因："+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefuseReason());
             rlReturnSuccess2.setVisibility(View.GONE);
+            btnApplyReturn.setVisibility(View.VISIBLE);
         } else if ("4".equals(status)) {
             tvApplyTopStatus.setText("已撤销退款申请");
             time_show_id.setVisibility(View.GONE);
