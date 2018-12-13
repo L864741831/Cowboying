@@ -35,19 +35,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/gray_666666"
                 />
-            <com.ibeef.cowboying.view.customview.CountDownView
-                android:layout_marginLeft="15dp" android:drawablePadding="@dimen/dp_10"
-                android:layout_marginTop="15dp" android:drawableLeft="@mipmap/myorder_time_icon"
+            <com.ibeef.cowboying.view.customview.CountDowntimeView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
                 android:layout_width="wrap_content" android:id="@+id/time_show_id"
                 android:layout_height="wrap_content"
-                android:textSize="15sp" android:textColor="@color/colorGold_1" />
+                android:textSize="15sp"  android:textColor="@color/gray_666666" />
             <View
                 android:layout_width="345dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/gray_666666"/>

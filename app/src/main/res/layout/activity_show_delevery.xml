@@ -36,7 +36,7 @@
                         android:layout_width="wrap_content" android:id="@+id/delevery_code_id"
                         android:layout_height="wrap_content" android:text="运单编号："
                         android:textSize="12sp"   android:textColor="@color/colorAccent"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="15dp"/>
                 </LinearLayout>
 
                 <EditText
@@ -62,7 +62,7 @@
                         android:id="@+id/tv_text_null"
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:src="@mipmap/cashmoneyimg"/>
+                        android:layout_height="wrap_content" android:src="@mipmap/wuliu_null"/>
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

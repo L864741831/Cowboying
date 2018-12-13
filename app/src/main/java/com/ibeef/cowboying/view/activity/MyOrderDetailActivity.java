@@ -150,6 +150,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
     private MyOrderListDetailBean myOrderListDetailBean;
     private String refundId;
     private boolean from;
+    private long createTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,7 +187,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
 
 
     @OnClick({R.id.back_id, R.id.btn_order_delete, R.id.btn_order_cancel, R.id.btn_order_pay, R.id.btn_order_apply_back,
-            R.id.btn_order_see_wuliu, R.id.btn_order_ok, R.id.btn_order_detail,R.id.tv_code})
+            R.id.btn_order_see_wuliu, R.id.btn_order_ok, R.id.btn_order_detail,R.id.tv_code,R.id.ll_wuliu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -212,6 +214,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 Intent intent5 = new Intent(this, StorePayTypeActivity.class);
                 int i = Integer.valueOf(orderId).intValue();
                 intent5.putExtra("orderId", i);
+                intent5.putExtra("createTime", createTime);
+                Log.i("htht", "去付款createTime::::: "+createTime);
                 startActivity(intent5);
                 break;
             case R.id.btn_order_apply_back:
@@ -241,6 +245,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 break;
             case R.id.tv_code:
                 tvCode.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveCode());
+                break;
+            case R.id.ll_wuliu:
+                Intent intent8 = new Intent(this, ShowOrderDeleveryActivity.class);
+                intent8.putExtra("orderId", orderId);
+                startActivity(intent8);
                 break;
             default:
                 break;
@@ -314,6 +323,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             this.beanList.addAll(myOrderListDetailBean.getBizData().getShopOrderProductResVos());
             afterSaleAdapter.setNewData(beanList);
             refundId = myOrderListDetailBean.getBizData().getRefundId();
+            createTime = myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime();
             afterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -343,6 +353,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     ivIcon.setVisibility(View.GONE);
                     tvCode.setVisibility(View.GONE);
                     rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
                 }
             } else if ("1".equals(status)) {
                 //已支付{包含待发货和待取货}
@@ -360,16 +371,29 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     llPickUp.setVisibility(View.VISIBLE);
                     tvOrderStatus.setVisibility(View.VISIBLE);
                     tvOrderStatus.setText("订单状态：待取货");
+                    rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
                 }
             } else if ("2".equals(status)) {
                 //待收货
                 llWuliu.setVisibility(View.VISIBLE);
-                rlAddressLocast.setVisibility(View.VISIBLE);
                 tvOrderStatus.setVisibility(View.VISIBLE);
                 btnOrderSeeWuliu.setVisibility(View.VISIBLE);
                 btnOrderOk.setVisibility(View.VISIBLE);
                 tvOrderShouhuoTime.setVisibility(View.GONE);
                 tvOrderStatus.setText("订单状态：待收货");
+                if ("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
+                    //快递
+                    rlAddressLocast.setVisibility(View.VISIBLE);
+                } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
+                    //门店自取
+                    llPickUp.setVisibility(View.VISIBLE);
+                    tvTihuo.setVisibility(View.GONE);
+                    ivIcon.setVisibility(View.GONE);
+                    tvCode.setVisibility(View.GONE);
+                    rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
+                }
             } else if ("3".equals(status)) {
                 //交易成功（包含线下门店和快递）
                 llWuliu.setVisibility(View.VISIBLE);
@@ -387,25 +411,48 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     ivIcon.setVisibility(View.GONE);
                     tvCode.setVisibility(View.GONE);
                     rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
                 }
             } else if ("4".equals(status)) {
                 //退款中
-                rlAddressLocast.setVisibility(View.VISIBLE);
                 tvOrderStatus.setVisibility(View.VISIBLE);
                 btnOrderDetail.setVisibility(View.VISIBLE);
                 tvOrderFahuoTime.setVisibility(View.GONE);
                 tvOrderShouhuoTime.setVisibility(View.GONE);
                 tvOrderStatus.setText("订单状态：退款中");
                 btnOrderApplyBack.setVisibility(View.GONE);
+                if ("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
+                    //快递
+                    rlAddressLocast.setVisibility(View.VISIBLE);
+                } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
+                    //门店自取
+                    llPickUp.setVisibility(View.VISIBLE);
+                    tvTihuo.setVisibility(View.GONE);
+                    ivIcon.setVisibility(View.GONE);
+                    tvCode.setVisibility(View.GONE);
+                    rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
+                }
             } else if ("5".equals(status)) {
                 //已退款
-                rlAddressLocast.setVisibility(View.VISIBLE);
                 tvOrderStatus.setVisibility(View.VISIBLE);
                 btnOrderDetail.setVisibility(View.VISIBLE);
                 tvOrderFahuoTime.setVisibility(View.GONE);
                 tvOrderShouhuoTime.setVisibility(View.GONE);
                 tvOrderTuikuanTime.setVisibility(View.VISIBLE);
                 tvOrderStatus.setText("订单状态：已退款");
+                if ("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
+                    //快递
+                    rlAddressLocast.setVisibility(View.VISIBLE);
+                } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
+                    //门店自取
+                    llPickUp.setVisibility(View.VISIBLE);
+                    tvTihuo.setVisibility(View.GONE);
+                    ivIcon.setVisibility(View.GONE);
+                    tvCode.setVisibility(View.GONE);
+                    rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
+                }
             } else if ("6".equals(status)) {
                 //交易关闭
                 llCountdown.setVisibility(View.GONE);
@@ -429,6 +476,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     ivIcon.setVisibility(View.GONE);
                     tvCode.setVisibility(View.GONE);
                     rlAddressLocast.setVisibility(View.GONE);
+                    rlYunfei.setVisibility(View.GONE);
                 }
             }
             if (myOrderListDetailBean.getBizData().getStoreInfoResVo() != null) {
@@ -456,6 +504,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             if (myOrderListDetailBean.getBizData().getLatestState() != null) {
                 tvWuliuIng.setText(myOrderListDetailBean.getBizData().getLatestState().getContext());
                 tvWuliuIngTime.setText(myOrderListDetailBean.getBizData().getLatestState().getTime());
+            }else{
+                llWuliu.setVisibility(View.GONE);
             }
             //如果没有优惠券就不显示优惠券一栏
             if (myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount() == 0.0) {
@@ -465,8 +515,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String times = sdf.format(new Date());
-            long time = DateUtils.getReduce(times, DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(), DateUtils.TYPE_01) + 1800000);
-            Log.i("htht", "CreateTime::::::: " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(), DateUtils.TYPE_01));
+            long time = DateUtils.getReduce(times, DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime()+1800000, DateUtils.TYPE_01));
+            Log.i("htht", "CreateTime::::::: " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime()+1800000, DateUtils.TYPE_01));
             Log.i("htht", "time::::::::: " + time);
             //两时间差,精确到毫秒
             long hour = time / 3600000;

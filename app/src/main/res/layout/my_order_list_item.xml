@@ -4,16 +4,16 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+     android:layout_marginLeft="10dp" android:layout_marginRight="10dp"
     android:layout_marginTop="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:orientation="vertical"
-        android:background="@drawable/shape_white_cicle_2" android:padding="10dp">
+        android:background="@drawable/shape_white_cicle_3" android:padding="10dp">
         <RelativeLayout
             android:layout_width="match_parent" android:id="@+id/yb_zy_dian"
-            android:layout_height="35dp"  android:background="@color/white">
+            android:layout_height="30dp"  android:background="@color/white">
             <TextView
                 android:layout_width="wrap_content" android:id="@+id/order_id"
                 android:layout_height="wrap_content" android:text="订单编号"

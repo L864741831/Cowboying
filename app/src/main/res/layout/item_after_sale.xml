@@ -61,13 +61,20 @@
             android:layout_centerVertical="true"
             android:id="@+id/tv_after_sale_status"
             android:layout_width="wrap_content"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="@color/wenzi_hei_2"
             android:layout_height="wrap_content"
             android:text=""
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/v_line"
             />
+        <com.ibeef.cowboying.view.customview.CountDowntimeView
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:layout_toRightOf="@+id/tv_after_sale_status"
+            android:layout_width="wrap_content" android:id="@+id/time_show_id"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"  android:textColor="@color/wenzi_hei_2" />
         <ImageView
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
