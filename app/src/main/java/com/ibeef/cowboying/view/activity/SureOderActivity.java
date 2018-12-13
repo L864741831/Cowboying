@@ -246,6 +246,10 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
                 break;
             case R.id.foret_pwd_id:
                 isPwd=false;
+                Map<String, String> reqData1 = new HashMap<>();
+                reqData1.put("Authorization",token);
+                reqData1.put("version",getVersionCodes());
+                isPayPwdPresenter.isPayPwd(reqData1);
                 break;
             case R.id.sure_pay_btn:
                 Map<String, String> reqData = new HashMap<>();

@@ -102,6 +102,9 @@ public class AddPayPwdActivity extends BaseActivity implements SmscodeBase.IView
                 finish();
                 break;
             case R.id.btn_code:
+                if(TextUtils.isEmpty(tell)){
+                    tell=etMobile.getText().toString();
+                }
                 if (TextUtils.isEmpty(tell)) {
                     showToast("手机号码不能为空！");
                     return;
