@@ -156,8 +156,6 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         storeTopAdapter = new StoreTopAdapter(baseBeans,getHoldingActivity(), R.layout.item_store_top);
         storeTopAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(storeTopAdapter);
-        storeTopAdapter.loadMoreEnd();
-
         storeTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int positions) {
@@ -599,12 +597,13 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         //先加入购物车在刷新
         currentPage = 1;
         isFirst = true;
-        baseBeans.clear();
-        productIds.clear();
         position=0;
+        MoveToPosition(layoutManager,ryId,position);
         isNoData=false;
         isMoreLoad=false;
         isLoadFirst=true;
+        baseBeans.clear();
+        productIds.clear();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
