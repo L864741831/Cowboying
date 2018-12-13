@@ -276,6 +276,7 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
 
     }
 
+
     @OnClick({R.id.back_id,R.id.action_new_question_tv,R.id.go_store_btn,R.id.now_claim_btn_id,R.id.all_ck_id,R.id.refuce_id,R.id.sure_id,R.id.lvs_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {

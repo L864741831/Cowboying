@@ -595,6 +595,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
      */
     private void refreshData(){
         //先加入购物车在刷新
+        token = Hawk.get(HawkKey.TOKEN);
         currentPage = 1;
         isFirst = true;
         position=0;
