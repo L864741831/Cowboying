@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,28 +8,26 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.PickUpCodeAdapter;
-import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
-import com.ibeef.cowboying.bean.MyContractListBean;
-import com.ibeef.cowboying.bean.MyContractURLBean;
-import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,14 +37,14 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
 /**
  * 取货码
+ *
  * @author Administrator
  */
-public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener, MyOrderListBase.IView{
+public class PickUpCodeActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, MyOrderListBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -58,14 +57,17 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
     @Bind(R.id.rv_bg)
     RelativeLayout rvBg;
     @Bind(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
+    @Bind(R.id.ll_bg)
+    LinearLayout llBg;
     private String token;
     private List<MyOrderListBean.BizDataBean> listData;
     private PickUpCodeAdapter pickUpCodeAdapter;
     private MyOrderListPresenter myOrderListPresenter;
-    private int page=1;
-    private boolean isFirst=true;
-    private boolean isMoreLoad=false;
+    private int page = 1;
+    private boolean isFirst = true;
+    private boolean isMoreLoad = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,16 +77,16 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
     }
 
     private void init() {
-        token= Hawk.get(HawkKey.TOKEN);
+        token = Hawk.get(HawkKey.TOKEN);
         info.setText("取货码");
-        listData=new ArrayList<>();
+        listData = new ArrayList<>();
         listData.clear();
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setEnabled(true);
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
         ryId.setLayoutManager(new LinearLayoutManager(this));
-        pickUpCodeAdapter=new PickUpCodeAdapter(listData,this,R.layout.item_my_pick_up_code);
+        pickUpCodeAdapter = new PickUpCodeAdapter(listData, this, R.layout.item_my_pick_up_code);
         pickUpCodeAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(pickUpCodeAdapter);
         pickUpCodeAdapter.loadMoreEnd();
@@ -93,17 +95,18 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(!ryId.canScrollVertically(-1)){
+                if (!ryId.canScrollVertically(-1)) {
                     swipeLayout.setEnabled(true);
-                }else {
+                } else {
                     swipeLayout.setEnabled(false);
                 }
             }
         });
-        myOrderListPresenter= new MyOrderListPresenter(this);
+        myOrderListPresenter = new MyOrderListPresenter(this);
     }
 
     @Override
@@ -116,7 +119,7 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            myOrderListPresenter.getMyOrderList(reqData,10, page,"7");
+            myOrderListPresenter.getMyOrderList(reqData, page, "7");
         }
     }
 
@@ -132,8 +135,18 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
-        myOrderListPresenter.getMyOrderList(reqData,10, page,"7");
+        myOrderListPresenter.getMyOrderList(reqData, page, "7");
         swipeLayout.setRefreshing(false);
+
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
 
     }
 
@@ -144,7 +157,7 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
-        myOrderListPresenter.getMyOrderList(reqData,10, page,"7");
+        myOrderListPresenter.getMyOrderList(reqData, page, "7");
     }
 
     @Override
@@ -154,11 +167,11 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void showLoading() {
-        if(isMoreLoad){
+        if (isMoreLoad) {
             loadingLayout.setVisibility(View.GONE);
             ryId.setVisibility(View.VISIBLE);
-            isMoreLoad=false;
-        }else {
+            isMoreLoad = false;
+        } else {
             loadingLayout.setVisibility(View.VISIBLE);
             ryId.setVisibility(View.GONE);
         }
@@ -172,12 +185,13 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public void getMyOrderList(MyOrderListBean myOrderListBean) {
-        if(myOrderListBean.getPageNo()==1&&SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())){
+        if (myOrderListBean.getPageNo() == 1 && SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())) {
             rvBg.setVisibility(View.VISIBLE);
             ryId.setVisibility(View.GONE);
+            llBg.setBackgroundColor(getResources().getColor(R.color.white));
             return;
-        }else {
-            if(SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())){
+        } else {
+            if (SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())) {
                 pickUpCodeAdapter.loadMoreEnd();
                 return;
             }
@@ -185,11 +199,12 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
         this.listData.addAll(myOrderListBean.getBizData());
 
         rvBg.setVisibility(View.GONE);
+        llBg.setBackgroundResource(R.mipmap.pick_up_bg);
         ryId.setVisibility(View.VISIBLE);
 
-        if(SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())){
+        if (SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())) {
             pickUpCodeAdapter.loadMoreEnd();
-        }else {
+        } else {
             pickUpCodeAdapter.setNewData(this.listData);
             pickUpCodeAdapter.loadMoreComplete();
         }
@@ -245,31 +260,11 @@ public class PickUpCodeActivity extends BaseActivity implements SwipeRefreshLayo
 
     }
 
-//    @Override
-//    public void getMyContrantList(MyContractListBean myContractListBean) {
-////        if(SDCardUtil.isNullOrEmpty(myContractListBean.getBizData())){
-////            if(isFirst){
-////                rvBg.setVisibility(View.VISIBLE);
-////                ryId.setVisibility(View.GONE);
-////            }else {
-////                rvBg.setVisibility(View.GONE);
-////                ryId.setVisibility(View.VISIBLE);
-////            }
-////            pickUpCodeAdapter.loadMoreEnd();
-////        }else {
-////            isFirst=false;
-////            beanList.addAll(myContractListBean.getBizData());
-////            pickUpCodeAdapter.setNewData(this.beanList);
-////            pickUpCodeAdapter.loadMoreComplete();
-////        }
-//    }
-
-
     @Override
     protected void onDestroy() {
-//        if(myContractPresenter!=null){
-//            myContractPresenter.detachView();
-//        }
+        if(myOrderListPresenter!=null){
+            myOrderListPresenter.detachView();
+        }
         super.onDestroy();
     }
 }

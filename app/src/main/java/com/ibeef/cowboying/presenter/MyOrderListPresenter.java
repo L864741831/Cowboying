@@ -37,9 +37,9 @@ public class MyOrderListPresenter extends BasePresenter implements MyOrderListBa
     }
 
     @Override
-    public void getMyOrderList(Map<String, String> headers, int pageSize, int curPage, String status) {
+    public void getMyOrderList(Map<String, String> headers, int curPage, String status) {
         mView.showLoading();
-        addSubscription(mModel.getMyOrderList(headers,pageSize,curPage,status,new ResponseCallback<MyOrderListBean>() {
+        addSubscription(mModel.getMyOrderList(headers,curPage,status,new ResponseCallback<MyOrderListBean>() {
             @Override
             public void onSuccess(MyOrderListBean result) {
                 mView.hideLoading();

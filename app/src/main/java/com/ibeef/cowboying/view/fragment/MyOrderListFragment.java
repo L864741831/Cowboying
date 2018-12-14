@@ -32,12 +32,14 @@ import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.utils.WrapContentLinearLayoutManager;
 import com.ibeef.cowboying.view.activity.AfterSaleApplyActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.MyorderListCancelDialog;
 import com.ibeef.cowboying.view.activity.ShowOrderDeleveryActivity;
 import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,12 +55,13 @@ import rxfamily.view.BaseFragment;
  *
  * @author lalala
  */
-public class MyOrderListFragment extends BaseFragment implements View.OnClickListener,MyOrderListBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class MyOrderListFragment extends BaseFragment implements View.OnClickListener,MyOrderListBase.IView,SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     RecyclerView mRView;
     ImageView tvTextNull;
     RelativeLayout rv_order;
-    SwipeRefreshLayout mSwipeLayout;
+    SuperSwipeRefreshLayout swipeLayout;
+    TextView btn_into_store;
     private String token;
     private String stadus;
     private RelativeLayout loadingLayout;
@@ -69,7 +72,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
     private boolean isMoreLoad = false;
     private String groupId;
     private MyOrderListPresenter myOrderListPresenter;
-    private TextView btn_into_store;
+
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
@@ -77,17 +80,17 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         mRView=view.findViewById(R.id.video_list_rv);
         tvTextNull=view.findViewById(R.id.tv_text_null);
         rv_order=view.findViewById(R.id.rv_order);
-        mSwipeLayout=view.findViewById(R.id.swipe_layout);
+        swipeLayout=view.findViewById(R.id.swipe_layout);
         btn_into_store = view.findViewById(R.id.btn_into_store);
         btn_into_store.setOnClickListener(this);
 
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setEnabled(true);
+        swipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLayout.setHeaderView(createHeaderView());// add headerView
+        swipeLayout.setTargetScrollWithLayout(true);
+        swipeLayout.setOnPullRefreshListener(this);
         listData=new ArrayList<>();
-        listData.clear();
         loadingLayout = view.findViewById(R.id.loading_layout);
-        mRView.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
+        mRView.setLayoutManager(new WrapContentLinearLayoutManager(getHoldingActivity(), LinearLayoutManager.VERTICAL, false));
         myOrderListAdapter = new MyOrderListAdapter(listData,getHoldingActivity());
         myOrderListAdapter.setOnLoadMoreListener(this, mRView);
         mRView.setAdapter(myOrderListAdapter);
@@ -100,9 +103,9 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if(!mRView.canScrollVertically(-1)){
-                    mSwipeLayout.setEnabled(true);
+                    swipeLayout.setEnabled(true);
                 }else {
-                    mSwipeLayout.setEnabled(false);
+                    swipeLayout.setEnabled(false);
                 }
             }
         });
@@ -137,13 +140,13 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
+            myOrderListPresenter.getMyOrderList(reqData, page,stadus);
         }
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_my_cows_list;
+        return R.layout.fragment_my_order_list;
     }
 
     @Override
@@ -174,8 +177,18 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
-        myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
-        mSwipeLayout.setRefreshing(false);
+        myOrderListPresenter.getMyOrderList(reqData, page,stadus);
+        swipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 
     @Override
@@ -185,7 +198,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
-        myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
+        myOrderListPresenter.getMyOrderList(reqData, page,stadus);
     }
 
     @Override
@@ -293,11 +306,13 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
     public void getMyOrderListDelete(MyOrderListCancelBean msg) {
         if("000000".equals(msg.getCode())){
             page = 1;
+            int previousSize = listData.size();
             listData.clear();
+            myOrderListAdapter.notifyItemRangeRemoved(0, previousSize);
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
+            myOrderListPresenter.getMyOrderList(reqData, page,stadus);
             Toast.makeText(getHoldingActivity(),"删除订单成功", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getHoldingActivity(), msg.getMessage(), Toast.LENGTH_SHORT).show();
@@ -322,7 +337,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            myOrderListPresenter.getMyOrderList(reqData,10, page,stadus);
+            myOrderListPresenter.getMyOrderList(reqData, page,stadus);
             Toast.makeText(getHoldingActivity(),"确认收货成功", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getHoldingActivity(), myOrderListCancelBean.getMessage(), Toast.LENGTH_SHORT).show();

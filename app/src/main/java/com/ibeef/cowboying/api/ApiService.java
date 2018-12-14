@@ -675,7 +675,7 @@ public interface ApiService {
      * @return
      */
     @GET("shop/order/get/orderList")
-    Observable<MyOrderListBean> getMyOrderList(@HeaderMap Map<String, String> headers, @Query("pageSize") int pageSize, @Query("curPage") int curPage, @Query("status") String status);
+    Observable<MyOrderListBean> getMyOrderList(@HeaderMap Map<String, String> headers, @Query("curPage") int curPage, @Query("status") String status);
 
     /**
      * 我的商城订单详情

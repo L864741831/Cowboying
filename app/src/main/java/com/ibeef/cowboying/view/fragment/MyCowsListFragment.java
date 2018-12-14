@@ -33,6 +33,7 @@ import com.ibeef.cowboying.view.activity.MyCowsProgressDialog;
 import com.ibeef.cowboying.view.activity.SellCowsFirstActivity;
 import com.ibeef.cowboying.view.activity.SureOderActivity;
 import com.ibeef.cowboying.view.activity.SureOrderBackDialog;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -50,12 +51,12 @@ import rxfamily.view.BaseFragment;
  *
  * @author lalala
  */
-public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.IView,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.IView,SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
 
     RecyclerView mRView;
     ImageView tvTextNull;
     RelativeLayout rv_order;
-    SwipeRefreshLayout mSwipeLayout;
+    SuperSwipeRefreshLayout mSwipeLayout;
     private String token;
     private String stadus;
     private RelativeLayout loadingLayout;
@@ -75,9 +76,10 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
         rv_order=view.findViewById(R.id.rv_order);
         mSwipeLayout=view.findViewById(R.id.swipe_layout);
 
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setEnabled(true);
+        mSwipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mSwipeLayout.setHeaderView(createHeaderView());// add headerView
+        mSwipeLayout.setTargetScrollWithLayout(true);
+        mSwipeLayout.setOnPullRefreshListener(this);
         listData=new ArrayList<>();
         listData.clear();
         loadingLayout = view.findViewById(R.id.loading_layout);
@@ -179,6 +181,16 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
         reqData.put("version", getVersionCodes());
         myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
         mSwipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 
     @Override
@@ -371,7 +383,9 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
     public void getMyCowsOrderDelete(MyCowsOrderDeleteBean msg) {
         if("000000".equals(msg.getCode())){
             page = 1;
+            int previousSize = listData.size();
             listData.clear();
+            myCowsListAdapter.notifyItemRangeRemoved(0, previousSize);
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());

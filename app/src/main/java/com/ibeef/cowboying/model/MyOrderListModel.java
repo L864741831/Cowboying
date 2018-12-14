@@ -42,8 +42,8 @@ public class MyOrderListModel implements MyOrderListBase.IModel {
     }
 
     @Override
-    public Subscription getMyOrderList(Map<String, String> headers, int pageSize, int curPage, String status, final ResponseCallback<MyOrderListBean> callback) {
-        Observable<MyOrderListBean> observable = service.getMyOrderList(headers,pageSize,curPage,status);
+    public Subscription getMyOrderList(Map<String, String> headers, int curPage, String status, final ResponseCallback<MyOrderListBean> callback) {
+        Observable<MyOrderListBean> observable = service.getMyOrderList(headers,curPage,status);
         Subscription sub = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(2, 3000))

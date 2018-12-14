@@ -54,7 +54,7 @@ dependencies {
 
 //    api files('libs/Baidu_Mtj_3.7.4.2.jar')
 //    api files('libs/android_for_sdk_1.7.jar')
-    api  'com.android.support:appcompat-v7:27.+'// 使用google的appcompat-v7包
+    api "com.android.support:appcompat-v7:$supportlib_version"// 使用google的appcompat-v7包
     api  'com.android.support:support-v4:27.+'
     api  'com.android.support:design:27.+'
     api  'com.android.support:cardview-v7:27.+'

@@ -13,17 +13,20 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.utils.WrapContentLinearLayoutManager;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizDataBean, BaseViewHolder> {
     private Context context;
+    private List<MyOrderListBean.BizDataBean.ShopOrderProductResVosBean> listData;
     public MyOrderListAdapter(List data, Context context) {
         super(R.layout.my_order_list_item, data);
         this.context=context;
@@ -55,11 +58,19 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         helper.setText(R.id.order_id,"订单编号："+item.getShopOrderResVo().getCode())
               .setText(R.id.tv_total,"共"+quantity+"件，合计：￥"+item.getShopOrderResVo().getPayAmount());
 
+       listData = new ArrayList<>();
+        if (item.getShopOrderProductResVos().size()>3){
+            listData.add(item.getShopOrderProductResVos().get(0));
+            listData.add(item.getShopOrderProductResVos().get(1));
+            listData.add(item.getShopOrderProductResVos().get(2));
+        }else{
+            listData.addAll(item.getShopOrderProductResVos());
+        }
         RecyclerView ry_id=helper.getView(R.id.ry_id);
-        ry_id.setLayoutManager(new LinearLayoutManager(context));
+        ry_id.setLayoutManager(new WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
-       final MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(item.getShopOrderProductResVos(),item.getShopOrderResVo().getReceiveType(),context);
+       final MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(listData,item.getShopOrderResVo().getReceiveType(),context);
         ry_id.setAdapter(myOrderChirdListAdapter);
         myOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
