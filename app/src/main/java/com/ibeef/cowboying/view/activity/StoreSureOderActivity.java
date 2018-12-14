@@ -264,12 +264,13 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 deleveryTypeId.setText("顺丰配送");
                 rvStoreaddrId.setVisibility(View.GONE);
                 addressRv.setVisibility(View.VISIBLE);
-
+                freightRv.setVisibility(View.VISIBLE);
                 oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()));
                 allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
                 break;
             case R.id.img_choose2_id:
                 type=2;
+                freightRv.setVisibility(View.GONE);
                 lvChooseId.setVisibility(View.GONE);
                 lvsId.setVisibility(View.VISIBLE);
                 deleveryTypeId.setText("到店自取");
@@ -281,6 +282,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 break;
             case R.id.refuce_id:
                 lvsId.setVisibility(View.GONE);
+                freightRv.setVisibility(View.VISIBLE);
                 type=1;
                 deleveryTypeId.setText("顺丰配送");
                 rvStoreaddrId.setVisibility(View.GONE);
@@ -292,6 +294,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 lvsId.setVisibility(View.GONE);
                 rvStoreaddrId.setVisibility(View.VISIBLE);
                 addressRv.setVisibility(View.GONE);
+                freightRv.setVisibility(View.GONE);
                 break;
             case R.id.cuppon_rv:
                 Intent intent1=new Intent(StoreSureOderActivity.this,UseCouponActivity.class);

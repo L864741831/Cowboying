@@ -18,7 +18,7 @@
             android:layout_height="wrap_content" android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="wrap_content" android:id="@+id/show_title_id"
                 android:layout_height="50dp" android:gravity="center_vertical"
                 android:text="将商品寄送至：" android:layout_marginLeft="20dp"
                 android:textSize="14sp"/>
@@ -30,12 +30,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/address_rv">
                 <TextView
-                    android:layout_width="wrap_content" android:id="@+id/show_addr_id"
+                    android:layout_width="match_parent" android:id="@+id/show_addr_id"
                     android:layout_height="wrap_content" android:drawableLeft="@mipmap/showaddbg"
                     android:layout_marginTop="15dp" android:textColor="@color/colorAccent"
                     android:layout_marginRight="10dp" android:layout_marginLeft="20dp"
                     android:text="请选择收货地址" android:drawablePadding="15dp"
-                    android:textSize="@dimen/sp_14"/>
+                    android:textSize="@dimen/sp_14" android:layout_toLeftOf="@+id/mobile_txt_id"/>
 
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/mobile_txt_id"
