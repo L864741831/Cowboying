@@ -178,7 +178,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
         myOrderListPresenter.getMyOrderList(reqData, page,stadus);
-        swipeLayout.setRefreshing(false);
+
     }
 
     @Override
@@ -222,6 +222,7 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         mRView.setVisibility(View.VISIBLE);
+        swipeLayout.setRefreshing(false);
     }
 
     @Override

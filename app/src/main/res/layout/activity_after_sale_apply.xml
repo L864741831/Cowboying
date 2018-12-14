@@ -19,8 +19,6 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
             <RelativeLayout
@@ -107,7 +105,7 @@
                     android:id="@+id/tv_return_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥88.00"
+                    android:text="￥"
                     android:layout_toRightOf="@+id/tv_weizhi"
                     android:textSize="19sp"
                     android:textColor="@color/qian_red"
@@ -121,7 +119,7 @@
                 android:paddingLeft="15dp"
                 android:textSize="@dimen/sp_12"
                 android:textColor="@color/gray_666666"
-                android:text="最多￥88.00.含发货运费￥0.00"/>
+                android:text="最多￥---.含发货运费￥---"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:background="@color/white"

@@ -157,9 +157,11 @@
                 android:layout_height="100dp">
                 <TextView
                     android:id="@+id/tv_address_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="乌克兰合肥额外然后i开发金额和顾客恐惧感可劲儿"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/showaddbg"
                     android:drawablePadding="15dp"

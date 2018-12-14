@@ -180,7 +180,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
         myCowsOrderPresenter.geMyCowsOrderList(reqData, page,stadus);
-        mSwipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -224,6 +223,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         mRView.setVisibility(View.VISIBLE);
+        mSwipeLayout.setRefreshing(false);
     }
 
     @Override

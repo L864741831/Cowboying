@@ -51,8 +51,11 @@ public class WalletDetailListAdapter extends BaseQuickAdapter<WalletRecordResult
             helper.setText(R.id.show_reson_id,"兑换牛肉减少");
         }else  if("34".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"用户提现减少");
+        }else  if("16".equals(item.getChangeType())){
+            helper.setText(R.id.show_reson_id,"订单支付");
+        }else  if("17".equals(item.getChangeType())){
+            helper.setText(R.id.show_reson_id,"订单支付");
         }
-
         if(item.getChangeAmount().floatValue()>=0){
             //如果金额是add的
             textView.setTextColor(context.getResources().getColor(R.color.colorGolds));
