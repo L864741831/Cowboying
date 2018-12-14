@@ -260,6 +260,8 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
                         }
                         if(j==lists.size()){
                             allCkId.setChecked(true);
+                        }else {
+                            allCkId.setChecked(false);
                         }
                        storeCarAdapter.notifyItemChanged(positions);
                         break;
@@ -578,6 +580,7 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
     public void onRefresh() {
         if(allCkId.isChecked()){
             //选中不刷新数据
+            swipeLy.setRefreshing(false);
         }else {
             chooseNum=0;
             allMoney=0;

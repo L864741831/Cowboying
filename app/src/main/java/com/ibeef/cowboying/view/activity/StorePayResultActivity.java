@@ -70,6 +70,10 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
     TextView showStoreAddrId;
     @Bind(R.id.address_rv)
     RelativeLayout addressRv;
+    @Bind(R.id.freight_rv)
+    RelativeLayout freightrv;
+    @Bind(R.id.show_title_id)
+    TextView showTitleId;
     private int orderId;
     private List<StoreCarResultBean> objectList;
     private String token;
@@ -149,12 +153,16 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
             if ("1".equals(stadus)) {
                 rvStoreaddrId.setVisibility(View.GONE);
                 addressRv.setVisibility(View.VISIBLE);
+                freightrv.setVisibility(View.VISIBLE);
+                showTitleId.setVisibility(View.VISIBLE);
                 showAddrId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverName());
                 mobileTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverMobile());
                 delAddrTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverProvince()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverCity()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverRegion()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
             } else  if ("2".equals(stadus)){
                 rvStoreaddrId.setVisibility(View.VISIBLE);
                 addressRv.setVisibility(View.GONE);
+                freightrv.setVisibility(View.GONE);
+                showTitleId.setVisibility(View.GONE);
 
                 showStoreId.setText(myOrderListDetailBean.getBizData().getStoreInfoResVo().getName());
                 showStoreAddrId.setText(myOrderListDetailBean.getBizData().getStoreInfoResVo().getAddress());

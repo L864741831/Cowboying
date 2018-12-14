@@ -35,6 +35,7 @@ import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
+import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
 import com.ibeef.cowboying.view.activity.NewManwelfareActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
@@ -230,7 +231,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                 break;
             case R.id.together_cow_fm:
                 //拼牛
-//                startActivity(FightCattleActivity.class);
+                startActivity(FightCattleActivity.class);
                 break;
             case R.id.newpeople_img_id:
                 //新人礼券
