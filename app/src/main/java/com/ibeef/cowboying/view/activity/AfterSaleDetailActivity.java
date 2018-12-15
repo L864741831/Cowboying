@@ -176,7 +176,9 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             case R.id.btn_apply_return:
                 //申请退款
                 Intent intent8 = new Intent(this, AfterSaleApplyActivity.class);
-                intent8.putExtra("orderCode", orderId);
+                intent8.putExtra("id",id+"");
+                intent8.putExtra("orderCode", orderIdnew+"");
+                Log.i("htht", "orderIdnew:::::发送 "+orderIdnew);
                 startActivity(intent8);
                 break;
             default:
@@ -272,7 +274,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             rlReturnRefuse.setVisibility(View.VISIBLE);
             rlReturnRefuse.setText("拒绝原因："+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getRefuseReason());
             rlReturnSuccess2.setVisibility(View.GONE);
-            btnApplyReturn.setVisibility(View.VISIBLE);
+            llBottomBtn.setVisibility(View.VISIBLE);
         } else if ("4".equals(status)) {
             tvApplyTopStatus.setText("已撤销退款申请");
             time_show_id.setVisibility(View.GONE);
@@ -295,10 +297,10 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
                 tv_return__way.setText("退回微信");
                 break;
             case "3":
-                tv_return__way.setText("退回银联");
+                tv_return__way.setText("退回钱包");
                 break;
             case "4":
-                tv_return__way.setText("退回钱包");
+                tv_return__way.setText("退回银行卡");
                 break;
             case "5":
                 tv_return__way.setText("退回会员卡");
@@ -312,9 +314,13 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
                 default:
                     break;
         }
+        int quantity=0;
+        for (int i=0;i<myAfterSaleDetailBean.getBizData().getOrderProductResVos().size();i++){
+            quantity=myAfterSaleDetailBean.getBizData().getOrderProductResVos().get(i).getQuantity()+quantity;
+        }
         tvPeriodNumber.setText(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getReason());
         tvReturnMoney.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
-        tvApplyId.setText(""+myAfterSaleDetailBean.getBizData().getOrderProductResVos().size());
+        tvApplyId.setText(""+quantity);
         txtApplyTime.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCreateTime(), DateUtils.TYPE_01));
         tvReturnId.setText(""+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getCode());
 

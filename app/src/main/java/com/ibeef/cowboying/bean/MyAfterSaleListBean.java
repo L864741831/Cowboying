@@ -229,7 +229,7 @@ public class MyAfterSaleListBean {
             private String name;
             private String status;
             private String imageUrl;
-            private double quantity;
+            private int quantity;
             private double buyPrice;
             private String specification;
 
@@ -273,11 +273,11 @@ public class MyAfterSaleListBean {
                 this.imageUrl = imageUrl;
             }
 
-            public double getQuantity() {
+            public int getQuantity() {
                 return quantity;
             }
 
-            public void setQuantity(double quantity) {
+            public void setQuantity(int quantity) {
                 this.quantity = quantity;
             }
 

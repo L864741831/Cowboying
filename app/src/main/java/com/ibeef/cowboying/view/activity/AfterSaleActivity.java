@@ -146,7 +146,6 @@ public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.I
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
         myOrderListPresenter.getAfterSaleList(reqData,10,currentPage);
-        swipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -190,6 +189,7 @@ public class AfterSaleActivity extends BaseActivity implements MyOrderListBase.I
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        swipeLayout.setRefreshing(false);
     }
 
     @Override

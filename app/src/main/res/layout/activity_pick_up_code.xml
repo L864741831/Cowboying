@@ -14,6 +14,7 @@
         android:scrollbars="vertical">
         <LinearLayout
             android:id="@+id/ll_bg"
+            android:background="@mipmap/pick_up_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

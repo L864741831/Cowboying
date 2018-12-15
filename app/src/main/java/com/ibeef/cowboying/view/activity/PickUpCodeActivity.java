@@ -136,8 +136,6 @@ public class PickUpCodeActivity extends BaseActivity implements SuperSwipeRefres
         reqData.put("Authorization", token);
         reqData.put("version", getVersionCodes());
         myOrderListPresenter.getMyOrderList(reqData, page, "7");
-        swipeLayout.setRefreshing(false);
-
     }
 
     @Override
@@ -181,6 +179,7 @@ public class PickUpCodeActivity extends BaseActivity implements SuperSwipeRefres
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        swipeLayout.setRefreshing(false);
     }
 
     @Override
@@ -199,7 +198,6 @@ public class PickUpCodeActivity extends BaseActivity implements SuperSwipeRefres
         this.listData.addAll(myOrderListBean.getBizData());
 
         rvBg.setVisibility(View.GONE);
-        llBg.setBackgroundResource(R.mipmap.pick_up_bg);
         ryId.setVisibility(View.VISIBLE);
 
         if (SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())) {

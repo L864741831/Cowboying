@@ -51,6 +51,10 @@ public class AssetDetailListAdapter extends BaseQuickAdapter<WalletRecordResultB
             helper.setText(R.id.show_reson_id,"兑换牛肉减少");
         }else  if("34".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"用户提现减少");
+        }else  if("36".equals(item.getChangeType())){
+            helper.setText(R.id.show_reson_id,"订单支付");
+        }else  if("37".equals(item.getChangeType())){
+            helper.setText(R.id.show_reson_id,"订单退款");
         }
 
         if(item.getChangeAmount().floatValue()>=0){
