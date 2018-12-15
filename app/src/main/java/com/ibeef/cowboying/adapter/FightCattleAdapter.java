@@ -47,6 +47,6 @@ public class FightCattleAdapter extends BaseQuickAdapter<Object,BaseViewHolder> 
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.banner_img_id);
-        Glide.with(mContext).load(Constant.imageDomain).apply(options).into(imageView);
+        Glide.with(context).load(Constant.imageDomain).apply(options).into(imageView);
     }
 }
