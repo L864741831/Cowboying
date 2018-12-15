@@ -38,9 +38,11 @@ import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.ibeef.cowboying.view.activity.MyMessegeActivity;
 import com.ibeef.cowboying.view.activity.MyOrderActivity;
 import com.ibeef.cowboying.view.activity.NormalQuestionActivity;
+import com.ibeef.cowboying.view.activity.PayActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.PickUpCodeActivity;
 import com.ibeef.cowboying.view.activity.SetUpActivity;
+import com.ibeef.cowboying.view.activity.VipCardActivity;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
@@ -202,6 +204,11 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
                 break;
             case R.id.pay_money_codeId:
                 //付款码
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(PayActivity.class);
+                }
                 break;
             case R.id.please_codeId:
                 //邀请码
@@ -268,8 +275,12 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
                 }
                 break;
             case R.id.write_money_rv:
-                //白条额度
-
+                //会员卡
+                if(TextUtils.isEmpty(token)){
+                    startActivity(LoginActivity.class);
+                }else {
+                    startActivity(VipCardActivity.class);
+                }
                 break;
             case R.id.coupon_num_rv:
                 //优惠券
@@ -331,10 +342,10 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
                 allMoneyId.setText("");
             }
 
-            if (cowManInfosResultBean.getBizData().getMyCreditAmount() > 0) {
-                writeMoneyId.setText(cowManInfosResultBean.getBizData().getMyCreditAmount() + "元");
-            } else {
+            if (cowManInfosResultBean.getBizData().isHaveVipCard()) {
                 writeMoneyId.setText("");
+            } else {
+                writeMoneyId.setText("未办理");
             }
 
             if (cowManInfosResultBean.getBizData().getMyCouponCount() > 0) {
