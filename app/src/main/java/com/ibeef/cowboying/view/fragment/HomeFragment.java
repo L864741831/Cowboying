@@ -36,6 +36,7 @@ import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
+import com.ibeef.cowboying.view.activity.CowsClaimActivity;
 import com.ibeef.cowboying.view.activity.DiscountCouponActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
@@ -184,6 +185,76 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
         banner.setClickable(true);
         banner.setBannerAnimation(Transformer.Accordion);
 
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if(SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getTopBannerList())){
+                    return;
+                }
+                switch (homeBannerResultBean.getBizData().getTopBannerList().get(position).getPageUrl()){
+                    case "adopt_scheme_list":
+                        //买牛方案列表
+                        startActivity(BuyCowsPlanActivity.class);
+                        break;
+                    case "adopt_scheme_detail":
+                        //买牛方案详情
+                        Intent intent4=new Intent(getHoldingActivity(),CowsClaimActivity.class);
+                        intent4.putExtra("schemId",Integer.parseInt(homeBannerResultBean.getBizData().getPopBanner().getParams()));
+                        startActivity(intent4);
+                        break;
+                    case "adop_order_list":
+                        //买牛订单列表
+                        startActivity(MyCowsActivity.class);
+                        break;
+                    case "adop_order_detail":
+                        //买牛订单详情
+                        Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
+                        intent.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
+                        startActivity(intent);
+                        break;
+                    case "pasture_list":
+                        //合作牧场列表
+                        startActivity(RanchConsociationActivity.class);
+                        break;
+                    case "shop_product_list":
+                        //商城商品列表
+                        Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                        intent1.putExtra("index",1);
+                        startActivity(intent1);
+                        break;
+                    case "shop_order_list":
+                        //商城订单列表
+                        startActivity(MyOrderActivity.class);
+                        break;
+                    case "shop_order_detail":
+                        //商城订单详情
+                        Intent intent2 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
+                        intent2.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
+                        startActivity(intent2);
+                        break;
+                    case "total_assets":
+                        //总资产
+                        startActivity(MyAllMoneyActivity.class);
+                        break;
+                    case "coupon_list":
+                        //优惠券列表
+                        startActivity(DiscountCouponActivity.class);
+                        break;
+                    case "contract_list":
+                        //合同列表
+                        startActivity(MyContractActivity.class);
+                        break;
+                    case "new_welfare":
+                        //新人福利
+                        Intent intent3=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                        intent3.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                        startActivity(intent3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         sellCowNumId=view.findViewById(R.id.sell_cow_num_id);
         sellCowNum2Id=view.findViewById(R.id.sell_cow_num2_id);
         specialbeefImgId=view.findViewById(R.id.specialbeef_img_id);
@@ -208,6 +279,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 //        specialbeefImgId.setDelayTime(1000 * 6);
         //设置轮播时间
         specialbeefImgId.setClickable(true);
+
+        specialbeefImgId.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                intent1.putExtra("index",1);
+                startActivity(intent1);
+            }
+        });
 
         beanList=new ArrayList<>();
 
@@ -295,70 +375,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             banner.setImages(imgStr);
             //设置图片集合
             banner.start();
-            banner.setOnBannerListener(new OnBannerListener() {
-                @Override
-                public void OnBannerClick(int position) {
-                    switch (homeBannerResultBean.getBizData().getTopBannerList().get(position).getPageUrl()){
-                        case "adopt_scheme_list":
-                            //买牛方案列表
-                            startActivity(BuyCowsPlanActivity.class);
-                            break;
-                        case "adopt_scheme_detail":
-                            //买牛方案详情
-                            break;
-                        case "adop_order_list":
-                            //买牛订单列表
-                            startActivity(MyCowsActivity.class);
-                            break;
-                        case "adop_order_detail":
-                            //买牛订单详情
-                            Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-                            intent.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
-                            startActivity(intent);
-                            break;
-                        case "pasture_list":
-                            //合作牧场列表
-                            startActivity(RanchConsociationActivity.class);
-                            break;
-                        case "shop_product_list":
-                            //商城商品列表
-                            Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
-                            intent1.putExtra("index",1);
-                            startActivity(intent1);
-                            break;
-                        case "shop_order_list":
-                            //商城订单列表
-                            startActivity(MyOrderActivity.class);
-                            break;
-                        case "shop_order_detail":
-                            //商城订单详情
-                            Intent intent2 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
-                            intent2.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
-                            startActivity(intent2);
-                            break;
-                        case "total_assets":
-                            //总资产
-                            startActivity(MyAllMoneyActivity.class);
-                            break;
-                        case "coupon_list":
-                            //优惠券列表
-                            startActivity(DiscountCouponActivity.class);
-                            break;
-                        case "contract_list":
-                            //合同列表
-                            startActivity(MyContractActivity.class);
-                            break;
-                        case "new_welfare":
-                            //新人福利
-                            Intent intent3=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
-                            intent3.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
-                            startActivity(intent3);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            });
+
         }
 
         //中间轮播banner
@@ -370,14 +387,6 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             specialbeefImgId.setImages(imgStr1);
             //设置图片集合
             specialbeefImgId.start();
-            specialbeefImgId.setOnBannerListener(new OnBannerListener() {
-                @Override
-                public void OnBannerClick(int position) {
-                    Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
-                    intent1.putExtra("index",1);
-                    startActivity(intent1);
-                }
-            });
         }
 
         //一天一次的广告弹框

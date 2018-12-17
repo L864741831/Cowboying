@@ -99,10 +99,11 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     private CowClaimSelectFragment cowClaimSelectFragment;
     private int allAmout=1;
     private String token;
-    private ActiveSchemeResultBean.BizDataBean infos;
+    private int schemId;
     private PastureDetailPresenter pastureDetailPresenter;
     private UserInfoPresenter userInfoPresenter;
     private UserInfoResultBean userInfoResultBean;
+    private SchemeDetailReultBean schemeDetailReultBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,27 +118,13 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         token= Hawk.get(HawkKey.TOKEN);
 
         scrollIsShowId.setSelected(true);
-        infos= (ActiveSchemeResultBean.BizDataBean) getIntent().getSerializableExtra("infos");
+        schemId= getIntent().getIntExtra("schemId",0);
         pastureDetailPresenter=new PastureDetailPresenter(this);
         userInfoPresenter=new UserInfoPresenter(this);
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
-        pastureDetailPresenter.getSchemeDetail(reqData,infos.getSchemeId());
-
-        if("1".equals(infos.getCurStatus())){
-            //当前类型（1：可以认领；2：即将开始；3：领完）
-            nowClaimBtnId.setImageResource(R.mipmap.nowclaim);
-            rvMiddleId.setVisibility(View.GONE);
-        }else  if("2".equals(infos.getCurStatus())) {
-            nowClaimBtnId.setImageResource(R.mipmap.claimwillopen);
-            rvMiddleId.setVisibility(View.VISIBLE);
-            scrollIsShowId.setText("开售时间："+infos.getStartTime());
-        }else  if("3".equals(infos.getCurStatus())) {
-            nowClaimBtnId.setImageResource(R.mipmap.claimend);
-            rvMiddleId.setVisibility(View.VISIBLE);
-            scrollIsShowId.setText("您来晚了，当前养牛方案牛只已售罄，不过还有牧场主未付款，您还有机会哟~");
-        }
+        pastureDetailPresenter.getSchemeDetail(reqData,schemId);
 
     }
 
@@ -176,18 +163,24 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                 finish();
                 break;
             case R.id.see_all_pasture_rv:
+                if(SDCardUtil.isNullOrEmpty(schemeDetailReultBean)){
+                    return;
+                }
                 Intent intent = new Intent(CowsClaimActivity.this, ChooseParsterActivity.class);
-                intent.putExtra("id", infos.getPastureId());
-                intent.putExtra("name", infos.getPastureName());
+                intent.putExtra("id", schemeDetailReultBean.getBizData().getPastureId());
+                intent.putExtra("name", schemeDetailReultBean.getBizData().getPastureName());
                 startActivity(intent);
                 break;
             case R.id.custom_img_id:
                 showToast("客服");
                 break;
             case R.id.now_claim_btn_id:
+                if(SDCardUtil.isNullOrEmpty(schemeDetailReultBean)){
+                    return;
+                }
                 //  先判断是否绑定手机号，（未绑定手机号去绑定，），
                 // 已绑定手机号再判断是否实名认证 ，已认证挑已认证的界面，未认证调到实名认证的界面
-                if("1".equals(infos.getCurStatus())){
+                if("1".equals( schemeDetailReultBean.getBizData().getCurStatus())){
                     //当前类型（1：可以认领；2：即将开始；3：领完）
                     if(TextUtils.isEmpty(token)){
                         startActivity(LoginActivity.class);
@@ -202,7 +195,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                                     //未实名认证
                                     Intent intent1=new Intent(CowsClaimActivity.this,ClaimUnCertificationActivity.class);
                                     intent1.putExtra("mobile",userInfoResultBean.getBizData().getMobile());
-                                    intent1.putExtra("schemeId",infos.getSchemeId());
+                                    intent1.putExtra("schemeId", schemeDetailReultBean.getBizData().getSchemeId());
                                     intent1.putExtra("quantity",allAmout);
                                     intent1.putExtra("userId",userInfoResultBean.getBizData().getUserId());
                                     startActivity(intent1);
@@ -210,7 +203,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                                     //已实名认证
                                     Intent intent1=new Intent(CowsClaimActivity.this,ClaimCertificationActivity.class);
                                     intent1.putExtra("infos",userInfoResultBean);
-                                    intent1.putExtra("schemeId",infos.getSchemeId());
+                                    intent1.putExtra("schemeId", schemeDetailReultBean.getBizData().getSchemeId());
                                     intent1.putExtra("quantity",allAmout);
                                     startActivity(intent1);
                                 }
@@ -218,9 +211,9 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                         }
 
                     }
-                }else  if("2".equals(infos.getCurStatus())) {
+                }else  if("2".equals(schemeDetailReultBean.getBizData().getCurStatus())) {
                     showToast("即将开售");
-                }else  if("3".equals(infos.getCurStatus())) {
+                }else  if("3".equals(schemeDetailReultBean.getBizData().getCurStatus())) {
                     showToast("已售罄");
                 }
                 break;
@@ -273,6 +266,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     public void getSchemeDetail(final SchemeDetailReultBean schemeDetailReultBean) {
 
         if("000000".equals(schemeDetailReultBean.getCode())){
+            this.schemeDetailReultBean=schemeDetailReultBean;
             allMoneyId.setText("总金额：￥"+schemeDetailReultBean.getBizData().getPrice());
             targetTxtId.setText(schemeDetailReultBean.getBizData().getTotalStock()+"头");
             priceTxtId.setText(schemeDetailReultBean.getBizData().getPrice()+"元/头");
@@ -294,6 +288,20 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                    allMoneyId.setText("总金额：￥"+amount* schemeDetailReultBean.getBizData().getPrice().floatValue());
                 }
             });
+
+            if("1".equals( schemeDetailReultBean.getBizData().getCurStatus())){
+                //当前类型（1：可以认领；2：即将开始；3：领完）
+                nowClaimBtnId.setImageResource(R.mipmap.nowclaim);
+                rvMiddleId.setVisibility(View.GONE);
+            }else  if("2".equals( schemeDetailReultBean.getBizData().getCurStatus())) {
+                nowClaimBtnId.setImageResource(R.mipmap.claimwillopen);
+                rvMiddleId.setVisibility(View.VISIBLE);
+                scrollIsShowId.setText("开售时间："+ schemeDetailReultBean.getBizData().getStartTime());
+            }else  if("3".equals( schemeDetailReultBean.getBizData().getCurStatus())) {
+                nowClaimBtnId.setImageResource(R.mipmap.claimend);
+                rvMiddleId.setVisibility(View.VISIBLE);
+                scrollIsShowId.setText("您来晚了，当前养牛方案牛只已售罄，不过还有牧场主未付款，您还有机会哟~");
+            }
         }else {
             showToast(schemeDetailReultBean.getMessage());
         }

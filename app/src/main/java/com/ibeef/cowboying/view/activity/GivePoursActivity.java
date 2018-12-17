@@ -48,6 +48,9 @@ public class GivePoursActivity extends BaseActivity {
                         break;
                     case "adopt_scheme_detail":
                         //买牛方案详情
+                        Intent intent4=new Intent(GivePoursActivity.this,CowsClaimActivity.class);
+                        intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getPopBanner().getParams()));
+                        startActivity(intent4);
                         break;
                     case "adop_order_list":
                         //买牛订单列表

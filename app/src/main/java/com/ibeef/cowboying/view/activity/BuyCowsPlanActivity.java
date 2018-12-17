@@ -108,7 +108,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
                 if(view.getId()==R.id.now_claim_btn_id){
                     ActiveSchemeResultBean.BizDataBean item=buyCowListAdapter.getItem(position);
                     Intent intent=new Intent(BuyCowsPlanActivity.this,CowsClaimActivity.class);
-                    intent.putExtra("infos",item);
+                    intent.putExtra("schemId",item.getSchemeId());
                     startActivity(intent);
                 }
             }

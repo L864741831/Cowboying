@@ -56,7 +56,7 @@ public class WalletDetailListAdapter extends BaseQuickAdapter<WalletRecordResult
         }else  if("17".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"订单支付");
         }
-        if(item.getChangeAmount().floatValue()>=0){
+        if(item.getChangeAmount().floatValue()>0){
             //如果金额是add的
             textView.setTextColor(context.getResources().getColor(R.color.colorGolds));
             helper.setText(R.id.show_money_id,"+"+item.getChangeAmount());

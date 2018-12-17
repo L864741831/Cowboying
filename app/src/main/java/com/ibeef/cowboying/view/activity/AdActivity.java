@@ -83,6 +83,9 @@ public class AdActivity extends BaseActivity {
                             break;
                         case "adopt_scheme_detail":
                             //买牛方案详情
+                            Intent intent4=new Intent(AdActivity.this,CowsClaimActivity.class);
+                            intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getParams()));
+                            startActivity(intent4);
                             break;
                         case "adop_order_list":
                             //买牛订单列表

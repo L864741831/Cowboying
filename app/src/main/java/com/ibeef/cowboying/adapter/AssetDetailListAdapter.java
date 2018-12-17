@@ -57,7 +57,7 @@ public class AssetDetailListAdapter extends BaseQuickAdapter<WalletRecordResultB
             helper.setText(R.id.show_reson_id,"订单退款");
         }
 
-        if(item.getChangeAmount().floatValue()>=0){
+        if(item.getChangeAmount().floatValue()>0){
             //如果金额是add的
             textView.setTextColor(context.getResources().getColor(R.color.colorGolds));
             helper.setText(R.id.show_money_id,"+"+item.getChangeAmount());

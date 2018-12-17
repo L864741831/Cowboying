@@ -25,7 +25,7 @@ public class AddMoneyAdapter extends BaseQuickAdapter<AddMoneyResultBean.BizData
     @Override
     protected void convert(BaseViewHolder helper, AddMoneyResultBean.BizDataBean item) {
         helper.setText(R.id.time_txt_id,item.getDate());
-        if(item.getAmount().floatValue()>=0){
+        if(item.getAmount().floatValue()>0){
             helper.setText(R.id.add_money_id,"+"+item.getAmount());
         }else {
             helper.setText(R.id.add_money_id,""+item.getAmount());
