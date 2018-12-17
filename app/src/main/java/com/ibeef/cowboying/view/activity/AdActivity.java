@@ -74,12 +74,67 @@ public class AdActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.bg_img:
                 // url广告webview地址，广告title
-                if(!TextUtils.isEmpty(info.getBizData().getLinkUrl())){
+                if(!TextUtils.isEmpty(info.getBizData().getPageUrl())){
                     continueCount = false;
-                    Intent intent=new Intent(AdActivity.this, AdWebviewActivity.class);
-                    intent.putExtra("url",info.getBizData().getLinkUrl());
-                    intent.putExtra("title","口袋牧场");
-                    startActivity(intent);
+                    switch (info.getBizData().getPageUrl()){
+                        case "adopt_scheme_list":
+                            //买牛方案列表
+                            startActivity(BuyCowsPlanActivity.class);
+                            break;
+                        case "adopt_scheme_detail":
+                            //买牛方案详情
+                            break;
+                        case "adop_order_list":
+                            //买牛订单列表
+                            startActivity(MyCowsActivity.class);
+                            break;
+                        case "adop_order_detail":
+                            //买牛订单详情
+                            Intent intent = new Intent(AdActivity.this, MyCowsDetailActivity.class);
+                            intent.putExtra("orderId",info.getBizData().getParams()+"");
+                            startActivity(intent);
+                            break;
+                        case "pasture_list":
+                            //合作牧场列表
+                            startActivity(RanchConsociationActivity.class);
+                            break;
+                        case "shop_product_list":
+                            //商城商品列表
+                            Intent intent1=new Intent(AdActivity.this,MainActivity.class);
+                            intent1.putExtra("index",1);
+                            startActivity(intent1);
+                            break;
+                        case "shop_order_list":
+                            //商城订单列表
+                            startActivity(MyOrderActivity.class);
+                            break;
+                        case "shop_order_detail":
+                            //商城订单详情
+                            Intent intent2 = new Intent(AdActivity.this, MyOrderDetailActivity.class);
+                            intent2.putExtra("orderId",info.getBizData().getParams()+"");
+                            startActivity(intent2);
+                            break;
+                        case "total_assets":
+                            //总资产
+                            startActivity(MyAllMoneyActivity.class);
+                            break;
+                        case "coupon_list":
+                            //优惠券列表
+                            startActivity(DiscountCouponActivity.class);
+                            break;
+                        case "contract_list":
+                            //合同列表
+                            startActivity(MyContractActivity.class);
+                            break;
+                        case "new_welfare":
+                            //新人福利
+//                            Intent intent3=new Intent(AdActivity.this,NewManwelfareActivity.class);
+//                            intent3.putExtra("infos",info.getBizData().getNewUserActivity());
+//                            startActivity(intent3);
+                            break;
+                        default:
+                            break;
+                    }
                     finish();
                 }else {
                     showToast("暂无广告详情~");

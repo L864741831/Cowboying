@@ -34,13 +34,23 @@ import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
+import com.ibeef.cowboying.view.activity.DiscountCouponActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.GivePoursActivity;
+import com.ibeef.cowboying.view.activity.MainActivity;
+import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
+import com.ibeef.cowboying.view.activity.MyContractActivity;
+import com.ibeef.cowboying.view.activity.MyCowsActivity;
+import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
+import com.ibeef.cowboying.view.activity.MyOrderActivity;
+import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 import com.ibeef.cowboying.view.activity.NewManwelfareActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
+import com.ibeef.cowboying.view.activity.StoreSureOderActivity;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
@@ -288,10 +298,65 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             banner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-//                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
-//                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
-//                intent.putExtra("title","口袋牧场");
-//                startActivity(intent);
+                    switch (homeBannerResultBean.getBizData().getTopBannerList().get(position).getPageUrl()){
+                        case "adopt_scheme_list":
+                            //买牛方案列表
+                            startActivity(BuyCowsPlanActivity.class);
+                            break;
+                        case "adopt_scheme_detail":
+                            //买牛方案详情
+                            break;
+                        case "adop_order_list":
+                            //买牛订单列表
+                            startActivity(MyCowsActivity.class);
+                            break;
+                        case "adop_order_detail":
+                            //买牛订单详情
+                            Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
+                            intent.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
+                            startActivity(intent);
+                            break;
+                        case "pasture_list":
+                            //合作牧场列表
+                            startActivity(RanchConsociationActivity.class);
+                            break;
+                        case "shop_product_list":
+                            //商城商品列表
+                            Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                            intent1.putExtra("index",1);
+                            startActivity(intent1);
+                            break;
+                        case "shop_order_list":
+                            //商城订单列表
+                            startActivity(MyOrderActivity.class);
+                            break;
+                        case "shop_order_detail":
+                            //商城订单详情
+                            Intent intent2 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
+                            intent2.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
+                            startActivity(intent2);
+                            break;
+                        case "total_assets":
+                            //总资产
+                            startActivity(MyAllMoneyActivity.class);
+                            break;
+                        case "coupon_list":
+                            //优惠券列表
+                            startActivity(DiscountCouponActivity.class);
+                            break;
+                        case "contract_list":
+                            //合同列表
+                            startActivity(MyContractActivity.class);
+                            break;
+                        case "new_welfare":
+                            //新人福利
+                            Intent intent3=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                            intent3.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                            startActivity(intent3);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             });
         }
@@ -308,10 +373,9 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             specialbeefImgId.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-//                Intent intent=new Intent(getHoldingActivity(), AdWebviewActivity.class);
-//                intent.putExtra("url",homeBannerResultBean.getBizData().getTopBannerList().get(position).getLinkUrl());
-//                intent.putExtra("title","口袋牧场");
-//                startActivity(intent);
+                    Intent intent1=new Intent(getHoldingActivity(),MainActivity.class);
+                    intent1.putExtra("index",1);
+                    startActivity(intent1);
                 }
             });
         }
@@ -325,7 +389,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                     editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                     editor.commit();
                     Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-                    intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
+                    intent.putExtra("info",homeBannerResultBean);
                     startActivity(intent);
                 }else {
                     if(!DateUtils.getTime(new Date()).equals(history)){
@@ -333,7 +397,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                         editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                         editor.commit();
                         Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-                        intent.putExtra("info",homeBannerResultBean.getBizData().getPopBanner());
+                        intent.putExtra("info",homeBannerResultBean);
                         startActivity(intent);
                     }
                 }
