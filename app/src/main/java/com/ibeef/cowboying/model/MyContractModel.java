@@ -5,6 +5,9 @@ import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
+import com.ibeef.cowboying.bean.PayCodeBean;
+import com.ibeef.cowboying.bean.VipCardBean;
+import com.ibeef.cowboying.bean.VipCardListBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.net.ResponseHandler;
 
@@ -83,6 +86,69 @@ public class MyContractModel implements MyContractBase.IModel {
                 .subscribe(new Action1<MyDiscountCouponListBean>() {
                     @Override
                     public void call(MyDiscountCouponListBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription showPayCode(Map<String, String> headers, String payType, final ResponseCallback<PayCodeBean> callback) {
+        Observable<PayCodeBean> observable = service.showPayCode(headers,payType);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<PayCodeBean>() {
+                    @Override
+                    public void call(PayCodeBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription showVipCard(Map<String, String> headers, final ResponseCallback<VipCardBean> callback) {
+        Observable<VipCardBean> observable = service.showVipCard(headers);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<VipCardBean>() {
+                    @Override
+                    public void call(VipCardBean result) {
+                        callback.onSuccess(result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onFaild(ResponseHandler.get(throwable));
+                    }
+                });
+        return sub;
+    }
+
+    @Override
+    public Subscription showVipCardHistory(Map<String, String> headers, int curPage, final ResponseCallback<VipCardListBean> callback) {
+        Observable<VipCardListBean> observable = service.showVipCardHistory(headers,curPage);
+        Subscription sub = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(2, 3000))
+                //总共重试3次，重试间隔3秒
+                .subscribe(new Action1<VipCardListBean>() {
+                    @Override
+                    public void call(VipCardListBean result) {
                         callback.onSuccess(result);
                     }
                 }, new Action1<Throwable>() {

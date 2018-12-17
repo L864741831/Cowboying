@@ -27,7 +27,7 @@
                     android:id="@+id/tv_text_null"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:src="@mipmap/moneyrecordimg"/>
+                    android:layout_height="wrap_content" android:src="@mipmap/consumption_bg_null"/>
             </RelativeLayout>
         </LinearLayout>
     </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>

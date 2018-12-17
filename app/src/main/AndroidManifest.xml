@@ -222,6 +222,9 @@
         <activity android:name=".view.activity.MyOrderDetailActivity"/>
         <activity android:name=".view.activity.ShowOrderDeleveryActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".view.activity.PayActivity"/>
+        <activity android:name=".view.activity.VipCardActivity"/>
+        <activity android:name=".view.activity.ConsumptionHistoryListActivity"/>
     </application>
 
 </manifest>

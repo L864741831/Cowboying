@@ -17,6 +17,9 @@ import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
+import com.ibeef.cowboying.bean.PayCodeBean;
+import com.ibeef.cowboying.bean.VipCardBean;
+import com.ibeef.cowboying.bean.VipCardListBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
@@ -177,6 +180,21 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
 
     @Override
     public void getMyDiscountCouponList(MyDiscountCouponListBean myDiscountCouponListBean) {
+
+    }
+
+    @Override
+    public void showPayCode(PayCodeBean payCodeBean) {
+
+    }
+
+    @Override
+    public void showVipCard(VipCardBean vipCardBean) {
+
+    }
+
+    @Override
+    public void showVipCardHistory(VipCardListBean vipCardListBean) {
 
     }
 

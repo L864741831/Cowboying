@@ -17,6 +17,9 @@ import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
+import com.ibeef.cowboying.bean.PayCodeBean;
+import com.ibeef.cowboying.bean.VipCardBean;
+import com.ibeef.cowboying.bean.VipCardListBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
@@ -237,6 +240,21 @@ public class DiscountCouponListFragment extends BaseFragment implements SuperSwi
         } else {
             showToast(myDiscountCouponListBean.getMessage());
         }
+    }
+
+    @Override
+    public void showPayCode(PayCodeBean payCodeBean) {
+
+    }
+
+    @Override
+    public void showVipCard(VipCardBean vipCardBean) {
+
+    }
+
+    @Override
+    public void showVipCardHistory(VipCardListBean vipCardListBean) {
+
     }
 
     @Override

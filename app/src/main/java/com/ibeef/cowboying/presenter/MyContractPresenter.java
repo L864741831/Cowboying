@@ -6,6 +6,9 @@ import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
+import com.ibeef.cowboying.bean.PayCodeBean;
+import com.ibeef.cowboying.bean.VipCardBean;
+import com.ibeef.cowboying.bean.VipCardListBean;
 import com.ibeef.cowboying.model.MyContractModel;
 
 import java.util.Map;
@@ -77,6 +80,60 @@ public class MyContractPresenter extends BasePresenter implements MyContractBase
 
             }
 
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void showPayCode(Map<String, String> headers, String payType) {
+        mView.showLoading();
+        addSubscription(mModel.showPayCode(headers,payType,new ResponseCallback<PayCodeBean>() {
+            @Override
+            public void onSuccess(PayCodeBean result) {
+                mView.hideLoading();
+                mView.showPayCode(result);
+            }
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void showVipCard(Map<String, String> headers) {
+        mView.showLoading();
+        addSubscription(mModel.showVipCard(headers,new ResponseCallback<VipCardBean>() {
+            @Override
+            public void onSuccess(VipCardBean result) {
+                mView.hideLoading();
+                mView.showVipCard(result);
+            }
+            @Override
+            public void onFaild(String msg) {
+                Log.e("onFaild", msg + "");
+                mView.hideLoading();
+                mView.showMsg(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void showVipCardHistory(Map<String, String> headers, int curPage) {
+        mView.showLoading();
+        addSubscription(mModel.showVipCardHistory(headers,curPage,new ResponseCallback<VipCardListBean>() {
+            @Override
+            public void onSuccess(VipCardListBean result) {
+                mView.hideLoading();
+                mView.showVipCardHistory(result);
+            }
             @Override
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");

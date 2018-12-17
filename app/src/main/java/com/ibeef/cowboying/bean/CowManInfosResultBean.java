@@ -57,6 +57,16 @@ public class CowManInfosResultBean {
         private double myCreditAmount;
         private double myBeefAmount;
         private int myCouponCount;
+        private boolean haveVipCard;
+
+        public boolean isHaveVipCard() {
+            return haveVipCard;
+        }
+
+        public void setHaveVipCard(boolean haveVipCard) {
+            this.haveVipCard = haveVipCard;
+        }
+
 
         public int getMyCattleCount() {
             return myCattleCount;

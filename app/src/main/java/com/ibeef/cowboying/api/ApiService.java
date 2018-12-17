@@ -761,4 +761,25 @@ public interface ApiService {
     @GET("shop/product/getInfo/{productId}")
     Observable<StoreOneResultBean> getStoreOneInfo(@HeaderMap Map<String, String> headers, @Path("productId") int productId);
 
+    /**
+     *付款码
+     * @return
+     */
+    @GET("appPay/code")
+    Observable<PayCodeBean> showPayCode(@HeaderMap Map<String, String> headers, @Query("payType") String payType);
+
+    /**
+     *会员卡信息
+     * @return
+     */
+    @GET("vip/card/info")
+    Observable<VipCardBean> showVipCard(@HeaderMap Map<String, String> headers);
+
+    /**
+     *会员卡消费记录
+     * @return
+     */
+    @GET("vip/card/consumer/log")
+    Observable<VipCardListBean> showVipCardHistory(@HeaderMap Map<String, String> headers, @Query("curPage") int curPage);
+
 }
