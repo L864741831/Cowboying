@@ -22,7 +22,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="horizontal">
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:visibility="gone">
             <LinearLayout
                 android:layout_width="0dp" android:layout_weight="0.5"
                 android:layout_height="80dp" android:orientation="vertical"
@@ -59,7 +60,7 @@
         </LinearLayout>
         <com.youth.banner.Banner
             android:id="@+id/specialbeef_img_id"
-            android:layout_width="match_parent"
+            android:layout_width="match_parent" android:layout_marginTop="10dp"
             android:layout_height="135dp" app:image_scale_type="center_crop" />
 
         <LinearLayout
@@ -84,7 +85,7 @@
                 android:layout_height="match_parent" android:id="@+id/buy_cow_fm">
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:src="@mipmap/buycow"
+                    android:layout_height="match_parent" android:src="@mipmap/eatcows"
                     android:scaleType="fitXY"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -94,10 +95,11 @@
 
             <View
                 android:layout_width="7dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" android:visibility="gone"/>
             <FrameLayout
                 android:layout_width="0dp"  android:layout_weight="0.5"
-                android:layout_height="match_parent" android:id="@+id/together_cow_fm">
+                android:layout_height="match_parent" android:id="@+id/together_cow_fm"
+                android:visibility="gone">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:src="@mipmap/together"

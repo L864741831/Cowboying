@@ -133,6 +133,24 @@ public class HomeBannerResultBean implements Serializable {
             private String imageUrl;
             private Object pageId;
             private String linkUrl;
+            private String pageUrl;
+            private String params;
+
+            public String getParams() {
+                return params;
+            }
+
+            public void setParams(String params) {
+                this.params = params;
+            }
+
+            public String getPageUrl() {
+                return pageUrl;
+            }
+
+            public void setPageUrl(String pageUrl) {
+                this.pageUrl = pageUrl;
+            }
 
             public int getId() {
                 return id;
@@ -189,6 +207,24 @@ public class HomeBannerResultBean implements Serializable {
             private String imageUrl;
             private Object pageId;
             private String linkUrl;
+            private String pageUrl;
+            private String params;
+
+            public String getParams() {
+                return params;
+            }
+
+            public void setParams(String params) {
+                this.params = params;
+            }
+
+            public String getPageUrl() {
+                return pageUrl;
+            }
+
+            public void setPageUrl(String pageUrl) {
+                this.pageUrl = pageUrl;
+            }
 
             public int getId() {
                 return id;
@@ -245,6 +281,15 @@ public class HomeBannerResultBean implements Serializable {
             private String imageUrl;
             private Object pageId;
             private String linkUrl;
+            private String params;
+
+            public String getParams() {
+                return params;
+            }
+
+            public void setParams(String params) {
+                this.params = params;
+            }
 
             public int getId() {
                 return id;
