@@ -17,7 +17,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/7 14:07
- * @describe 买牛创建订单
+ * @describe 养牛创建订单
  * @package com.ranhan.cowboying.presenter
  **/
 public class OrderInitPresenter extends BasePresenter implements OrderInitBase.IPresenter  {

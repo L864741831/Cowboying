@@ -34,7 +34,7 @@ public class WalletDetailListAdapter extends BaseQuickAdapter<WalletRecordResult
         }else  if("12".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"卖牛收益奖励");
         }else  if("13".equals(item.getChangeType())){
-            helper.setText(R.id.show_reson_id,"买牛花费");
+            helper.setText(R.id.show_reson_id,"养牛花费");
         }else  if("14".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"用户提现减少");
         }else  if("15".equals(item.getChangeType())){
@@ -44,9 +44,9 @@ public class WalletDetailListAdapter extends BaseQuickAdapter<WalletRecordResult
         }else  if("22".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"牛肉提取");
         }else  if("31".equals(item.getChangeType())){
-            helper.setText(R.id.show_reson_id,"买牛资金流入");
+            helper.setText(R.id.show_reson_id,"养牛资金流入");
         }else  if("32".equals(item.getChangeType())){
-            helper.setText(R.id.show_reson_id,"买牛资金收益");
+            helper.setText(R.id.show_reson_id,"养牛资金收益");
         }else  if("33".equals(item.getChangeType())){
             helper.setText(R.id.show_reson_id,"兑换牛肉减少");
         }else  if("34".equals(item.getChangeType())){

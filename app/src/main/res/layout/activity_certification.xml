@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:orientation="vertical"
+    android:layout_height="match_parent" android:background="@color/homef7"
+    >
+    <include layout="@layout/include_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_margin="20dp">
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/txt1_id"
+            android:layout_height="wrap_content" android:text="还没有进行实名认证！"
+            android:textColor="@color/black" android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/txt2_id"
+            android:layout_height="wrap_content" android:text="通过实名认证后才能使用口袋牧场养牛！"
+            android:layout_marginTop="10dp" android:textSize="16sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"  android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content" android:id="@+id/name"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:clickable="false"
+            android:enabled="false"
+            android:maxLines="1"
+            android:text="真实姓名"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <EditText
+            android:layout_alignParentRight="true"
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" android:maxLines="1"
+            android:layout_gravity="bottom" android:hint="请输入真实姓名"
+            android:layout_marginRight="20dp" android:singleLine="true"
+            android:background="@null"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#dadada"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"  android:background="@color/white"
+         >
+
+        <EditText
+            android:layout_width="wrap_content" android:id="@+id/pwd"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:clickable="false"
+            android:enabled="false"
+            android:singleLine="true"
+            android:text="身份证号"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom" android:hint="请输入身份证号码"
+             android:maxLines="1"
+            android:background="@null" android:singleLine="true"
+            android:textSize="14sp" android:paddingLeft="15dp"
+            android:textCursorDrawable="@drawable/edit_cursor_color" />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#dadada"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp" android:id="@+id/rv_show_id"
+        android:background="@color/white" android:paddingLeft="20dp">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cb_st" android:layout_centerVertical="true"
+            />
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/sure1_id"
+            android:layout_height="wrap_content" android:text="我已认真阅读并确认同意"
+            android:layout_toRightOf="@+id/cb_st" android:textSize="12sp"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/xieyi_id"
+            android:layout_height="wrap_content" android:text="《用户使用协议》"
+            android:textColor="#c8b798" android:layout_toRightOf="@+id/sure1_id"
+            android:layout_centerVertical="true" android:textSize="12sp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/btn_submit"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorGold"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/wenzi_hei"
+            android:textSize="16sp"
+            android:visibility="visible" />
+        <TextView
+            android:layout_width="wrap_content" android:id="@+id/txt3_id"
+            android:layout_height="wrap_content" android:textSize="14sp"
+            android:textColor="@color/wenzi_hei"
+            android:text="实名认证由阿里云提供" android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"/>
+    </LinearLayout>
+
+</LinearLayout>

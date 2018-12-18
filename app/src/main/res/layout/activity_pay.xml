@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_code_1"
-            android:text="2806******查看数字"
+            android:text="******查看数字"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
             />
@@ -82,7 +82,7 @@
         android:text="如果付款失败将尝试其他付款方式"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:textColor="#9cc910"
+        android:textColor="#d8c9a5"
         android:textSize="13sp"
         />
 

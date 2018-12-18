@@ -48,7 +48,7 @@ import rxfamily.view.BaseActivity;
 import rxfamily.view.BaseFragment;
 
 /**
- * 买牛方案》》》》认领界面
+ * 养牛方案》》》》认领界面
  */
 public class CowsClaimActivity extends BaseActivity implements PastureDetailBase.IView, UserInfoBase.IView {
 
@@ -78,7 +78,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     ViewPager contentVp;
     @Bind(R.id.img_id)
     ImageView img_id;
-    private static final String[] CHANNELS = new String[]{"项目介绍", "买牛方案", "牛只查询"};
+    private static final String[] CHANNELS = new String[]{"项目介绍", "养牛方案", "牛只查询"};
     @Bind(R.id.custom_img_id)
     ImageView customImgId;
     @Bind(R.id.amout_num_id)

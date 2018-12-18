@@ -75,9 +75,17 @@
                     android:gravity="center_vertical" android:layout_centerVertical="true"
                     android:drawableRight="@mipmap/binds" android:drawablePadding="10dp" />
             </RelativeLayout>
-            <View
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="15dp" android:background="@color/homef7"/>
+                android:layout_height="wrap_content"
+                android:text="为了您的资金安全，此处绑定支付宝信息必须与姓名信息一致，否则将影响您的提现，请注意！！！"
+               android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:background="@color/homef7"
+                />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="57dp" android:id="@+id/set_login_pwd_rv">

@@ -12,7 +12,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/7 14:04
- * @describe 买牛方案列表
+ * @describe 养牛方案列表
  * @package com.ranhan.cowboying.base
  **/
 public class BuyCowSchemeBase {

@@ -43,21 +43,21 @@ public class GivePoursActivity extends BaseActivity {
             case R.id.home_honegivepour:
                 switch (info.getBizData().getPopBanner().getPageUrl()){
                     case "adopt_scheme_list":
-                        //买牛方案列表
+                        //养牛方案列表
                         startActivity(BuyCowsPlanActivity.class);
                         break;
                     case "adopt_scheme_detail":
-                        //买牛方案详情
+                        //养牛方案详情
                         Intent intent4=new Intent(GivePoursActivity.this,CowsClaimActivity.class);
                         intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getPopBanner().getParams()));
                         startActivity(intent4);
                         break;
                     case "adop_order_list":
-                        //买牛订单列表
+                        //养牛订单列表
                         startActivity(MyCowsActivity.class);
                         break;
                     case "adop_order_detail":
-                        //买牛订单详情
+                        //养牛订单详情
                         Intent intent = new Intent(GivePoursActivity.this, MyCowsDetailActivity.class);
                         intent.putExtra("orderId",info.getBizData().getPopBanner().getParams()+"");
                         startActivity(intent);

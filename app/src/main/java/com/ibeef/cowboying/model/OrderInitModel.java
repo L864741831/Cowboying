@@ -23,7 +23,7 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 买牛订单
+ * @describe 养牛订单
  * @package com.ranhan.cowboying.model
  **/
 public class OrderInitModel implements OrderInitBase.IModel {
