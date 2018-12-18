@@ -1,11 +1,13 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -66,6 +68,7 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
     private Handler handler;
     private Thread thread;
     private boolean stopThread = false;
+    private String payType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +93,7 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
                     Map<String, String> reqData = new HashMap<>();
                     reqData.put("Authorization", token);
                     reqData.put("version", getVersionCodes());
-                    myContractPresenter.showPayCode(reqData,"");
+                    myContractPresenter.showPayCode(reqData,payType);
                 }
                 super.handleMessage(msg);
             }
@@ -131,12 +134,27 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
                 finish();
                 break;
             case R.id.tv_wallet:
+                Intent intent = new Intent(this, PayTypeDialog.class);
+                startActivityForResult(intent, 666);
                 break;
             case R.id.tv_code:
                 tvCode.setText(payCode);
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 666 && resultCode == 555) {
+            payType = data.getStringExtra("PayType");
+            Map<String, String> reqData = new HashMap<>();
+            reqData.put("Authorization", token);
+            reqData.put("version", getVersionCodes());
+            myContractPresenter.showPayCode(reqData,payType);
+            Log.i("htht", "payType=============" + payType);
         }
     }
 

@@ -132,7 +132,7 @@ public class MyOrderListDetailBean {
             private double payAmount;
             private double orderAmount;
             private double discountAmount;
-            private double carrageAmount;
+            private double carriageAmount;
             private long payTime;
             private String receiveType;
             private String receiveCode;
@@ -149,6 +149,14 @@ public class MyOrderListDetailBean {
             private String receiverAddress;
             private Object cancelReason;
             private long createTime;
+
+            public double getCarriageAmount() {
+                return carriageAmount;
+            }
+
+            public void setCarriageAmount(double carriageAmount) {
+                this.carriageAmount = carriageAmount;
+            }
 
             public String getUpdateTime() {
                 return updateTime;
@@ -214,14 +222,6 @@ public class MyOrderListDetailBean {
 
             public void setDiscountAmount(double discountAmount) {
                 this.discountAmount = discountAmount;
-            }
-
-            public double getCarrageAmount() {
-                return carrageAmount;
-            }
-
-            public void setCarrageAmount(double carrageAmount) {
-                this.carrageAmount = carrageAmount;
             }
 
             public long getPayTime() {

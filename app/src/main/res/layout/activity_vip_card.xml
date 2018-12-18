@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/vip_card_icon_null"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="55dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="40dp"
             />
         <ImageView
             android:visibility="gone"

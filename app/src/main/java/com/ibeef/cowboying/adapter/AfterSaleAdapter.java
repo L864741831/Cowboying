@@ -52,7 +52,7 @@ public class AfterSaleAdapter extends BaseQuickAdapter<MyAfterSaleListBean.BizDa
             helper.setText(R.id.tv_after_sale_status,"退款成功");
             countDowntimeView.setVisibility(View.GONE);
         } else if ("3".equals(item.getShopRefundOrderResVo().getStatus())) {
-            helper.setText(R.id.tv_after_sale_status,"审核拒绝 ");
+            helper.setText(R.id.tv_after_sale_status,"退款审核拒绝 ");
             countDowntimeView.setVisibility(View.GONE);
         } else if ("4".equals(item.getShopRefundOrderResVo().getStatus())) {
             helper.setText(R.id.tv_after_sale_status,"已撤销退款申请 ");

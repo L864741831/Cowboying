@@ -225,6 +225,8 @@
         <activity android:name=".view.activity.PayActivity"/>
         <activity android:name=".view.activity.VipCardActivity"/>
         <activity android:name=".view.activity.ConsumptionHistoryListActivity"/>
+        <activity android:name=".view.activity.PayTypeDialog"
+            android:theme="@style/myTransparent"/>
     </application>
 
 </manifest>

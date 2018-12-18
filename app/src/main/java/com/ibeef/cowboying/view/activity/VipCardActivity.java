@@ -68,12 +68,10 @@ public class VipCardActivity extends BaseActivity implements MyContractBase.IVie
 
     private void init() {
         token = Hawk.get(HawkKey.TOKEN);
-        info.setText("向商家付钱");
+        info.setText("会员卡");
         actionNewQuestionTv.setText("消费记录");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
         myContractPresenter = new MyContractPresenter(this);
-
-
     }
 
 
@@ -143,7 +141,8 @@ public class VipCardActivity extends BaseActivity implements MyContractBase.IVie
                 //没有会员卡
                 ivVipCardBgNull.setVisibility(View.VISIBLE);
                 tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText(vipCardBean.getBizData().getStoreAddress());
+                tvAddressInfo.setText("线下门店地址："+vipCardBean.getBizData().getStoreAddress());
+                actionNewQuestionTv.setVisibility(View.GONE);
             }
         }
     }

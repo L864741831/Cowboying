@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:hint="选填"
                     android:background="@null"
-                    android:textSize="19sp"
+                    android:textSize="14.5sp"
                     android:textColor="@color/gray_999999"
                     />
             </LinearLayout>

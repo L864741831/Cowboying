@@ -104,6 +104,10 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
     LinearLayout llCancel;
     @Bind(R.id.time_show_id)
     CountDowntimeView time_show_id;
+    @Bind(R.id.ll_return_time)
+    LinearLayout ll_return_time;
+    @Bind(R.id.tv_return_time)
+    TextView tv_return_time;
     private List<MyAfterSaleDetailBean.BizDataBean.OrderProductResVosBean> beanList;
     private String token;
     private AfterSaleoneDetailAdapter afterSaleAdapter;
@@ -263,6 +267,8 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             llApplyIng.setVisibility(View.GONE);
             rlReturnRefuse.setVisibility(View.GONE);
             rlReturnSuccess2.setVisibility(View.VISIBLE);
+            ll_return_time.setVisibility(View.VISIBLE);
+            tv_return_time.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
             tvReturnMoneyNum.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
             tvReturnMoneyWay.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
         } else if ("3".equals(status)) {
