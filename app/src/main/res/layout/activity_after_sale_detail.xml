@@ -386,6 +386,34 @@
                     android:layout_marginRight="20dp"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_return_time"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_height="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="退款时间：   "
+                    android:textSize="13sp"
+                    android:textColor="@color/wenzi_hei"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:id="@+id/tv_return_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:textColor="@color/wenzi_hei"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
     <LinearLayout
@@ -421,7 +449,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@drawable/shape_white_cicle_1"
-            android:text="申请退货"
+            android:text="申请退款"
             android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

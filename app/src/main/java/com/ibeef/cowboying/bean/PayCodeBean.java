@@ -84,7 +84,7 @@ public class PayCodeBean {
 
             private String name;
             private String payType;
-            private int amount;
+            private double amount;
             private boolean checked;
 
             public String getName() {
@@ -103,11 +103,11 @@ public class PayCodeBean {
                 this.payType = payType;
             }
 
-            public int getAmount() {
+            public double getAmount() {
                 return amount;
             }
 
-            public void setAmount(int amount) {
+            public void setAmount(double amount) {
                 this.amount = amount;
             }
 

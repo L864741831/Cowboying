@@ -191,7 +191,7 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
             }else {
                 coupponMoneyId.setText("未使用");
             }
-            if(myOrderListDetailBean.getBizData().getShopOrderResVo().getCarrageAmount()>0){
+            if(myOrderListDetailBean.getBizData().getShopOrderResVo().getCarriageAmount()>0){
                 freightMoneyId.setText("￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getDiscountAmount());
             }else {
                 freightMoneyId.setText("包邮");

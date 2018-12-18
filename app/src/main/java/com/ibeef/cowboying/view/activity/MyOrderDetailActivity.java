@@ -440,7 +440,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 tvOrderFahuoTime.setVisibility(View.GONE);
                 tvOrderShouhuoTime.setVisibility(View.GONE);
                 tvOrderTuikuanTime.setVisibility(View.VISIBLE);
-                tvOrderStatus.setText("订单状态：已退款");
+                tvOrderStatus.setText("订单状态：退款成功");
                 if ("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                     //快递
                     rlAddressLocast.setVisibility(View.VISIBLE);
@@ -491,7 +491,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             tvAddressName.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverName());
             tvAddressMobile.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverMobile());
             tvAddressDetail.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
-            tvYunfei.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getCarrageAmount());
+            tvYunfei.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getCarriageAmount());
             tvNumMoney.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getOrderAmount());
             tvShifuMoney.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount());
             tvOrderId.setText("订单编号:   " + myOrderListDetailBean.getBizData().getShopOrderResVo().getCode());

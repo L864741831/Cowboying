@@ -155,13 +155,13 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
                 textView6.setVisibility(View.GONE);
             }else if ("5".equals(item.getShopOrderResVo().getStatus())) {
                 //已退款
-                helper.setText(R.id.stadus_id,"退款完成");
+                helper.setText(R.id.stadus_id,"退款成功");
                 textView7.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.GONE);
                 textView3.setVisibility(View.GONE);
                 textView4.setVisibility(View.GONE);
                 textView5.setVisibility(View.GONE);
-                textView1.setVisibility(View.GONE);
+                textView1.setVisibility(View.VISIBLE);
                 textView6.setVisibility(View.GONE);
             }
 

@@ -195,7 +195,7 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
             afterSaleAdapter.setNewData(beanList);
             tvReturnMoney.setText("￥" + myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount());
             refundId = myOrderListDetailBean.getBizData().getRefundId();
-            tvReturnGrayInfo.setText("最多￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount()+"含发货运费￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getCarrageAmount());
+            tvReturnGrayInfo.setText("最多￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getPayAmount()+"含发货运费￥"+myOrderListDetailBean.getBizData().getShopOrderResVo().getCarriageAmount());
         }
     }
 
