@@ -62,15 +62,15 @@ public class IncomeInfoResultBean {
         private BigDecimal cumulativeIncome;
         private BigDecimal walletBalance;
         private BigDecimal cridetBalance;
-        private double vipCardAmount;
+        private BigDecimal vipCardAmount;
         private List<NearSevenDaysIncomeBean> nearSevenDaysIncome;
 
 
-        public double getVipCardAmount() {
+        public BigDecimal getVipCardAmount() {
             return vipCardAmount;
         }
 
-        public void setVipCardAmount(double vipCardAmount) {
+        public void setVipCardAmount(BigDecimal vipCardAmount) {
             this.vipCardAmount = vipCardAmount;
         }
 

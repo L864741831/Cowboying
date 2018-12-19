@@ -86,8 +86,9 @@ public class CertificationActivity extends BaseActivity implements UserInfoBase.
         mobile = getIntent().getStringExtra("mobile");
         String realName = getIntent().getStringExtra("realName");
         String realCardNo = getIntent().getStringExtra("realCardNo");
+        String flag = getIntent().getStringExtra("flag");
         userInfoPresenter=new UserInfoPresenter(this);
-        if (!"".equals(realName)||realName!=null){
+        if ("1".equals(flag)){
             txt2Id.setVisibility(View.GONE);
             txt1Id.setText("恭喜您，实名认证成功");
             etName.setText(realName);

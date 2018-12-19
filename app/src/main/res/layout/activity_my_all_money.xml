@@ -129,6 +129,7 @@
                     android:layout_height="wrap_content" android:orientation="horizontal"
                     android:layout_marginTop="10dp">
                     <LinearLayout
+                        android:id="@+id/ll_my_wallet_show"
                         android:layout_width="0dp" android:layout_weight="0.5"
                         android:layout_height="80dp" android:orientation="vertical"
                         android:gravity="center" android:paddingLeft="20dp">
@@ -147,6 +148,7 @@
                         android:layout_width="1dp" android:layout_height="28dp"
                         android:background="@color/colorline" android:layout_gravity="center" />
                     <LinearLayout
+                        android:id="@+id/ll_white_money_show"
                         android:layout_width="0dp" android:layout_weight="0.5"
                         android:layout_height="80dp" android:orientation="vertical"
                         android:gravity="center"  android:paddingLeft="20dp">
