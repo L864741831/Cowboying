@@ -202,11 +202,13 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                         //已实名认证
                         Intent intent = new Intent(this, CertificationActivity.class);
                         intent.putExtra("realName",userInfoResultBean.getBizData().getRealName());
+                        intent.putExtra("flag","1");
                         intent.putExtra("realCardNo",userInfoResultBean.getBizData().getRealCardNo());
                         startActivity(intent);
                     }else {
                         //未实名认证
                         Intent intent = new Intent(this, CertificationActivity.class);
+                        intent.putExtra("flag","2");
                         intent.putExtra("userId",userInfoResultBean.getBizData().getUserId()+"");
                         intent.putExtra("mobile",userInfoResultBean.getBizData().getMobile());
                         startActivity(intent);

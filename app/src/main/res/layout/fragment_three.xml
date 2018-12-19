@@ -260,7 +260,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="match_parent" android:visibility="gone"
                 android:layout_height="50dp" android:id="@+id/beef_house_rv">
                 <TextView
                     android:layout_width="wrap_content"

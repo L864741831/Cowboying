@@ -259,6 +259,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             rlReturnSuccess1.setVisibility(View.GONE);
             rlReturnRefuse.setVisibility(View.GONE);
             rlReturnSuccess2.setVisibility(View.GONE);
+            llBottomBtn.setVisibility(View.GONE);
         } else if ("2".equals(status)) {
             tvApplyTopStatus.setText("退款成功");
             time_show_id.setVisibility(View.GONE);
@@ -271,6 +272,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             tv_return_time.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
             tvReturnMoneyNum.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
             tvReturnMoneyWay.setText("￥"+myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getAmount());
+            llBottomBtn.setVisibility(View.GONE);
         } else if ("3".equals(status)) {
             tvApplyTopStatus.setText("审核拒绝");
             time_show_id.setVisibility(View.GONE);
@@ -293,6 +295,7 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
             llCancel.setVisibility(View.VISIBLE);
             rlReturnSuccess2.setVisibility(View.VISIBLE);
             tv_cancel_time.setText(DateUtils.formatDate(myAfterSaleDetailBean.getBizData().getShopRefundOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
+            llBottomBtn.setVisibility(View.GONE);
         }
 //'支付方式（1：支付宝；2：微信；3：银联；4：钱包；5：会员卡；6：会员卡+钱包；7：白条）'
         switch(myAfterSaleDetailBean.getBizData().getPayType()){

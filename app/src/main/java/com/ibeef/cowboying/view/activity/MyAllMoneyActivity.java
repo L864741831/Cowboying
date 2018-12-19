@@ -39,6 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
+/**
+ * 总资产界面
+ */
 public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.IView {
 
     @Bind(R.id.back_id)
@@ -217,7 +220,9 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
         }
     }
 
-    @OnClick({R.id.back_id, R.id.all_money_id, R.id.yesterday_money_rv,R.id.add_money_rv, R.id.my_wallet_show, R.id.white_money_show, R.id.get_money_id, R.id.get_money_record_id})
+    @OnClick({R.id.back_id, R.id.all_money_id, R.id.yesterday_money_rv,R.id.add_money_rv,
+            R.id.my_wallet_show, R.id.white_money_show, R.id.get_money_id,R.id.ll_my_wallet_show,R.id.ll_white_money_show,
+            R.id.get_money_record_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -242,11 +247,13 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
                 intent.putExtra("isYesterday",true);
                 startActivity(intent);
                 break;
-            case R.id.my_wallet_show:
+            case R.id.ll_my_wallet_show:
                 //我的钱包
                 startActivity(WalletDetailActivity.class);
                 break;
-            case R.id.white_money_show:
+            case R.id.ll_white_money_show:
+                //会员卡
+                startActivity(VipCardActivity.class);
                 break;
             case R.id.get_money_id:
                 //钱包提现
@@ -279,9 +286,8 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             yesterdayMoneyId.setText(incomeInfeResultBean.getBizData().getYesterdayIncome()+"");
             addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
             myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());
-            if(!SDCardUtil.isNullOrEmpty(incomeInfeResultBean.getBizData().getCridetBalance())){
-                whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getCridetBalance());
-            }
+            whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getVipCardAmount());
+
             setData(incomeInfeResultBean);
         }else {
             showToast(incomeInfeResultBean.getMessage());

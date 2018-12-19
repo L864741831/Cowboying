@@ -62,8 +62,17 @@ public class IncomeInfoResultBean {
         private BigDecimal cumulativeIncome;
         private BigDecimal walletBalance;
         private BigDecimal cridetBalance;
+        private BigDecimal vipCardAmount;
         private List<NearSevenDaysIncomeBean> nearSevenDaysIncome;
 
+
+        public BigDecimal getVipCardAmount() {
+            return vipCardAmount;
+        }
+
+        public void setVipCardAmount(BigDecimal vipCardAmount) {
+            this.vipCardAmount = vipCardAmount;
+        }
 
         public BigDecimal getTotalAssets() {
             return totalAssets;
