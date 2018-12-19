@@ -211,24 +211,19 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 }
                 break;
             case R.id.real_info_rv:
-                if(isCheck){
                     if(!"0".equals(userInfoResultBean.getBizData().getIsValidate())){
                         //已实名认证
-                        showRealinfoRv.setVisibility(View.VISIBLE);
-                        nameTxtId.setText("姓名："+userInfoResultBean.getBizData().getRealName());
-                        codeTxtId.setText("身份证号："+userInfoResultBean.getBizData().getRealCardNo());
+                        Intent intent = new Intent(this, CertificationActivity.class);
+                        intent.putExtra("realName",userInfoResultBean.getBizData().getRealName());
+                        intent.putExtra("realCardNo",userInfoResultBean.getBizData().getRealCardNo());
+                        startActivity(intent);
                     }else {
                         //未实名认证
-                        isNickname=false;
-                        etWriteId.setHint("请输入真实姓名");
-                        etWriteId1.setHint("请输入真实身份证号");
-                        etWriteId.setText("");
-                        etWriteId1.setText("");
-                        modifyNicknameRv.setVisibility(View.VISIBLE);
-                        titleTxtId.setText("实名认证");
-                        search2Id.setVisibility(View.VISIBLE);
+                        Intent intent = new Intent(this, CertificationActivity.class);
+                        intent.putExtra("userId",userInfoResultBean.getBizData().getUserId()+"");
+                        intent.putExtra("mobile",userInfoResultBean.getBizData().getMobile());
+                        startActivity(intent);
                     }
-                }
                 break;
             case R.id.modify_pwd_rv:
                 startActivity(ModifyPwdActivity.class);

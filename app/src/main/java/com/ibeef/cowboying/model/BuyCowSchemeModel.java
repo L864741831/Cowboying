@@ -21,7 +21,7 @@ import rxfamily.net.RetryWithDelay;
 /**
  * @author ls
  * @date on 2018/10/7 14:05
- * @describe 买牛方案列表
+ * @describe 养牛方案列表
  * @package com.ranhan.cowboying.model
  **/
 public class BuyCowSchemeModel implements BuyCowSchemeBase.IModel {

@@ -33,7 +33,7 @@ import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
 /**
- * 买牛往期记录
+ * 养牛往期记录
  */
 public class CowClaimPastRecordActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView {
     @Bind(R.id.back_id)

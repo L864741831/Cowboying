@@ -15,7 +15,7 @@ import rxfamily.net.ResponseCallback;
 /**
  * @author ls
  * @date on 2018/10/7 14:07
- * @describe 买牛方案列表
+ * @describe 养牛方案列表
  * @package com.ranhan.cowboying.presenter
  **/
 public class BuyCowsSchemePresenter extends BasePresenter implements BuyCowSchemeBase.IPresenter  {

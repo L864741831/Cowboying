@@ -33,7 +33,7 @@ import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
 /**
- * 买牛方案列表
+ * 养牛方案列表
  */
 public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView {
 
@@ -71,7 +71,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
 
     private void init() {
         token = Hawk.get(HawkKey.TOKEN);
-        info.setText("买牛方案列表");
+        info.setText("养牛方案列表");
         actionNewQuestionTv.setText("往期记录");
         actionNewQuestionTv.setVisibility(View.VISIBLE);
 

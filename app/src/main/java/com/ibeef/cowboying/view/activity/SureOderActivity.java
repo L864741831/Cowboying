@@ -52,7 +52,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import rxfamily.view.BaseActivity;
 
 /**
- * 买牛确认订单界面
+ * 养牛确认订单界面
  */
 public class SureOderActivity extends BaseActivity implements OrderInitBase.IView,PayPwdBase.IView {
 

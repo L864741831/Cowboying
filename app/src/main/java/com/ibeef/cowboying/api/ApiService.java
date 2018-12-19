@@ -459,7 +459,7 @@ public interface ApiService {
     Observable<JionPersonInfoResultBean> getJionPersonInfo(@HeaderMap Map<String, String> headers, @Query("schemeId") int schemeId, @Query("currentPage") int currentPage);
 
     /**
-     * 查询买牛方案详情
+     * 查询养牛方案详情
      * @return
      */
     @GET("adopt/scheme/schemeDetail")
@@ -488,7 +488,7 @@ public interface ApiService {
     Observable<CreatOderResultBean> getCreatOder(@HeaderMap Map<String, String> headers, @Body CreatOrderParamBean creatOrderParamBean);
 
     /**
-     *买牛订单支付
+     *养牛订单支付
      * @return
      */
     @POST("adopt/order/payInit")

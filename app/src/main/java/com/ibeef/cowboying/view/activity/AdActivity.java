@@ -78,21 +78,21 @@ public class AdActivity extends BaseActivity {
                     continueCount = false;
                     switch (info.getBizData().getPageUrl()){
                         case "adopt_scheme_list":
-                            //买牛方案列表
+                            //养牛方案列表
                             startActivity(BuyCowsPlanActivity.class);
                             break;
                         case "adopt_scheme_detail":
-                            //买牛方案详情
+                            //养牛方案详情
                             Intent intent4=new Intent(AdActivity.this,CowsClaimActivity.class);
                             intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getParams()));
                             startActivity(intent4);
                             break;
                         case "adop_order_list":
-                            //买牛订单列表
+                            //养牛订单列表
                             startActivity(MyCowsActivity.class);
                             break;
                         case "adop_order_detail":
-                            //买牛订单详情
+                            //养牛订单详情
                             Intent intent = new Intent(AdActivity.this, MyCowsDetailActivity.class);
                             intent.putExtra("orderId",info.getBizData().getParams()+"");
                             startActivity(intent);
