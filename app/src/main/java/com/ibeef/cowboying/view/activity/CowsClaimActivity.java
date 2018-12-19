@@ -104,6 +104,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     private UserInfoPresenter userInfoPresenter;
     private UserInfoResultBean userInfoResultBean;
     private SchemeDetailReultBean schemeDetailReultBean;
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +114,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     }
 
     private void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         info.setText("认领");
         fragmentList = new ArrayList<>();
         token= Hawk.get(HawkKey.TOKEN);
@@ -160,6 +162,9 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                if(isAd){
+                    startActivity(new Intent(CowsClaimActivity.this, MainActivity.class));
+                }
                 finish();
                 break;
             case R.id.see_all_pasture_rv:
@@ -269,7 +274,9 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
             this.schemeDetailReultBean=schemeDetailReultBean;
             allMoneyId.setText("总金额：￥"+schemeDetailReultBean.getBizData().getPrice());
             targetTxtId.setText(schemeDetailReultBean.getBizData().getTotalStock()+"头");
-            priceTxtId.setText(schemeDetailReultBean.getBizData().getPrice()+"元/头");
+            Double d1 = new Double(schemeDetailReultBean.getBizData().getPrice());
+            int i1 = d1.intValue();
+            priceTxtId.setText(i1+"元/头");
             hasidentifyTxtId.setText((schemeDetailReultBean.getBizData().getTotalStock()-schemeDetailReultBean.getBizData().getStock())+"头");
             parstureNameId.setText(schemeDetailReultBean.getBizData().getPastureName());
 
@@ -285,7 +292,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                 @Override
                 public void onAmountChange(View view, int amount) {
                     allAmout=amount;
-                   allMoneyId.setText("总金额：￥"+amount* schemeDetailReultBean.getBizData().getPrice().floatValue());
+                   allMoneyId.setText("总金额：￥"+amount* schemeDetailReultBean.getBizData().getPrice());
                 }
             });
 
@@ -326,5 +333,14 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
             userInfoPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(CowsClaimActivity.this, MainActivity.class));
+        }
+        finish();
     }
 }

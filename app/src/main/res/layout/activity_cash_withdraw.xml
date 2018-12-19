@@ -98,7 +98,7 @@
                     android:layout_marginTop="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="注：1.提现资金到银行卡的具体时间，请以银行为准；如遇节假日申请，则隔周第一个工作日内打款。\n2.如果想要更改支付宝账号，请前往设置-账号安全处更换绑定支付宝。\n3.为了保证您的资金安全绑定支付宝必须与实名信息姓名一致方可提现成功。"
+                    android:layout_height="wrap_content" android:text="注：1.提现资金到支付宝的具体时间，请以银行为准；如遇节假日申请，则隔周第一个工作日内打款。\n2.如果想要更改支付宝账号，请前往设置-账号安全处更换绑定支付宝。\n3.为了保证您的资金安全绑定支付宝必须与实名信息姓名一致方可提现成功。"
                     android:lineSpacingExtra="5dp" android:textSize="13sp"
                     android:layout_marginLeft="30dp" android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"/>

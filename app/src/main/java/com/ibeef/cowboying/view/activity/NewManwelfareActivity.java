@@ -43,6 +43,7 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
     private UserInfoResultBean userInfoResultBean;
     private String token;
     private HomeBannerResultBean.BizDataBean.NewUserActivity infos;
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,8 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
         init();
     }
     private void init(){
+        isAd=getIntent().getBooleanExtra("isAd",false);
+
         info.setText("新手福利");
         userInfoPresenter=new UserInfoPresenter(this);
         infos= (HomeBannerResultBean.BizDataBean.NewUserActivity) getIntent().getSerializableExtra("infos");
@@ -77,6 +80,9 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                if(isAd){
+                    startActivity(new Intent(NewManwelfareActivity.this, MainActivity.class));
+                }
                 finish();
                 break;
             case R.id.experience_btn_id:
@@ -170,5 +176,14 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
             userInfoPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(NewManwelfareActivity.this, MainActivity.class));
+        }
+        finish();
     }
 }

@@ -39,6 +39,7 @@ import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.AdActivity;
 import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.CowsClaimActivity;
@@ -266,27 +267,35 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                 switch (homeBannerResultBean.getBizData().getTopBannerList().get(position).getPageUrl()){
                     case "adopt_scheme_list":
                         //养牛方案列表
-                        startActivity(BuyCowsPlanActivity.class);
+                        Intent intent=new Intent(getHoldingActivity(),BuyCowsPlanActivity.class);
+                        intent.putExtra("isAd",true);
+                        startActivity(intent);
                         break;
                     case "adopt_scheme_detail":
                         //养牛方案详情
                         Intent intent4=new Intent(getHoldingActivity(),CowsClaimActivity.class);
-                        intent4.putExtra("schemId",Integer.parseInt(homeBannerResultBean.getBizData().getPopBanner().getParams()));
+                        intent4.putExtra("schemId",Integer.parseInt(homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()));
+                        intent4.putExtra("isAd",true);
                         startActivity(intent4);
                         break;
                     case "adop_order_list":
                         //养牛订单列表
-                        startActivity(MyCowsActivity.class);
+                        Intent intent2=new Intent(getHoldingActivity(),MyCowsActivity.class);
+                        intent2.putExtra("isAd",true);
+                        startActivity(intent2);
                         break;
                     case "adop_order_detail":
                         //养牛订单详情
-                        Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-                        intent.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
-                        startActivity(intent);
+                        Intent intent3 = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
+                        intent3.putExtra("orderId",homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()+"");
+                        intent3.putExtra("isAd",true);
+                        startActivity(intent3);
                         break;
                     case "pasture_list":
                         //合作牧场列表
-                        startActivity(RanchConsociationActivity.class);
+                        Intent intent5=new Intent(getHoldingActivity(),RanchConsociationActivity.class);
+                        intent5.putExtra("isAd",true);
+                        startActivity(intent5);
                         break;
                     case "shop_product_list":
                         //商城商品列表
@@ -296,31 +305,41 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                         break;
                     case "shop_order_list":
                         //商城订单列表
-                        startActivity(MyOrderActivity.class);
+                        Intent intent6=new Intent(getHoldingActivity(),MyOrderActivity.class);
+                        intent6.putExtra("isAd",true);
+                        startActivity(intent6);
                         break;
                     case "shop_order_detail":
                         //商城订单详情
-                        Intent intent2 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
-                        intent2.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
-                        startActivity(intent2);
+                        Intent intent7 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
+                        intent7.putExtra("orderId",homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()+"");
+                        intent7.putExtra("isAd",true);
+                        startActivity(intent7);
                         break;
                     case "total_assets":
                         //总资产
-                        startActivity(MyAllMoneyActivity.class);
+                        Intent intent8=new Intent(getHoldingActivity(),MyAllMoneyActivity.class);
+                        intent8.putExtra("isAd",true);
+                        startActivity(intent8);
                         break;
                     case "coupon_list":
                         //优惠券列表
-                        startActivity(DiscountCouponActivity.class);
+                        Intent intent9=new Intent(getHoldingActivity(),DiscountCouponActivity.class);
+                        intent9.putExtra("isAd",true);
+                        startActivity(intent9);
                         break;
                     case "contract_list":
                         //合同列表
-                        startActivity(MyContractActivity.class);
+                        Intent intent10=new Intent(getHoldingActivity(),MyContractActivity.class);
+                        intent10.putExtra("isAd",true);
+                        startActivity(intent10);
                         break;
                     case "new_welfare":
                         //新人福利
-                        Intent intent3=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
-                        intent3.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
-                        startActivity(intent3);
+                        Intent intent11=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                        intent11.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                        intent11.putExtra("isAd",true);
+                        startActivity(intent11);
                         break;
                     default:
                         break;
@@ -371,7 +390,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeVideoResultBean.BizDataBean item=ranchDynamicsAdapter.getItem(position);
                 if(position==beanList.size()-1){
-                    startActivity(RanchDynamicActivity.class);
+                    if(beanList.size()>3){
+                        startActivity(RanchDynamicActivity.class);
+                    }else {
+                        Intent intent = new Intent(getHoldingActivity(), PlayerVideoActivity.class);
+                        intent.putExtra("video_url",item.getPlayUrl());
+                        intent.putExtra("title",item.getName());
+                        intent.putExtra("coverUrl",item.getCoverUrl());
+                        startActivity(intent);
+                    }
                 }else {
                     Intent intent = new Intent(getHoldingActivity(), PlayerVideoActivity.class);
                     intent.putExtra("video_url",item.getPlayUrl());
@@ -491,11 +518,12 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
         beanList.addAll(homeAdResultBean.getBizData());
 
-        HomeVideoResultBean  homeVideoResultBean=new HomeVideoResultBean();
-        HomeVideoResultBean.BizDataBean bizDataBean=homeVideoResultBean.new BizDataBean();
-        bizDataBean.setCoverUrl("1");
-
-        beanList.add(bizDataBean);
+        if(homeAdResultBean.getBizData().size()>3){
+            HomeVideoResultBean  homeVideoResultBean=new HomeVideoResultBean();
+            HomeVideoResultBean.BizDataBean bizDataBean=homeVideoResultBean.new BizDataBean();
+            bizDataBean.setCoverUrl("1");
+            beanList.add(bizDataBean);
+        }
         ranchDynamicsAdapter.setNewData(this.beanList);
         ranchDynamicsAdapter.loadMoreEnd();
     }

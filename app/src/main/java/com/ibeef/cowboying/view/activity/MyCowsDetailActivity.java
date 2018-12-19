@@ -143,7 +143,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     private String orderCode;
     private int LockMonths;
     private String unlockTime;
-
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +153,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     }
 
     private void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         token = Hawk.get(HawkKey.TOKEN);
         orderCode = getIntent().getStringExtra("orderId");
         info.setText("我的牛只");
@@ -178,6 +179,9 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                if(isAd){
+                    startActivity(new Intent(MyCowsDetailActivity.this, MainActivity.class));
+                }
                 finish();
                 break;
             case R.id.btn_delet_order:
@@ -438,7 +442,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
             } else {
                 tvPayWay.setText("钱包余额");
             }
-            if (Double.valueOf(myCowsOrderListDetailBean.getBizData().getDiscountAmount())!=null){
+            if (myCowsOrderListDetailBean.getBizData().getDiscountAmount()>0){
                 rlDiscountCoupon.setVisibility(View.VISIBLE);
                 if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
                     tvDiscountCoupon.setText("￥"+myCowsOrderListDetailBean.getBizData().getDiscountAmount());
@@ -446,6 +450,12 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                     tvDiscountCoupon.setText("-￥"+myCowsOrderListDetailBean.getBizData().getDiscountAmount());
                 }
 
+            }else {
+                if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
+                    rlDiscountCoupon.setVisibility(View.VISIBLE);
+                }else {
+                    rlDiscountCoupon.setVisibility(View.GONE);
+                }
             }
         } else {
             Toast.makeText(this, myCowsOrderListDetailBean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -482,5 +492,14 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
         } else {
             showToast(creatOderResultBean.getMessage());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(MyCowsDetailActivity.this, MainActivity.class));
+        }
+        finish();
     }
 }

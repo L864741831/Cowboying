@@ -79,27 +79,35 @@ public class AdActivity extends BaseActivity {
                     switch (info.getBizData().getPageUrl()){
                         case "adopt_scheme_list":
                             //养牛方案列表
-                            startActivity(BuyCowsPlanActivity.class);
+                            Intent intent=new Intent(AdActivity.this,BuyCowsPlanActivity.class);
+                            intent.putExtra("isAd",true);
+                            startActivity(intent);
                             break;
                         case "adopt_scheme_detail":
                             //养牛方案详情
                             Intent intent4=new Intent(AdActivity.this,CowsClaimActivity.class);
                             intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getParams()));
+                            intent4.putExtra("isAd",true);
                             startActivity(intent4);
                             break;
                         case "adop_order_list":
                             //养牛订单列表
-                            startActivity(MyCowsActivity.class);
+                            Intent intent2=new Intent(AdActivity.this,MyCowsActivity.class);
+                            intent2.putExtra("isAd",true);
+                            startActivity(intent2);
                             break;
                         case "adop_order_detail":
                             //养牛订单详情
-                            Intent intent = new Intent(AdActivity.this, MyCowsDetailActivity.class);
-                            intent.putExtra("orderId",info.getBizData().getParams()+"");
-                            startActivity(intent);
+                            Intent intent3 = new Intent(AdActivity.this, MyCowsDetailActivity.class);
+                            intent3.putExtra("orderId",info.getBizData().getParams()+"");
+                            intent3.putExtra("isAd",true);
+                            startActivity(intent3);
                             break;
                         case "pasture_list":
                             //合作牧场列表
-                            startActivity(RanchConsociationActivity.class);
+                            Intent intent5=new Intent(AdActivity.this,RanchConsociationActivity.class);
+                            intent5.putExtra("isAd",true);
+                            startActivity(intent5);
                             break;
                         case "shop_product_list":
                             //商城商品列表
@@ -109,25 +117,34 @@ public class AdActivity extends BaseActivity {
                             break;
                         case "shop_order_list":
                             //商城订单列表
-                            startActivity(MyOrderActivity.class);
+                            Intent intent6=new Intent(AdActivity.this,MyOrderActivity.class);
+                            intent6.putExtra("isAd",true);
+                            startActivity(intent6);
                             break;
                         case "shop_order_detail":
                             //商城订单详情
-                            Intent intent2 = new Intent(AdActivity.this, MyOrderDetailActivity.class);
-                            intent2.putExtra("orderId",info.getBizData().getParams()+"");
-                            startActivity(intent2);
+                            Intent intent7 = new Intent(AdActivity.this, MyOrderDetailActivity.class);
+                            intent7.putExtra("orderId",info.getBizData().getParams()+"");
+                            intent7.putExtra("isAd",true);
+                            startActivity(intent7);
                             break;
                         case "total_assets":
                             //总资产
-                            startActivity(MyAllMoneyActivity.class);
+                            Intent intent8=new Intent(AdActivity.this,MyAllMoneyActivity.class);
+                            intent8.putExtra("isAd",true);
+                            startActivity(intent8);
                             break;
                         case "coupon_list":
                             //优惠券列表
-                            startActivity(DiscountCouponActivity.class);
+                            Intent intent9=new Intent(AdActivity.this,DiscountCouponActivity.class);
+                            intent9.putExtra("isAd",true);
+                            startActivity(intent9);
                             break;
                         case "contract_list":
                             //合同列表
-                            startActivity(MyContractActivity.class);
+                            Intent intent10=new Intent(AdActivity.this,MyContractActivity.class);
+                            intent10.putExtra("isAd",true);
+                            startActivity(intent10);
                             break;
                         case "new_welfare":
                             //新人福利
@@ -163,5 +180,12 @@ public class AdActivity extends BaseActivity {
             finish();
         }
         return timeCount;
+    }
+
+    @Override
+    public void onBackPressed() {
+        continueCount = false;
+        startActivity(new Intent(AdActivity.this, MainActivity.class));
+        finish();
     }
 }

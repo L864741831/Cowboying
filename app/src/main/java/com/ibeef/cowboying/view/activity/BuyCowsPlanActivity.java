@@ -60,6 +60,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
+    private boolean isAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     }
 
     private void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("养牛方案列表");
         actionNewQuestionTv.setText("往期记录");
@@ -134,6 +136,9 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                if(isAd){
+                    startActivity(new Intent(BuyCowsPlanActivity.this, MainActivity.class));
+                }
                 finish();
                 break;
             case R.id.action_new_question_tv:
@@ -218,7 +223,11 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(BuyCowsPlanActivity.this, MainActivity.class));
+        }
         finish();
+
     }
 
     @Override
@@ -242,4 +251,5 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     public void onPullEnable(boolean enable) {
 
     }
+
 }
