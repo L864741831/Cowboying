@@ -5,14 +5,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -76,6 +81,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private List<Object> objectList;
     private TextView sellCowNumId;
     private TextView sellCowNum2Id;
+    private LinearLayout netscroll_view_id;
 
     private Banner specialbeefImgId;
     private ImageView newpeopleImgId;
@@ -83,6 +89,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private FrameLayout buyCowFm;
     private FrameLayout togetherCowFm;
     private RecyclerView ranchDynamicsRy;
+    private LinearLayout lv_show_num_id;
     private RanchDynamicsAdapter ranchDynamicsAdapter;
     private List<HomeVideoResultBean.BizDataBean> beanList;
     private HomeBannerPresenter homeBannerPresenter;
@@ -94,12 +101,17 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private RelativeLayout rv_show_id;
     private String token;
     private HomeBannerResultBean homeBannerResultBean;
-
+    private GestureDetector mDetector;
+    protected static final float FLIP_DISTANCE = 50;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
+        homeRyId.setHasFixedSize(true);
+        homeRyId.setNestedScrollingEnabled(false);
         rv_show_id=view.findViewById(R.id.rv_show_id);
+        lv_show_num_id=view.findViewById(R.id.lv_show_num_id);
+        netscroll_view_id=view.findViewById(R.id.netscroll_view_id);
 
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
@@ -109,10 +121,10 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 
         objectList=new ArrayList<>();
         homeProductListAdapter=new HomeProductListAdapter(objectList,getHoldingActivity(),R.layout.activity_ad_webview);
-        View headView = View.inflate(getHoldingActivity(), R.layout.home_head_view, null);
-        init(headView);
+//        View headView = View.inflate(getHoldingActivity(), R.layout.home_head_view, null);
+        init(view);
         //添加头视图
-        homeProductListAdapter.addHeaderView(headView);
+//        homeProductListAdapter.addHeaderView(headView);
         homeRyId.setAdapter(homeProductListAdapter);
 
         token= Hawk.get(HawkKey.TOKEN);
@@ -146,9 +158,69 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             }
         });
 
+        mDetector = new GestureDetector(getHoldingActivity(), new GestureDetector.OnGestureListener() {
 
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() > FLIP_DISTANCE) {
+                    Log.i("MYTAG", "向左滑...");
+                    return true;
+                }
+                if (e2.getX() - e1.getX() > FLIP_DISTANCE) {
+                    Log.i("MYTAG", "向右滑...");
+                    return true;
+                }
+                if (e1.getY() - e2.getY() > FLIP_DISTANCE) {
+                    Log.i("MYTAG", "向上滑...");
+                    return true;
+                }
+                if (e2.getY() - e1.getY() > FLIP_DISTANCE) {
+                    Log.i("MYTAG", "向下滑...");
+                    return true;
+                }
+
+                Log.d("TAG", e2.getX() + " " + e2.getY());
+
+                return false;
+            }
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
+        netscroll_view_id.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return  mDetector.onTouchEvent(event);
+            }
+        });
     }
-
 
     @Override
     public void onResume() {
@@ -431,8 +503,14 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     @Override
     public void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean) {
         if("000000".equals(homeSellCowNumResultBean.getCode())){
-            sellCowNumId.setText(homeSellCowNumResultBean.getBizData().getTotalSalesQuantity()+"");
-            sellCowNum2Id.setText(homeSellCowNumResultBean.getBizData().getTotalUserQuantity()+"");
+            if(homeSellCowNumResultBean.getBizData().isShowStatistic()){
+                lv_show_num_id.setVisibility(View.VISIBLE);
+                sellCowNumId.setText(homeSellCowNumResultBean.getBizData().getTotalSalesQuantity()+"");
+                sellCowNum2Id.setText(homeSellCowNumResultBean.getBizData().getTotalUserQuantity()+"");
+            }else {
+                lv_show_num_id.setVisibility(View.GONE);
+            }
+            homeProductListAdapter.notifyItemChanged(0);
         }else {
             showToast(homeSellCowNumResultBean.getMessage());
         }

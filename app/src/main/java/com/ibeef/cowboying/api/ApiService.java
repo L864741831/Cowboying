@@ -782,4 +782,11 @@ public interface ApiService {
     @GET("vip/card/consumer/log")
     Observable<VipCardListBean> showVipCardHistory(@HeaderMap Map<String, String> headers, @Query("curPage") int curPage);
 
+    /**
+     *更新极光注册id
+     * @return
+     */
+    @POST("jiguang/update/code")
+    Observable<JgResultBean> getJgRegisteId(@HeaderMap Map<String, String> headers, @Body JgParamBean jgParamBean);
+
 }

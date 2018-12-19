@@ -5,17 +5,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
+import com.ibeef.cowboying.application.CowboyingApplication;
 import com.ibeef.cowboying.base.CheckVersionBase;
+import com.ibeef.cowboying.base.GetJgRegisterIdBase;
 import com.ibeef.cowboying.bean.CheckVersionBean;
 import com.ibeef.cowboying.bean.CheckVersionParamBean;
+import com.ibeef.cowboying.bean.JgParamBean;
+import com.ibeef.cowboying.bean.JgResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CheckVersionPresenter;
+import com.ibeef.cowboying.presenter.GetRegisterIdPresenter;
 import com.ibeef.cowboying.view.customview.NoScrollViewPager;
 import com.ibeef.cowboying.view.fragment.HomeFragment;
 import com.ibeef.cowboying.view.fragment.SecondFragment;
@@ -24,16 +30,19 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import rxfamily.view.BaseActivity;
 import rxfamily.view.BaseFragment;
 
 /**
  * 主页面
  */
-public class MainActivity extends BaseActivity implements CheckVersionBase.IView{
+public class MainActivity extends BaseActivity implements CheckVersionBase.IView,GetJgRegisterIdBase.IView{
 
     @Bind(R.id.bnve)
     BottomNavigationViewEx bnve;
@@ -43,6 +52,8 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
     private CheckVersionPresenter checkVersionPresenter;
     private String token;
     private int index;
+    private GetRegisterIdPresenter getRegisterIdPresenter;
+    private Map<String, String> reqData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +97,18 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
         checkVersionParamBean.setVersion(getVersionCodes());
         checkVersionPresenter.getCheckVersion(getVersionCodes(),checkVersionParamBean);
 
+        getRegisterIdPresenter=new GetRegisterIdPresenter(this);
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        if(!TextUtils.isEmpty(token)){
+            JgParamBean jgParamBean=new JgParamBean();
+            jgParamBean.setPlatform("1");
+            jgParamBean.setRegistrationId(JPushInterface.getRegistrationID(this));
+            Log.e(Constant.TAG,JPushInterface.getRegistrationID(this)+"CowboyingApplication.registrationId");
+            getRegisterIdPresenter.getJgRegisteId(reqData,jgParamBean);
+        }
+
     }
 
     private void initEvent() {
@@ -109,6 +132,11 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
     @Override
     public void showMsg(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void getJgRegisteId(JgResultBean jgResultBean) {
+
     }
 
     @Override
