@@ -106,28 +106,16 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     TextView modifyBtn;
     @Bind(R.id.title_txt_id)
     TextView titleTxtId;
-    @Bind(R.id.code_txt_id)
-    TextView codeTxtId;
-    @Bind(R.id.name_txt_id)
-    TextView nameTxtId;
     @Bind(R.id.real_info_rv)
     RelativeLayout realInfoRv;
     @Bind(R.id.modify_pwd_rv)
     RelativeLayout modifyPwdRv;
     @Bind(R.id.et_write_id)
     EditText etWriteId;
-    @Bind(R.id.et_write_id1)
-    EditText etWriteId1;
     @Bind(R.id.cancle_img)
     ImageView cancleImg;
-    @Bind(R.id.cancle_img1)
-    ImageView cancleImg1;
     @Bind(R.id.modify_nickname_rv)
     RelativeLayout modifyNicknameRv;
-    @Bind(R.id.show_realinfo_rv)
-    RelativeLayout showRealinfoRv;
-    @Bind(R.id.search2_id)
-    LinearLayout search2Id;
     @Bind(R.id.lv_info_show)
     LinearLayout lvInfoShow;
     @Bind(R.id.loading_layout)
@@ -181,7 +169,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         userInfoPresenter.getUserInfo(reqData);
     }
 
-    @OnClick({R.id.back_id, R.id.iv_icon, R.id.nickname_rv, R.id.bind_phone_rv, R.id.real_info_rv, R.id.modify_pwd_rv,R.id.modify_btn,R.id.cancle_img,R.id.cancle_img1,R.id.modify_nickname_rv,R.id.show_realinfo_rv})
+    @OnClick({R.id.back_id, R.id.iv_icon, R.id.nickname_rv, R.id.bind_phone_rv, R.id.real_info_rv, R.id.modify_pwd_rv,R.id.modify_btn,R.id.cancle_img,R.id.modify_nickname_rv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -196,7 +184,6 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 modifyNicknameRv.setVisibility(View.VISIBLE);
                 titleTxtId.setText("昵称");
                 isNickname=true;
-                search2Id.setVisibility(View.GONE);
                 break;
             case R.id.bind_phone_rv:
                 // 是否绑定手机号
@@ -245,41 +232,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                     ModifyNickParamBean modifyNickParamBean=new ModifyNickParamBean();
                     modifyNickParamBean.setNiceName(etWriteId.getText().toString().trim());
                     userInfoPresenter.getModifNick(reqData,modifyNickParamBean);
-                }else {
-                    // 实名认证
-                    if(TextUtils.isEmpty(etWriteId.getText().toString().trim())){
-                        showToast("实名认证姓名不能为空~");
-                        return;
-                    }
-                    if(TextUtils.isEmpty(etWriteId1.getText().toString().trim())){
-                        showToast("实名认证身份证号不能为空~");
-                        return;
-                    }
-                    Map<String, String> reqData = new HashMap<>();
-                    reqData.put("Authorization",token);
-                    reqData.put("version",getVersionCodes());
-                    RealNameParamBean realNameParamBean=new RealNameParamBean();
-                    realNameParamBean.setUserId(userInfoResultBean.getBizData().getUserId()+"");
-                    if(!SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getMobile())){
-                        realNameParamBean.setUserMobile(userInfoResultBean.getBizData().getMobile());
-                    }
-                    realNameParamBean.setRealName(etWriteId.getText().toString().trim());
-                    realNameParamBean.setRealCardNo(etWriteId1.getText().toString().trim());
-                    userInfoPresenter.getRealName(reqData,realNameParamBean);
                 }
                 modifyNicknameRv.setVisibility(View.GONE);
                 break; 
             case R.id.cancle_img:
                 etWriteId.setText("");
                 break;
-            case R.id.cancle_img1:
-                etWriteId1.setText("");
-                break;
             case R.id.modify_nickname_rv:
                 modifyNicknameRv.setVisibility(View.GONE);
-                break;
-            case R.id.show_realinfo_rv:
-                showRealinfoRv.setVisibility(View.GONE);
                 break;
             default:
                 break;

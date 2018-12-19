@@ -136,7 +136,6 @@
                 android:text="昵称" android:textSize="15sp" android:layout_gravity="center"
                 android:layout_marginTop="10dp" android:layout_marginBottom="15dp"/>
             <include layout="@layout/search_toolbar_layout"/>
-            <include layout="@layout/search1_toolbar_layout"/>
 
             <TextView
                 android:layout_width="match_parent" android:id="@+id/modify_btn"
@@ -146,36 +145,6 @@
                 android:layout_marginLeft="60dp" android:layout_marginRight="60dp"
                 android:layout_marginBottom="30dp"/>
 
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent" android:id="@+id/show_realinfo_rv"
-        android:layout_height="match_parent" android:background="@color/colordialog"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"    android:orientation="vertical"
-            android:background="@drawable/cicle_write_bg" android:layout_centerInParent="true">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="实名信息" android:layout_gravity="center"
-                android:layout_marginTop="10dp" android:layout_marginBottom="15dp"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/name_txt_id"
-                android:layout_height="wrap_content" android:text="姓名:"
-                android:layout_marginLeft="15dp" android:textColor="@color/black"
-                android:textSize="15sp"/>
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/code_txt_id"
-                android:layout_height="wrap_content" android:text="身份证号："
-                android:layout_marginLeft="15dp" android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp" android:textColor="@color/black"
-                android:textSize="15sp"/>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
