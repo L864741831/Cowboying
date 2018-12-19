@@ -51,7 +51,7 @@
                             android:layout_width="wrap_content" android:id="@+id/all_money_id"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white" android:textSize="30sp"
-                            android:text="5000"
+                            android:text="0.00"
                             android:layout_marginTop="5dp"/>
                         <ImageView
                             android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                         android:gravity="center"  android:paddingLeft="20dp">
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/white_money_show"
-                            android:layout_height="wrap_content" android:text="白条额度  >"
+                            android:layout_height="wrap_content" android:text="会员卡  >"
                             android:layout_gravity="left"
                             android:textSize="15sp" />
                         <TextView

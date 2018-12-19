@@ -39,6 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
+/**
+ * 总资产界面
+ */
 public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.IView {
 
     @Bind(R.id.back_id)
@@ -275,7 +278,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
             myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());
             if(!SDCardUtil.isNullOrEmpty(incomeInfeResultBean.getBizData().getCridetBalance())){
-                whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getCridetBalance());
+                whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getVipCardAmount());
             }
             setData(incomeInfeResultBean);
         }else {
