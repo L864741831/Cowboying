@@ -20,7 +20,7 @@
             android:id="@+id/switchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:kswBackMeasureRatio="2.2"
+            app:kswBackMeasureRatio="2.2" android:background="@color/white"
             app:kswFadeBack="true" android:layout_alignParentRight="true"
             android:layout_centerVertical="true" android:layout_marginRight="10dp"
             app:kswBackDrawable="@drawable/shape_swich_btn" app:layout_constraintTop_toTopOf="parent"

@@ -549,7 +549,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
                 if(baseBeans.get(position).getProductVideoResVos().size()>2){
                     for (int j=0;j<baseBeans.get(position).getProductVideoResVos().size()-2;j++){
-                        baseBean.add(j+2,baseBeans.get(position).getProductVideoResVos().get(j));
+                        baseBean.add(j+2,baseBeans.get(position).getProductVideoResVos().get(j+2));
                         storeBottomAdapter.notifyDataSetChanged();
                         see_more_id.setVisibility(View.INVISIBLE);
                     }

@@ -38,6 +38,15 @@ public class HomeSellCowNumResultBean {
     public  class BizDataBean {
         private int totalSalesQuantity;
         private int totalUserQuantity;
+        private boolean showStatistic;
+
+        public boolean isShowStatistic() {
+            return showStatistic;
+        }
+
+        public void setShowStatistic(boolean showStatistic) {
+            this.showStatistic = showStatistic;
+        }
 
         public int getTotalSalesQuantity() {
             return totalSalesQuantity;

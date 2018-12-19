@@ -205,7 +205,10 @@ public class MobileLoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.register_rule_id:
-                Toast.makeText(MobileLoginActivity.this, "显示注册协议", Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(MobileLoginActivity.this,AdWebviewActivity.class);
+                intent.putExtra("url","file:///android_asset/indexxy.html");
+                intent.putExtra("title","注册协议");
+                startActivity(intent);
                 break;
             case R.id.pwd_login_id:
                 if ("0".equals(stadus)) {

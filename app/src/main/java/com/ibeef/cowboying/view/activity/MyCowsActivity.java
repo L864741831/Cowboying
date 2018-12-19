@@ -59,8 +59,8 @@ public class MyCowsActivity extends BaseActivity {
         from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我的牛只");
-        actionNewQuestionTv.setVisibility(View.VISIBLE);
-        actionNewQuestionTv.setText("我要卖牛");
+//        actionNewQuestionTv.setVisibility(View.VISIBLE);
+//        actionNewQuestionTv.setText("我要卖牛");
 
         fragmentList = new ArrayList<>();
         /**

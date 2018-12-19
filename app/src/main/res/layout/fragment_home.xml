@@ -11,34 +11,37 @@
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:orientation="vertical">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/home_ry_id"
+            android:layout_height="wrap_content" >
+            <LinearLayout
+                android:layout_width="match_parent" android:id="@+id/netscroll_view_id"
+                android:layout_height="match_parent" android:orientation="vertical">
+                <include layout="@layout/home_head_view"/>
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:scrollbars="none" />
-                <RelativeLayout
-                    android:layout_width="match_parent" android:id="@+id/rv_show_id"
-                    android:layout_height="wrap_content" android:background="@color/colorAccent"
-                    android:paddingBottom="8dp" android:visibility="gone">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:src="@mipmap/toptitlehome"
-                        android:layout_centerInParent="true" android:layout_marginTop="19dp"
-                       />
-                </RelativeLayout>
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/home_ry_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:scrollbars="none" />
+                    <RelativeLayout
+                        android:layout_width="match_parent" android:id="@+id/rv_show_id"
+                        android:layout_height="wrap_content" android:background="@color/colorAccent"
+                        android:paddingBottom="8dp" android:visibility="gone">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:src="@mipmap/toptitlehome"
+                            android:layout_centerInParent="true" android:layout_marginTop="19dp"
+                            />
+                    </RelativeLayout>
+                </FrameLayout>
 
-            </FrameLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-
-        </LinearLayout>
     </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
 
 </RelativeLayout>
