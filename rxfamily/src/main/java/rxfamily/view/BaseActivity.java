@@ -63,9 +63,9 @@ public class    BaseActivity extends RxAppCompatActivity{
 //            steepStatusBar();
 //        }
 
-        if (!isAllowScreenRoate) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if (!isAllowScreenRoate) {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
 
         if (application == null) {
            // 得到Application对象
