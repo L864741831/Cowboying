@@ -1,17 +1,11 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.google.zxing.BarcodeFormat;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.PayCodeBean;
-import com.king.zxing.util.CodeUtils;
 
 import java.util.List;
 

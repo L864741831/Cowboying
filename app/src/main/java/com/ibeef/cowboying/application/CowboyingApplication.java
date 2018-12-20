@@ -1,15 +1,11 @@
 package com.ibeef.cowboying.application;
 
-import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
 
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import rxfamily.application.RxApplication;

@@ -2,13 +2,9 @@ package com.ibeef.cowboying.presenter;
 
 import android.util.Log;
 
-import com.ibeef.cowboying.base.AccountRegisterBase;
 import com.ibeef.cowboying.base.GetJgRegisterIdBase;
-import com.ibeef.cowboying.bean.AccountRegisterParamBean;
-import com.ibeef.cowboying.bean.AccountRegisterResultBean;
 import com.ibeef.cowboying.bean.JgParamBean;
 import com.ibeef.cowboying.bean.JgResultBean;
-import com.ibeef.cowboying.model.AccountRegisetModel;
 import com.ibeef.cowboying.model.GetJgRegisterIdModel;
 
 import java.util.Map;

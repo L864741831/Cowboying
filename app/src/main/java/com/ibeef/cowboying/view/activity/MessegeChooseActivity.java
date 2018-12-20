@@ -14,7 +14,6 @@ import com.ibeef.cowboying.bean.MessegeListReslutBean;
 import com.ibeef.cowboying.bean.MessegeNumResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MessegePresenter;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;

@@ -20,7 +20,6 @@ import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.utils.ZzUtils;
 import com.orhanobut.hawk.Hawk;
 

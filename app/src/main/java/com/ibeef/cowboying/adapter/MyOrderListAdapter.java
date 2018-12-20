@@ -12,13 +12,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyOrderListBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.utils.WrapContentLinearLayoutManager;
-import com.ibeef.cowboying.view.activity.MainActivity;
-import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
-import com.ibeef.cowboying.view.activity.MyCowsDetailActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
-import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
 
 import java.util.ArrayList;
 import java.util.List;

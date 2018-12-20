@@ -4,28 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.utils.DateUtils;
-import com.ibeef.cowboying.utils.SDCardUtil;
-import com.ibeef.cowboying.view.activity.AfterSaleActivity;
 import com.ibeef.cowboying.view.activity.AfterSaleDetailActivity;
 import com.ibeef.cowboying.view.customview.CountDowntimeView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import rxfamily.bean.BaseBean;
 
 /**
  * @author ls

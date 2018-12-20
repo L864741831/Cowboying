@@ -13,18 +13,14 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.base.GetJgRegisterIdBase;
 import com.ibeef.cowboying.base.InitThirdLoginBase;
 import com.ibeef.cowboying.base.ThirdLoginBase;
 import com.ibeef.cowboying.bean.AuthResult;
-import com.ibeef.cowboying.bean.JgResultBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginParamBean;
 import com.ibeef.cowboying.bean.ThirdCountLoginResultBean;
 import com.ibeef.cowboying.bean.ThirdLoginResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.GetOssImgPresenter;
-import com.ibeef.cowboying.presenter.GetRegisterIdPresenter;
 import com.ibeef.cowboying.presenter.InitThirdLoginPresenter;
 import com.ibeef.cowboying.presenter.ThirdAccountLoginPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;

@@ -17,7 +17,6 @@ import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
 import com.ibeef.cowboying.base.PastureDetailBase;
 import com.ibeef.cowboying.base.UserInfoBase;
-import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.JionPersonInfoResultBean;
 import com.ibeef.cowboying.bean.ModifyHeadResultBean;
 import com.ibeef.cowboying.bean.ModifyNickResultBean;

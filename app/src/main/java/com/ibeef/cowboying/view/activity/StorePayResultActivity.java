@@ -13,7 +13,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.StoreResultOrderAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
-import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;

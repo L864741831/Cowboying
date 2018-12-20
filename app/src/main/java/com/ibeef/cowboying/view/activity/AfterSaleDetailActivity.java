@@ -25,7 +25,6 @@ import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
-import com.ibeef.cowboying.view.customview.CountDownView;
 import com.ibeef.cowboying.view.customview.CountDowntimeView;
 import com.orhanobut.hawk.Hawk;
 

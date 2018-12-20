@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.DiscountCoupondapter;
 import com.ibeef.cowboying.base.MyContractBase;
-import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
@@ -27,7 +25,6 @@ import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.FightCattleActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
-import com.ibeef.cowboying.view.activity.StoreSureOderActivity;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
@@ -36,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.jiguang.api.SdkType;
 import rxfamily.view.BaseFragment;
 
 /**

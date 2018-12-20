@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MainFragmentAdapter;
-import com.ibeef.cowboying.application.CowboyingApplication;
 import com.ibeef.cowboying.base.CheckVersionBase;
 import com.ibeef.cowboying.base.GetJgRegisterIdBase;
 import com.ibeef.cowboying.bean.CheckVersionBean;

@@ -10,11 +10,8 @@ import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.MyOrderListBase;
-import com.ibeef.cowboying.bean.CreatOderResultBean;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListBean;
-import com.ibeef.cowboying.bean.MyCowsOrderListDetailBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;

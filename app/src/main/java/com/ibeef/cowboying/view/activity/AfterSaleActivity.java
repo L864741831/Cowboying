@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,28 +9,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.AfterSaleAdapter;
-import com.ibeef.cowboying.adapter.AfterSaleDetailAdapter;
-import com.ibeef.cowboying.adapter.MyOrderListAdapter;
-import com.ibeef.cowboying.base.MyContractBase;
 import com.ibeef.cowboying.base.MyOrderListBase;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
-import com.ibeef.cowboying.bean.MyContractListBean;
-import com.ibeef.cowboying.bean.MyContractURLBean;
-import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
-import com.ibeef.cowboying.presenter.MyContractPresenter;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
-import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
@@ -44,7 +34,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rxfamily.bean.BaseBean;
 import rxfamily.view.BaseActivity;
 
 /**

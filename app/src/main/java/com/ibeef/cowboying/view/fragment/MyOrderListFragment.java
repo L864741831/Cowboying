@@ -3,7 +3,6 @@ package com.ibeef.cowboying.view.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -41,6 +40,7 @@ import com.ibeef.cowboying.view.activity.ShowOrderDeleveryActivity;
 import com.ibeef.cowboying.view.activity.StorePayTypeActivity;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
