@@ -382,9 +382,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
     public void getMyCowsOrderDelete(MyCowsOrderDeleteBean msg) {
         if("000000".equals(msg.getCode())){
             page = 1;
-            int previousSize = listData.size();
             listData.clear();
-            myCowsListAdapter.notifyItemRangeRemoved(0, previousSize);
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
