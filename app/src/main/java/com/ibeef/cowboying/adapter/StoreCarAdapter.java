@@ -15,7 +15,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.config.Constant;
-import com.ibeef.cowboying.view.customview.AmountViewStoreBeef;
 import com.ibeef.cowboying.view.customview.AmountViewWhite;
 
 import java.util.List;

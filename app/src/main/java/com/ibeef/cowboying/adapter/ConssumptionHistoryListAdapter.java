@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.VipCardListBean;
-import com.ibeef.cowboying.bean.WalletRecordResultBean;
 import com.ibeef.cowboying.utils.DateUtils;
 
 import java.util.List;

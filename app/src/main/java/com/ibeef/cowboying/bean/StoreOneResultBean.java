@@ -1,7 +1,5 @@
 package com.ibeef.cowboying.bean;
 
-import java.util.List;
-
 /**
  * @author ls
  * @date on 2018/12/10 20:25

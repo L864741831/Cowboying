@@ -47,7 +47,7 @@ public class MyOrderActivity extends BaseActivity {
     private MyOrderListFragment fragment_5;
     private MainFragmentAdapter mAdpter;
     private boolean from;
-
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,7 @@ public class MyOrderActivity extends BaseActivity {
 
     private void init() {
         index=getIntent().getIntExtra("index",0);
+        isAd=getIntent().getBooleanExtra("isAd",false);
         from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我的订单");
@@ -92,7 +93,7 @@ public class MyOrderActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                if(from){
+                if(from||isAd){
                     removeALLActivity();//执行移除所以Activity方法
                     Intent intent1=new Intent(MyOrderActivity.this,MainActivity.class);
                     startActivity(intent1);
@@ -107,10 +108,12 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (from){
+        if (from||isAd){
             removeALLActivity();//执行移除所以Activity方法
             Intent intent1=new Intent(MyOrderActivity.this,MainActivity.class);
             startActivity(intent1);
+        }else {
+            finish();
         }
     }
 }

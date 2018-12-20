@@ -4,21 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,7 +31,6 @@ import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
 import com.ibeef.cowboying.utils.GlideImageLoader;
 import com.ibeef.cowboying.utils.SDCardUtil;
-import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.BuyCowsPlanActivity;
 import com.ibeef.cowboying.view.activity.CowsClaimActivity;
 import com.ibeef.cowboying.view.activity.DiscountCouponActivity;
@@ -56,7 +47,7 @@ import com.ibeef.cowboying.view.activity.NewManwelfareActivity;
 import com.ibeef.cowboying.view.activity.PlayerVideoActivity;
 import com.ibeef.cowboying.view.activity.RanchConsociationActivity;
 import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
-import com.ibeef.cowboying.view.activity.StoreSureOderActivity;
+import com.ibeef.cowboying.view.activity.VipCardActivity;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 import com.youth.banner.Banner;
@@ -81,7 +72,6 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private List<Object> objectList;
     private TextView sellCowNumId;
     private TextView sellCowNum2Id;
-    private LinearLayout netscroll_view_id;
 
     private Banner specialbeefImgId;
     private ImageView newpeopleImgId;
@@ -101,17 +91,13 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private RelativeLayout rv_show_id;
     private String token;
     private HomeBannerResultBean homeBannerResultBean;
-    private GestureDetector mDetector;
-    protected static final float FLIP_DISTANCE = 50;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
-        homeRyId.setHasFixedSize(true);
-        homeRyId.setNestedScrollingEnabled(false);
+//        homeRyId.setHasFixedSize(true);
+//        homeRyId.setNestedScrollingEnabled(false);
         rv_show_id=view.findViewById(R.id.rv_show_id);
-        lv_show_num_id=view.findViewById(R.id.lv_show_num_id);
-        netscroll_view_id=view.findViewById(R.id.netscroll_view_id);
 
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
@@ -121,14 +107,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 
         objectList=new ArrayList<>();
         homeProductListAdapter=new HomeProductListAdapter(objectList,getHoldingActivity(),R.layout.activity_ad_webview);
-//        View headView = View.inflate(getHoldingActivity(), R.layout.home_head_view, null);
-        init(view);
-        //添加头视图
-//        homeProductListAdapter.addHeaderView(headView);
-        homeRyId.setAdapter(homeProductListAdapter);
-
         token= Hawk.get(HawkKey.TOKEN);
         homeBannerPresenter=new HomeBannerPresenter(this);
+
+        View headView = View.inflate(getHoldingActivity(), R.layout.home_head_view, null);
+        init(headView);
+        //添加头视图
+        homeProductListAdapter.addHeaderView(headView);
+        homeRyId.setAdapter(homeProductListAdapter);
+
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
@@ -158,69 +145,8 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             }
         });
 
-        mDetector = new GestureDetector(getHoldingActivity(), new GestureDetector.OnGestureListener() {
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                // TODO Auto-generated method stub
-                return false;
-            }
-
-            @Override
-            public void onShowPress(MotionEvent e) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                // TODO Auto-generated method stub
-                return false;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                if (e1.getX() - e2.getX() > FLIP_DISTANCE) {
-                    Log.i("MYTAG", "向左滑...");
-                    return true;
-                }
-                if (e2.getX() - e1.getX() > FLIP_DISTANCE) {
-                    Log.i("MYTAG", "向右滑...");
-                    return true;
-                }
-                if (e1.getY() - e2.getY() > FLIP_DISTANCE) {
-                    Log.i("MYTAG", "向上滑...");
-                    return true;
-                }
-                if (e2.getY() - e1.getY() > FLIP_DISTANCE) {
-                    Log.i("MYTAG", "向下滑...");
-                    return true;
-                }
-
-                Log.d("TAG", e2.getX() + " " + e2.getY());
-
-                return false;
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                // TODO Auto-generated method stub
-                return false;
-            }
-        });
-        netscroll_view_id.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return  mDetector.onTouchEvent(event);
-            }
-        });
     }
+
 
     @Override
     public void onResume() {
@@ -241,6 +167,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
         /**
          * 轮播图
          */
+        lv_show_num_id=view.findViewById(R.id.lv_show_num_id);
         banner = view.findViewById(R.id.banner);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置banner样式
@@ -271,7 +198,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                     case "adopt_scheme_detail":
                         //养牛方案详情
                         Intent intent4=new Intent(getHoldingActivity(),CowsClaimActivity.class);
-                        intent4.putExtra("schemId",Integer.parseInt(homeBannerResultBean.getBizData().getPopBanner().getParams()));
+                        intent4.putExtra("schemId",Integer.parseInt(homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()));
                         startActivity(intent4);
                         break;
                     case "adop_order_list":
@@ -280,9 +207,9 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                         break;
                     case "adop_order_detail":
                         //养牛订单详情
-                        Intent intent = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
-                        intent.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
-                        startActivity(intent);
+                        Intent intent3 = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
+                        intent3.putExtra("orderId",homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()+"");
+                        startActivity(intent3);
                         break;
                     case "pasture_list":
                         //合作牧场列表
@@ -300,9 +227,9 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                         break;
                     case "shop_order_detail":
                         //商城订单详情
-                        Intent intent2 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
-                        intent2.putExtra("orderId",homeBannerResultBean.getBizData().getPopBanner().getParams()+"");
-                        startActivity(intent2);
+                        Intent intent7 = new Intent(getHoldingActivity(), MyOrderDetailActivity.class);
+                        intent7.putExtra("orderId",homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()+"");
+                        startActivity(intent7);
                         break;
                     case "total_assets":
                         //总资产
@@ -316,11 +243,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                         //合同列表
                         startActivity(MyContractActivity.class);
                         break;
+                    case "vip_card_detail":
+                        //会员卡详情
+                        startActivity(VipCardActivity.class);
+                        break;
                     case "new_welfare":
                         //新人福利
-                        Intent intent3=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
-                        intent3.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
-                        startActivity(intent3);
+                        Intent intent11=new Intent(getHoldingActivity(),NewManwelfareActivity.class);
+                        intent11.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                        startActivity(intent11);
                         break;
                     default:
                         break;
@@ -371,7 +302,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeVideoResultBean.BizDataBean item=ranchDynamicsAdapter.getItem(position);
                 if(position==beanList.size()-1){
-                    startActivity(RanchDynamicActivity.class);
+                    if(beanList.size()>3){
+                        startActivity(RanchDynamicActivity.class);
+                    }else {
+                        Intent intent = new Intent(getHoldingActivity(), PlayerVideoActivity.class);
+                        intent.putExtra("video_url",item.getPlayUrl());
+                        intent.putExtra("title",item.getName());
+                        intent.putExtra("coverUrl",item.getCoverUrl());
+                        startActivity(intent);
+                    }
                 }else {
                     Intent intent = new Intent(getHoldingActivity(), PlayerVideoActivity.class);
                     intent.putExtra("video_url",item.getPlayUrl());
@@ -381,6 +320,10 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                 }
             }
         });
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
     }
 
 
@@ -465,23 +408,30 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
         if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBanner())){
             if(isFirstAdDialog){
                 isFirstAdDialog=false;
-                if(TextUtils.isEmpty(history)){
-                    SharedPreferences.Editor editor = mPrefDailog.edit();
-                    editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
-                    editor.commit();
-                    Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
-                    intent.putExtra("info",homeBannerResultBean);
-                    startActivity(intent);
-                }else {
-                    if(!DateUtils.getTime(new Date()).equals(history)){
+                if("0".equals(homeBannerResultBean.getBizData().getPopBanner())){
+                    if(TextUtils.isEmpty(history)){
                         SharedPreferences.Editor editor = mPrefDailog.edit();
                         editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
                         editor.commit();
                         Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
                         intent.putExtra("info",homeBannerResultBean);
                         startActivity(intent);
+                    }else {
+                        if(!DateUtils.getTime(new Date()).equals(history)){
+                            SharedPreferences.Editor editor = mPrefDailog.edit();
+                            editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
+                            editor.commit();
+                            Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
+                            intent.putExtra("info",homeBannerResultBean);
+                            startActivity(intent);
+                        }
                     }
+                }else {
+                    Intent intent=new Intent(getHoldingActivity(),GivePoursActivity.class);
+                    intent.putExtra("info",homeBannerResultBean);
+                    startActivity(intent);
                 }
+
             }
         }
 
@@ -491,11 +441,12 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
         beanList.addAll(homeAdResultBean.getBizData());
 
-        HomeVideoResultBean  homeVideoResultBean=new HomeVideoResultBean();
-        HomeVideoResultBean.BizDataBean bizDataBean=homeVideoResultBean.new BizDataBean();
-        bizDataBean.setCoverUrl("1");
-
-        beanList.add(bizDataBean);
+        if(homeAdResultBean.getBizData().size()>3){
+            HomeVideoResultBean  homeVideoResultBean=new HomeVideoResultBean();
+            HomeVideoResultBean.BizDataBean bizDataBean=homeVideoResultBean.new BizDataBean();
+            bizDataBean.setCoverUrl("1");
+            beanList.add(bizDataBean);
+        }
         ranchDynamicsAdapter.setNewData(this.beanList);
         ranchDynamicsAdapter.loadMoreEnd();
     }
@@ -510,7 +461,6 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             }else {
                 lv_show_num_id.setVisibility(View.GONE);
             }
-            homeProductListAdapter.notifyItemChanged(0);
         }else {
             showToast(homeSellCowNumResultBean.getMessage());
         }

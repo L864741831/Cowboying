@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -60,6 +59,7 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +69,7 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
     }
 
     private void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         token= Hawk.get(HawkKey.TOKEN);
         info.setText("我的合同");
         beanList=new ArrayList<>();
@@ -117,6 +118,9 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
 
     @OnClick(R.id.back_id)
     public void onViewClicked() {
+        if(isAd){
+            startActivity(new Intent(MyContractActivity.this, MainActivity.class));
+        }
         finish();
     }
 
@@ -226,5 +230,14 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
     @Override
     public void onPullEnable(boolean enable) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(MyContractActivity.this, MainActivity.class));
+        }
+        finish();
     }
 }

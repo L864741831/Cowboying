@@ -56,17 +56,13 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
         token= Hawk.get(HawkKey.TOKEN);
 
         addMoneyPresenter=new AddMoneyPresenter(this);
-        if("1".equals(incomeType)){
-            rvShowId.setVisibility(View.GONE);
-            ryId.setVisibility(View.GONE);
-        }else  if("2".equals(incomeType)){
-            rvShowId.setVisibility(View.VISIBLE);
-            ryId.setVisibility(View.VISIBLE);
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization",token);
-            reqData.put("version",getVersionCodes());
-            addMoneyPresenter.getAddMoney(reqData,currentPage,interestType);
-        }
+
+        rvShowId.setVisibility(View.VISIBLE);
+        ryId.setVisibility(View.VISIBLE);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        addMoneyPresenter.getAddMoney(reqData,currentPage,interestType,incomeType);
 
     }
 
@@ -97,14 +93,12 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
 
     @Override
     public void onLoadMoreRequested() {
-        if("2".equals(incomeType)){
             isMoreLoad = true;
             currentPage += 1;
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            addMoneyPresenter.getAddMoney(reqData,currentPage,interestType);
-        }
+            addMoneyPresenter.getAddMoney(reqData,currentPage,interestType,incomeType);
     }
 
     @Override

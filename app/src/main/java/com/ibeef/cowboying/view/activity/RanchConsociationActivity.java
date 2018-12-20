@@ -1,6 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -64,6 +65,7 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
     private MainFragmentAdapter mainFragmentAdapter;
     private RanchConsociationFragment ranchConsociationFragment;
     private String token;
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,7 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
     }
 
     private void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         info.setText("合作牧场");
         dataBeen = new ArrayList<>();
         fragmentList=new ArrayList<>();
@@ -167,6 +170,9 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                if(isAd){
+                    startActivity(new Intent(RanchConsociationActivity.this, MainActivity.class));
+                }
                 finish();
                 break;
             default:
@@ -180,5 +186,14 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
             pasturePresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(RanchConsociationActivity.this, MainActivity.class));
+        }
+        finish();
     }
 }

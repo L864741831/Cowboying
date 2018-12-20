@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -58,9 +57,9 @@ public class GivePoursActivity extends BaseActivity {
                         break;
                     case "adop_order_detail":
                         //养牛订单详情
-                        Intent intent = new Intent(GivePoursActivity.this, MyCowsDetailActivity.class);
-                        intent.putExtra("orderId",info.getBizData().getPopBanner().getParams()+"");
-                        startActivity(intent);
+                        Intent intent3 = new Intent(GivePoursActivity.this, MyCowsDetailActivity.class);
+                        intent3.putExtra("orderId",info.getBizData().getPopBanner().getParams()+"");
+                        startActivity(intent3);
                         break;
                     case "pasture_list":
                         //合作牧场列表
@@ -78,9 +77,9 @@ public class GivePoursActivity extends BaseActivity {
                         break;
                     case "shop_order_detail":
                         //商城订单详情
-                        Intent intent2 = new Intent(GivePoursActivity.this, MyOrderDetailActivity.class);
-                        intent2.putExtra("orderId",info.getBizData().getPopBanner().getParams()+"");
-                        startActivity(intent2);
+                        Intent intent7 = new Intent(GivePoursActivity.this, MyOrderDetailActivity.class);
+                        intent7.putExtra("orderId",info.getBizData().getPopBanner().getParams()+"");
+                        startActivity(intent7);
                         break;
                     case "total_assets":
                         //总资产
@@ -94,11 +93,15 @@ public class GivePoursActivity extends BaseActivity {
                         //合同列表
                         startActivity(MyContractActivity.class);
                         break;
+                    case "vip_card_detail":
+                        //会员卡详情
+                        startActivity(VipCardActivity.class);
+                        break;
                     case "new_welfare":
                         //新人福利
-                        Intent intent3=new Intent(GivePoursActivity.this,NewManwelfareActivity.class);
-                        intent3.putExtra("infos",info.getBizData().getNewUserActivity());
-                        startActivity(intent3);
+                        Intent intent11=new Intent(GivePoursActivity.this,NewManwelfareActivity.class);
+                        intent11.putExtra("infos",info.getBizData().getNewUserActivity());
+                        startActivity(intent11);
                         break;
                     default:
                         break;

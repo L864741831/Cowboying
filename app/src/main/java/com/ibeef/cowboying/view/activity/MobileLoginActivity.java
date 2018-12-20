@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.config.HawkKey;
@@ -206,7 +205,7 @@ public class MobileLoginActivity extends BaseActivity {
                 break;
             case R.id.register_rule_id:
                 Intent intent=new Intent(MobileLoginActivity.this,AdWebviewActivity.class);
-                intent.putExtra("url","file:///android_asset/indexxy.html");
+                intent.putExtra("url","http://h5.ibeef.vip/protocol/index.html");
                 intent.putExtra("title","注册协议");
                 startActivity(intent);
                 break;

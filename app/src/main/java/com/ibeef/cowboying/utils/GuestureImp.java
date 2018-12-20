@@ -1,11 +1,10 @@
 package com.ibeef.cowboying.utils;
- 
+
 import android.content.Context;
 import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
  
 public class GuestureImp implements OnGestureListener{
  

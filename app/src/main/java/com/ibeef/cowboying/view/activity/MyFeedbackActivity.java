@@ -1,7 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,6 +19,7 @@ import com.ibeef.cowboying.bean.SubmitFeedbackResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.FeedbackPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 我的反馈界面
  */
-public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener ,FeedbackBase.IView {
+public class MyFeedbackActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener ,FeedbackBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -46,7 +46,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     @Bind(R.id.ry_id)
     RecyclerView ryId;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout mSwipeLayout;
+    SuperSwipeRefreshLayout mSwipeLayout;
     @Bind(R.id.loading_layout)
     RelativeLayout loadingLayout;
     @Bind(R.id.rv_order)
@@ -75,9 +75,11 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         myFeedbackAdapter = new MyFeedbackAdapter(this, baseBeans, R.layout.my_feedback_item);
         myFeedbackAdapter.setOnLoadMoreListener(this, ryId);
         ryId.setAdapter(myFeedbackAdapter);
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent);
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setEnabled(true);
+
+        mSwipeLayout.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mSwipeLayout.setHeaderView(createHeaderView());// add headerView
+        mSwipeLayout.setTargetScrollWithLayout(true);
+        mSwipeLayout.setOnPullRefreshListener(this);
 
         feedbackPresenter = new FeedbackPresenter(this);
         Map<String, String> reqData = new HashMap<>();
@@ -119,7 +121,16 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
         if (!TextUtils.isEmpty(token)) {
             feedbackPresenter.getMyFeedback(reqData, currentPage);
         }
-        mSwipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 
     @Override
@@ -181,6 +192,7 @@ public class MyFeedbackActivity extends BaseActivity implements SwipeRefreshLayo
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
         ryId.setVisibility(View.VISIBLE);
+        mSwipeLayout.setRefreshing(false);
     }
 
     @Override

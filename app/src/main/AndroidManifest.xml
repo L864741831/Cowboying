@@ -70,7 +70,19 @@
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
             tools:node="replace" />
-
+        <receiver
+            android:name=".view.activity.MyReceiver"
+            android:exported="false"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.ibeef.cowboying" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -86,7 +98,8 @@
         <activity
             android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBarWithBackGrounds" />
+            android:theme="@style/AppTheme.NoActionBarWithBackGrounds"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -199,7 +212,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity android:name=".view.activity.StoreCarActivity"
+        <activity
+            android:name=".view.activity.StoreCarActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.StoreSureOderActivity"
@@ -210,24 +224,29 @@
         <activity
             android:name=".view.activity.StorePayResultActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.activity.PickUpCodeActivity"/>
-        <activity android:name=".view.activity.AfterSaleActivity"/>
-        <activity android:name=".view.activity.AfterSaleDetailActivity"/>
-        <activity android:name=".view.activity.AfterSaleApplyActivity"/>
-        <activity android:name=".view.activity.AfterSaleApplyReasonDialog"
-            android:theme="@style/myTransparent"/>
-        <activity android:name=".view.activity.MyOrderActivity"/>
-        <activity android:name=".view.activity.MyorderListCancelDialog"
-            android:theme="@style/myTransparent"/>
-        <activity android:name=".view.activity.MyOrderDetailActivity"/>
-        <activity android:name=".view.activity.ShowOrderDeleveryActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".view.activity.PayActivity"/>
-        <activity android:name=".view.activity.VipCardActivity"/>
-        <activity android:name=".view.activity.ConsumptionHistoryListActivity"/>
-        <activity android:name=".view.activity.PayTypeDialog"
-            android:theme="@style/myTransparent"/>
-        <activity android:name=".view.activity.CertificationActivity"/>
+        <activity android:name=".view.activity.PickUpCodeActivity" />
+        <activity android:name=".view.activity.AfterSaleActivity" />
+        <activity android:name=".view.activity.AfterSaleDetailActivity" />
+        <activity android:name=".view.activity.AfterSaleApplyActivity" />
+        <activity
+            android:name=".view.activity.AfterSaleApplyReasonDialog"
+            android:theme="@style/myTransparent" />
+        <activity android:name=".view.activity.MyOrderActivity" />
+        <activity
+            android:name=".view.activity.MyorderListCancelDialog"
+            android:theme="@style/myTransparent" />
+        <activity android:name=".view.activity.MyOrderDetailActivity" />
+        <activity
+            android:name=".view.activity.ShowOrderDeleveryActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.activity.PayActivity" />
+        <activity android:name=".view.activity.VipCardActivity" />
+        <activity android:name=".view.activity.ConsumptionHistoryListActivity" />
+        <activity
+            android:name=".view.activity.PayTypeDialog"
+            android:theme="@style/myTransparent" />
+        <activity android:name=".view.activity.CertificationActivity" />
+        <activity android:name=".view.activity.MessegeChooseActivity"></activity>
     </application>
 
 </manifest>

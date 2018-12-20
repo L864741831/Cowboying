@@ -35,8 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rxfamily.view.BaseActivity;
 
-import static io.reactivex.schedulers.Schedulers.start;
-
 /**
  * @author Administrator
  * 付款吗界面

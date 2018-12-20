@@ -10,12 +10,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.zxing.BarcodeFormat;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyOrderListBean;
-import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.king.zxing.util.CodeUtils;
 
 import java.util.List;
-
-import rxfamily.bean.BaseBean;
 
 /**
  * @author ls

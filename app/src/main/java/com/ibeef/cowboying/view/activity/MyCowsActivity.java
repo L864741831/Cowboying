@@ -46,7 +46,7 @@ public class MyCowsActivity extends BaseActivity {
     private MyCowsListFragment fragment_4;
     private MainFragmentAdapter mAdpter;
     private boolean from;
-
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,7 @@ public class MyCowsActivity extends BaseActivity {
 
     private void init() {
         from=getIntent().getBooleanExtra("from",false);
+        isAd=getIntent().getBooleanExtra("isAd",false);
         token = Hawk.get(HawkKey.TOKEN);
         info.setText("我的牛只");
 //        actionNewQuestionTv.setVisibility(View.VISIBLE);
@@ -93,7 +94,7 @@ public class MyCowsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                if(from){
+                if(from||isAd){
                     removeALLActivity();//执行移除所以Activity方法
                     Intent intent1=new Intent(MyCowsActivity.this,MainActivity.class);
                     startActivity(intent1);
@@ -113,10 +114,12 @@ public class MyCowsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (from){
+        if (from||isAd){
             removeALLActivity();//执行移除所以Activity方法
             Intent intent1=new Intent(MyCowsActivity.this,MainActivity.class);
             startActivity(intent1);
+        }else {
+            finish();
         }
     }
 }

@@ -11,7 +11,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 
-
 import java.util.List;
 
 public class MyWorkStepAdapter extends BaseQuickAdapter<ShowDeleveryResultBean.BizDataBean.ExpressResVosBean, BaseViewHolder> {

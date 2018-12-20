@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
@@ -38,7 +39,7 @@ public class DiscountCouponActivity extends BaseActivity {
     private MainFragmentAdapter mAdpter;
     private int index;
     private String[] title = {"已领取", "不可用"};
-
+    private boolean isAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class DiscountCouponActivity extends BaseActivity {
     }
 
     public void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         info.setText("我的优惠券");
         index = getIntent().getIntExtra("index", 0);
         mTopNavigationTabStrip = findViewById(R.id.nts_top);
@@ -77,10 +79,17 @@ public class DiscountCouponActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(DiscountCouponActivity.this, MainActivity.class));
+        }
+        finish();
     }
 
     @OnClick(R.id.back_id)
     public void onViewClicked() {
+        if(isAd){
+            startActivity(new Intent(DiscountCouponActivity.this, MainActivity.class));
+        }
         finish();
     }
 }

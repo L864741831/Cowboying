@@ -15,9 +15,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.PayTypeAdapter;
-import com.ibeef.cowboying.adapter.PickUpCodeAdapter;
 import com.ibeef.cowboying.base.MyContractBase;
-import com.ibeef.cowboying.bean.CarListResultBean;
 import com.ibeef.cowboying.bean.MyContractListBean;
 import com.ibeef.cowboying.bean.MyContractURLBean;
 import com.ibeef.cowboying.bean.MyDiscountCouponListBean;
@@ -37,7 +35,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class PayTypeDialog extends AppCompatActivity implements MyContractBase.IView{

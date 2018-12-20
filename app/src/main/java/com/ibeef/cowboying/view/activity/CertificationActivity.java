@@ -1,5 +1,6 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
-import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.utils.ZzUtils;
 import com.orhanobut.hawk.Hawk;
 
@@ -81,6 +81,7 @@ public class CertificationActivity extends BaseActivity implements UserInfoBase.
     }
 
     private void init() {
+        info.setText("实名认证");
         token = Hawk.get(HawkKey.TOKEN);
         userId = getIntent().getStringExtra("userId");
         mobile = getIntent().getStringExtra("mobile");
@@ -154,9 +155,10 @@ public class CertificationActivity extends BaseActivity implements UserInfoBase.
                 finish();
                 break;
             case R.id.xieyi_id:
- //               Bundle bundle = new Bundle();
-//                bundle.putString("title", "用户使用协议");
-//                startActivity(WebViewActivity.class,bundle);
+                Intent intent=new Intent(CertificationActivity.this,AdWebviewActivity.class);
+                intent.putExtra("url","http://h5.ibeef.vip/protocol/index.html");
+                intent.putExtra("title","用户使用协议");
+                startActivity(intent);
                 break;
             case R.id.btn_submit:
                 if (cbSt.isChecked()) {
@@ -191,6 +193,14 @@ public class CertificationActivity extends BaseActivity implements UserInfoBase.
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(userInfoPresenter!=null){
+            userInfoPresenter.detachView();
         }
     }
 }

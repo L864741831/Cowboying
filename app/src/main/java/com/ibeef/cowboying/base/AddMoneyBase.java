@@ -25,12 +25,12 @@ public class AddMoneyBase {
     }
 
     public interface IPresenter {
-        void getAddMoney(Map<String, String> headers,int currentPage,String interestType);
+        void getAddMoney(Map<String, String> headers,int currentPage,String interestType,String incomeType);
         void getYesterdayIncome(Map<String, String> headers,String incomeType);
     }
 
     public interface IModel {
-        Subscription getAddMoney(Map<String, String> headers,int currentPage, String interestType,ResponseCallback<AddMoneyResultBean> callback);
+        Subscription getAddMoney(Map<String, String> headers,int currentPage, String interestType,String incomeType,ResponseCallback<AddMoneyResultBean> callback);
         Subscription getYesterdayIncome(Map<String, String> headers,String incomeType, ResponseCallback<YesterdayIncomeResultBean> callback);
     }
 }

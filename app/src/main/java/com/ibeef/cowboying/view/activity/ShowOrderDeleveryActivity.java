@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.MyWorkStepAdapter;
 import com.ibeef.cowboying.base.MyOrderListBase;
-import com.ibeef.cowboying.bean.CashMoneyRecordResultBean;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
 import com.ibeef.cowboying.bean.MyAfterSaleListBean;
 import com.ibeef.cowboying.bean.MyOrderListBean;

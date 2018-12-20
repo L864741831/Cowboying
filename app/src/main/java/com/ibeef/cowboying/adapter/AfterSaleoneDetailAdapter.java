@@ -1,7 +1,6 @@
 package com.ibeef.cowboying.adapter;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -10,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyAfterSaleDetailBean;
-import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.config.Constant;
 
 import java.util.List;

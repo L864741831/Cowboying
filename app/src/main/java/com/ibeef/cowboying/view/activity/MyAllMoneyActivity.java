@@ -75,6 +75,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     private IncomeInfoPresenter incomeInfoPresenter;
     private String token;
     private IncomeInfoResultBean incomeInfeResultBean;
+    private boolean isAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     }
 
     private void init() {
+        isAd=getIntent().getBooleanExtra("isAd",false);
         token= Hawk.get(HawkKey.TOKEN);
         incomeInfoPresenter=new IncomeInfoPresenter(this);
         integery = new ArrayList<>();
@@ -224,6 +226,9 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
+                if(isAd){
+                    startActivity(new Intent(MyAllMoneyActivity.this, MainActivity.class));
+                }
                 finish();
                 break;
             case R.id.all_money_id:
@@ -281,8 +286,9 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             yesterdayMoneyId.setText(incomeInfeResultBean.getBizData().getYesterdayIncome()+"");
             addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
             myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());
-            whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getVipCardAmount());
-
+            if(!SDCardUtil.isNullOrEmpty(incomeInfeResultBean.getBizData().getVipCardAmount())){
+                whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getVipCardAmount());
+            }
             setData(incomeInfeResultBean);
         }else {
             showToast(incomeInfeResultBean.getMessage());
@@ -310,5 +316,14 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             incomeInfoPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isAd){
+            startActivity(new Intent(MyAllMoneyActivity.this, MainActivity.class));
+        }
+        finish();
     }
 }

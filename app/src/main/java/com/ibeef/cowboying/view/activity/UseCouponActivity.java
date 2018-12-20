@@ -2,7 +2,6 @@ package com.ibeef.cowboying.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.ibeef.cowboying.bean.UseCouponListResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.UseCouponListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 选择优惠券
  */
-public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, UseCouponListBase.IView{
+public class UseCouponActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener, UseCouponListBase.IView{
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -54,7 +54,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
     @Bind(R.id.ry_id)
     RecyclerView ryId;
     @Bind(R.id.swipe_ly)
-    SwipeRefreshLayout swipeLy;
+    SuperSwipeRefreshLayout swipeLy;
     private UseCouponListAdapter useCouponListAdapter;
     private List<UseCouponListResultBean.BizDataBean> objectList;
     private String token;
@@ -81,9 +81,11 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         isStore=getIntent().getBooleanExtra("isStore",false);
         token= Hawk.get(HawkKey.TOKEN);
         info.setText("我的优惠券");
-        swipeLy.setColorSchemeResources(R.color.colorAccent);
-        swipeLy.setOnRefreshListener(this);
-        swipeLy.setEnabled(true);
+
+        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+        swipeLy.setHeaderView(createHeaderView());// add headerView
+        swipeLy.setTargetScrollWithLayout(true);
+        swipeLy.setOnPullRefreshListener(this);
 
         objectList=new ArrayList<>();
         useCouponListPresenter=new UseCouponListPresenter(this);
@@ -213,7 +215,16 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
             couponNumParamBean.setQuantity(quantity+"");
         }
         useCouponListPresenter.getUseCouponList(reqData,couponNumParamBean);
-        swipeLy.setRefreshing(false);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 
     @Override
@@ -284,7 +295,7 @@ public class UseCouponActivity extends BaseActivity implements SwipeRefreshLayou
         } else {
             showToast(useCouponListResultBean.getMessage());
         }
-
+        swipeLy.setRefreshing(false);
     }
 
     @Override
