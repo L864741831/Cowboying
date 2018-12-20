@@ -136,6 +136,10 @@ public class AddressActivity extends BaseActivity implements SuperSwipeRefreshLa
                 startActivity(intent);
                 break;
             case R.id.back_id:
+                Intent intent1=new Intent();
+                intent1.setAction("com.ibeef.cowboying.chooseaddr");
+                intent1.putExtra("isNoData",true);
+                sendBroadcast(intent1);
                 finish();
                 break;
             default:
@@ -251,5 +255,14 @@ public class AddressActivity extends BaseActivity implements SuperSwipeRefreshLa
     @Override
     public void onPullEnable(boolean enable) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent1=new Intent();
+        intent1.setAction("com.ibeef.cowboying.chooseaddr");
+        intent1.putExtra("isNoData",true);
+        sendBroadcast(intent1);
     }
 }
