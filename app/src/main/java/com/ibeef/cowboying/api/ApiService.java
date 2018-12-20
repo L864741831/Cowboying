@@ -377,7 +377,7 @@ public interface ApiService {
      * @return
      */
     @GET("assets/income/log")
-    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage,@Query("interestType") String interestType);
+    Observable<AddMoneyResultBean> getAddMoney(@HeaderMap Map<String, String> headers, @Query("currentPage") int currentPage,@Query("interestType") String interestType,@Query("incomeType") String incomeType );
 
     /**
      * 昨日收益
@@ -788,5 +788,26 @@ public interface ApiService {
      */
     @POST("jiguang/update/code")
     Observable<JgResultBean> getJgRegisteId(@HeaderMap Map<String, String> headers, @Body JgParamBean jgParamBean);
+
+    /**
+     *获取消息列表
+     * @return
+     */
+    @GET("message/get/infoList")
+    Observable<MessegeListReslutBean> getMessegeList(@HeaderMap Map<String, String> headers, @Query("type") int type,@Query("curPage") int curPage);
+
+    /**
+     *获取各个类型未读消息数量
+     * @return
+     */
+    @GET("message/get/noRead/count")
+    Observable<MessegeNumResultBean> getMessegeNum(@HeaderMap Map<String, String> headers);
+
+    /**
+     *删除指定消息
+     * @return
+     */
+    @GET("message/remove/info")
+    Observable<DeleteMessegeResultBean> getMessegeDelete(@HeaderMap Map<String, String> headers,@Query("messageId") int messageId);
 
 }

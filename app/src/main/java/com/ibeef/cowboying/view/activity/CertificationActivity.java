@@ -193,4 +193,12 @@ public class CertificationActivity extends BaseActivity implements UserInfoBase.
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(userInfoPresenter!=null){
+            userInfoPresenter.detachView();
+        }
+    }
 }

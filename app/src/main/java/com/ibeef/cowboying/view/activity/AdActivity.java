@@ -14,8 +14,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.HomeAdResultBean;
+import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
+import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.HomeBannerPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
+import com.orhanobut.hawk.Hawk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +37,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 广告页
  */
-public class AdActivity extends BaseActivity {
+public class AdActivity extends BaseActivity implements HomeBannerBase.IView{
 
     @Bind(R.id.bg_img)
     ImageView bgImg;
@@ -38,6 +50,11 @@ public class AdActivity extends BaseActivity {
     int timeCount = 0,countTime=6;
     boolean continueCount = true;
     private HomeAdResultBean info;
+    private HomeBannerPresenter homeBannerPresenter;
+    private HomeBannerResultBean homeBannerResultBean;
+    private Map<String, String> reqData;
+    private String token;
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressWarnings("unused")
@@ -56,8 +73,17 @@ public class AdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
         ButterKnife.bind(this);
+
+        token= Hawk.get(HawkKey.TOKEN);
+        reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter=new HomeBannerPresenter(this);
+        homeBannerPresenter.getHomeBanner(reqData);
+
         handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
         info= (HomeAdResultBean) getIntent().getSerializableExtra("info");
+
 
         RequestOptions options = new RequestOptions()
                 .error(R.mipmap.startup)
@@ -146,11 +172,17 @@ public class AdActivity extends BaseActivity {
                             intent10.putExtra("isAd",true);
                             startActivity(intent10);
                             break;
+                        case "vip_card_detail":
+                            //会员卡详情
+                            startActivity(VipCardActivity.class);
+                            break;
                         case "new_welfare":
                             //新人福利
-//                            Intent intent3=new Intent(AdActivity.this,NewManwelfareActivity.class);
-//                            intent3.putExtra("infos",info.getBizData().getNewUserActivity());
-//                            startActivity(intent3);
+                            if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean)){
+                                Intent intent11=new Intent(AdActivity.this,NewManwelfareActivity.class);
+                                intent11.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                                startActivity(intent11);
+                            }
                             break;
                         default:
                             break;
@@ -187,5 +219,48 @@ public class AdActivity extends BaseActivity {
         continueCount = false;
         startActivity(new Intent(AdActivity.this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getHomeBanner(HomeBannerResultBean homeBannerResultBean) {
+        this.homeBannerResultBean=homeBannerResultBean;
+    }
+
+    @Override
+    public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
+
+    }
+
+    @Override
+    public void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean) {
+
+    }
+
+    @Override
+    public void getAllVideo(HomeAllVideoResultBean homeAllVideoResultBean) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(homeBannerPresenter!=null){
+            homeBannerPresenter.detachView();
+        }
     }
 }

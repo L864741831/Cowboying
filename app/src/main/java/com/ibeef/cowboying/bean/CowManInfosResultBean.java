@@ -53,11 +53,20 @@ public class CowManInfosResultBean {
          */
 
         private int myCattleCount;
+        private int msgCount;
         private double myTotalAssets;
         private double myCreditAmount;
         private double myBeefAmount;
         private int myCouponCount;
         private boolean haveVipCard;
+
+        public int getMsgCount() {
+            return msgCount;
+        }
+
+        public void setMsgCount(int msgCount) {
+            this.msgCount = msgCount;
+        }
 
         public boolean isHaveVipCard() {
             return haveVipCard;

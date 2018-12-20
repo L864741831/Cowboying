@@ -26,12 +26,15 @@ import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.CowManInfoPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
+import com.ibeef.cowboying.view.activity.AdWebviewActivity;
 import com.ibeef.cowboying.view.activity.AfterSaleActivity;
 import com.ibeef.cowboying.view.activity.BeefStoreHouseActivity;
 import com.ibeef.cowboying.view.activity.ContactUsActivity;
 import com.ibeef.cowboying.view.activity.DiscountCouponActivity;
 import com.ibeef.cowboying.view.activity.InviteFriendActivity;
 import com.ibeef.cowboying.view.activity.LoginActivity;
+import com.ibeef.cowboying.view.activity.MessegeChooseActivity;
+import com.ibeef.cowboying.view.activity.MobileLoginActivity;
 import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
@@ -97,6 +100,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
     @Bind(R.id.beef_house_rv)
     RelativeLayout beefHouseRv;
     TextView writeMoneyId;
+    TextView txt_num_id;
 
     @Bind(R.id.write_money_rv)
     RelativeLayout writeMoneyRv;
@@ -128,6 +132,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
         allMoneyId=view.findViewById(R.id.all_money_id);
         couponNumId=view.findViewById(R.id.coupon_num_id);
         levelId=view.findViewById(R.id.level_id);
+        txt_num_id=view.findViewById(R.id.txt_num_id);
 
         swipeLy.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
         swipeLy.setHeaderView(createHeaderView());// add headerView
@@ -183,7 +188,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
                 if(TextUtils.isEmpty(token)){
                     startActivity(LoginActivity.class);
                 }else {
-                    startActivity(MyMessegeActivity.class);
+                    startActivity(MessegeChooseActivity.class);
                 }
                 break;
             case R.id.setting_id:
@@ -308,10 +313,16 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
                 break;
             case R.id.tell_us_id_rv:
                 //联系我们
-                startActivity(ContactUsActivity.class);
+                Intent intent1=new Intent(getHoldingActivity(),AdWebviewActivity.class);
+                intent1.putExtra("url","http://h5.ibeef.vip/aboutUs/index.html");
+                intent1.putExtra("title","联系我们");
+                startActivity(intent1);
                 break;
             case R.id.nomal_question_rv:
-                startActivity(NormalQuestionActivity.class);
+                Intent intent2=new Intent(getHoldingActivity(),AdWebviewActivity.class);
+                intent2.putExtra("url","http://h5.ibeef.vip/question/faq_index.html");
+                intent2.putExtra("title","常见问题");
+                startActivity(intent2);
                 break;
             case R.id.after_sale_goods_id:
                 //售后列表
@@ -329,6 +340,13 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
     @Override
     public void getCowManInfos(CowManInfosResultBean cowManInfosResultBean) {
         if("000000".equals(cowManInfosResultBean.getCode())){
+
+            if (cowManInfosResultBean.getBizData().getMsgCount() > 0) {
+                txt_num_id.setVisibility(View.VISIBLE);
+                txt_num_id.setText(cowManInfosResultBean.getBizData().getMsgCount() + "");
+            } else {
+                txt_num_id.setVisibility(View.GONE);
+            }
 
             if (cowManInfosResultBean.getBizData().getMyCattleCount() > 0) {
                 cattleNumId.setText(cowManInfosResultBean.getBizData().getMyCattleCount() + "只");

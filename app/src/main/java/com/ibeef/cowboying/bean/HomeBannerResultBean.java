@@ -135,6 +135,15 @@ public class HomeBannerResultBean implements Serializable {
             private String linkUrl;
             private String pageUrl;
             private String params;
+            private String popFlag;
+
+            public String getPopFlag() {
+                return popFlag;
+            }
+
+            public void setPopFlag(String popFlag) {
+                this.popFlag = popFlag;
+            }
 
             public String getParams() {
                 return params;
@@ -209,6 +218,15 @@ public class HomeBannerResultBean implements Serializable {
             private String linkUrl;
             private String pageUrl;
             private String params;
+            private String popFlag;
+
+            public String getPopFlag() {
+                return popFlag;
+            }
+
+            public void setPopFlag(String popFlag) {
+                this.popFlag = popFlag;
+            }
 
             public String getParams() {
                 return params;
@@ -282,6 +300,15 @@ public class HomeBannerResultBean implements Serializable {
             private Object pageId;
             private String linkUrl;
             private String params;
+            private String popFlag;
+
+            public String getPopFlag() {
+                return popFlag;
+            }
+
+            public void setPopFlag(String popFlag) {
+                this.popFlag = popFlag;
+            }
 
             public String getParams() {
                 return params;

@@ -3,10 +3,14 @@ package com.ibeef.cowboying.adapter;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.bean.MessegeListReslutBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.utils.DateUtils;
 
 import java.util.List;
 
@@ -18,7 +22,7 @@ import rxfamily.bean.BaseBean;
  * @describe
  * @package com.ranhan.cowboying.adapter
  **/
-public class MyMessegeListAdapter extends BaseQuickAdapter<BaseBean,BaseViewHolder> {
+public class MyMessegeListAdapter extends BaseQuickAdapter<MessegeListReslutBean.BizDataBean,BaseViewHolder> {
     private Context context;
     public MyMessegeListAdapter(List data, Context context, int layout) {
         super(layout, data);
@@ -26,17 +30,18 @@ public class MyMessegeListAdapter extends BaseQuickAdapter<BaseBean,BaseViewHold
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, BaseBean item) {
+    protected void convert(BaseViewHolder helper, MessegeListReslutBean.BizDataBean item) {
 
-        helper.setText(R.id.time_show_id,"12:12")
-                .setText(R.id.title_txt_id,"订单已提交，请尽快支付哟！")
-                .setText(R.id.info_txt_id,"主人，您已提交认购安格斯牛一头，需支付5000，请在45分钟内完成支付哟！");
+        helper.setText(R.id.time_show_id,DateUtils.formatDate(item.getCreateTime(),DateUtils.TYPE_01))
+                .setText(R.id.title_txt_id,item.getTitle())
+                .setText(R.id.info_txt_id,item.getContent());
 
         RequestOptions options = new RequestOptions()
                 .skipMemoryCache(true)
+                .error(R.mipmap.jzsb)
                 //跳过内存缓存
                 ;
         ImageView imageView= helper.getView(R.id.show_img_id);
-//        Glide.with(mContext).load(item.getMessage()).apply(options).into(imageView);
+        Glide.with(mContext).load(Constant.imageDomain+item.getImageUrl()).apply(options).into(imageView);
     }
 }

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/homef7"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.MessegeChooseActivity">
+    <include layout="@layout/include_title"/>
+    <RelativeLayout
+        android:layout_width="match_parent" android:background="@color/white"
+        android:layout_height="60dp" android:id="@+id/system_messege_rv"
+        android:layout_marginTop="7dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rv1_id"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="40dp" android:id="@+id/img2_id"
+                android:layout_height="40dp" android:src="@drawable/systemmessegerv"
+                android:layout_marginLeft="20dp" android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="15dp" android:text="12"
+                android:layout_height="15dp" android:background="@drawable/shape_black_cicle"
+                android:textColor="@color/white" android:gravity="center"
+                android:id="@+id/txt1_id" android:textSize="8sp"
+                android:layout_marginLeft="45dp"  android:padding="3dp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="系统消息" android:layout_marginLeft="10dp"
+            android:textSize="16sp" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rv1_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text=""
+            android:textColor="@color/red" android:textSize="14sp"
+            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+            android:gravity="center" android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent" android:background="@color/white"
+        android:layout_height="60dp" android:id="@+id/unuse_messege_rv"
+        android:layout_marginTop="7dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rv2_id"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="40dp" android:id="@+id/img1_id"
+                android:layout_height="40dp" android:src="@drawable/unusemessegerv"
+                android:layout_marginLeft="20dp" android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="15dp" android:text="12"
+                android:layout_height="15dp" android:background="@drawable/shape_black_cicle"
+                android:textColor="@color/white" android:gravity="center"
+                android:id="@+id/txt2_id" android:textSize="8sp"
+                android:layout_marginLeft="45dp"  android:padding="3dp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="吃肉省钱" android:layout_marginLeft="10dp"
+            android:textSize="16sp" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rv2_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+            android:gravity="center" android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="7dp"
+        android:layout_width="match_parent" android:background="@color/white"
+        android:layout_height="60dp" android:id="@+id/eatcows_messege_rv">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rv3_id"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="40dp" android:id="@+id/img_id"
+                android:layout_height="40dp" android:src="@drawable/eatcowsmessegerv"
+                android:layout_marginLeft="20dp" android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="15dp" android:text="12"
+                android:layout_height="15dp" android:background="@drawable/shape_black_cicle"
+                android:textColor="@color/white" android:gravity="center"
+                android:id="@+id/txt3_id" android:textSize="8sp"
+                android:layout_marginLeft="45dp"  android:padding="3dp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="养牛赚钱" android:layout_marginLeft="10dp"
+            android:textSize="16sp" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rv3_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text=""
+            android:textColor="@color/red" android:textSize="14sp"
+            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+            android:gravity="center" android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent" android:background="@color/white"
+        android:layout_height="60dp" android:id="@+id/storeorder_messege_rv"
+        android:layout_marginTop="7dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rv4_id"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="40dp" android:id="@+id/img4_id"
+                android:layout_height="40dp" android:src="@drawable/storeordermessegerv"
+                android:layout_marginLeft="20dp" android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="15dp" android:text="12"
+                android:layout_height="15dp" android:background="@drawable/shape_black_cicle"
+                android:textColor="@color/white" android:gravity="center"
+                android:id="@+id/txt4_id" android:textSize="8sp"
+                android:layout_marginLeft="45dp"  android:padding="3dp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="商城订单" android:layout_marginLeft="10dp"
+            android:textSize="16sp" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rv4_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+            android:gravity="center" android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:background="@color/white"
+        android:layout_height="60dp" android:id="@+id/mucoupon_messege_rv"
+        android:layout_marginTop="7dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rv5_id"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="40dp" android:id="@+id/img5_id"
+                android:layout_height="40dp" android:src="@drawable/mucouponmessegerv"
+                android:layout_marginLeft="20dp" android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="15dp" android:text="12"
+                android:layout_height="15dp" android:background="@drawable/shape_black_cicle"
+                android:textColor="@color/white" android:gravity="center"
+                android:id="@+id/txt5_id" android:textSize="8sp"
+                android:layout_marginLeft="45dp"  android:padding="3dp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/black"
+            android:text="我的优惠券" android:layout_marginLeft="10dp"
+            android:textSize="16sp" android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rv5_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+            android:gravity="center" android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
