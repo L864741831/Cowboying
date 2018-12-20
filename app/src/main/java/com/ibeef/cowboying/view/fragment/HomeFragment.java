@@ -408,7 +408,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
         if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getPopBanner())){
             if(isFirstAdDialog){
                 isFirstAdDialog=false;
-                if("0".equals(homeBannerResultBean.getBizData().getPopBanner())){
+                if("0".equals(homeBannerResultBean.getBizData().getPopBanner().getPopFlag())){
                     if(TextUtils.isEmpty(history)){
                         SharedPreferences.Editor editor = mPrefDailog.edit();
                         editor.putString(KEY_HISTORY_KEYWORD, DateUtils.getTime(new Date()));
