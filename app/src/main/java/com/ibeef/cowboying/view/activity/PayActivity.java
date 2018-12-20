@@ -123,7 +123,7 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
-            myContractPresenter.showPayCode(reqData,"");
+            myContractPresenter.showPayCode(reqData,payType);
         }
     }
 
@@ -135,6 +135,7 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
                 break;
             case R.id.tv_wallet:
                 Intent intent = new Intent(this, PayTypeDialog.class);
+                intent.putExtra("PayType",payType);
                 startActivityForResult(intent, 666);
                 break;
             case R.id.tv_code:
@@ -150,11 +151,11 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 666 && resultCode == 555) {
             payType = data.getStringExtra("PayType");
-            Map<String, String> reqData = new HashMap<>();
-            reqData.put("Authorization", token);
-            reqData.put("version", getVersionCodes());
-            myContractPresenter.showPayCode(reqData,payType);
-            Log.i("htht", "payType=============" + payType);
+//            Map<String, String> reqData = new HashMap<>();
+//            reqData.put("Authorization", token);
+//            reqData.put("version", getVersionCodes());
+//            myContractPresenter.showPayCode(reqData,payType);
+//            Log.i("htht", "payType=============" + payType);
         }
     }
 

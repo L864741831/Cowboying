@@ -53,6 +53,7 @@ public class PayTypeDialog extends AppCompatActivity implements MyContractBase.I
     private String token;
     private MyContractPresenter myContractPresenter;
     private List<PayCodeBean.BizDataBean.PayTypeListBean> listData;
+    private String payType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class PayTypeDialog extends AppCompatActivity implements MyContractBase.I
     private void init() {
 
         token = Hawk.get(HawkKey.TOKEN);
+        payType = getIntent().getStringExtra("PayType");
         listData= new ArrayList<>();
         ryId.setLayoutManager(new LinearLayoutManager(this));
         payTypeAdapter = new PayTypeAdapter(listData, this, R.layout.item_pay_type);
@@ -74,17 +76,19 @@ public class PayTypeDialog extends AppCompatActivity implements MyContractBase.I
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", Constant.VersionCodes);
-            myContractPresenter.showPayCode(reqData,"");
+            myContractPresenter.showPayCode(reqData,payType);
         }
-        payTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+        payTypeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 intent = new Intent();
                 intent.putExtra("PayType", payTypeAdapter.getItem(position).getPayType());
                 setResult(555, intent);
                 finish();
             }
         });
+
     }
 
     @Override
