@@ -85,6 +85,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify_code);
         ButterKnife.bind(this);
+        initDialog();
         init();
     }
 
@@ -113,6 +114,30 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             public void onComplete(String content) {
                 contents=content;
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                showLoadings();
+                if("0".equals(stadus)){
+                    //调登录接口
+                    LoginParamBean loginParamBean=new LoginParamBean();
+                    loginParamBean.setUserName(mobile);
+                    loginParamBean.setType("2");
+                    //1：密码登录；2：短信验证码登录
+                    loginParamBean.setSmsCode(contents);
+                    loginParamBean.setMachineCode(Md5Util.getIMEI(IdentifyCodeActivity.this));
+                    Log.e(Constant.TAG,Md5Util.getIMEI(IdentifyCodeActivity.this)+"~~~~~~~~~~");
+                    loginPresenter.getUserLogin(getVersionCodes(),loginParamBean);
+                }else  if("2".equals(stadus)){
+                    //注册接口
+                    AccountRegisterParamBean accountRegisterParamBean=new AccountRegisterParamBean();
+                    accountRegisterParamBean.setMobile(mobile);
+                    accountRegisterParamBean.setCode(contents);
+                    accountRegisterParamBean.setMachineCode(Md5Util.getIMEI(IdentifyCodeActivity.this));
+                    Log.e(Constant.TAG,Md5Util.getIMEI(IdentifyCodeActivity.this)+"~~~~~~~~~~");
+                    accountRegisterPresenter.getAccoutRegister(getVersionCodes(),accountRegisterParamBean);
+
+                }else {
+                    //校验验证码接口
+                    validade();
+                }
                 Log.e(Constant.TAG, "完成输入：" + content);
             }
         });
@@ -131,6 +156,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                     showToast("请完善验证码！");
                     return;
                 }
+                showLoadings();
                 if("0".equals(stadus)){
                     //调登录接口
                     LoginParamBean loginParamBean=new LoginParamBean();
@@ -330,6 +356,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void getUpdateMobile(UpdateMobileResultBean updateMobileResultBean) {
+        dismissLoading();
         if("000000".equals(updateMobileResultBean.getCode())){
             if("9".equals(stadus)){
                 showToast("换绑手机号成功~");
@@ -346,6 +373,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void getUserLogin(LoginBean loginBean) {
+        dismissLoading();
         if("000000".equals(loginBean.getCode())){
             Hawk.put(HawkKey.TOKEN, loginBean.getBizData());
 
@@ -370,8 +398,10 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void getValidateSms(SmsCodeResultBean smsCodeResultBean) {
+
         if("000000".equals(smsCodeResultBean.getCode())){
             if("1".equals(stadus)||"5".equals(stadus)||"11".equals(stadus)){
+                dismissLoading();
                 //1来自忘记密码，跳到重置密码界面，  //5 11设置<账号安全<设置登录密码  修改登录密码
                 Intent intent=new Intent(IdentifyCodeActivity.this,ResetPwdActivity.class);
                 if("1".equals(stadus)){
@@ -396,6 +426,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
             }else   if("4".equals(stadus)){
                 //2注册流程 4 //设置<账号安全<修改登录手机号
+                dismissLoading();
                 Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
                 intent.putExtra("stadus","6");
                 intent.putExtra("oldmobile",oldmobile);
@@ -403,6 +434,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 finish();
             }else if("8".equals(stadus)){
                  // 8 设置<账号安全<手机号换绑
+                dismissLoading();
                 Intent intent=new Intent(IdentifyCodeActivity.this,MobileLoginActivity.class);
                 intent.putExtra("stadus","8");
                 intent.putExtra("oldmobile",oldmobile);
@@ -427,6 +459,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 updateMobilePresenter.getUpdateMobile(reqData,updateMobileParamBean);
             }
         }else {
+            dismissLoading();
             showToast(smsCodeResultBean.getMessage());
         }
 
@@ -450,6 +483,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void getAccoutRegister(AccountRegisterResultBean accountRegisterResultBean) {
+        dismissLoading();
         if("000000".equals(accountRegisterResultBean.getCode())){
             Hawk.put(HawkKey.TOKEN, accountRegisterResultBean.getBizData());
             Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
@@ -466,6 +500,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void getBindMobile(BindMobileResultBean bindMobileResultBean) {
+        dismissLoading();
         if("000000".equals(bindMobileResultBean.getCode())){
             showToast("绑定手机号成功~");
             if("3".equals(stadus)){
@@ -482,6 +517,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     public void getCheckThirLogin(CheckThirdLoginResultBean checkThirdLoginResultBean) {
+        dismissLoading();
         if("000000".equals(checkThirdLoginResultBean.getCode())){
             Hawk.put(HawkKey.TOKEN, checkThirdLoginResultBean.getBizData());
             Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);

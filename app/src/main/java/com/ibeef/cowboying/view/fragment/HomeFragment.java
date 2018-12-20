@@ -83,7 +83,6 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private List<Object> objectList;
     private TextView sellCowNumId;
     private TextView sellCowNum2Id;
-    private LinearLayout netscroll_view_id;
 
     private Banner specialbeefImgId;
     private ImageView newpeopleImgId;
@@ -107,11 +106,9 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     protected void initView(View view, Bundle savedInstanceState) {
         swipeLy=view.findViewById(R.id.swipe_ly);
         homeRyId=view.findViewById(R.id.home_ry_id);
-        homeRyId.setHasFixedSize(true);
-        homeRyId.setNestedScrollingEnabled(false);
+//        homeRyId.setHasFixedSize(true);
+//        homeRyId.setNestedScrollingEnabled(false);
         rv_show_id=view.findViewById(R.id.rv_show_id);
-        lv_show_num_id=view.findViewById(R.id.lv_show_num_id);
-        netscroll_view_id=view.findViewById(R.id.netscroll_view_id);
 
         homeRyId.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
         swipeLy.setHeaderViewBackgroundColor(getHoldingActivity().getResources().getColor(R.color.colorAccent));
@@ -121,14 +118,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 
         objectList=new ArrayList<>();
         homeProductListAdapter=new HomeProductListAdapter(objectList,getHoldingActivity(),R.layout.activity_ad_webview);
+        token= Hawk.get(HawkKey.TOKEN);
+        homeBannerPresenter=new HomeBannerPresenter(this);
+
         View headView = View.inflate(getHoldingActivity(), R.layout.home_head_view, null);
         init(headView);
         //添加头视图
         homeProductListAdapter.addHeaderView(headView);
         homeRyId.setAdapter(homeProductListAdapter);
 
-        token= Hawk.get(HawkKey.TOKEN);
-        homeBannerPresenter=new HomeBannerPresenter(this);
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
@@ -180,6 +178,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
         /**
          * 轮播图
          */
+        lv_show_num_id=view.findViewById(R.id.lv_show_num_id);
         banner = view.findViewById(R.id.banner);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置banner样式
@@ -332,6 +331,10 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                 }
             }
         });
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getHomeSellCowsNum(reqData);
     }
 
 
@@ -469,7 +472,6 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
             }else {
                 lv_show_num_id.setVisibility(View.GONE);
             }
-            homeProductListAdapter.notifyItemChanged(0);
         }else {
             showToast(homeSellCowNumResultBean.getMessage());
         }

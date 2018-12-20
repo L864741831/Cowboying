@@ -286,8 +286,9 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
             yesterdayMoneyId.setText(incomeInfeResultBean.getBizData().getYesterdayIncome()+"");
             addMoneyId.setText(incomeInfeResultBean.getBizData().getCumulativeIncome()+"");
             myWalletId.setText("￥"+incomeInfeResultBean.getBizData().getWalletBalance());
-            whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getVipCardAmount());
-
+            if(!SDCardUtil.isNullOrEmpty(incomeInfeResultBean.getBizData().getVipCardAmount())){
+                whiteMoneyId.setText("￥"+incomeInfeResultBean.getBizData().getVipCardAmount());
+            }
             setData(incomeInfeResultBean);
         }else {
             showToast(incomeInfeResultBean.getMessage());
