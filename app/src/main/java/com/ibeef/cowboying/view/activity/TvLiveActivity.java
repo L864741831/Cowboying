@@ -1,178 +1,328 @@
 package com.ibeef.cowboying.view.activity;
 
-import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Transition;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.OrientationEventListener;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.ezvizuikit.open.EZUIError;
+import com.ezvizuikit.open.EZUIKit;
+import com.ezvizuikit.open.EZUIPlayer;
 import com.ibeef.cowboying.R;
-import com.ibeef.cowboying.view.customview.OnTransitionListener;
-import com.ibeef.cowboying.view.customview.SampleVideo;
-import com.ibeef.cowboying.view.customview.SwitchVideoModel;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.ibeef.cowboying.base.VideoAppkeyBase;
+import com.ibeef.cowboying.bean.VideoAppkeyResultBean;
+import com.ibeef.cowboying.config.Constant;
+import com.ibeef.cowboying.config.HawkKey;
+import com.ibeef.cowboying.presenter.VideoAppkeyPresenter;
+import com.ibeef.cowboying.view.customview.WindowSizeChangeNotifier;
+import com.orhanobut.hawk.Hawk;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+public class TvLiveActivity extends AppCompatActivity implements View.OnClickListener,VideoAppkeyBase.IView , WindowSizeChangeNotifier.OnWindowSizeChangedListener, EZUIPlayer.EZUIPlayerCallBack {
 
-public class TvLiveActivity extends AppCompatActivity {
-    @Bind(R.id.detail_player)
-    SampleVideo detailPlayer;
-    OrientationUtils orientationUtils;
 
-    private boolean isTransition;
-
-    private Transition transition;
-
-    private ImageView coverImageView;
-    public final static String IMG_TRANSITION = "IMG_TRANSITION";
-    public final static String TRANSITION = "TRANSITION";
+    private VideoAppkeyPresenter videoAppkeyPresenter;
+    private String token;
+    private String video_url;
+    private String title;
+    private String coverUrl;
+    private EZUIPlayer mEZUIPlayer;
+    private ImageView back_id;
+    private MyOrientationDetector mOrientationDetector;
+    /**
+     * onresume时是否恢复播放
+     */
+    private boolean isResumePlay = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_tv_live);
-        ButterKnife.bind(this);
-        isTransition = getIntent().getBooleanExtra(TRANSITION, false);
         init();
     }
 
-    private void init(){
-        String video_url = getIntent().getStringExtra("video_url");
-        String title = getIntent().getStringExtra("title");
-        String coverUrl = getIntent().getStringExtra("coverUrl");
-        String source1 = "https://res.exexm.com/cw_145225549855002";
-        //String source1 = "https://res.exexm.com/cw_145225549855002";
-        String name = "普通";
-        SwitchVideoModel switchVideoModel = new SwitchVideoModel(name, source1);
+    private void init() {
+        video_url = getIntent().getStringExtra("video_url");
+        title = getIntent().getStringExtra("title");
+        coverUrl = getIntent().getStringExtra("coverUrl");
+
+        back_id=findViewById(R.id.back_id);
+        back_id.setOnClickListener(this);
+        token = Hawk.get(HawkKey.TOKEN);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization", token);
+        reqData.put("version", Constant.VersionCodes);
+        videoAppkeyPresenter = new VideoAppkeyPresenter(this);
+        videoAppkeyPresenter.getVideoAppKey(reqData);
 
 
-        List<SwitchVideoModel> list = new ArrayList<>();
-        list.add(switchVideoModel);
-        detailPlayer.setUp(list, true, title);
+        mOrientationDetector = new MyOrientationDetector(this);
+        new WindowSizeChangeNotifier(this, this);
 
-        //增加封面
-        coverImageView = new ImageView(this);
-        coverImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(this).load(coverUrl).into(coverImageView);
-        detailPlayer.setThumbImageView(coverImageView);
+        //获取EZUIPlayer实例
+        mEZUIPlayer = (EZUIPlayer) findViewById(R.id.player_ui);
+        //设置加载需要显示的view
+        mEZUIPlayer.setLoadingView(initProgressBar());
 
-        //增加title
-        detailPlayer.getTitleTextView().setVisibility(View.VISIBLE);
-        //videoPlayer.setShowPauseCover(false);
-
-        //videoPlayer.setSpeed(2f);
-
-        //设置返回键
-        detailPlayer.getBackButton().setVisibility(View.VISIBLE);
-
-        //设置旋转
-        orientationUtils = new OrientationUtils(this, detailPlayer);
-
-        //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-        detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                orientationUtils.resolveByClick();
-            }
-        });
-
-        //是否可以滑动调整
-        detailPlayer.setIsTouchWiget(true);
-
-        //设置返回按键功能
-        detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        //过渡动画
-        initTransition();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        detailPlayer.onVideoPause();
+    /**
+     * 创建加载view
+     *
+     * @return
+     */
+    private View initProgressBar() {
+        RelativeLayout relativeLayout = new RelativeLayout(this);
+        relativeLayout.setBackgroundColor(Color.parseColor("#000000"));
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        relativeLayout.setLayoutParams(lp);
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rlp.addRule(RelativeLayout.CENTER_IN_PARENT);//addRule参数对应RelativeLayout XML布局的属性
+        ProgressBar mProgressBar = new ProgressBar(this);
+        mProgressBar.setIndeterminateDrawable(getResources().getDrawable(R.drawable.progress));
+        relativeLayout.addView(mProgressBar, rlp);
+        return relativeLayout;
+    }
+
+    /**
+     * 准备播放资源参数
+     */
+    private void preparePlay(String mGlobalAreaDomain,String appkey,String accesstoken) {
+        //设置debug模式，输出log信息
+        EZUIKit.setDebug(true);
+        if (TextUtils.isEmpty(mGlobalAreaDomain)) {
+            //appkey初始化
+            EZUIKit.initWithAppKey(this.getApplication(), appkey);
+
+        } else {
+            //appkey初始化 海外版本
+            EZUIKit.initWithAppKeyGlobal(this.getApplication(), appkey, mGlobalAreaDomain);
+        }
+        //设置授权accesstoken
+        EZUIKit.setAccessToken(accesstoken);
+        //设置播放资源参数
+        mEZUIPlayer.setCallBack(this);
+        mEZUIPlayer.setUrl(video_url);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        detailPlayer.onVideoResume();
+        mOrientationDetector.enable();
+        Log.d(Constant.TAG, "onResume");
+        //界面stop时，如果在播放，那isResumePlay标志位置为true，resume时恢复播放
+        if (isResumePlay) {
+            isResumePlay = false;
+            mEZUIPlayer.startPlay();
+        }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mOrientationDetector.disable();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(Constant.TAG, "onStop + " + mEZUIPlayer.getStatus());
+        //界面stop时，如果在播放，那isResumePlay标志位置为true，以便resume时恢复播放
+        if (mEZUIPlayer.getStatus() != EZUIPlayer.STATUS_STOP) {
+            isResumePlay = true;
+        }
+        //停止播放
+        mEZUIPlayer.stopPlay();
+    }
+
+    @Override
+    public void onPlaySuccess() {
+
+    }
+
+    @Override
+    public void onPlayFail(EZUIError error) {
+        Log.d(Constant.TAG, "onPlayFail");
+        // TODO: 2017/2/21 播放失败处理
+        if (error.getErrorString().equals(EZUIError.UE_ERROR_INNER_VERIFYCODE_ERROR)) {
+
+        } else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_NOT_FOUND_RECORD_FILES)) {
+            // TODO: 2017/5/12
+            //未发现录像文件
+            Toast.makeText(this, "未发现录像文件", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onVideoSizeChange(int width, int height) {
+        // TODO: 2017/2/16 播放视频分辨率回调
+        Log.d(Constant.TAG, "onVideoSizeChange  width = " + width + "   height = " + height);
+    }
+
+    @Override
+    public void onPrepared() {
+        Log.d(Constant.TAG, "onPrepared");
+        //播放
+        mEZUIPlayer.startPlay();
+    }
+
+    @Override
+    public void onPlayTime(Calendar calendar) {
+        Log.d(Constant.TAG, "onPlayTime");
+        if (calendar != null) {
+            // TODO: 2017/2/16 当前播放时间
+            Log.d(Constant.TAG, "onPlayTime calendar = " + calendar.getTime().toString());
+        }
+    }
+
+    @Override
+    public void onPlayFinish() {
+        // TODO: 2017/2/16 播放结束
+        Log.d(Constant.TAG, "onPlayFinish");
+    }
+
+
+    /**
+     * 屏幕旋转时调用此方法
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d(Constant.TAG, "onConfigurationChanged");
+        setSurfaceSize();
+    }
+
+    private void setSurfaceSize() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        boolean isWideScrren = mOrientationDetector.isWideScrren();
+        //竖屏
+        if (!isWideScrren) {
+            //竖屏调整播放区域大小，宽全屏，高根据视频分辨率自适应
+            mEZUIPlayer.setSurfaceSize(dm.widthPixels, 0);
+        } else {
+            //横屏屏调整播放区域大小，宽、高均全屏，播放区域根据视频分辨率自适应
+            mEZUIPlayer.setSurfaceSize(dm.widthPixels, dm.heightPixels);
+        }
+    }
+
+    @Override
+    public void onWindowSizeChanged(int w, int h, int oldW, int oldH) {
+        if (mEZUIPlayer != null) {
+            setSurfaceSize();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.back_id){
+            finish();
+        }
+    }
+
+    public class MyOrientationDetector extends OrientationEventListener {
+
+        private WindowManager mWindowManager;
+        private int mLastOrientation = 0;
+
+        public MyOrientationDetector(Context context) {
+            super(context);
+            mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        }
+
+        public boolean isWideScrren() {
+            Display display = mWindowManager.getDefaultDisplay();
+            Point pt = new Point();
+            display.getSize(pt);
+            return pt.x > pt.y;
+        }
+
+        @Override
+        public void onOrientationChanged(int orientation) {
+            int value = getCurentOrientationEx(orientation);
+            if (value != mLastOrientation) {
+                mLastOrientation = value;
+                int current = getRequestedOrientation();
+                if (current == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                        || current == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                }
+            }
+        }
+
+        private int getCurentOrientationEx(int orientation) {
+            int value = 0;
+            if (orientation >= 315 || orientation < 45) {
+                // 0度
+                value = 0;
+                return value;
+            }
+            if (orientation >= 45 && orientation < 135) {
+                // 90度
+                value = 90;
+                return value;
+            }
+            if (orientation >= 135 && orientation < 225) {
+                // 180度
+                value = 180;
+                return value;
+            }
+            if (orientation >= 225 && orientation < 315) {
+                // 270度
+                value = 270;
+                return value;
+            }
+            return value;
+        }
+    }
+
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getVideoAppKey(VideoAppkeyResultBean videoAppkeyResultBean) {
+        if ("000000".equals(videoAppkeyResultBean.getCode())) {
+            preparePlay("",videoAppkeyResultBean.getBizData().getAppKey(),videoAppkeyResultBean.getBizData().getAccessToken());
+            setSurfaceSize();
+        } else {
+            Toast.makeText(TvLiveActivity.this,videoAppkeyResultBean.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (orientationUtils != null) {
-            orientationUtils.releaseListener();
+        Log.d(Constant.TAG, "onDestroy");
+
+        //释放资源
+        mEZUIPlayer.releasePlayer();
+        if(videoAppkeyPresenter!=null){
+            videoAppkeyPresenter.detachView();
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        //先返回正常状态
-        if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            detailPlayer.getFullscreenButton().performClick();
-            return;
-        }
-        //释放所有
-        detailPlayer.setVideoAllCallBack(null);
-        GSYVideoManager.releaseAllVideos();
-        if (isTransition && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.onBackPressed();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    finish();
-                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-                }
-            }, 500);
-        }
-    }
-
-
-    private void initTransition() {
-        if (isTransition && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            postponeEnterTransition();
-            ViewCompat.setTransitionName(detailPlayer, IMG_TRANSITION);
-            addTransitionListener();
-            startPostponedEnterTransition();
-        } else {
-            detailPlayer.startPlayLogic();
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private boolean addTransitionListener() {
-        transition = getWindow().getSharedElementEnterTransition();
-        if (transition != null) {
-            transition.addListener(new OnTransitionListener(){
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    super.onTransitionEnd(transition);
-                    detailPlayer.startPlayLogic();
-                    transition.removeListener(this);
-                }
-            });
-            return true;
-        }
-        return false;
-    }
-
 }
+

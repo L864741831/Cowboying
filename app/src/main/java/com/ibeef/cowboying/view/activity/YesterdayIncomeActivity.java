@@ -132,9 +132,9 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(addMoneyPresenter!=null){
             addMoneyPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

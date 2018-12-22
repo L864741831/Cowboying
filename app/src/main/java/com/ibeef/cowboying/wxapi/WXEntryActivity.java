@@ -169,12 +169,12 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(accountSecurityPresenter!=null){
             accountSecurityPresenter.detachView();
         }
         if(thirdAccountLoginPresenter!=null){
             thirdAccountLoginPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

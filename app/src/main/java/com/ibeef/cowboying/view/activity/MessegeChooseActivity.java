@@ -14,6 +14,7 @@ import com.ibeef.cowboying.bean.MessegeListReslutBean;
 import com.ibeef.cowboying.bean.MessegeNumResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MessegePresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
@@ -127,36 +128,45 @@ public class MessegeChooseActivity extends BaseActivity implements MessegeBase.I
     @Override
     public void getMessegeNum(MessegeNumResultBean numResultBean) {
         if("000000".equals(numResultBean.getCode())){
-            if(numResultBean.getBizData().getSysMsgCount()>0){
-                txt1Id.setVisibility(View.VISIBLE);
-                txt1Id.setText(numResultBean.getBizData().getSysMsgCount()+"");
-             }else {
+            if(SDCardUtil.isNullOrEmpty(numResultBean.getBizData())){
                 txt1Id.setVisibility(View.GONE);
-            }
-            if(numResultBean.getBizData().getEatMeatCount()>0){
-                txt2Id.setVisibility(View.VISIBLE);
-                txt2Id.setText(numResultBean.getBizData().getEatMeatCount()+"");
-             }else {
                 txt2Id.setVisibility(View.GONE);
-            }
-            if(numResultBean.getBizData().getAdoptCount()>0){
-                txt3Id.setVisibility(View.VISIBLE);
-                txt3Id.setText(numResultBean.getBizData().getAdoptCount()+"");
-             }else {
                 txt3Id.setVisibility(View.GONE);
-            }
-            if(numResultBean.getBizData().getShopCount()>0){
-                txt4Id.setVisibility(View.VISIBLE);
-                txt4Id.setText(numResultBean.getBizData().getShopCount()+"");
-             }else {
                 txt4Id.setVisibility(View.GONE);
-            }
-            if(numResultBean.getBizData().getCouponCount()>0){
-                txt5Id.setVisibility(View.VISIBLE);
-                txt5Id.setText(numResultBean.getBizData().getCouponCount()+"");
-             }else {
                 txt5Id.setVisibility(View.GONE);
+            }else {
+                if(numResultBean.getBizData().getSysMsgCount()>0){
+                    txt1Id.setVisibility(View.VISIBLE);
+                    txt1Id.setText(numResultBean.getBizData().getSysMsgCount()+"");
+                }else {
+                    txt1Id.setVisibility(View.GONE);
+                }
+                if(numResultBean.getBizData().getEatMeatCount()>0){
+                    txt2Id.setVisibility(View.VISIBLE);
+                    txt2Id.setText(numResultBean.getBizData().getEatMeatCount()+"");
+                }else {
+                    txt2Id.setVisibility(View.GONE);
+                }
+                if(numResultBean.getBizData().getAdoptCount()>0){
+                    txt3Id.setVisibility(View.VISIBLE);
+                    txt3Id.setText(numResultBean.getBizData().getAdoptCount()+"");
+                }else {
+                    txt3Id.setVisibility(View.GONE);
+                }
+                if(numResultBean.getBizData().getShopCount()>0){
+                    txt4Id.setVisibility(View.VISIBLE);
+                    txt4Id.setText(numResultBean.getBizData().getShopCount()+"");
+                }else {
+                    txt4Id.setVisibility(View.GONE);
+                }
+                if(numResultBean.getBizData().getCouponCount()>0){
+                    txt5Id.setVisibility(View.VISIBLE);
+                    txt5Id.setText(numResultBean.getBizData().getCouponCount()+"");
+                }else {
+                    txt5Id.setVisibility(View.GONE);
+                }
             }
+
         }else {
             showToast(numResultBean.getMessage());
         }

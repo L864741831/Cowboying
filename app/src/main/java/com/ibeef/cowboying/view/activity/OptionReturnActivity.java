@@ -442,9 +442,12 @@ public class OptionReturnActivity extends BaseActivity implements FeedbackBase.I
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (feedbackPresenter != null) {
             feedbackPresenter.detachView();
         }
-        super.onDestroy();
+        if (getOssImgPresenter != null) {
+            getOssImgPresenter.detachView();
+        }
     }
 }

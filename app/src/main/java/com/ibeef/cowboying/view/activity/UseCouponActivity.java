@@ -320,10 +320,10 @@ public class UseCouponActivity extends BaseActivity implements SuperSwipeRefresh
     }
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(useCouponListPresenter!=null){
             useCouponListPresenter.detachView();
         }
-        super.onDestroy();
     }
 
 }

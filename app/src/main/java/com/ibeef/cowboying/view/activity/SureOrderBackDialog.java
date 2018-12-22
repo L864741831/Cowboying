@@ -115,4 +115,12 @@ public class SureOrderBackDialog extends AppCompatActivity implements View.OnCli
     public void getMyCowsToPay(CreatOderResultBean creatOderResultBean) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myCowsOrderPresenter!=null){
+            myCowsOrderPresenter.detachView();
+        }
+    }
 }

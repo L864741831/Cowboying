@@ -20,7 +20,6 @@ import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.bean.StoreCarResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.orhanobut.hawk.Hawk;
@@ -156,7 +155,7 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
                 showTitleId.setVisibility(View.VISIBLE);
                 showAddrId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverName());
                 mobileTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverMobile());
-                delAddrTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverProvince()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverCity()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverRegion()+myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
+                delAddrTxtId.setText(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiverAddress());
             } else  if ("2".equals(stadus)){
                 rvStoreaddrId.setVisibility(View.VISIBLE);
                 addressRv.setVisibility(View.GONE);
@@ -173,7 +172,8 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     MyOrderListDetailBean.BizDataBean.ShopOrderProductResVosBean items=storeResultOrderAdapter.getItem(position);
-                    Constant.PRODUCR_ID=items.getProductId();
+                    Hawk.put(HawkKey.PRODUCR_ID, items.getProductId());
+                    removeALLActivity();
                     Intent intent1=new Intent(StorePayResultActivity.this,MainActivity.class);
                     intent1.putExtra("index",1);
                     startActivity(intent1);

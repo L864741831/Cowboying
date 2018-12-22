@@ -261,10 +261,10 @@ public class SellCowsActivity extends BaseActivity  implements SuperSwipeRefresh
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(myCowsOrderPresenter!=null){
             myCowsOrderPresenter.detachView();
         }
-        super.onDestroy();
         if (receiver != null) {
             unregisterReceiver(receiver);
         }

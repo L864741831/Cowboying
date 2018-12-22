@@ -86,6 +86,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private boolean isLoadFirst=true;
     private boolean isNoData=false;
     private List<Integer> productIds;
+    private int PRODUCR_ID;
     /**
      * 滑动到指定位置
      */
@@ -118,6 +119,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         layoutManager = new ViewPagerLayoutManager(getHoldingActivity(), OrientationHelper.HORIZONTAL);
         ryId.setLayoutManager(layoutManager);
         token = Hawk.get(HawkKey.TOKEN);
+        PRODUCR_ID = Hawk.get(HawkKey.PRODUCR_ID);
+
         productIds=new ArrayList<>();
 
         /**
@@ -195,7 +198,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         StorePriductIdParamBean storePriductIdParamBean=new StorePriductIdParamBean();
-        if(Constant.PRODUCR_ID==0){
+        if(PRODUCR_ID==0){
             if(productIds.size()>0){
                 storePriductIdParamBean.setProductIds(productIds);
                 storePriductIdParamBean.setCurrentPage(currentPage);
@@ -217,7 +220,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
             isNoData=false;
             isMoreLoad=false;
             isLoadFirst=true;
-            storeCarPresenter.getStoreOneInfo(reqData,Constant.PRODUCR_ID);
+            storeCarPresenter.getStoreOneInfo(reqData,PRODUCR_ID);
         }
         storeCarPresenter.getStoreCarNum(reqData);
 
@@ -410,8 +413,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
                 isFirst = false;
                 baseBeans.addAll(storeInfoListResultBean.getBizData());
-                for(int i=0;i<baseBeans.size();i++){
-                    productIds.add(baseBeans.get(i).getShopProductResVo().getProductId());
+                for(int i=0;i<storeInfoListResultBean.getBizData().size();i++){
+                    productIds.add(storeInfoListResultBean.getBizData().get(i).getShopProductResVo().getProductId());
                 }
                 storeTopAdapter.setNewData(this.baseBeans);
                 if(isLoadFirst){
@@ -444,8 +447,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
                 }
             }
 
-        amountViewBeef.intEdit(baseBeans.get(position).getCartProductNum()+"");
         amountViewBeef.setGoods_storage(baseBeans.get(position).getShopProductResVo().getStock());
+        amountViewBeef.intEdit(baseBeans.get(position).getCartProductNum()+"");
         amountViewBeef.setOnAmountChangeListener(new AmountViewStoreBeef.OnAmountChangeListener() {
             @Override
             public void onAmountChange(View view, int amount) {

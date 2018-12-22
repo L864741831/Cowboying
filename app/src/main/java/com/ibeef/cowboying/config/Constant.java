@@ -106,4 +106,9 @@ public class Constant {
      * 是否是商城商品id
      */
     public static  int PRODUCR_ID = 0;
+
+    /**
+     * 萤石云app key
+     */
+    public static  String APPKEYYHC = "6db46fefb0534ce494d1e148bccc7ec8";
 }

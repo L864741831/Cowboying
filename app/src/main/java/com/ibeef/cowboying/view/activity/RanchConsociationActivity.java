@@ -171,6 +171,7 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
         switch (view.getId()) {
             case R.id.back_id:
                 if(isAd){
+                    removeALLActivity();
                     startActivity(new Intent(RanchConsociationActivity.this, MainActivity.class));
                 }
                 finish();
@@ -182,16 +183,17 @@ public class RanchConsociationActivity extends BaseActivity implements PastureBa
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (pasturePresenter != null) {
             pasturePresenter.detachView();
         }
-        super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(RanchConsociationActivity.this, MainActivity.class));
         }
         finish();

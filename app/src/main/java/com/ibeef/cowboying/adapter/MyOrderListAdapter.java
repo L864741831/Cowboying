@@ -21,7 +21,6 @@ import java.util.List;
 
 public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizDataBean, BaseViewHolder> {
     private Context context;
-    private List<MyOrderListBean.BizDataBean.ShopOrderProductResVosBean> listData;
     public MyOrderListAdapter(List data, Context context) {
         super(R.layout.my_order_list_item, data);
         this.context=context;
@@ -53,7 +52,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
         helper.setText(R.id.order_id,"订单编号："+item.getShopOrderResVo().getCode())
               .setText(R.id.tv_total,"共"+quantity+"件，合计：￥"+item.getShopOrderResVo().getPayAmount());
 
-       listData = new ArrayList<>();
+        List<MyOrderListBean.BizDataBean.ShopOrderProductResVosBean> listData = new ArrayList<>();
         if (item.getShopOrderProductResVos().size()>3){
             listData.add(item.getShopOrderProductResVos().get(0));
             listData.add(item.getShopOrderProductResVos().get(1));
@@ -62,7 +61,7 @@ public class MyOrderListAdapter extends BaseQuickAdapter<MyOrderListBean.BizData
             listData.addAll(item.getShopOrderProductResVos());
         }
         RecyclerView ry_id=helper.getView(R.id.ry_id);
-        ry_id.setLayoutManager(new WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        ry_id.setLayoutManager(new LinearLayoutManager(context));
         ry_id.setHasFixedSize(true);
         ry_id.setNestedScrollingEnabled(false);
        final MyOrderChirdListAdapter myOrderChirdListAdapter=new MyOrderChirdListAdapter(listData,item.getShopOrderResVo().getReceiveType(),context);

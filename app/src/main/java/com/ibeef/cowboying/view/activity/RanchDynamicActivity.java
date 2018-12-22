@@ -190,10 +190,10 @@ public class RanchDynamicActivity extends BaseActivity implements SuperSwipeRefr
 
     @Override
     protected void onDestroy() {
-        if(homeBannerPresenter!=null){
-           homeBannerPresenter.detachView();
-        }
         super.onDestroy();
+        if(homeBannerPresenter!=null){
+            homeBannerPresenter.detachView();
+        }
     }
 
     @Override

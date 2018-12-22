@@ -201,11 +201,11 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
                         intent4.putExtra("schemId",Integer.parseInt(homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()));
                         startActivity(intent4);
                         break;
-                    case "adop_order_list":
+                    case "adopt_order_list":
                         //养牛订单列表
                         startActivity(MyCowsActivity.class);
                         break;
-                    case "adop_order_detail":
+                    case "adopt_order_detail":
                         //养牛订单详情
                         Intent intent3 = new Intent(getHoldingActivity(), MyCowsDetailActivity.class);
                         intent3.putExtra("orderId",homeBannerResultBean.getBizData().getTopBannerList().get(position).getParams()+"");
@@ -484,11 +484,10 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(homeBannerPresenter!=null){
             homeBannerPresenter.detachView();
         }
-
-        super.onDestroy();
     }
 
     @Override

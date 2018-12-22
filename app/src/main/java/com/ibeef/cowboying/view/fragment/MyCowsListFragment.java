@@ -383,6 +383,7 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
         if("000000".equals(msg.getCode())){
             page = 1;
             listData.clear();
+            myCowsListAdapter.notifyDataSetChanged();
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
@@ -421,9 +422,9 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(myCowsOrderPresenter!=null){
             myCowsOrderPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

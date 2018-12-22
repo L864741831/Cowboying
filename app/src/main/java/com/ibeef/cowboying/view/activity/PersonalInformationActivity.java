@@ -635,10 +635,13 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(getOssImgPresenter!=null){
             getOssImgPresenter.detachView();
         }
-        super.onDestroy();
+        if(userInfoPresenter!=null){
+            userInfoPresenter.detachView();
+        }
     }
 
 }

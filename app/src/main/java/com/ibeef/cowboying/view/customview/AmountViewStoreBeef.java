@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ibeef.cowboying.R;
+import com.ibeef.cowboying.config.Constant;
 
 
 /**
@@ -73,6 +75,7 @@ public class AmountViewStoreBeef extends LinearLayout implements View.OnClickLis
 
     public void intEdit(String num){
         etAmount.setText(num);
+        Log.e(Constant.TAG,num+"小明小明");
     }
 
     public String getEditNum(){

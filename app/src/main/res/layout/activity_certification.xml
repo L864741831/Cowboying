@@ -48,7 +48,7 @@
             android:layout_marginRight="20dp" android:singleLine="true"
             android:background="@null"
             android:textSize="14sp"
-            />
+            android:gravity="right|center_vertical"/>
     </RelativeLayout>
 
     <View
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="bottom" android:hint="请输入身份证号码"
-             android:maxLines="1"
+             android:maxLines="1"  android:gravity="right|center_vertical"
             android:background="@null" android:singleLine="true"
             android:textSize="14sp" android:paddingLeft="15dp"
             android:textCursorDrawable="@drawable/edit_cursor_color" />

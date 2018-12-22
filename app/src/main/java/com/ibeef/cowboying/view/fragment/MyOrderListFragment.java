@@ -88,12 +88,19 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         swipeLayout.setHeaderView(createHeaderView());// add headerView
         swipeLayout.setTargetScrollWithLayout(true);
         swipeLayout.setOnPullRefreshListener(this);
+
         listData=new ArrayList<>();
+        listData.clear();
+
         loadingLayout = view.findViewById(R.id.loading_layout);
-        mRView.setLayoutManager(new WrapContentLinearLayoutManager(getHoldingActivity(), LinearLayoutManager.VERTICAL, false));
+        mRView.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
+        mRView.setHasFixedSize(true);
+        mRView.setNestedScrollingEnabled(false);
+
         myOrderListAdapter = new MyOrderListAdapter(listData,getHoldingActivity());
         myOrderListAdapter.setOnLoadMoreListener(this, mRView);
         mRView.setAdapter(myOrderListAdapter);
+
         mRView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -158,17 +165,6 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 
     @Override
     public void onRefresh() {
@@ -242,12 +238,8 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
         rv_order.setVisibility(View.GONE);
         mRView.setVisibility(View.VISIBLE);
 
-        if(SDCardUtil.isNullOrEmpty(myOrderListBean.getBizData())){
-            myOrderListAdapter.loadMoreEnd();
-        }else {
-            myOrderListAdapter.setNewData(this.listData);
-            myOrderListAdapter.loadMoreComplete();
-        }
+        myOrderListAdapter.setNewData(this.listData);
+        myOrderListAdapter.loadMoreComplete();
 
         myOrderListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -307,9 +299,8 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
     public void getMyOrderListDelete(MyOrderListCancelBean msg) {
         if("000000".equals(msg.getCode())){
             page = 1;
-            int previousSize = listData.size();
             listData.clear();
-            myOrderListAdapter.notifyItemRangeRemoved(0, previousSize);
+            myOrderListAdapter.notifyDataSetChanged();
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
             reqData.put("version", getVersionCodes());
@@ -407,10 +398,10 @@ public class MyOrderListFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(myOrderListPresenter!=null){
             myOrderListPresenter.detachView();
         }
-        super.onDestroy();
     }
 
     @Override

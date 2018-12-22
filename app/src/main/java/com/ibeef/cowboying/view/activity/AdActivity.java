@@ -116,13 +116,13 @@ public class AdActivity extends BaseActivity implements HomeBannerBase.IView{
                             intent4.putExtra("isAd",true);
                             startActivity(intent4);
                             break;
-                        case "adop_order_list":
+                        case "adopt_order_list":
                             //养牛订单列表
                             Intent intent2=new Intent(AdActivity.this,MyCowsActivity.class);
                             intent2.putExtra("isAd",true);
                             startActivity(intent2);
                             break;
-                        case "adop_order_detail":
+                        case "adopt_order_detail":
                             //养牛订单详情
                             Intent intent3 = new Intent(AdActivity.this, MyCowsDetailActivity.class);
                             intent3.putExtra("orderId",info.getBizData().getParams()+"");

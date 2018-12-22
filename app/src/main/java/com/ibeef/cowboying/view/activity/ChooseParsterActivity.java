@@ -169,7 +169,7 @@ public class ChooseParsterActivity extends BaseActivity implements SuperSwipeRef
                         Intent intent = new Intent(ChooseParsterActivity.this, TvLiveActivity.class);
                         intent.putExtra("video_url", pastureDetelResultBean.getBizData().getLivePlayUrl());
                         intent.putExtra("title", pastureDetelResultBean.getBizData().getName());
-                        intent.putExtra("coverUrl", pastureDetelResultBean.getBizData().getVideoCoverUrl());
+                        intent.putExtra("coverUrl", pastureDetelResultBean.getBizData().getLiveCoverUrl());
                         startActivity(intent);
                     }
                 }

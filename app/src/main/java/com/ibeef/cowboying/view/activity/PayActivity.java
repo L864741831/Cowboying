@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -224,5 +223,8 @@ public class PayActivity extends BaseActivity implements MyContractBase.IView{
     protected void onDestroy() {
         super.onDestroy();
         stopThread = true;//这样在线程执行run方法就会退出那个循环了
+        if(myContractPresenter!=null){
+            myContractPresenter.detachView();
+        }
     }
 }

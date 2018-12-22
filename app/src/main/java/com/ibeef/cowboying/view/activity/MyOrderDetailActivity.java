@@ -29,7 +29,6 @@ import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
@@ -198,6 +197,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     startActivity(intent1);
                 }else {
                     if(isAd){
+                        removeALLActivity();
                         Intent intent1=new Intent(MyOrderDetailActivity.this,MainActivity.class);
                         startActivity(intent1);
                     }
@@ -332,7 +332,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             afterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Constant.PRODUCR_ID=myOrderListDetailBean.getBizData().getShopOrderProductResVos().get(position).getProductId();
+                    Hawk.put(HawkKey.PRODUCR_ID, myOrderListDetailBean.getBizData().getShopOrderProductResVos().get(position).getProductId());
+                    removeALLActivity();
                     Intent intent1=new Intent(MyOrderDetailActivity.this,MainActivity.class);
                     intent1.putExtra("index",1);
                     startActivity(intent1);
@@ -609,11 +610,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (myOrderListPresenter != null) {
             myOrderListPresenter.detachView();
         }
         time_show_id.onPause();
-        super.onDestroy();
     }
 
     @Override
@@ -625,6 +626,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             startActivity(intent1);
         } else{
             if(isAd) {
+                removeALLActivity();
                 Intent intent1 = new Intent(MyOrderDetailActivity.this, MainActivity.class);
                 startActivity(intent1);
             }

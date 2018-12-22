@@ -211,9 +211,9 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(accountSecurityPresenter!=null){
             accountSecurityPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

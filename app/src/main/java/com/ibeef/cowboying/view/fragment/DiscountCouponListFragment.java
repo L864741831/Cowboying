@@ -255,10 +255,10 @@ public class DiscountCouponListFragment extends BaseFragment implements SuperSwi
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(myContractPresenter!=null){
             myContractPresenter.detachView();
         }
-        super.onDestroy();
     }
 
     @Override

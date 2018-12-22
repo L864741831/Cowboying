@@ -119,9 +119,11 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
                         startActivity(LoginActivity.class);
                         finish();
                     }
-                Intent intent1=new Intent();
-                intent1.setAction("com.ibeef.cowboying.storeaddcar");
-                sendBroadcast(intent1);
+                    if(item.getItemId()==R.id.i_second){
+                        Intent intent1=new Intent();
+                        intent1.setAction("com.ibeef.cowboying.storeaddcar");
+                        sendBroadcast(intent1);
+                    }
                 return true;
             }
         });
@@ -158,11 +160,13 @@ public class MainActivity extends BaseActivity implements CheckVersionBase.IView
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(checkVersionPresenter!=null){
             checkVersionPresenter.detachView();
         }
-        Constant.PRODUCR_ID=0;
-        super.onDestroy();
+        if(getRegisterIdPresenter!=null){
+            getRegisterIdPresenter.detachView();
+        }
     }
 
     @Override

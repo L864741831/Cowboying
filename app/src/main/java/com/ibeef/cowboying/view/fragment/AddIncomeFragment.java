@@ -160,9 +160,9 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(addMoneyPresenter!=null){
             addMoneyPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

@@ -44,7 +44,9 @@ android {
         resConfigs "en", "zh"//仅支持中英文
 
         ndk {
-            abiFilters "armeabi-v7a", "x86", "armeabi", "arm64-v8a"
+            //萤石云只支持v7a
+            //, "x86", "armeabi", "arm64-v8a"
+            abiFilters "armeabi-v7a"
         }
         //添加如下配置就OK了
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -56,6 +58,12 @@ android {
 
         packagingOptions {
             exclude 'META-INF/rxjava.properties'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
     buildTypes {
@@ -80,8 +88,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:$supportlib_version"
-    implementation "com.android.support:recyclerview-v7:$supportlib_version"
+//    implementation "com.android.support:appcompat-v7:$supportlib_version"
+//    implementation "com.android.support:recyclerview-v7:$supportlib_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -121,4 +129,5 @@ dependencies {
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'com.king.zxing:zxing-lite:1.0.3'
+    implementation 'com.hikvision.ezviz:ezviz-sdk:4.8.4'
 }

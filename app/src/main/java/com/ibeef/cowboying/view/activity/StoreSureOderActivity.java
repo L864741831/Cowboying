@@ -31,7 +31,6 @@ import com.ibeef.cowboying.bean.NowPayOrderResultBean;
 import com.ibeef.cowboying.bean.ShowAddressResultBean;
 import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.UseCouponListResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.UseCouponListPresenter;
@@ -210,7 +209,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 NowBuyOrderResultBean.BizDataBean.ProductsBean items=storeSureOrderAdapter.getItem(position);
-                Constant.PRODUCR_ID=items.getProductId();
+                Hawk.put(HawkKey.PRODUCR_ID, items.getProductId());
+                removeALLActivity();
                 Intent intent1=new Intent(StoreSureOderActivity.this,MainActivity.class);
                 intent1.putExtra("index",1);
                 startActivity(intent1);

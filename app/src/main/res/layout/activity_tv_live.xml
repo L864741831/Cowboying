@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.TvLiveActivity">
-
-    <com.ibeef.cowboying.view.customview.SampleVideo
-        android:id="@+id/detail_player"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
+        android:layout_height="@dimen/titlehight"
+        android:padding="10dp" android:background="@color/transparent">
+        <ImageView
+            android:layout_width="35dp" android:id="@+id/back_id"
+            android:layout_height="30dp" android:src="@mipmap/back"
+            android:layout_centerVertical="true" android:scaleType="fitXY"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.ezvizuikit.open.EZUIPlayer
+            android:id="@+id/player_ui"
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_height="wrap_content" android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</FrameLayout>

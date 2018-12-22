@@ -30,7 +30,6 @@ import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.bean.StoreOneResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
@@ -218,9 +217,10 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
            @Override
            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                CarListResultBean.BizDataBean items=storeCarAdapter.getItem(position);
-               Constant.PRODUCR_ID=items.getProductId();
+               Hawk.put(HawkKey.PRODUCR_ID, items.getProductId());
                isBuy=false;
                addCar();
+               removeALLActivity();
                Intent intent1=new Intent(StoreCarActivity.this,MainActivity.class);
                intent1.putExtra("index",1);
                startActivity(intent1);

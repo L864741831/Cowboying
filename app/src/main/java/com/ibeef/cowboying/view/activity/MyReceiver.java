@@ -68,13 +68,13 @@ public class MyReceiver extends BroadcastReceiver implements HomeBannerBase.IVie
 						intent4.putExtra("isAd",true);
 						context.startActivity(intent4);
 						break;
-					case "adop_order_list":
+					case "adopt_order_list":
 						//养牛订单列表
 						Intent intent2=new Intent(context,MyCowsActivity.class);
 						intent2.putExtra("isAd",true);
 						context.startActivity(intent2);
 						break;
-					case "adop_order_detail":
+					case "adopt_order_detail":
 						//养牛订单详情
 						Intent intent3 = new Intent(context, MyCowsDetailActivity.class);
 						intent3.putExtra("orderId",pageId);

@@ -80,6 +80,7 @@ public class DiscountCouponActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(DiscountCouponActivity.this, MainActivity.class));
         }
         finish();
@@ -88,6 +89,7 @@ public class DiscountCouponActivity extends BaseActivity {
     @OnClick(R.id.back_id)
     public void onViewClicked() {
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(DiscountCouponActivity.this, MainActivity.class));
         }
         finish();

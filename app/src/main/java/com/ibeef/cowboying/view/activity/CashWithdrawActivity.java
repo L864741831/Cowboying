@@ -405,12 +405,18 @@ public class CashWithdrawActivity extends BaseActivity implements CashMoneyBase.
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(cashMoneyPresenter!=null){
             cashMoneyPresenter.detachView();
         }
         if(isPayPwdPresenter!=null){
             isPayPwdPresenter.detachView();
         }
-        super.onDestroy();
+        if(accountSecurityPresenter!=null){
+            accountSecurityPresenter.detachView();
+        }
+        if(initThirdLoginPresenter!=null){
+            initThirdLoginPresenter.detachView();
+        }
     }
 }

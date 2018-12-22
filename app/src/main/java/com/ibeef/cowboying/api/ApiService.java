@@ -712,4 +712,11 @@ public interface ApiService {
     @GET("message/remove/info")
     Observable<DeleteMessegeResultBean> getMessegeDelete(@HeaderMap Map<String, String> headers,@Query("messageId") int messageId);
 
+    /**
+     *获取直播TOKEN
+     * @return
+     */
+    @GET("yingshi/getToken")
+    Observable<VideoAppkeyResultBean> getVideoAppKey(@HeaderMap Map<String, String> headers);
+
 }

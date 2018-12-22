@@ -222,10 +222,10 @@ public class ResetPwdActivity extends BaseActivity implements EditLogionPwdBase.
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(editLoginPwdPresenter!=null){
             editLoginPwdPresenter.detachView();
         }
-        super.onDestroy();
     }
 
 
