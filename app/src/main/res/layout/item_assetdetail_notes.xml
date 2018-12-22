@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content" android:id="@+id/show_reson_id"
             android:layout_height="wrap_content" android:textSize="16sp"
-            android:text="认领牛只" android:textColor="@color/colorAccent"
+            android:text="" android:textColor="@color/colorAccent"
             android:layout_marginLeft="15dp"  />
         <TextView
             android:layout_width="wrap_content" android:id="@+id/show_time_id"

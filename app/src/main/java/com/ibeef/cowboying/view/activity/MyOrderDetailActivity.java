@@ -393,6 +393,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     rlAddressLocast.setVisibility(View.VISIBLE);
                 } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                     //门店自取
+                    tvOrderFahuoTime.setVisibility(View.GONE);
                     llPickUp.setVisibility(View.VISIBLE);
                     tvTihuo.setVisibility(View.GONE);
                     ivIcon.setVisibility(View.GONE);
@@ -412,6 +413,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     btnOrderSeeWuliu.setVisibility(View.VISIBLE);
                 } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                     //门店自取
+                    tvOrderFahuoTime.setVisibility(View.GONE);
                     llPickUp.setVisibility(View.VISIBLE);
                     tvTihuo.setVisibility(View.GONE);
                     ivIcon.setVisibility(View.GONE);
@@ -503,7 +505,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             tvOrderId.setText("订单编号:   " + myOrderListDetailBean.getBizData().getShopOrderResVo().getCode());
             tvOrderCreateTime.setText("创建时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(), DateUtils.TYPE_01));
             tvOrderPayTime.setText("付款时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getPayTime(), DateUtils.TYPE_01));
-
+            tvOrderFahuoTime.setText("发货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getDeliveryTime(), DateUtils.TYPE_01));
+            tvOrderShouhuoTime.setText("收货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(), DateUtils.TYPE_01));
             tvOrderTuikuanTime.setText("退款时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getRefundTime(), DateUtils.TYPE_01));
             tvOrderGuanbiTime.setText("关闭时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
 
@@ -539,14 +542,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             }
             if ("1".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                 tvPeisongType.setText("顺丰冷运");
-                tvOrderFahuoTime.setVisibility(View.VISIBLE);
-                tvOrderShouhuoTime.setVisibility(View.VISIBLE);
-                tvOrderFahuoTime.setText("发货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getDeliveryTime(), DateUtils.TYPE_01));
-                tvOrderShouhuoTime.setText("收货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(), DateUtils.TYPE_01));
             } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                 tvPeisongType.setText("到店提货");
-                tvOrderFahuoTime.setVisibility(View.GONE);
-                tvOrderShouhuoTime.setVisibility(View.GONE);
+                if("3".equals(status)){
+                    tvOrderShouhuoTime.setText("取货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(), DateUtils.TYPE_01));
+                }
             }
 
         } else {

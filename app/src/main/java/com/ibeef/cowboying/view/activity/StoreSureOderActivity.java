@@ -374,6 +374,15 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                     //不使用优惠券
                     coupponMoneyId.setText("未使用");
                     coupponMoneyId.setTextColor(getResources().getColor(R.color.txthui));
+                    if(!SDCardUtil.isNullOrEmpty(nowBuyOrderResultBean)){
+                        if(type==1){
+                            oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()));
+                            allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
+                        }else {
+                            oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()));
+                            allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()))+"");
+                        }
+                    }
                 }else {
                     if(couponmoney>0){
                         coupponMoneyId.setText("-"+couponmoney);

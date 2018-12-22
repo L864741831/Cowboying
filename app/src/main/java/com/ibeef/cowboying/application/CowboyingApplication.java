@@ -35,11 +35,11 @@ public class CowboyingApplication extends RxApplication {
         registrationId= JPushInterface.getRegistrationID(this);
         Log.e("--main--",registrationId+"????????");
         /** * sdk日志开关，正式发布需要去掉 */
-        EZOpenSDK.showSDKLog(true);
+//        EZOpenSDK.showSDKLog(true);
        /** * 设置是否支持P2P取流,详见api */
-        EZOpenSDK.enableP2P(false);
+//        EZOpenSDK.enableP2P(false);
        /** * APP_KEY请替换成自己申请的 */
-        EZOpenSDK.initLib(this, Constant.APPKEYYHC);
+//        EZOpenSDK.initLib(this, Constant.APPKEYYHC);
 
     }
 

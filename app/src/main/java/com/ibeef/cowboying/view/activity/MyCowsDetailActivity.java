@@ -438,6 +438,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 tvMode.setText("定期养牛");
                 discountTypeId.setText("优惠券：");
             } else  if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
+                rlLockDay.setVisibility(View.GONE);
                 tvMode.setText("新手体验养牛");
                 discountTypeId.setText("体验金额：");
                 rlExpirenceDay.setVisibility(View.VISIBLE);
