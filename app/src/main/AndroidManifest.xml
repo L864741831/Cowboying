@@ -72,13 +72,6 @@
             android:configChanges="orientation|keyboardHidden">
         </activity>
 
-        <receiver
-            android:name=".utils.MyReceiver"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.videogo.action.OAUTH_SUCCESS_ACTION" />
-            </intent-filter>
-        </receiver>
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
