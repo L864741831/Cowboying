@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
@@ -33,6 +34,7 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
     private AddMoneyAdapter addMoneyAdapter;
     private String token;
     private AddMoneyPresenter addMoneyPresenter;
+    private TextView type_txt_id;
 
     private int currentPage=1;
     private boolean isFirst=true;
@@ -44,6 +46,7 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
         loadingLayout=view.findViewById(R.id.loading_layout);
         rvOrder=view.findViewById(R.id.rv_order);
         rvShowId=view.findViewById(R.id.rv_show_id);
+        type_txt_id=view.findViewById(R.id.type_txt_id);
         ryId=view.findViewById(R.id.ry_id);
         ryId.setHasFixedSize(true);
         ryId.setNestedScrollingEnabled(false);
@@ -57,6 +60,13 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
 
         addMoneyPresenter=new AddMoneyPresenter(this);
 
+        //昨日收益
+        if("1".equals(incomeType)){
+            type_txt_id.setText("订单收益(元)");
+        }else  if("2".equals(incomeType)){
+            //累计收益
+            type_txt_id.setText("当日收益(元)");
+        }
         rvShowId.setVisibility(View.VISIBLE);
         ryId.setVisibility(View.VISIBLE);
         Map<String, String> reqData = new HashMap<>();

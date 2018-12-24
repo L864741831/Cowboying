@@ -51,7 +51,7 @@ public class MyCowsListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizD
         if(item.getCattleList().size()>0){
             ry_id.setVisibility(View.VISIBLE);
             rlEmeng.setVisibility(View.GONE);
-            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),item.getSchemeType(),context);
+            MyCowsChirdListAdapter sureOrderChirdListAdapter=new MyCowsChirdListAdapter(item.getCattleList(),item.getPastureName(),item.getSchemeType(),context,item.getStatus());
             ry_id.setAdapter(sureOrderChirdListAdapter);
             sureOrderChirdListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override

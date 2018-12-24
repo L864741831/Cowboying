@@ -110,7 +110,7 @@ public class MyCowsDetailListAdapter extends BaseQuickAdapter<MyCowsOrderListDet
         }
 
         //方案类型（1：活期；2：定期；3：新人活动）
-        if ("2".equals(schemeType)) {
+        if ("4".equals(status)) {
             imageView2.setVisibility(View.VISIBLE);
             imageView2.setImageResource(R.mipmap.img_my_cows_dingqi);
         } else  if ("3".equals(schemeType)){

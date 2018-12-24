@@ -96,6 +96,7 @@ public class MyOrderActivity extends BaseActivity {
                 if(from||isAd){
                     removeALLActivity();//执行移除所以Activity方法
                     Intent intent1=new Intent(MyOrderActivity.this,MainActivity.class);
+                    intent1.putExtra("index",1);
                     startActivity(intent1);
                 }else {
                     finish();
@@ -111,6 +112,7 @@ public class MyOrderActivity extends BaseActivity {
         if (from||isAd){
             removeALLActivity();//执行移除所以Activity方法
             Intent intent1=new Intent(MyOrderActivity.this,MainActivity.class);
+            intent1.putExtra("index",1);
             startActivity(intent1);
         }else {
             finish();

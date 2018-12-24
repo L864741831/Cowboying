@@ -19,12 +19,13 @@ import java.util.List;
 public class MyCowsChirdListAdapter extends BaseQuickAdapter<MyCowsOrderListBean.BizDataBean.CattleListBean, BaseViewHolder> {
     private Context context;
     private String ranch_id;
-    private String status;
-    public MyCowsChirdListAdapter(List data,String ranch_id,String status, Context context) {
+    private String status,staduOut;
+    public MyCowsChirdListAdapter(List data,String ranch_id,String status, Context context,String staduOut) {
         super(R.layout.my_cows_chird_item, data);
         this.context=context;
         this.ranch_id=ranch_id;
         this.status=status;
+        this.staduOut=staduOut;
     }
 
     @Override
@@ -40,7 +41,8 @@ public class MyCowsChirdListAdapter extends BaseQuickAdapter<MyCowsOrderListBean
                 ;
         Glide.with(mContext).load(Constant.imageDomain+item.getCattleImage()).apply(options).into((ImageView) helper.getView(R.id.store_img));
         //方案类型（1：活期；2：定期；3：新人活动）
-        if ("2".equals(status)) {
+        if ("4".equals(staduOut)) {
+            //外边的状态是4定期养牛角标才出现
             helper.setText(R.id.store_name,"牛只编号:"+item.getCattleCode())
             .setText(R.id.money_id,"安格斯牛");
             imageView.setVisibility(View.VISIBLE);
