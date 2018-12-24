@@ -122,11 +122,6 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         schemId= getIntent().getIntExtra("schemId",0);
         pastureDetailPresenter=new PastureDetailPresenter(this);
         userInfoPresenter=new UserInfoPresenter(this);
-        Map<String, String> reqData = new HashMap<>();
-        reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
-        pastureDetailPresenter.getSchemeDetail(reqData,schemId);
-
     }
 
     @Override
@@ -136,6 +131,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         userInfoPresenter.getUserInfo(reqData);
+        pastureDetailPresenter.getSchemeDetail(reqData,schemId);
     }
 
     private void initMagicIndicator(SchemeDetailReultBean schemeDetailReultBean) {
