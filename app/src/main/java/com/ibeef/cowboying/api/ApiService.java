@@ -224,12 +224,6 @@ public interface ApiService {
     @GET("user/thirdLogin/init")
     Observable<ThirdLoginResultBean> getInitThirdLogin(@Header("version") String version, @Query("loginType") String loginType);
 
-    /**
-     * 七牛上传图片
-     * @return
-     */
-    @GET("token/upload")
-    Observable<QiniuUploadImg> qiNiuUpload(@Query("bucket") String bucket);
 
     /**
      *上传图片

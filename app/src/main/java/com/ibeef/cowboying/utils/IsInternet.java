@@ -41,26 +41,6 @@ public class IsInternet {
         }  
         return false;  
     }
-    /**
-     * 判断当前是否有网络连接,但是如果该连接的网络无法上网，也会返回true
-     * @param mContext
-     * @return
-     */
-    public static boolean isNetConnection(Context mContext) {
-        if (mContext!=null){
-            ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            boolean connected = networkInfo.isConnected();
-            if (networkInfo!=null&&connected){
-                if (networkInfo.getState()== NetworkInfo.State.CONNECTED){
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
 
     // 如果没有网络，则弹出网络设置对话框  
     public static void checkNetwork(final Activity activity) {
@@ -69,17 +49,17 @@ public class IsInternet {
             msg.setText("当前没有可以使用的网络，请设置网络！");  
             new AlertDialog.Builder(activity)
 //                    .setIcon(R.drawable.android)
-                    .setTitle("网络状态提示")  
+                    .setTitle("网络状态提示")
                     .setView(msg)  
                     .setPositiveButton("确定",  
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,  
                                         int whichButton) {  
-                                    // 跳转到设置界面  
+                                    // 跳转到设置界面
                                     activity.startActivityForResult(new Intent(
                                             Settings.ACTION_WIRELESS_SETTINGS),
-                                            0);  
+                                            0);
                                 }  
                             }).create().show();  
         }  

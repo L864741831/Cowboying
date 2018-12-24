@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.ezvizuikit.open.EZUIError;
 import com.ezvizuikit.open.EZUIKit;
 import com.ezvizuikit.open.EZUIPlayer;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.base.VideoAppkeyBase;
 import com.ibeef.cowboying.bean.VideoAppkeyResultBean;
@@ -167,15 +170,63 @@ public class TvLiveActivity extends AppCompatActivity implements View.OnClickLis
     public void onPlayFail(EZUIError error) {
         Log.d(Constant.TAG, "onPlayFail");
         // TODO: 2017/2/21 播放失败处理
-        if (error.getErrorString().equals(EZUIError.UE_ERROR_INNER_VERIFYCODE_ERROR)) {
-
-        } else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_NOT_FOUND_RECORD_FILES)) {
-            // TODO: 2017/5/12
-            //未发现录像文件
-            Toast.makeText(this, "未发现录像文件", Toast.LENGTH_LONG).show();
+        if (error.getErrorString().equals(EZUIError.UE_ERROR_ACCESSTOKEN_ERROR_OR_EXPIRE)) {
+            showWaring("accesstoken异常或失效，需要重新获取accesstoken，并传入到sd");
+        } else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_APPKEY_ERROR)) {
+            showWaring("appkey和AccessToken不匹配,建议更换appkey或者AccessToken");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_CAMERA_NOT_EXIST)) {
+            showWaring("通道不存在，设备参数错误，建议重新获取播放地址");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_DEVICE_NOT_EXIST)) {
+            showWaring("设备不存在，设备参数错误，建议重新获取播放地址");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_PARAM_ERROR)) {
+            showWaring("参数错误，建议重新获取播放地址");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_PROTOCAL_ERROR)) {
+            showWaring("播放地址错误,建议重新获取播放地址");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_CAS_MSG_PU_NO_RESOURCE)) {
+            showWaring("设备连接数过大，升级设备固件版本,海康设备可咨询客服获取升级流程");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_TRANSF_DEVICE_OFFLINE)) {
+            showWaring("设备不在线，确认设备上线之后重试");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_INNER_STREAM_TIMEOUT)) {
+            showWaring("播放失败，请求连接设备超时，检测设备网路连接是否正常");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_INNER_VERIFYCODE_ERROR)) {
+            showWaring("视频验证码错误，建议重新获取url地址增加验证码");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_PLAY_FAIL)) {
+            showWaring("视频播放失败");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_TRANSF_TERMINAL_BINDING)) {
+            showWaring("当前账号开启了终端绑定，只允许指定设备登录操作");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_INNER_DEVICE_NULLINFO)) {
+            showWaring("设备信息异常为空，建议重新获取播放地址");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_NOT_FOUND_RECORD_FILES)) {
+            showWaring("未查找到录像文件");
+        }else if (error.getErrorString().equalsIgnoreCase(EZUIError.UE_ERROR_STREAM_CLIENT_LIMIT)) {
+            showWaring("取流并发路数限制");
+        }else if (error.getErrorString().equalsIgnoreCase("UE110")) {
+            showWaring("设备不支持的清晰度类型, 请根据设备预览能力级选择");
         }
     }
 
+
+    public void showWaring(String info) {
+        final NormalDialog dialog = new NormalDialog(this);
+        dialog.isTitleShow(true)
+                .style(NormalDialog.STYLE_TWO)
+                .content(info)
+                .titleTextSize(18)
+                .show();
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                });
+    }
     @Override
     public void onVideoSizeChange(int width, int height) {
         // TODO: 2017/2/16 播放视频分辨率回调
