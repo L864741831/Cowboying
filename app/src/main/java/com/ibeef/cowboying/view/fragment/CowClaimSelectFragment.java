@@ -188,9 +188,9 @@ public class CowClaimSelectFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(cattleDetailPresenter!=null){
             cattleDetailPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

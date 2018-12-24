@@ -162,6 +162,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         switch (view.getId()) {
             case R.id.back_id:
                 if(isAd){
+                    removeALLActivity();
                     startActivity(new Intent(CowsClaimActivity.this, MainActivity.class));
                 }
                 finish();
@@ -184,7 +185,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                 }
                 //  先判断是否绑定手机号，（未绑定手机号去绑定，），
                 // 已绑定手机号再判断是否实名认证 ，已认证挑已认证的界面，未认证调到实名认证的界面
-                if("1".equals( schemeDetailReultBean.getBizData().getCurStatus())){
+                if("1".equals(schemeDetailReultBean.getBizData().getCurStatus())){
                     //当前类型（1：可以认领；2：即将开始；3：领完）
                     if(TextUtils.isEmpty(token)){
                         startActivity(LoginActivity.class);
@@ -295,15 +296,19 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
                 }
             });
 
-            if("1".equals( schemeDetailReultBean.getBizData().getCurStatus())){
+            if("1".equals(schemeDetailReultBean.getBizData().getCurStatus())){
                 //当前类型（1：可以认领；2：即将开始；3：领完）
                 nowClaimBtnId.setImageResource(R.mipmap.nowclaim);
                 rvMiddleId.setVisibility(View.GONE);
-            }else  if("2".equals( schemeDetailReultBean.getBizData().getCurStatus())) {
+            }else  if("2".equals(schemeDetailReultBean.getBizData().getCurStatus())) {
                 nowClaimBtnId.setImageResource(R.mipmap.claimwillopen);
                 rvMiddleId.setVisibility(View.VISIBLE);
                 scrollIsShowId.setText("开售时间："+ schemeDetailReultBean.getBizData().getStartTime());
-            }else  if("3".equals( schemeDetailReultBean.getBizData().getCurStatus())) {
+            }else  if("3".equals(schemeDetailReultBean.getBizData().getCurStatus())) {
+                nowClaimBtnId.setImageResource(R.mipmap.claimend);
+                rvMiddleId.setVisibility(View.VISIBLE);
+                scrollIsShowId.setText("您来晚了，当前养牛方案牛只已售罄，不过还有牧场主未付款，您还有机会哟~");
+            }else  if(SDCardUtil.isNullOrEmpty(schemeDetailReultBean.getBizData().getCurStatus())) {
                 nowClaimBtnId.setImageResource(R.mipmap.claimend);
                 rvMiddleId.setVisibility(View.VISIBLE);
                 scrollIsShowId.setText("您来晚了，当前养牛方案牛只已售罄，不过还有牧场主未付款，您还有机会哟~");
@@ -338,6 +343,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(CowsClaimActivity.this, MainActivity.class));
         }
         finish();

@@ -440,10 +440,13 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(userInfoPresenter!=null){
             userInfoPresenter.detachView();
         }
-        super.onDestroy();
+        if(cowManInfoPresenter!=null){
+            cowManInfoPresenter.detachView();
+        }
     }
 
     @Override

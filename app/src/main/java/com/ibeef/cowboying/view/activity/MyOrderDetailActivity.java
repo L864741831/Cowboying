@@ -29,7 +29,6 @@ import com.ibeef.cowboying.bean.MyOrderListBean;
 import com.ibeef.cowboying.bean.MyOrderListCancelBean;
 import com.ibeef.cowboying.bean.MyOrderListDetailBean;
 import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.DateUtils;
@@ -198,6 +197,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     startActivity(intent1);
                 }else {
                     if(isAd){
+                        removeALLActivity();
                         Intent intent1=new Intent(MyOrderDetailActivity.this,MainActivity.class);
                         startActivity(intent1);
                     }
@@ -332,7 +332,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             afterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Constant.PRODUCR_ID=myOrderListDetailBean.getBizData().getShopOrderProductResVos().get(position).getProductId();
+                    Hawk.put(HawkKey.PRODUCR_ID, myOrderListDetailBean.getBizData().getShopOrderProductResVos().get(position).getProductId());
+                    removeALLActivity();
                     Intent intent1=new Intent(MyOrderDetailActivity.this,MainActivity.class);
                     intent1.putExtra("index",1);
                     startActivity(intent1);
@@ -392,6 +393,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     rlAddressLocast.setVisibility(View.VISIBLE);
                 } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                     //门店自取
+                    tvOrderFahuoTime.setVisibility(View.GONE);
                     llPickUp.setVisibility(View.VISIBLE);
                     tvTihuo.setVisibility(View.GONE);
                     ivIcon.setVisibility(View.GONE);
@@ -411,6 +413,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                     btnOrderSeeWuliu.setVisibility(View.VISIBLE);
                 } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                     //门店自取
+                    tvOrderFahuoTime.setVisibility(View.GONE);
                     llPickUp.setVisibility(View.VISIBLE);
                     tvTihuo.setVisibility(View.GONE);
                     ivIcon.setVisibility(View.GONE);
@@ -503,9 +506,10 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             tvOrderCreateTime.setText("创建时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getCreateTime(), DateUtils.TYPE_01));
             tvOrderPayTime.setText("付款时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getPayTime(), DateUtils.TYPE_01));
             tvOrderFahuoTime.setText("发货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getDeliveryTime(), DateUtils.TYPE_01));
+            tvOrderShouhuoTime.setText("收货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(), DateUtils.TYPE_01));
             tvOrderTuikuanTime.setText("退款时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getRefundTime(), DateUtils.TYPE_01));
             tvOrderGuanbiTime.setText("关闭时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getUpdateTime(), DateUtils.TYPE_01));
-            tvOrderShouhuoTime.setText("收货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(), DateUtils.TYPE_01));
+
             if (myOrderListDetailBean.getBizData().getLatestState() != null) {
                 tvWuliuIng.setText(myOrderListDetailBean.getBizData().getLatestState().getContext());
                 tvWuliuIngTime.setText(myOrderListDetailBean.getBizData().getLatestState().getTime());
@@ -540,6 +544,9 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
                 tvPeisongType.setText("顺丰冷运");
             } else if ("2".equals(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveType())) {
                 tvPeisongType.setText("到店提货");
+                if("3".equals(status)){
+                    tvOrderShouhuoTime.setText("取货时间:   " + DateUtils.formatDate(myOrderListDetailBean.getBizData().getShopOrderResVo().getReceiveTime(), DateUtils.TYPE_01));
+                }
             }
 
         } else {
@@ -609,11 +616,11 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (myOrderListPresenter != null) {
             myOrderListPresenter.detachView();
         }
         time_show_id.onPause();
-        super.onDestroy();
     }
 
     @Override
@@ -625,6 +632,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             startActivity(intent1);
         } else{
             if(isAd) {
+                removeALLActivity();
                 Intent intent1 = new Intent(MyOrderDetailActivity.this, MainActivity.class);
                 startActivity(intent1);
             }

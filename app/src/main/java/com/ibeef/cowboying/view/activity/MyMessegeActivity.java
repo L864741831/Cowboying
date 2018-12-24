@@ -152,6 +152,7 @@ public class MyMessegeActivity extends BaseActivity  implements SuperSwipeRefres
                         break;
                     case "shop_product_list":
                         //商城商品列表
+                        removeALLActivity();
                         Intent intent1=new Intent(MyMessegeActivity.this,MainActivity.class);
                         intent1.putExtra("index",1);
                         startActivity(intent1);
@@ -330,6 +331,9 @@ public class MyMessegeActivity extends BaseActivity  implements SuperSwipeRefres
         super.onDestroy();
         if(messegePresenter!=null){
             messegePresenter.detachView();
+        }
+        if(homeBannerPresenter!=null){
+            homeBannerPresenter.detachView();
         }
     }
 

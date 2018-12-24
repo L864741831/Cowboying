@@ -100,4 +100,3 @@ public class PlayerVideoActivity extends BaseActivity {
         super.onBackPressed();
     }
 }
-

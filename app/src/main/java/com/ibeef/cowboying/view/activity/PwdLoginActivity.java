@@ -157,7 +157,7 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
     public void getUserLogin(LoginBean loginBean) {
         if("000000".equals(loginBean.getCode())){
             Hawk.put(HawkKey.TOKEN, loginBean.getBizData());
-
+            removeALLActivity();
             Intent intent1=new Intent(PwdLoginActivity.this,MainActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -169,9 +169,9 @@ public class PwdLoginActivity extends BaseActivity implements LoginBase.IView {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(loginPresenter!=null){
             loginPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

@@ -385,12 +385,12 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
         }
         if(isPayPwdPresenter!=null){
             isPayPwdPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

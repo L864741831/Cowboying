@@ -231,7 +231,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 validateSmsCodeParamBean.setSmsType("bindPhone");
                 break;
             case "4":
-                validateSmsCodeParamBean.setSmsType("editPhone");
+                validateSmsCodeParamBean.setSmsType("login");
                 break;
             case "5":
                 validateSmsCodeParamBean.setSmsType("addPwd");
@@ -292,8 +292,8 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 reqData.put("smsType", "bindPhone");
                 break;
             case "4":
-                smsCodeParamBean.setSmsType("editPhone");
-                reqData.put("smsType", "editPhone");
+                smsCodeParamBean.setSmsType("login");
+                reqData.put("smsType", "login");
                 break;
             case "5":
                 smsCodeParamBean.setSmsType("addPwd");
@@ -376,7 +376,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         dismissLoading();
         if("000000".equals(loginBean.getCode())){
             Hawk.put(HawkKey.TOKEN, loginBean.getBizData());
-
+            removeALLActivity();
             Intent intent=new Intent(IdentifyCodeActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -486,6 +486,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         dismissLoading();
         if("000000".equals(accountRegisterResultBean.getCode())){
             Hawk.put(HawkKey.TOKEN, accountRegisterResultBean.getBizData());
+            removeALLActivity();
             Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -504,6 +505,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         if("000000".equals(bindMobileResultBean.getCode())){
             showToast("绑定手机号成功~");
             if("3".equals(stadus)){
+                removeALLActivity();
                 Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -520,6 +522,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
         dismissLoading();
         if("000000".equals(checkThirdLoginResultBean.getCode())){
             Hawk.put(HawkKey.TOKEN, checkThirdLoginResultBean.getBizData());
+            removeALLActivity();
             Intent intent1=new Intent(IdentifyCodeActivity.this,MainActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -532,6 +535,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(bindMobilePresenter!=null){
             bindMobilePresenter.detachView();
         }
@@ -545,7 +549,6 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
             smsCodePresenter.getCountDownTimerService().stopCountDown();
             smsCodePresenter.detachView();
         }
-        super.onDestroy();
     }
 
 }

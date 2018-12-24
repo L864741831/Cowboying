@@ -30,7 +30,6 @@ import com.ibeef.cowboying.bean.StoreAddrResultBean;
 import com.ibeef.cowboying.bean.StoreCarNumResultBean;
 import com.ibeef.cowboying.bean.StoreInfoListResultBean;
 import com.ibeef.cowboying.bean.StoreOneResultBean;
-import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.StoreCarPayPresenter;
 import com.ibeef.cowboying.presenter.StoreCarPresenter;
@@ -218,9 +217,10 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
            @Override
            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                CarListResultBean.BizDataBean items=storeCarAdapter.getItem(position);
-               Constant.PRODUCR_ID=items.getProductId();
+               Hawk.put(HawkKey.PRODUCR_ID, items.getProductId());
                isBuy=false;
                addCar();
+               removeALLActivity();
                Intent intent1=new Intent(StoreCarActivity.this,MainActivity.class);
                intent1.putExtra("index",1);
                startActivity(intent1);
@@ -273,10 +273,25 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
         storeCarPresenter=new StoreCarPresenter(this);
         storeCarPayPresenter=new StoreCarPayPresenter(this);
 
-        storeCarPayPresenter.getCarList(reqData,currentPage);
-
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(allCkId.isChecked()){
+            allCkId.setChecked(false);
+        }
+        chooseNum=0;
+        allMoney=0;
+        DecimalFormat df = new DecimalFormat("#####0.00");
+        String str = df.format(allMoney);
+        allCownumId.setText("合计：￥"+str);
+        currentPage = 1;
+        isFirst = true;
+        lists.clear();
+        storeCarPayPresenter.getCarList(reqData,currentPage);
+    }
 
     @OnClick({R.id.back_id,R.id.action_new_question_tv,R.id.go_store_btn,R.id.now_claim_btn_id,R.id.all_ck_id,R.id.refuce_id,R.id.sure_id,R.id.lvs_id})
     public void onViewClicked(View view) {
@@ -578,19 +593,17 @@ public class StoreCarActivity extends BaseActivity implements SuperSwipeRefreshL
     @Override
     public void onRefresh() {
         if(allCkId.isChecked()){
-            //选中不刷新数据
-            swipeLy.setRefreshing(false);
-        }else {
-            chooseNum=0;
-            allMoney=0;
-            DecimalFormat df = new DecimalFormat("#####0.00");
-            String str = df.format(allMoney);
-            allCownumId.setText("合计：￥"+str);
-            currentPage = 1;
-            isFirst = true;
-            lists.clear();
-            storeCarPayPresenter.getCarList(reqData,currentPage);
+            allCkId.setChecked(false);
         }
+        chooseNum=0;
+        allMoney=0;
+        DecimalFormat df = new DecimalFormat("#####0.00");
+        String str = df.format(allMoney);
+        allCownumId.setText("合计：￥"+str);
+        currentPage = 1;
+        isFirst = true;
+        lists.clear();
+        storeCarPayPresenter.getCarList(reqData,currentPage);
     }
 
     @Override

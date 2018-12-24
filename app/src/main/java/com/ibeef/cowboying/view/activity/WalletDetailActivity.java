@@ -167,10 +167,10 @@ public class WalletDetailActivity extends BaseActivity  implements SuperSwipeRef
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(incomeInfoPresenter!=null){
             incomeInfoPresenter.detachView();
         }
-        super.onDestroy();
     }
 
     @Override

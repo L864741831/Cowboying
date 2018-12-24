@@ -202,4 +202,12 @@ public class MyContractDetailActivity extends BaseActivity implements  MyContrac
             return this.url;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myContractPresenter!=null){
+            myContractPresenter.detachView();
+        }
+    }
 }

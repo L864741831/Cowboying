@@ -81,6 +81,7 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
         switch (view.getId()) {
             case R.id.back_id:
                 if(isAd){
+                    removeALLActivity();
                     startActivity(new Intent(NewManwelfareActivity.this, MainActivity.class));
                 }
                 finish();
@@ -172,16 +173,17 @@ public class NewManwelfareActivity extends BaseActivity implements UserInfoBase.
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(userInfoPresenter!=null){
             userInfoPresenter.detachView();
         }
-        super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(NewManwelfareActivity.this, MainActivity.class));
         }
         finish();

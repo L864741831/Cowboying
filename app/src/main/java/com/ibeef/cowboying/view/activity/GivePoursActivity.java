@@ -51,11 +51,11 @@ public class GivePoursActivity extends BaseActivity {
                         intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getPopBanner().getParams()));
                         startActivity(intent4);
                         break;
-                    case "adop_order_list":
+                    case "adopt_order_list":
                         //养牛订单列表
                         startActivity(MyCowsActivity.class);
                         break;
-                    case "adop_order_detail":
+                    case "adopt_order_detail":
                         //养牛订单详情
                         Intent intent3 = new Intent(GivePoursActivity.this, MyCowsDetailActivity.class);
                         intent3.putExtra("orderId",info.getBizData().getPopBanner().getParams()+"");

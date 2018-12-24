@@ -32,6 +32,7 @@ public class ResponseHandler {
             if(code==401){
                 if(!ActivityCollector.isForeground(CowboyingApplication.getInstance(),"LoginActivity")){
                     Hawk.put(HawkKey.TOKEN, "");
+                    CowboyingApplication.getInstance().removeALLActivity_();
                     CowboyingApplication.getInstance().startActivity(new Intent(CowboyingApplication.getInstance(), LoginActivity.class));
                 }
                 return "未登录";

@@ -136,6 +136,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
         switch (view.getId()) {
             case R.id.back_id:
                 if(isAd){
+                    removeALLActivity();
                     startActivity(new Intent(BuyCowsPlanActivity.this, MainActivity.class));
                 }
                 finish();
@@ -223,6 +224,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(BuyCowsPlanActivity.this, MainActivity.class));
         }
         finish();

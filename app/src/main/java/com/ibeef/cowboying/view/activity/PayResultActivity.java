@@ -73,10 +73,9 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
                 finish();
                 break;
             case R.id.see_order_btn:
-                Intent intent=new Intent(PayResultActivity.this,MyCowsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent=new Intent(PayResultActivity.this,MyCowsDetailActivity.class);
                 intent.putExtra("from",true);
+                intent.putExtra("orderId",orderId+"");
                 startActivity(intent);
                 break;
             default:
@@ -148,9 +147,9 @@ public class PayResultActivity extends BaseActivity implements MyCowsOrderBase.I
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(myCowsOrderPresenter!=null){
             myCowsOrderPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

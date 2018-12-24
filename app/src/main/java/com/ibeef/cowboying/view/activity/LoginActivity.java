@@ -133,8 +133,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         req.scope = "snsapi_userinfo";
         req.state = "wechat_sdk_demo_test";
         api.sendReq(req);
-
-        finish();
     }
 
 
@@ -202,6 +200,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
                 startActivity(intent2);
             }else {
                 Hawk.put(HawkKey.TOKEN, thirdCountLoginResultBean.getBizData().getToken());
+                removeALLActivity();
                 Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -216,10 +215,13 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(thirdAccountLoginPresenter!=null){
             thirdAccountLoginPresenter.detachView();
         }
-        super.onDestroy();
+        if(initThirdLoginPresenter!=null){
+            initThirdLoginPresenter.detachView();
+        }
     }
 
     @Override
@@ -227,6 +229,7 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
         if(TextUtils.isEmpty(token)){
             finish();
         }else {
+            removeALLActivity();
             Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -234,5 +237,6 @@ public class LoginActivity extends BaseActivity implements ThirdLoginBase.IView 
             finish();
         }
     }
+
 
 }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.SchemeDetailReultBean;
+import com.ibeef.cowboying.utils.SDCardUtil;
 
 import java.text.NumberFormat;
 
@@ -46,6 +47,12 @@ public class CowClaimBuyWayFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(SDCardUtil.isNullOrEmpty(schemeDetailReultBean)){
+            return;
+        }
+        if(SDCardUtil.isNullOrEmpty(schemeDetailReultBean.getBizData())){
+            return;
+        }
         vip_level_txt_id.setText("· 第"+schemeDetailReultBean.getBizData().getCode()+"期 ·");
         level_vip_txt_id.setText("· VIP"+schemeDetailReultBean.getBizData().getVipLevel()+" ·");
         percent_txt_id.setText(schemeDetailReultBean.getBizData().getExpectRate());

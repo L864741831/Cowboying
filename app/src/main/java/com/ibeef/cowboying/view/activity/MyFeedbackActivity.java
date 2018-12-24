@@ -202,9 +202,9 @@ public class MyFeedbackActivity extends BaseActivity implements SuperSwipeRefres
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (feedbackPresenter != null) {
             feedbackPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

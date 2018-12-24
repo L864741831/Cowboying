@@ -33,6 +33,7 @@ public class WelcomeActivity extends BaseActivity implements HomeAdBase.IView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        Hawk.put(HawkKey.PRODUCR_ID,0);
         init();
     }
 
@@ -104,5 +105,13 @@ public class WelcomeActivity extends BaseActivity implements HomeAdBase.IView {
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(homeAdPresenter!=null){
+            homeAdPresenter.detachView();
+        }
     }
 }

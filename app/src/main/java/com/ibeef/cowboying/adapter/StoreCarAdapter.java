@@ -3,7 +3,6 @@ package com.ibeef.cowboying.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -36,9 +35,8 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
     protected void convert(final BaseViewHolder helper, CarListResultBean.BizDataBean item) {
 
         AmountViewWhite amountViewWhite=helper.getView(R.id.amout_num_white_id);
-        amountViewWhite.intEdit(item.getQuantity()+"");
-        Log.e(Constant.TAG,item.getQuantity()+"mayamyamay");
         amountViewWhite.setGoods_storage(item.getStock());
+        amountViewWhite.intEdit(item.getQuantity()+"");
 
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         if(0==item.getDefautChoose()){
@@ -57,8 +55,7 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
         Glide.with(context).load(Constant.imageDomain+item.getProductMainImage()).apply(options).into((ImageView) helper.getView(R.id.goods_info_img));
 
         helper.setText(R.id.name_beef_id,item.getName())
-                .setText(R.id.price_id,"￥"+item.getPrice())
-                .setText(R.id.etAmount,item.getQuantity()+"");
+                .setText(R.id.price_id,"￥"+item.getPrice());
 
         amountViewWhite.setOnAmountChangeListener(new AmountViewWhite.OnAmountChangeListener() {
             @Override

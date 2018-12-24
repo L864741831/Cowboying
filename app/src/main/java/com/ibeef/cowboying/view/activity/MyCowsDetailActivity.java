@@ -143,7 +143,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     private String orderCode;
     private int LockMonths;
     private String unlockTime;
-    private boolean isAd;
+    private boolean isAd,from;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +154,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
 
     private void init() {
         isAd=getIntent().getBooleanExtra("isAd",false);
+        from=getIntent().getBooleanExtra("from",false);
         token = Hawk.get(HawkKey.TOKEN);
         orderCode = getIntent().getStringExtra("orderId");
         info.setText("我的牛只");
@@ -179,8 +180,15 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
-                if(isAd){
-                    startActivity(new Intent(MyCowsDetailActivity.this, MainActivity.class));
+                if(from){
+                    Intent intent1=new Intent(MyCowsDetailActivity.this,MyCowsActivity.class);
+                    intent1.putExtra("from",true);
+                    startActivity(intent1);
+                }else {
+                    if(isAd){
+                        removeALLActivity();
+                        startActivity(new Intent(MyCowsDetailActivity.this, MainActivity.class));
+                    }
                 }
                 finish();
                 break;
@@ -430,6 +438,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 tvMode.setText("定期养牛");
                 discountTypeId.setText("优惠券：");
             } else  if ("3".equals(myCowsOrderListDetailBean.getBizData().getSchemeType())){
+                rlLockDay.setVisibility(View.GONE);
                 tvMode.setText("新手体验养牛");
                 discountTypeId.setText("体验金额：");
                 rlExpirenceDay.setVisibility(View.VISIBLE);
@@ -497,9 +506,24 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(isAd){
-            startActivity(new Intent(MyCowsDetailActivity.this, MainActivity.class));
+        if(from){
+            Intent intent1=new Intent(MyCowsDetailActivity.this,MyCowsActivity.class);
+            intent1.putExtra("from",true);
+            startActivity(intent1);
+        }else {
+            if(isAd){
+                removeALLActivity();
+                startActivity(new Intent(MyCowsDetailActivity.this, MainActivity.class));
+            }
         }
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myCowsOrderPresenter!=null){
+            myCowsOrderPresenter.detachView();
+        }
     }
 }

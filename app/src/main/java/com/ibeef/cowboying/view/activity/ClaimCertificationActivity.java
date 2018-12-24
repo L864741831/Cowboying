@@ -256,9 +256,12 @@ public class ClaimCertificationActivity extends BaseActivity implements OrderIni
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
         }
-        super.onDestroy();
+        if(useCouponListPresenter!=null){
+            useCouponListPresenter.detachView();
+        }
     }
 }

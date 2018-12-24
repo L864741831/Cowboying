@@ -490,6 +490,9 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         if(isPayPwdPresenter!=null){
             isPayPwdPresenter.detachView();
         }
+        if(myOrderListPresenter!=null){
+            myOrderListPresenter.detachView();
+        }
         super.onDestroy();
     }
 

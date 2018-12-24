@@ -188,9 +188,9 @@ public class SellCowsSecondActivity extends BaseActivity implements SellCowsBase
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(sellCowsPresenter!=null){
             sellCowsPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

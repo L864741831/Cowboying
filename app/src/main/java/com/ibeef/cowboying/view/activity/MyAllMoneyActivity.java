@@ -227,6 +227,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
         switch (view.getId()) {
             case R.id.back_id:
                 if(isAd){
+                    removeALLActivity();
                     startActivity(new Intent(MyAllMoneyActivity.this, MainActivity.class));
                 }
                 finish();
@@ -322,6 +323,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(MyAllMoneyActivity.this, MainActivity.class));
         }
         finish();

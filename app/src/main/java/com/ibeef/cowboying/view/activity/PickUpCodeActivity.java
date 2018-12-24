@@ -257,9 +257,9 @@ public class PickUpCodeActivity extends BaseActivity implements SuperSwipeRefres
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(myOrderListPresenter!=null){
             myOrderListPresenter.detachView();
         }
-        super.onDestroy();
     }
 }

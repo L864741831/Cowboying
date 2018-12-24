@@ -124,6 +124,7 @@ public class MobileLoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //  第三方登录取消绑定手机号  跳转到主界面
+                removeALLActivity();
                 Intent intent1 = new Intent(MobileLoginActivity.this, MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);

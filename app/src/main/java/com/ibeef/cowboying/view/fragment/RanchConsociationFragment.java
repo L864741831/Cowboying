@@ -228,13 +228,13 @@ public class RanchConsociationFragment extends BaseFragment implements SuperSwip
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(pasturePresenter!=null){
             pasturePresenter.detachView();
         }
         if(ranchBottomVideoPresenter!=null){
             ranchBottomVideoPresenter.detachView();
         }
-        super.onDestroy();
     }
 
     @Override
@@ -260,7 +260,7 @@ public class RanchConsociationFragment extends BaseFragment implements SuperSwip
                         Intent intent = new Intent(getHoldingActivity(), TvLiveActivity.class);
                         intent.putExtra("video_url", pastureDetelResultBean.getBizData().getLivePlayUrl());
                         intent.putExtra("title", pastureDetelResultBean.getBizData().getName());
-                        intent.putExtra("coverUrl", pastureDetelResultBean.getBizData().getVideoCoverUrl());
+                        intent.putExtra("coverUrl", pastureDetelResultBean.getBizData().getLiveCoverUrl());
                         startActivity(intent);
                     }
                 }

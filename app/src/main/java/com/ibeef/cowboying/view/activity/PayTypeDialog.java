@@ -142,4 +142,12 @@ public class PayTypeDialog extends AppCompatActivity implements MyContractBase.I
     public void showVipCardHistory(VipCardListBean vipCardListBean) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myContractPresenter!=null){
+            myContractPresenter.detachView();
+        }
+    }
 }

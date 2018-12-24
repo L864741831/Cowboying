@@ -12,6 +12,7 @@ import com.ibeef.cowboying.bean.MessegeListReslutBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.utils.DateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +31,13 @@ public class MyMessegeListAdapter extends BaseQuickAdapter<MessegeListReslutBean
     @Override
     protected void convert(BaseViewHolder helper, MessegeListReslutBean.BizDataBean item) {
 
-        helper.setText(R.id.time_show_id,DateUtils.formatDate(item.getCreateTime(),DateUtils.TYPE_01))
+        String times="";
+        if(DateUtils.getTime(new Date()).equals(DateUtils.formatDate(item.getCreateTime(),DateUtils.TYPE_02))){
+            times=DateUtils.formatDate(item.getCreateTime(),DateUtils.TYPE_03);
+        }else {
+            times=DateUtils.formatDate(item.getCreateTime(),DateUtils.TYPE_01);
+        }
+        helper.setText(R.id.time_show_id,times)
                 .setText(R.id.title_txt_id,item.getTitle())
                 .setText(R.id.info_txt_id,item.getContent());
 

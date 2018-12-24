@@ -119,6 +119,7 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
     @OnClick(R.id.back_id)
     public void onViewClicked() {
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(MyContractActivity.this, MainActivity.class));
         }
         finish();
@@ -236,6 +237,7 @@ public class MyContractActivity extends BaseActivity implements SuperSwipeRefres
     public void onBackPressed() {
         super.onBackPressed();
         if(isAd){
+            removeALLActivity();
             startActivity(new Intent(MyContractActivity.this, MainActivity.class));
         }
         finish();

@@ -164,6 +164,16 @@ public class VipCardActivity extends BaseActivity implements MyContractBase.IVie
             case R.id.iv_xinpian:
                 startActivity(PayActivity.class);
                 break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myContractPresenter!=null){
+            myContractPresenter.detachView();
         }
     }
 }

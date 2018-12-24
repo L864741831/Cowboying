@@ -257,4 +257,12 @@ public class AfterSaleApplyActivity extends BaseActivity implements MyOrderListB
     public void showDelevery(ShowDeleveryResultBean showDeleveryResultBean) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myOrderListPresenter!=null){
+            myOrderListPresenter.detachView();
+        }
+    }
 }

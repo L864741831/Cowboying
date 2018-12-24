@@ -290,12 +290,15 @@ public class ClaimUnCertificationActivity extends BaseActivity implements UserIn
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(userInfoPresenter!=null){
             userInfoPresenter.detachView();
         }
         if(orderInitPresenter!=null){
             orderInitPresenter.detachView();
         }
-        super.onDestroy();
+        if(useCouponListPresenter!=null){
+            useCouponListPresenter.detachView();
+        }
     }
 }
