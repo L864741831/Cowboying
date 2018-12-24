@@ -178,11 +178,14 @@ public class AfterSaleDetailActivity extends BaseActivity implements MyOrderList
                 break;
             case R.id.btn_apply_return:
                 //申请退款
-                Intent intent8 = new Intent(this, AfterSaleApplyActivity.class);
-                intent8.putExtra("id",id+"");
-                intent8.putExtra("orderCode", orderIdnew+"");
-                Log.i("htht", "orderIdnew:::::发送 "+orderIdnew);
-                startActivity(intent8);
+//                Intent intent8 = new Intent(this, AfterSaleApplyActivity.class);
+//                intent8.putExtra("id",id+"");
+//                intent8.putExtra("orderCode", orderIdnew+"");
+//                Log.i("htht", "orderIdnew:::::发送 "+orderIdnew);
+//                startActivity(intent8);
+                Intent intent = new Intent(this, MyOrderDetailActivity.class);
+                intent.putExtra("orderId",orderIdnew+"");
+                startActivity(intent);
                 break;
             default:
                 break;

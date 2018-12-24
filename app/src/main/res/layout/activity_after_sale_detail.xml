@@ -449,7 +449,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@drawable/shape_white_cicle_1"
-            android:text="申请退款"
+            android:text="订单详情"
             android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>
