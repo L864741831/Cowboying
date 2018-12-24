@@ -31,7 +31,7 @@ import com.ibeef.cowboying.bean.VideoAppkeyResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.VideoAppkeyPresenter;
-import com.ibeef.cowboying.utils.IsInternet;
+
 import com.ibeef.cowboying.view.customview.WindowSizeChangeNotifier;
 import com.orhanobut.hawk.Hawk;
 
