@@ -38,7 +38,8 @@
                     <TextView
                         android:layout_width="0dp" android:layout_weight="0.33"
                         android:layout_height="wrap_content" android:text="拼牛收益（元）"
-                        android:gravity="center" android:textColor="@color/colorAccent"/>
+                        android:gravity="center" android:textColor="@color/colorAccent"
+                        android:visibility="gone"/>
                     <TextView
                         android:layout_width="0dp" android:layout_weight="0.33"
                         android:layout_height="wrap_content" android:text="推荐奖励（元）"

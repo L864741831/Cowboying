@@ -66,7 +66,7 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
     RelativeLayout releaseCacheRv;
     @Bind(R.id.unlogin_rv)
     TextView unloginRv;
-    private String token;
+    private String token,isMessege;
     private AccountSecurityPresenter accountSecurityPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
         ButterKnife.bind(this);
         init();
         token= Hawk.get(HawkKey.TOKEN);
+        isMessege=Hawk.get(HawkKey.ISMESSEGE);
         accountSecurityPresenter=new AccountSecurityPresenter(this);
     }
 
@@ -85,6 +86,11 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         accountSecurityPresenter.getSafeInfo(reqData);
+        if("1".equals(isMessege)){
+            switchButton.setChecked(false);
+        }else {
+            switchButton.setChecked(true);
+        }
     }
 
     private void init() {
@@ -95,9 +101,11 @@ public class SetUpActivity extends BaseActivity implements AccountSecurityBase.I
                 if (isChecked) {
                     // 点击恢复按钮后，极光推送服务会恢复正常工作
                     JPushInterface.resumePush(getApplicationContext());
+                    Hawk.put(HawkKey.ISMESSEGE,"0");
                 }else {
                     // 点击停止按钮后，极光推送服务会被停止掉
                     JPushInterface.stopPush(getApplicationContext());
+                    Hawk.put(HawkKey.ISMESSEGE,"1");
                 }
 
             }

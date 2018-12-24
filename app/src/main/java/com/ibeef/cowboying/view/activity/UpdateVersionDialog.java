@@ -1,5 +1,7 @@
 package com.ibeef.cowboying.view.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,7 +26,7 @@ public class UpdateVersionDialog extends AppCompatActivity {
     @Bind(R.id.version_txt_id)
     TextView versionTxtId;
 
-    private String from,version;
+    private String from,version,fileUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class UpdateVersionDialog extends AppCompatActivity {
         ButterKnife.bind(this);
         from=getIntent().getStringExtra("from");
         version=getIntent().getStringExtra("version");
+        fileUrl=getIntent().getStringExtra("fileUrl");
         // 如果是强更，不展示关闭按钮
         if("1".equals(from)){
             imgCloseId.setVisibility(View.GONE);
@@ -48,6 +51,10 @@ public class UpdateVersionDialog extends AppCompatActivity {
                 finish();
                 break;
             case R.id.sure_id:
+                Uri uri = Uri.parse(fileUrl);
+                //跳到应用宝
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
                 break;
             default:
                 break;

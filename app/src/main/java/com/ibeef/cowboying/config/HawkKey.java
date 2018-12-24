@@ -12,5 +12,6 @@ public interface HawkKey {
     String OrderID ="orderId";
     String deliveryOrderCode ="deliveryOrderCode";
     String PRODUCR_ID ="PRODUCR_ID";
+    String ISMESSEGE ="1";
 
 }

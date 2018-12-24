@@ -74,10 +74,10 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
         }
         fragmentList=new ArrayList<>();
         addIncomeFragment = AddIncomeFragment.newInstance("1",incomeType);
-        addIncomeFragment2 = AddIncomeFragment.newInstance("2",incomeType);
+//        addIncomeFragment2 = AddIncomeFragment.newInstance("2",incomeType);
         addIncomeFragment3 = AddIncomeFragment.newInstance("3",incomeType);
         fragmentList.add(addIncomeFragment);
-        fragmentList.add(addIncomeFragment2);
+//        fragmentList.add(addIncomeFragment2);
         fragmentList.add(addIncomeFragment3);
         mainFragmentAdapter = new MainFragmentAdapter(getSupportFragmentManager(), fragmentList);
         contentVp.setAdapter(mainFragmentAdapter);
@@ -109,7 +109,8 @@ public class YesterdayIncomeActivity extends BaseActivity implements AddMoneyBas
 
         if("000000".equals(yesterdayIncomeResultBean.getCode())){
             incomeMoneyId.setText(yesterdayIncomeResultBean.getBizData().getCumulativeIncome()+"");
-            CHANNELS= new String[]{""+yesterdayIncomeResultBean.getBizData().getAdoptCattleIncome(), ""+yesterdayIncomeResultBean.getBizData().getGroupCattleIncome(), ""+yesterdayIncomeResultBean.getBizData().getRecommendIncome()};
+//            CHANNELS= new String[]{""+yesterdayIncomeResultBean.getBizData().getAdoptCattleIncome(), ""+yesterdayIncomeResultBean.getBizData().getGroupCattleIncome(), ""+yesterdayIncomeResultBean.getBizData().getRecommendIncome()};
+            CHANNELS= new String[]{""+yesterdayIncomeResultBean.getBizData().getAdoptCattleIncome(),  ""+yesterdayIncomeResultBean.getBizData().getRecommendIncome()};
             ntsTop.setViewPager(contentVp, 0);
             ntsTop.setTitles(CHANNELS);
             ntsTop.setStripType(NavigationTabStrip.StripType.LINE);

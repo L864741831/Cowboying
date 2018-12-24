@@ -106,7 +106,10 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.back_id:
-                finish();
+                removeALLActivity();
+                Intent intent=new Intent(StorePayResultActivity.this,MainActivity.class);
+                intent.putExtra("index",1);
+                startActivity(intent);
                 break;
             case R.id.rv_bottom_id:
                 //跳到订单列表
@@ -252,5 +255,14 @@ public class StorePayResultActivity extends BaseActivity implements MyOrderListB
         if(myOrderListPresenter!=null){
             myOrderListPresenter.detachView();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        removeALLActivity();
+        Intent intent1=new Intent(StorePayResultActivity.this,MainActivity.class);
+        intent1.putExtra("index",1);
+        startActivity(intent1);
     }
 }

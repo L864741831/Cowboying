@@ -223,7 +223,7 @@ public class ChooseParsterActivity extends BaseActivity implements SuperSwipeRef
             Glide.with(this).load(pastureDetelResultBean.getBizData().getVideoCoverUrl()).into(ivRanchCanosciation);
             RequestOptions options = new RequestOptions()
                     .skipMemoryCache(true)
-                    .error(R.mipmap.ranch_consociation_banner_2)
+                    .error(R.mipmap.realtimepicture)
                     //跳过内存缓存
                     ;
             Glide.with(this).load(Constant.imageDomain + pastureDetelResultBean.getBizData().getLiveCoverUrl()).apply(options).into(ivRanchConsociationLive);
