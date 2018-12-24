@@ -79,7 +79,7 @@ android {
         debug {
             keyAlias 'cows'
             keyPassword 'liangniu888'
-            storeFile file('C:/Users/lwang/Desktop/cows.keystore')
+            storeFile file('C:/Users/Administrator/Desktop/cowboy/cows.keystore')
             storePassword 'liangniu888'
         }
     }

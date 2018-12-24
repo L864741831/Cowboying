@@ -67,7 +67,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
     private boolean isMoreLoad = false;
     private String groupId;
     private MyCowsOrderPresenter myCowsOrderPresenter;
-    private boolean mIsRefreshing = false;
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
@@ -102,16 +101,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
                     mSwipeLayout.setEnabled(true);
                 }else {
                     mSwipeLayout.setEnabled(false);
-                }
-            }
-        });
-        mRView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (mIsRefreshing) {
-                    return true;
-                } else {
-                    return false;
                 }
             }
         });
@@ -239,7 +228,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
 
     @Override
     public void geMyCowsOrderList(MyCowsOrderListBean myCowsOrderListBean) {
-        mIsRefreshing=true;
         if(myCowsOrderListBean.getPageNo()==1&&SDCardUtil.isNullOrEmpty(myCowsOrderListBean.getBizData())){
             rv_order.setVisibility(View.VISIBLE);
             mRView.setVisibility(View.GONE);
@@ -395,7 +383,6 @@ public class MyCowsListFragment extends BaseFragment implements MyCowsOrderBase.
     public void getMyCowsOrderDelete(MyCowsOrderDeleteBean msg) {
         if("000000".equals(msg.getCode())){
             page = 1;
-            mIsRefreshing=false;
             listData.clear();
             myCowsListAdapter.notifyDataSetChanged();
             Map<String, String> reqData = new HashMap<>();
