@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -71,6 +72,7 @@ public class ChooseParsterActivity extends BaseActivity implements SuperSwipeRef
     SuperSwipeRefreshLayout swipeLy;
     @Bind(R.id.action_new_question_tv)
     TextView actionNewQuestionTv;
+    private LinearLayout lv_play_show;
     private int id;
     private PasturePresenter pasturePresenter;
     private List<RanchBottomVideoResultBean.BizDataBean> beanList;
@@ -89,7 +91,7 @@ public class ChooseParsterActivity extends BaseActivity implements SuperSwipeRef
     private void init() {
         id = getIntent().getIntExtra("id", 0);
         name=getIntent().getStringExtra("name");
-
+        lv_play_show=findViewById(R.id.lv_play_show);
         info.setText(name);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置banner样式
@@ -221,6 +223,11 @@ public class ChooseParsterActivity extends BaseActivity implements SuperSwipeRef
             }
 
             Glide.with(this).load(pastureDetelResultBean.getBizData().getVideoCoverUrl()).into(ivRanchCanosciation);
+            if(SDCardUtil.isNullOrEmpty(pastureDetelResultBean.getBizData().getLivePlayUrl())){
+                lv_play_show.setVisibility(View.GONE);
+            }else {
+                lv_play_show.setVisibility(View.VISIBLE);
+            }
             RequestOptions options = new RequestOptions()
                     .skipMemoryCache(true)
                     .error(R.mipmap.realtimepicture)

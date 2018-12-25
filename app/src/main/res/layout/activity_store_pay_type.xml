@@ -28,7 +28,7 @@
             <RelativeLayout
                 android:layout_width="match_parent" android:background="@color/white"
                 android:layout_height="60dp" android:padding="10dp"
-                android:id="@+id/zfb_id">
+                android:id="@+id/rv1_id">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -36,27 +36,27 @@
                     android:textColor="@color/black" android:textSize="15sp"
                     android:layout_centerVertical="true" android:layout_marginLeft="20dp"/>
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
                     android:id="@+id/zfb_check" android:layout_centerVertical="true"
-                    android:src="@drawable/hascheck"  android:layout_marginRight="10dp"/>
+                    android:src="@mipmap/hascheck"  android:layout_marginRight="10dp"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp" android:background="@color/colorline"/>
             <RelativeLayout
                 android:layout_width="match_parent" android:background="@color/white"
-                android:layout_height="60dp" android:padding="10dp" android:id="@+id/weixin_id">
+                android:layout_height="60dp" android:padding="10dp" android:id="@+id/rv2_id">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="微信"
                     android:textColor="@color/black"  android:textSize="15sp"
                     android:layout_centerVertical="true" android:layout_marginLeft="20dp"/>
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
                     android:id="@+id/weixin_check" android:layout_centerVertical="true"
-                    android:src="@drawable/unhascheck"  android:layout_marginRight="10dp"/>
+                    android:src="@mipmap/unhascheck"  android:layout_marginRight="10dp"/>
             </RelativeLayout>
 
             <View
@@ -65,17 +65,17 @@
 
             <RelativeLayout
                 android:layout_width="match_parent" android:background="@color/white"
-                android:layout_height="60dp" android:padding="10dp" android:id="@+id/wallet_id">
+                android:layout_height="60dp" android:padding="10dp" android:id="@+id/rv3_id">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="钱包余额"
                     android:textColor="@color/black"  android:textSize="15sp"
                     android:layout_centerVertical="true" android:layout_marginLeft="20dp"/>
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
                     android:id="@+id/wallet_check" android:layout_centerVertical="true"
-                    android:src="@drawable/unhascheck" android:layout_marginRight="10dp" />
+                    android:src="@mipmap/unhascheck" android:layout_marginRight="10dp" />
             </RelativeLayout>
 
             <View

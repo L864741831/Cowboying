@@ -59,7 +59,7 @@
                 <LinearLayout
                     android:layout_width="match_parent" android:id="@+id/lv_show_id"
                     android:layout_height="wrap_content" android:orientation="vertical"
-                    android:background="@color/homef7">
+                    android:background="@color/homef7" >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:orientation="vertical"
@@ -162,9 +162,16 @@
                             android:layout_marginBottom="50dp" android:layout_gravity="center_horizontal" />
 
                     </LinearLayout>
-
                 </LinearLayout>
-
+                <RelativeLayout
+                    android:layout_width="match_parent" android:id="@+id/rv_order"
+                    android:layout_height="match_parent" android:visibility="gone">
+                    <ImageView
+                        android:id="@+id/tv_text_null"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:src="@mipmap/storewhitebg"/>
+                </RelativeLayout>
             </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

@@ -236,15 +236,15 @@
                 android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="80dp" android:id="@+id/rv1_id">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="顺丰配送"
                     android:layout_centerVertical="true" android:layout_marginLeft="15dp"
                     android:textSize="@dimen/sp_16" android:textColor="@color/gray_42"/>
                 <ImageView
-                    android:layout_width="20dp" android:id="@+id/img_choose1_id"
-                    android:layout_height="20dp" android:src="@drawable/unhascheck"
+                    android:layout_width="wrap_content" android:id="@+id/img_choose1_id"
+                    android:layout_height="wrap_content" android:src="@mipmap/unhascheck"
                     android:layout_alignParentRight="true" android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"/>
             </RelativeLayout>
@@ -255,15 +255,15 @@
                 android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="80dp" android:id="@+id/rv2_id">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="到店自取"
                     android:layout_centerVertical="true" android:layout_marginLeft="15dp"
                     android:textSize="@dimen/sp_16" android:textColor="@color/gray_42"/>
                 <ImageView
-                    android:layout_width="20dp" android:id="@+id/img_choose2_id"
-                    android:layout_height="20dp" android:src="@drawable/unhascheck"
+                    android:layout_width="wrap_content" android:id="@+id/img_choose2_id"
+                    android:layout_height="wrap_content" android:src="@mipmap/unhascheck"
                     android:layout_alignParentRight="true" android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"/>
             </RelativeLayout>

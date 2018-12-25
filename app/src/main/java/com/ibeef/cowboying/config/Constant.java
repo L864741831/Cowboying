@@ -12,6 +12,7 @@ public class Constant {
 //      public static final String BASE_URL = "http://192.168.0.162:8090/";
 //    public static final String BASE_URL = "http://192.168.1.100:8090/";
     public static final String BASE_URL = "http://120.27.12.205:9001/";
+//    public static final String BASE_URL = "http://47.110.252.99:9001/";
 
     /**
      * 微信支付appid
@@ -35,7 +36,7 @@ public class Constant {
     /**
      * //正式环境图片服务器域名
      */
-//    public static final String imageDomain = "http://yabei.oss-cn-beijing.aliyuncs.com/";
+//    public static final String imageDomain = "http://img.ibeef.vip/";
 
     /**
      * //测试环境图片服务器域名

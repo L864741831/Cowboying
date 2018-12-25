@@ -114,6 +114,10 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     LinearLayout lvChooseId;
     @Bind(R.id.rv_storeaddr_id)
     RelativeLayout rvStoreaddrId;
+    @Bind(R.id.rv1_id)
+    RelativeLayout rv1_id;
+    @Bind(R.id.rv2_id)
+    RelativeLayout rv2_id;
     private StoreSureOrderAdapter storeSureOrderAdapter;
     private String token;
     private BroadcastReceiver receiver;
@@ -245,7 +249,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
         storeCarPayPresenter.nowBuyOrder(reqData,addShopCarResultBean1);
     }
 
-    @OnClick({R.id.back_id, R.id.delevery_rv, R.id.cuppon_rv, R.id.now_pay_id,R.id.address_rv,R.id.refuce_id,R.id.sure_id,R.id.lv_choose_id,R.id.img_choose1_id,R.id.img_choose2_id,R.id.lvs_id})
+    @OnClick({R.id.back_id, R.id.delevery_rv, R.id.cuppon_rv, R.id.now_pay_id,R.id.address_rv,R.id.refuce_id,R.id.sure_id,R.id.lv_choose_id,R.id.rv1_id,R.id.rv2_id,R.id.lvs_id,R.id.img_choose2_id,R.id.img_choose1_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -257,6 +261,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
             case R.id.lvs_id:
                 //最外层蒙版 阻止点击事件的传递
                 break;
+            case R.id.rv1_id:
             case R.id.img_choose1_id:
                 type=1;
                 lvChooseId.setVisibility(View.GONE);
@@ -267,6 +272,7 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 oderAllMoneyId.setText("￥"+df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()));
                 allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
                 break;
+            case R.id.rv2_id:
             case R.id.img_choose2_id:
                 type=2;
                 freightRv.setVisibility(View.GONE);

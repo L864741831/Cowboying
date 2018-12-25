@@ -63,7 +63,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private StoreTopAdapter storeTopAdapter;
     private ViewPagerLayoutManager layoutManager;
     private RelativeLayout storecars_rv;
-    private RelativeLayout loadingLayout;
+    private RelativeLayout loadingLayout,rv_order;
     private BroadcastReceiver receiver,receiver1;
     private int num,position;
     private boolean isClick=false;
@@ -112,6 +112,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         lv_show_id=view.findViewById(R.id.lv_show_id);
         txt1_id=view.findViewById(R.id.txt1_id);
         amountViewBeef=view.findViewById(R.id.amout_num_id);
+        rv_order=view.findViewById(R.id.rv_order);
 
         last_go_img.setOnClickListener(this);
         first_go_img.setOnClickListener(this);
@@ -291,13 +292,8 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
     private void isShowData(){
         if (position == baseBeans.size() - 1) {
             if(isNoData){
-                if(position!=0){
-                    position=0;
-                    MoveToPosition(layoutManager,ryId,position);
-                }else {
-                    position = position + 1;
-                    MoveToPosition(layoutManager,ryId,position);
-                }
+                position=0;
+                MoveToPosition(layoutManager,ryId,position);
             }else {
                 currentPage = 1;
                 Map<String, String> reqData = new HashMap<>();
@@ -401,9 +397,20 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         if ("000000".equals(storeInfoListResultBean.getCode())) {
             if (SDCardUtil.isNullOrEmpty(storeInfoListResultBean.getBizData())) {
                 if (isFirst) {
-                    lv_show_id.setVisibility(View.GONE);
+                    if(baseBeans.size()==0){
+                        lv_show_id.setVisibility(View.GONE);
+                        rv_order.setVisibility(View.VISIBLE);
+                    }else {
+                        lv_show_id.setVisibility(View.VISIBLE);
+                        rv_order.setVisibility(View.GONE);
+                        storeTopAdapter.setNewData(this.baseBeans);
+                        isFirst = false;
+                        isLoadFirst=false;
+                        initData();
+                    }
                 } else {
                     lv_show_id.setVisibility(View.VISIBLE);
+                    rv_order.setVisibility(View.GONE);
                     isNoData=true;
                     position=0;
                     MoveToPosition(layoutManager,ryId,position);

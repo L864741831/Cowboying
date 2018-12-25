@@ -9,15 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"     android:layout_gravity="center">
         <CheckBox
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/all_ck_id"
-            android:background="@drawable/unhascheck" android:layout_marginTop="15dp"
+            android:background="@mipmap/unhascheck" android:layout_marginTop="5dp"
             android:button="@null"  />
 
         <ImageView
             android:layout_width="130dp" android:id="@+id/goods_info_img"
-            android:layout_marginTop="10dp" android:layout_below="@+id/all_ck_id"
+            android:layout_below="@+id/all_ck_id"
             android:layout_height="130dp"
             android:scaleType="centerCrop"/>
     </RelativeLayout>

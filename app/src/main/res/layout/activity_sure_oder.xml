@@ -159,18 +159,19 @@
                         android:layout_marginRight="10dp"/>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/rv1_id"
                     android:layout_width="match_parent" android:background="@color/white"
-                    android:layout_height="50dp" android:padding="10dp">
+                    android:layout_height="wrap_content" android:padding="10dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="支付宝"
                         android:textColor="@color/black" android:textSize="14sp"
                         android:layout_centerVertical="true" android:layout_marginLeft="5dp"/>
                     <CheckBox
-                        android:layout_width="19dp"
-                        android:layout_height="19dp" android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
                         android:id="@+id/zfb_check" android:layout_centerVertical="true"
-                        android:checked="true" android:background="@drawable/hascheck"
+                        android:checked="true" android:background="@mipmap/hascheck"
                         android:button="@null"  android:layout_marginRight="15dp"/>
                 </RelativeLayout>
 
@@ -178,26 +179,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp" android:background="@color/colorline"/>
                 <RelativeLayout
+                    android:id="@+id/rv2_id"
                     android:layout_width="match_parent" android:background="@color/white"
-                    android:layout_height="50dp" android:padding="10dp">
+                    android:layout_height="wrap_content" android:padding="10dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="微信"
                         android:textColor="@color/black"  android:textSize="14sp"
                         android:layout_centerVertical="true" android:layout_marginLeft="5dp"/>
                     <CheckBox
-                        android:layout_width="19dp"
-                        android:layout_height="19dp" android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
                         android:id="@+id/weixin_check" android:layout_centerVertical="true"
-                        android:checked="true" android:background="@drawable/unhascheck"
+                        android:checked="true" android:background="@mipmap/unhascheck"
                         android:button="@null" android:layout_marginRight="15dp"/>
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp" android:background="@color/colorline"/>
                 <RelativeLayout
+                    android:id="@+id/rv3_id"
                     android:layout_width="match_parent" android:background="@color/white"
-                    android:layout_height="50dp" android:padding="10dp"
+                    android:layout_height="wrap_content" android:padding="10dp"
                     android:layout_marginBottom="50dp">
                     <TextView
                         android:layout_width="wrap_content"
@@ -205,10 +208,10 @@
                         android:textColor="@color/black"  android:textSize="14sp"
                         android:layout_centerVertical="true"  android:layout_marginLeft="5dp"/>
                     <CheckBox
-                        android:layout_width="19dp"
-                        android:layout_height="19dp" android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_alignParentRight="true"
                         android:id="@+id/account_balance_ck" android:layout_centerVertical="true"
-                        android:checked="true" android:background="@drawable/unhascheck"
+                        android:checked="true" android:background="@mipmap/unhascheck"
                         android:button="@null"  android:layout_marginRight="15dp"/>
 
                 </RelativeLayout>

@@ -99,6 +99,12 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     TextView myOrderId;
     @Bind(R.id.dialog_close_id)
     TextView dialogCloseId;
+    @Bind(R.id.rv1_id)
+    RelativeLayout rv1_id;
+    @Bind(R.id.rv2_id)
+    RelativeLayout rv2_id;
+    @Bind(R.id.rv3_id)
+    RelativeLayout rv3_id;
     private int type=1;
     private boolean isComplet=true;
     private String token, contents;
@@ -225,7 +231,8 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
-    @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.zfb_check,R.id.weixin_check, R.id.foret_pwd_id, R.id.pay_back_id,R.id.wallet_check,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id,R.id.lvs_back_id,R.id.my_order_id,R.id.dialog_close_id})
+    @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.rv1_id,R.id.rv2_id, R.id.foret_pwd_id, R.id.pay_back_id,R.id.rv3_id,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id,R.id.lvs_back_id,R.id.my_order_id,R.id.dialog_close_id
+    ,R.id.zfb_check,R.id.weixin_check,R.id.wallet_check})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
@@ -253,23 +260,26 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 intent1.putExtra("from",true);
                 startActivity(intent1);
                 break;
+            case R.id.rv1_id:
             case R.id.zfb_check:
                 type=1;
-                weixinCheck.setImageResource(R.drawable.unhascheck);
-                zfbCheck.setImageResource(R.drawable.hascheck);
-                walletCheck.setImageResource(R.drawable.unhascheck);
+                weixinCheck.setImageResource(R.mipmap.unhascheck);
+                zfbCheck.setImageResource(R.mipmap.hascheck);
+                walletCheck.setImageResource(R.mipmap.unhascheck);
                 break;
+            case R.id.rv2_id:
             case R.id.weixin_check:
                 type=2;
-                weixinCheck.setImageResource(R.drawable.hascheck);
-                zfbCheck.setImageResource(R.drawable.unhascheck);
-                walletCheck.setImageResource(R.drawable.unhascheck);
+                weixinCheck.setImageResource(R.mipmap.hascheck);
+                zfbCheck.setImageResource(R.mipmap.unhascheck);
+                walletCheck.setImageResource(R.mipmap.unhascheck);
                 break;
+            case R.id.rv3_id:
             case R.id.wallet_check:
                 type=3;
-                weixinCheck.setImageResource(R.drawable.unhascheck);
-                zfbCheck.setImageResource(R.drawable.unhascheck);
-                walletCheck.setImageResource(R.drawable.hascheck);
+                weixinCheck.setImageResource(R.mipmap.unhascheck);
+                zfbCheck.setImageResource(R.mipmap.unhascheck);
+                walletCheck.setImageResource(R.mipmap.hascheck);
                 break;
             case R.id.foret_pwd_id:
                 isPwd=false;

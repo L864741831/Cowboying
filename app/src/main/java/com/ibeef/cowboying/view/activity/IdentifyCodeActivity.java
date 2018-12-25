@@ -243,7 +243,7 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 validateSmsCodeParamBean.setSmsType("bindPhone");
                 break;
             case "8":
-                validateSmsCodeParamBean.setSmsType("editPhone");
+                validateSmsCodeParamBean.setSmsType("login");
                 break;
             case "9":
                 validateSmsCodeParamBean.setSmsType("editPhone");
@@ -308,8 +308,8 @@ public class IdentifyCodeActivity extends BaseActivity implements AccountRegiste
                 reqData.put("smsType", "bindPhone");
                 break;
             case "8":
-                smsCodeParamBean.setSmsType("editPhone");
-                reqData.put("smsType", "editPhone");
+                smsCodeParamBean.setSmsType("login");
+                reqData.put("smsType", "login");
                 break;
             case "9":
                 smsCodeParamBean.setSmsType("editPhone");

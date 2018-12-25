@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
@@ -46,14 +47,15 @@ import rxfamily.view.BaseFragment;
  * 合作牧场主界面
  */
 public class RanchConsociationFragment extends BaseFragment implements SuperSwipeRefreshLayout.OnPullRefreshListener,PastureBase.IView ,RanchBottomVideoBase.IView,View.OnClickListener {
-    ImageView ivRanchConsociationLive;
-    RecyclerView ryId;
-    ImageView iv_ranch_canosciation;
-    Banner banner;
-    RelativeLayout loadingLayout;
-    NestedScrollView nestScrollId;
-    RichEditor richEditextInfoTv;
-    SuperSwipeRefreshLayout mSwipeLayout;
+    private ImageView ivRanchConsociationLive;
+    private RecyclerView ryId;
+    private ImageView iv_ranch_canosciation;
+    private Banner banner;
+    private RelativeLayout loadingLayout;
+    private NestedScrollView nestScrollId;
+    private RichEditor richEditextInfoTv;
+    private SuperSwipeRefreshLayout mSwipeLayout;
+    private LinearLayout lv_play_show;
     private PasturePresenter pasturePresenter;
     private  List<RanchBottomVideoResultBean.BizDataBean> beanList;
     private PastureDetelBottomImgAdapter pastureDetelBottomImgAdapter;
@@ -71,6 +73,7 @@ public class RanchConsociationFragment extends BaseFragment implements SuperSwip
         nestScrollId=view.findViewById(R.id.nest_scroll_id);
         richEditextInfoTv=view.findViewById(R.id.rich_editext_info_tv);
         mSwipeLayout=view.findViewById(R.id.swipe_ly);
+        lv_play_show=view.findViewById(R.id.lv_play_show);
         ivRanchConsociationLive.setOnClickListener(this);
         iv_ranch_canosciation.setOnClickListener(this);
         init();
@@ -199,6 +202,11 @@ public class RanchConsociationFragment extends BaseFragment implements SuperSwip
             }
 
             Glide.with(this).load(pastureDetelResultBean.getBizData().getVideoCoverUrl()).into(iv_ranch_canosciation);
+            if(SDCardUtil.isNullOrEmpty(pastureDetelResultBean.getBizData().getLivePlayUrl())){
+                lv_play_show.setVisibility(View.GONE);
+            }else {
+                lv_play_show.setVisibility(View.VISIBLE);
+            }
             RequestOptions options = new RequestOptions()
                     .skipMemoryCache(true)
                     .error(R.mipmap.realtimepicture)
