@@ -205,7 +205,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_dingqi"
-            android:visibility="gone"
+           android:visibility="gone"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="45dp">
@@ -231,9 +231,11 @@
             </RelativeLayout>
             <LinearLayout
                 android:orientation="vertical"
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
             <TextView
+
                 android:id="@+id/tv_lock_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -246,11 +248,12 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/tv_lock_month"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="付款确认已到账并无异常"
                 android:textSize="11sp"
                 android:textColor="@color/wenzi_hei"
-                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
                 />
             </LinearLayout>
         </LinearLayout>
