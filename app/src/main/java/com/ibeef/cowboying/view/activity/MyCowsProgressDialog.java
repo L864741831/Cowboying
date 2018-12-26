@@ -90,6 +90,13 @@ public class MyCowsProgressDialog extends AppCompatActivity implements View.OnCl
             iv4.setBackgroundResource(R.mipmap.ischecked);
             iv5.setBackgroundResource(R.mipmap.ischecked_now);
         } else if ("4".equals(status)) {
+            if(LockMonths==0){
+                tvLockDay.setVisibility(View.GONE);
+                tvLockMonth.setTextSize(14);
+            }else {
+                tvLockDay.setVisibility(View.VISIBLE);
+                tvLockMonth.setTextSize(11);
+            }
             tvLockDay.setText(LockMonths+"个月锁定期");
             tvLockMonth.setText("预计"+UnlockTime+"锁定结束");
             vw1.setBackgroundResource(R.color.colorGold_1);
