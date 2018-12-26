@@ -182,7 +182,7 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setClickable(true);
-        banner.setBannerAnimation(Transformer.Accordion);
+        banner.setBannerAnimation(Transformer.DepthPage);
 
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
