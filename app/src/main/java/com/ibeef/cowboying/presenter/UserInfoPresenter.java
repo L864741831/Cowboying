@@ -16,6 +16,7 @@ import com.ibeef.cowboying.bean.ModifyNickResultBean;
 import com.ibeef.cowboying.bean.RealNameParamBean;
 import com.ibeef.cowboying.bean.RealNameReaultBean;
 import com.ibeef.cowboying.bean.UserInfoResultBean;
+import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.model.UserInfoModel;
 
 import java.io.File;
@@ -135,11 +136,13 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
         intent.putExtra("outputY", 60);
 
         intent.putExtra("noFaceDetection", false);
-        File out = new File(Environment.getExternalStorageDirectory() + "/head.jpg");
+        File out = new File(Environment.getExternalStorageDirectory()+"/"+System.currentTimeMillis() + ".jpg");
         if (!out.getParentFile().exists()) {
             out.getParentFile().mkdirs();
         }
+        Log.e(Constant.TAG,out.getAbsolutePath()+"<?????????????");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(out));
+        intent.putExtra("cropImg" , out.getAbsolutePath());
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
         return intent;
@@ -152,27 +155,27 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
             // 检测sd是否可用
             mView.showMsg("请插入SD卡");
         }
-        File file = new File(path);
-        file.mkdirs();// 创建文件夹
-        String fileName = path + System.currentTimeMillis()+"head.jpg";
-
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
-            // 把数据写入文件
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 关闭流
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
+//        File file = new File(path);
+//        file.mkdirs();// 创建文件夹
+//        String fileName = path + System.currentTimeMillis()+"head.jpg";
+//
+//        try {
+//            b = new FileOutputStream(fileName);
+//            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
+//            // 把数据写入文件
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                // 关闭流
+//                b.flush();
+//                b.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        Log.e(Constant.TAG,path+"<夏明?????????????");
         // 图片名字
-        mView.isTakePhoeto(fileName);
+        mView.isTakePhoeto(path);
     }
 }

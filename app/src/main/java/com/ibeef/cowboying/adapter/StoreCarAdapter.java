@@ -40,9 +40,9 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
 
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         if(0==item.getDefautChoose()){
-            all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.unhascheck));
+            all_ck_id.setBackground(ContextCompat.getDrawable(context, R.mipmap.unhascheck));
         }else {
-            all_ck_id.setBackground(ContextCompat.getDrawable(context, R.drawable.hascheck));
+            all_ck_id.setBackground(ContextCompat.getDrawable(context, R.mipmap.hascheck));
         }
 
         helper.addOnClickListener(R.id.all_ck_id);

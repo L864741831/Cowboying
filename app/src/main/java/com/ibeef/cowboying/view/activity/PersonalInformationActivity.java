@@ -137,6 +137,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     private OSS oss = null;
     private OssResultBean ossResultBean;
     private List<String> stringList;
+    private String imgUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -399,6 +400,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                     @Override
                     public void onSuccess(PutObjectRequest request, PutObjectResult result) { // 上传成功
                         urls.remove(0);
+                        stringList.clear();
                         stringList.add(objectKey);
                         // 递归同步效果
                         ossUpload(urls,BucketName,Folder);
@@ -428,14 +430,15 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what==0){
-                Toast.makeText(PersonalInformationActivity.this,"图片上传成功！",Toast.LENGTH_SHORT).show();
-
-                Map<String, String> reqData = new HashMap<>();
-                reqData.put("Authorization",token);
-                reqData.put("version",getVersionCodes());
-                ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
-                modifyHeadParamBean.setImageUrl(stringList.get(0));
-                userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
+                if(stringList.size()>0){
+                    Log.e(Constant.TAG,stringList.get(0)+"objectKey????????????????");
+                    Map<String, String> reqData = new HashMap<>();
+                    reqData.put("Authorization",token);
+                    reqData.put("version",getVersionCodes());
+                    ModifyHeadParamBean modifyHeadParamBean=new ModifyHeadParamBean();
+                    modifyHeadParamBean.setImageUrl(stringList.get(0));
+                    userInfoPresenter.getModifyHead(reqData,modifyHeadParamBean);
+                }
                 dismissLoading();
             }
 
@@ -461,6 +464,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
     @Override
     public void getModifyHead(ModifyHeadResultBean modifyHeadResultBean) {
         if("000000".equals(modifyHeadResultBean.getCode())){
+            stringList.clear();
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization",token);
             reqData.put("version",getVersionCodes());
@@ -578,6 +582,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                 if (resultCode == RESULT_OK) {
                     uritempFile=data.getData();
                     Intent intent = userInfoPresenter.cropHeadPhoto(data.getData());
+                    imgUrl=intent.getStringExtra("cropImg");
                     // 裁剪图片
                     startActivityForResult(intent,3);
                 }
@@ -591,12 +596,14 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                         Intent intent1 = userInfoPresenter.cropHeadPhoto(Uri.fromFile(file));
                         // 裁剪图片
                         uritempFile=Uri.fromFile(file);
+                        imgUrl=intent1.getStringExtra("cropImg");
                         startActivityForResult(intent1,3);
                     }else {
                         Uri photoURI = FileProvider.getUriForFile(PersonalInformationActivity.this, "com.ibeef.cowboying.fileprovider", file);
                         Intent intent1 = userInfoPresenter.cropHeadPhoto(photoURI);
                         // 裁剪图片
                         uritempFile=photoURI;
+                        imgUrl=intent1.getStringExtra("cropImg");
                         startActivityForResult(intent1,3);
                     }
 
@@ -621,7 +628,7 @@ public class PersonalInformationActivity extends BaseActivity implements UserInf
                         // 用ImageView显示出来
 //                         headImgUrl = bitmapToBase64(head);
 
-                        userInfoPresenter.setPicToView(head,path,b);
+                        userInfoPresenter.setPicToView(head,imgUrl,b);
                         // 保存在SD卡中
 
                     }

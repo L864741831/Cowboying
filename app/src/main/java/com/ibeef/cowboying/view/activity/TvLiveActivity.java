@@ -32,6 +32,7 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.VideoAppkeyPresenter;
 
+import com.ibeef.cowboying.utils.InteneteUtil;
 import com.ibeef.cowboying.view.customview.WindowSizeChangeNotifier;
 import com.orhanobut.hawk.Hawk;
 
@@ -134,6 +135,9 @@ public class TvLiveActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
+        if(!InteneteUtil.isNetworkConnected(this)){
+            showWaring("播放失败，请求连接设备超时，检测设备网路连接是否正常");
+        }
         mOrientationDetector.enable();
         Log.d(Constant.TAG, "onResume");
         //界面stop时，如果在播放，那isResumePlay标志位置为true，resume时恢复播放

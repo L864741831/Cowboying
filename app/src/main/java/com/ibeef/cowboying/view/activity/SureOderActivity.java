@@ -102,6 +102,12 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
     CheckBox weixinCheck;
     @Bind(R.id.account_balance_ck)
     CheckBox accountBalanceCk;
+    @Bind(R.id.rv3_id)
+    RelativeLayout rv3_id;
+    @Bind(R.id.rv2_id)
+    RelativeLayout rv2_id;
+    @Bind(R.id.rv1_id)
+    RelativeLayout rv1_id;
     private int chooseType = 1;
 
     private static final int SDK_PAY_FLAG = 1;
@@ -213,32 +219,35 @@ public class SureOderActivity extends BaseActivity implements OrderInitBase.IVie
         isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
-    @OnClick({R.id.back_id, R.id.custom_txt_id, R.id.sure_pay_btn, R.id.pay_back_id, R.id.foret_pwd_id, R.id.account_balance_ck, R.id.weixin_check, R.id.zfb_check})
+    @OnClick({R.id.back_id, R.id.custom_txt_id, R.id.sure_pay_btn, R.id.pay_back_id, R.id.foret_pwd_id, R.id.rv3_id, R.id.rv2_id, R.id.rv1_id,R.id.zfb_check,R.id.weixin_check,R.id.account_balance_ck})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_id:
                 finish();
                 break;
+            case R.id.rv3_id:
             case R.id.account_balance_ck:
                 chooseType = 3;
-                weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
-                zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
-                accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.hascheck));
+                weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.unhascheck));
+                zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.unhascheck));
+                accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.hascheck));
                 break;
+            case R.id.rv2_id:
             case R.id.weixin_check:
                 chooseType = 2;
-                weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.hascheck));
-                zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
-                accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
+                weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.hascheck));
+                zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.unhascheck));
+                accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.unhascheck));
                 break;
+            case R.id.rv1_id:
             case R.id.zfb_check:
                 chooseType = 1;
-                weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
-                zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.hascheck));
-                accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.drawable.unhascheck));
+                weixinCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.unhascheck));
+                zfbCheck.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.hascheck));
+                accountBalanceCk.setBackground(ContextCompat.getDrawable(SureOderActivity.this, R.mipmap.unhascheck));
                 break;
             case R.id.custom_txt_id:
-                showToast("客服");
+//                showToast("客服");
                 break;
             case R.id.pay_back_id:
                 accountPayShowRv.setVisibility(View.GONE);

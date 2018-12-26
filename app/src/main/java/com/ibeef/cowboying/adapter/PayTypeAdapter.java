@@ -29,9 +29,9 @@ public class PayTypeAdapter extends BaseQuickAdapter<PayCodeBean.BizDataBean.Pay
             helper.addOnClickListener(R.id.tv_pay_type);
         CheckBox checkBox = helper.getView(R.id.cb_pay_type);
         if (item.isChecked()){
-            checkBox.setBackgroundResource(R.drawable.hascheck);
+            checkBox.setBackgroundResource(R.mipmap.hascheck);
         }else {
-            checkBox.setBackgroundResource(R.drawable.unhascheck);
+            checkBox.setBackgroundResource(R.mipmap.unhascheck);
         }
 
 

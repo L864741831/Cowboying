@@ -44,11 +44,11 @@
         android:background="@color/colorAccent" >
 
         <CheckBox
-            android:layout_width="19dp"
-            android:layout_height="19dp"   android:layout_marginLeft="15dp"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
             android:id="@+id/all_ck_id" android:layout_centerVertical="true"
             android:checked="false" android:background="@drawable/checkbox_white_bg"
-            android:button="@null"  android:layout_marginRight="5dp"/>
+            android:button="@null" />
 
         <TextView
             android:layout_width="wrap_content" android:id="@+id/txt_ck_id"
