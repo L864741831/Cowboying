@@ -8,10 +8,14 @@
     android:background="@color/white"
     tools:context=".view.fragment.HomeFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" android:background="@color/colorAccent"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlehight"
-        android:padding="10dp" android:background="@color/colorAccent">
+        android:padding="10dp" android:background="@color/colorAccent"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -172,6 +176,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:src="@mipmap/storewhitebg"/>
                 </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="我是有底线的~"
+                    android:layout_gravity="center_horizontal" android:textColor="@color/colorAccent"
+                    android:layout_marginBottom="20dp"/>
             </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

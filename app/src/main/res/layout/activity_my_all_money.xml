@@ -66,9 +66,9 @@
                         <LinearLayout
                             android:layout_width="0dp" android:layout_weight="0.5"
                             android:layout_height="80dp" android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center" android:id="@+id/yesterday_money_rv">
                             <TextView
-                                android:layout_width="wrap_content" android:id="@+id/yesterday_money_rv"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:text="昨日收益（元）>"
                                 android:layout_gravity="center" android:textColor="@color/color3c"
                                 android:textSize="14sp"  />
@@ -84,9 +84,9 @@
                         <LinearLayout
                             android:layout_width="0dp" android:layout_weight="0.5"
                             android:layout_height="80dp" android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center" android:id="@+id/add_money_rv">
                             <TextView
-                                android:layout_width="wrap_content" android:id="@+id/add_money_rv"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:text="累计收益（元）>"
                                 android:layout_gravity="center" android:textColor="@color/color3c"
                                 android:textSize="14sp" />

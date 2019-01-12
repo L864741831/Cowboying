@@ -20,9 +20,7 @@ import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.model.UserInfoModel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Map;
 
 import rxfamily.mvp.BasePresenter;
@@ -129,11 +127,11 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", 16);
+        intent.putExtra("aspectY", 16);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 60);
-        intent.putExtra("outputY", 60);
+        intent.putExtra("outputX", 800);
+        intent.putExtra("outputY", 800);
 
         intent.putExtra("noFaceDetection", false);
         File out = new File(Environment.getExternalStorageDirectory()+"/"+System.currentTimeMillis() + ".jpg");
@@ -143,6 +141,7 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoBase.IPr
         Log.e(Constant.TAG,out.getAbsolutePath()+"<?????????????");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(out));
         intent.putExtra("cropImg" , out.getAbsolutePath());
+        intent.putExtra("return-data", false);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
         return intent;

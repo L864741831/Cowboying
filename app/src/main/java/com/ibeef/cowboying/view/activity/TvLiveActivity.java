@@ -11,14 +11,12 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.ezvizuikit.open.EZUIError;
 import com.ezvizuikit.open.EZUIKit;
@@ -31,7 +29,6 @@ import com.ibeef.cowboying.bean.VideoAppkeyResultBean;
 import com.ibeef.cowboying.config.Constant;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.VideoAppkeyPresenter;
-
 import com.ibeef.cowboying.utils.InteneteUtil;
 import com.ibeef.cowboying.view.customview.WindowSizeChangeNotifier;
 import com.orhanobut.hawk.Hawk;
@@ -366,7 +363,7 @@ public class TvLiveActivity extends AppCompatActivity implements View.OnClickLis
             preparePlay("",videoAppkeyResultBean.getBizData().getAppKey(),videoAppkeyResultBean.getBizData().getAccessToken());
             setSurfaceSize();
         } else {
-            Toast.makeText(TvLiveActivity.this,videoAppkeyResultBean.getMessage(),Toast.LENGTH_SHORT).show();
+            showWaring(videoAppkeyResultBean.getMessage());
         }
     }
     @Override

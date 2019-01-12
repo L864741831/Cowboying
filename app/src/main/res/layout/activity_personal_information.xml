@@ -1,125 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.activity.PersonalInformationActivity">
     <include
         layout="@layout/loading_layout"
         android:id="@+id/loading_layout"  />
-    <include layout="@layout/include_title"/>
-    <LinearLayout
-        android:layout_width="match_parent" android:id="@+id/lv_info_show"
-        android:layout_height="match_parent" android:orientation="vertical"
-        android:layout_marginTop="50dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_above="@+id/unlogin_rv">
+        <LinearLayout
+            android:layout_width="match_parent" android:id="@+id/lv_info_show"
+            android:layout_height="match_parent" android:orientation="vertical">
+            <include layout="@layout/include_title" />
+            <RelativeLayout
+                android:layout_width="match_parent" android:id="@+id/see_head"
+                android:layout_height="45dp"  android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="头像"
+                    android:textColor="@color/black" android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"  android:textSize="14sp"/>
+                <ImageView
+                    android:layout_width="30dp" android:id="@+id/backs_id"
+                    android:layout_height="30dp" android:src="@mipmap/enterright"
+                    android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp" android:layout_centerVertical="true"
+                    android:src="@mipmap/meheaddefalut" android:layout_toLeftOf="@+id/backs_id"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent" android:id="@+id/see_head"
-            android:layout_height="45dp"  android:background="@color/white"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="头像"
-                android:textColor="@color/black" android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"  android:textSize="14sp"/>
-            <ImageView
-                android:layout_width="30dp" android:id="@+id/backs_id"
-                android:layout_height="30dp" android:src="@mipmap/enterright"
-                android:layout_centerVertical="true" android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"/>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_icon"
-                android:layout_width="34dp"
-                android:layout_height="34dp" android:layout_centerVertical="true"
-                android:src="@mipmap/meheaddefalut" android:layout_toLeftOf="@+id/backs_id"/>
+            </RelativeLayout>
+            <View style="@style/line1"/>
 
-        </RelativeLayout>
-        <View style="@style/line1"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp" android:id="@+id/nickname_rv"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/nick_show_txt"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="昵称" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp" android:id="@+id/nickname_rv"
-            android:background="@color/white">
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/nick_show_txt"
-                android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="昵称" android:layout_marginLeft="20dp"
-                android:textSize="14sp" android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/nickname_txt"
+                    android:layout_height="wrap_content" android:text=""
+                    android:textSize="14sp" android:layout_toRightOf="@+id/nick_show_txt"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="right|center_vertical" android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp" android:layout_marginLeft="10dp"
+                    android:singleLine="true" android:maxLines="1"
+                    android:ellipsize="end" />
+                <View
+                    style="@style/line1" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/nickname_txt"
-                android:layout_height="wrap_content" android:text=""
-                android:textSize="14sp" android:layout_toRightOf="@+id/nick_show_txt"
-                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-                android:gravity="right|center_vertical" android:layout_centerVertical="true"
-                android:layout_marginRight="10dp" android:layout_marginLeft="10dp"
-                android:singleLine="true" android:maxLines="1"
-                android:ellipsize="end" />
-            <View
-                style="@style/line1" android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp" android:id="@+id/bind_phone_rv"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/bind_phone_stadus"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="未绑定手机号" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp" android:id="@+id/bind_phone_rv"
-            android:background="@color/white">
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/bind_phone_stadus"
-                android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="未绑定手机号" android:layout_marginLeft="20dp"
-                android:textSize="14sp" android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/bind_phone_txt"
+                    android:layout_height="wrap_content" android:text=""
+                    android:textSize="14sp"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+                <View
+                    style="@style/line1" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp" android:id="@+id/real_info_rv"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/real_info_stadus"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="实名信息" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
 
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/bind_phone_txt"
-                android:layout_height="wrap_content" android:text=""
-                android:textSize="14sp"
-                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-                android:gravity="center" android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"/>
-            <View
-                style="@style/line1" android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp" android:id="@+id/real_info_rv"
-            android:background="@color/white">
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/real_info_stadus"
-                android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="实名信息" android:layout_marginLeft="20dp"
-                android:textSize="14sp" android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/real_info_txt"
+                    android:layout_height="wrap_content" android:text=""
+                    android:textSize="14sp" android:textColor="@color/red"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+                <View
+                    style="@style/line1" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"  android:background="@color/white"
+                android:layout_height="50dp" android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="是否接收通知" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/switchButton"
+                    android:layout_width="wrap_content" android:checked="true"
+                    android:layout_height="wrap_content" app:kswThumbColor="#ECECEC"
+                    app:kswBackMeasureRatio="2.2" android:background="@color/white"
+                    app:kswFadeBack="true" android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" android:layout_marginRight="10dp"
+                    app:kswBackDrawable="@drawable/shape_swich_btn" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"  android:background="@color/white"
+                android:layout_height="50dp" android:id="@+id/goods_addr_rv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="我的收货地址" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
 
-            <TextView
-                android:layout_width="wrap_content" android:id="@+id/real_info_txt"
-                android:layout_height="wrap_content" android:text=""
-                android:textSize="14sp" android:textColor="@color/red"
-                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-                android:gravity="center" android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"/>
-            <View
-                style="@style/line1" android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp" android:id="@+id/modify_pwd_rv"
-            android:background="@color/white" android:visibility="gone">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textColor="@color/black"
-                android:text="修改密码" android:layout_marginLeft="20dp"
-                android:textSize="14sp" android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
-                android:gravity="center" android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"/>
-            <View
-                style="@style/line1" android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
-    </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"  android:background="@color/white"
+                android:layout_height="50dp" android:id="@+id/accout_securty_id">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="账号安全" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_toLeftOf="@+id/station_txt" android:layout_centerVertical="true">
+                    <ImageView
+                        android:layout_width="40dp" android:id="@+id/phone_stadus"
+                        android:layout_height="40dp" android:src="@mipmap/setphone"/>
+                    <ImageView
+                        android:layout_width="40dp" android:id="@+id/weixin_stadus"
+                        android:layout_height="40dp" android:src="@mipmap/setweixin"/>
+                    <ImageView
+                        android:layout_width="40dp" android:id="@+id/zfb_stadus"
+                        android:layout_height="40dp" android:src="@mipmap/setzfb"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/station_txt"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" android:id="@+id/modify_pwd_rv"
+                android:visibility="gone"  android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="修改密码" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"  android:background="@color/white"
+                android:layout_height="50dp" android:id="@+id/option_return_rv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="意见反馈" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/enterright" android:layout_alignParentRight="true"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"  android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="版本号" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/version_code_txt"
+                    android:layout_height="wrap_content" android:text="版本1.2.3"
+                    android:layout_alignParentRight="true" android:layout_marginRight="13dp"
+                    android:gravity="center" android:layout_centerVertical="true"/>
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"  android:background="@color/white"
+                android:layout_height="50dp" android:id="@+id/release_cache_rv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/black"
+                    android:text="清除缓存" android:layout_marginLeft="20dp"
+                    android:textSize="14sp" android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/release_cache_txt"
+                    android:layout_height="wrap_content" android:text="0kb"
+                    android:layout_alignParentRight="true" android:layout_marginRight="13dp"
+                    android:gravity="center" android:layout_centerVertical="true"
+                    android:textColor="@color/colorGold"/>
+                <View
+                    style="@style/line2" android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent" android:id="@+id/unlogin_rv"
+        android:layout_height="50dp" android:background="@color/colorAccent"
+        android:textColor="@color/colorGold" android:text="退出登录"
+        android:layout_alignParentBottom="true" android:gravity="center"
+        android:textSize="17sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/modify_nickname_rv"
@@ -147,4 +284,4 @@
 
         </LinearLayout>
     </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>

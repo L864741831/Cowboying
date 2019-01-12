@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:background="@color/white"
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".view.activity.OfflineStoreActivity"
+    android:gravity="center">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent" android:id="@+id/nest_scroll_id"
+        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp" android:scaleType="centerCrop" />
+                <ImageView
+                    android:layout_width="35dp" android:id="@+id/back_id"
+                    android:layout_height="30dp" android:src="@mipmap/back"
+                    android:layout_centerVertical="true" android:scaleType="fitXY"
+                    android:layout_marginTop="15dp"/>
+            </FrameLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" android:background="@color/homef7"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"  android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp">
+                    <TextView
+                        android:layout_width="match_parent" android:id="@+id/store_name_id"
+                        android:layout_height="wrap_content" android:text="店铺名称"
+                        android:textColor="@color/black" android:textSize="16sp"
+                        android:layout_marginRight="60dp"/>
+                    <ImageView
+                        android:layout_width="35dp" android:id="@+id/tell_us_img"
+                        android:layout_height="35dp" android:src="@mipmap/tellkf"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                   android:layout_marginLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="营业时间:"
+                        android:textSize="15sp" />
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent" android:id="@+id/store_addr_ry"
+                        android:layout_height="wrap_content"    android:scrollbars="none"
+                        android:layout_marginLeft="10dp"   app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        android:focusable="false"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="60dp"   android:layout_marginBottom="10dp" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="门店地址:"
+                        android:textSize="15sp" />
+                    <TextView
+                        android:layout_width="wrap_content" android:id="@+id/store_addr_id"
+                        android:layout_height="wrap_content" android:text="郑州市金水区农科路科新路（万达金街东门对面）建业凯旋广场3-313"
+                        android:textSize="15sp"  android:layout_marginLeft="10dp"
+                        android:lineSpacingExtra="5dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" android:background="@color/homef7"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp" android:orientation="vertical"
+                android:layout_marginTop="15dp" android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp" android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="门店地图"
+                    android:textColor="@color/black" android:textSize="16sp" />
+                <com.ibeef.cowboying.view.customview.MapContainer
+                    android:id="@+id/map_container"
+                    android:layout_width="match_parent"  android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
+                    <com.amap.api.maps.MapView
+                        android:id="@+id/map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.ibeef.cowboying.view.customview.MapContainer>
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" android:background="@color/homef7"/>
+            <LinearLayout
+                android:layout_width="match_parent" android:id="@+id/lv_img"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:layout_marginTop="15dp" android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="门店图片"
+                    android:textColor="@color/black" android:textSize="16sp"
+                  />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent" android:id="@+id/store_img_ry"
+                    android:layout_height="wrap_content"    android:scrollbars="none"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:focusable="false" android:layout_marginTop="10dp" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" android:background="@color/homef7"/>
+            <LinearLayout
+                android:layout_width="match_parent" android:id="@+id/lv_info"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:layout_marginTop="15dp" android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp" android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="店铺信息"
+                    android:textColor="@color/black" android:textSize="16sp"
+                   />
+                <TextView
+                    android:layout_width="wrap_content" android:id="@+id/store_info_id"
+                    android:layout_height="wrap_content" android:text="这是一个美的地方"
+                    android:textSize="14sp" android:lineSpacingExtra="5dp"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" android:background="@color/homef7"/>
+            <LinearLayout
+                android:layout_width="match_parent" android:id="@+id/lv_video"
+                android:layout_height="wrap_content" android:orientation="vertical"
+                android:layout_marginTop="15dp" android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp" android:layout_marginBottom="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="店铺视频"
+                    android:textColor="@color/black" android:textSize="16sp"
+                   />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                        <ImageView
+                            android:layout_width="match_parent" android:id="@+id/video_img"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"/>
+                       <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:src="@mipmap/vediostart"
+                           android:layout_gravity="center"/>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rv_show_id"
+        android:layout_width="wrap_content" android:layout_gravity="center"
+        android:layout_height="wrap_content" android:background="@mipmap/offstorewhiteimg"
+        android:visibility="gone"/>
+</LinearLayout>

@@ -301,6 +301,15 @@ public class HomeBannerResultBean implements Serializable {
             private String linkUrl;
             private String params;
             private String popFlag;
+            private String pageUrl;
+
+            public String getPageUrl() {
+                return pageUrl;
+            }
+
+            public void setPageUrl(String pageUrl) {
+                this.pageUrl = pageUrl;
+            }
 
             public String getPopFlag() {
                 return popFlag;

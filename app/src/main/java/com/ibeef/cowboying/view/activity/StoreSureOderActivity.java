@@ -139,6 +139,8 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     private StoreAddrResultBean storeAddrResultBean;
     private double couponmoney;
     private  DecimalFormat df2;
+    private  boolean ischeck=false;
+    private int checkIndex=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,13 +200,16 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 if(view.getId()==R.id.all_ck_id){
                     for (int i=0;i<nowBuyOrderResultBean.getBizData().getProducts().size();i++){
                         if(i==position){
-                            nowBuyOrderResultBean.getBizData().getProducts().get(i).setDefautChoose(1);
+                            bizDataBeans.get(i).setDefautChoose(1);
+                            showStoreId.setText(bizDataBeans.get(i).getName());
+                            showStoreAddrId.setText(bizDataBeans.get(i).getAddress());
+                            ischeck=true;
+                            checkIndex=position;
                         }else{
-                            nowBuyOrderResultBean.getBizData().getProducts().get(i).setDefautChoose(0);
+                            bizDataBeans.get(i).setDefautChoose(0);
                         }
-                        storeAddrAdapter.notifyItemChanged(i);
                     }
-
+                    storeAddrAdapter.notifyItemChanged(position);
                 }
             }
         });
@@ -296,6 +301,10 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                 allNumMoneyId.setText("共"+nowBuyOrderResultBean.getBizData().getTotalQuantity()+"件,实付款:￥"+(df2.format(nowBuyOrderResultBean.getBizData().getTotalProductAmount()-couponmoney+nowBuyOrderResultBean.getBizData().getTotalCarriageAmount()))+"");
                 break;
             case R.id.sure_id:
+//                if(!ischeck){
+//                    showToast("请选择门店地址");
+//                    return;
+//                }
                 lvsId.setVisibility(View.GONE);
                 rvStoreaddrId.setVisibility(View.VISIBLE);
                 addressRv.setVisibility(View.GONE);
@@ -334,8 +343,16 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
                         noPayOrderParamBean.setAddressId(nowBuyOrderResultBean.getBizData().getAddress().getId());
                     }
                 }else {
-                    noPayOrderParamBean.setAddressDetail(bizDataBeans.get(0).getAddress());
-                    noPayOrderParamBean.setAddressId(bizDataBeans.get(0).getStoreId());
+//                    if(!ischeck){
+//                        showToast("请选择门店地址");
+//                        return;
+//                    }
+                    if(bizDataBeans.size()==0){
+                        showToast("暂无门店信息哟！");
+                        return;
+                    }
+                    noPayOrderParamBean.setAddressDetail(bizDataBeans.get(checkIndex).getAddress());
+                    noPayOrderParamBean.setAddressId(bizDataBeans.get(checkIndex).getStoreId());
                 }
                 if(selectId!=0){
                     //使用了优惠券 selectId优惠券id
@@ -505,12 +522,11 @@ public class StoreSureOderActivity extends BaseActivity implements StoreCarPayBa
     public void storeAddrList(StoreAddrResultBean storeAddrResultBean) {
         if ("000000".equals(storeAddrResultBean.getCode())) {
             if (!SDCardUtil.isNullOrEmpty(storeAddrResultBean.getBizData())) {
-                showTitleId.setText(storeAddrResultBean.getBizData().get(0).getName());
-                showStoreId.setText(storeAddrResultBean.getBizData().get(0).getName());
-                showStoreAddrId.setText(storeAddrResultBean.getBizData().get(0).getAddress());
                 this.storeAddrResultBean=storeAddrResultBean;
                 bizDataBeans.addAll(storeAddrResultBean.getBizData());
                 storeAddrAdapter.setNewData(bizDataBeans);
+                showStoreId.setText(bizDataBeans.get(0).getName());
+                showStoreAddrId.setText(bizDataBeans.get(0).getAddress());
             }
         } else {
             showToast(storeAddrResultBean.getMessage());

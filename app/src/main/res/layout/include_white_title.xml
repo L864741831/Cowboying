@@ -21,5 +21,12 @@
         android:layout_alignParentRight="true" android:textColor="@color/black"
         android:text="跳过"   android:background="@drawable/shape_oval_line_empty"
         android:visibility="gone"/>
+    <TextView
+        android:id="@+id/action_login_tv"
+        android:layout_width="wrap_content" android:textSize="16sp"
+        android:layout_height="wrap_content" android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" android:textColor="@color/black"
+        android:text="注册" android:layout_marginRight="20dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

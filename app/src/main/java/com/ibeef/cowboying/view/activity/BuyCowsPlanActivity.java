@@ -13,10 +13,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.adapter.BuyCowListAdapter;
 import com.ibeef.cowboying.base.BuyCowSchemeBase;
+import com.ibeef.cowboying.base.HomeBannerBase;
 import com.ibeef.cowboying.bean.ActiveSchemeResultBean;
 import com.ibeef.cowboying.bean.HistorySchemeResultBean;
+import com.ibeef.cowboying.bean.HomeAllVideoResultBean;
+import com.ibeef.cowboying.bean.HomeBannerResultBean;
+import com.ibeef.cowboying.bean.HomeSellCowNumResultBean;
+import com.ibeef.cowboying.bean.HomeVideoResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.BuyCowsSchemePresenter;
+import com.ibeef.cowboying.presenter.HomeBannerPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
@@ -34,7 +40,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 养牛方案列表
  */
-public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView {
+public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener,BuyCowSchemeBase.IView,HomeBannerBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -53,13 +59,14 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
     private BuyCowListAdapter buyCowListAdapter;
     private List<ActiveSchemeResultBean.BizDataBean> objectList;
     private BuyCowsSchemePresenter buyCowsSchemePresenter;
-
+    private HomeBannerPresenter homeBannerPresenter;
     private String token;
 
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
     private boolean isAd;
+    private HomeBannerResultBean homeBannerResultBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,14 +115,32 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if(view.getId()==R.id.now_claim_btn_id){
                     ActiveSchemeResultBean.BizDataBean item=buyCowListAdapter.getItem(position);
-                    Intent intent=new Intent(BuyCowsPlanActivity.this,CowsClaimActivity.class);
-                    intent.putExtra("schemId",item.getSchemeId());
-                    startActivity(intent);
+                    if("3".equals(objectList.get(position).getType())){
+                        //新人
+                        if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean)){
+                            if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData())){
+                                if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean.getBizData().getNewUserActivity())){
+                                    Intent intent=new Intent(BuyCowsPlanActivity.this,NewManwelfareActivity.class);
+                                    intent.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                    }else {
+                        Intent intent=new Intent(BuyCowsPlanActivity.this,CowsClaimActivity.class);
+                        intent.putExtra("schemId",item.getSchemeId());
+                        startActivity(intent);
+                    }
                 }
             }
         });
 
         buyCowsSchemePresenter=new BuyCowsSchemePresenter(this);
+        homeBannerPresenter=new HomeBannerPresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        homeBannerPresenter.getHomeBanner(reqData);
     }
 
     @Override
@@ -127,7 +152,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
         objectList.clear();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
+        reqData.put("version","1.1");
         buyCowsSchemePresenter.getActiveSchemeInfo(reqData,currentPage);
     }
 
@@ -156,12 +181,32 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
         currentPage += 1;
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
+        reqData.put("version","1.1");
         buyCowsSchemePresenter.getActiveSchemeInfo(reqData,currentPage);
     }
 
     @Override
     public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getHomeBanner(HomeBannerResultBean homeBannerResultBean) {
+        this.homeBannerResultBean=homeBannerResultBean;
+    }
+
+    @Override
+    public void getHomeVideo(HomeVideoResultBean homeAdResultBean) {
+
+    }
+
+    @Override
+    public void getHomeSellCowsNum(HomeSellCowNumResultBean homeSellCowNumResultBean) {
+
+    }
+
+    @Override
+    public void getAllVideo(HomeAllVideoResultBean homeAllVideoResultBean) {
 
     }
 
@@ -238,7 +283,7 @@ public class BuyCowsPlanActivity extends BaseActivity implements SuperSwipeRefre
         objectList.clear();
         Map<String, String> reqData = new HashMap<>();
         reqData.put("Authorization",token);
-        reqData.put("version",getVersionCodes());
+        reqData.put("version","1.1");
         buyCowsSchemePresenter.getActiveSchemeInfo(reqData,currentPage);
 
     }

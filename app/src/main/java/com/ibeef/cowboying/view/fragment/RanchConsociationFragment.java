@@ -89,7 +89,7 @@ public class RanchConsociationFragment extends BaseFragment implements SuperSwip
         //设置banner动画效果
         banner.isAutoPlay(true);
         //设置自动轮播，默认为true
-        banner.setDelayTime(1000 * 3);
+        banner.setDelayTime(1000 * 5);
         //设置轮播时间
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置指示器位置（当banner模式中有指示器时）

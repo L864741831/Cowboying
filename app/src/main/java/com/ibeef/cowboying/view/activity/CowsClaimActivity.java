@@ -3,7 +3,9 @@ package com.ibeef.cowboying.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +31,8 @@ import com.ibeef.cowboying.presenter.PastureDetailPresenter;
 import com.ibeef.cowboying.presenter.UserInfoPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
 import com.ibeef.cowboying.view.customview.AmountView;
+import com.ibeef.cowboying.view.customview.DragScrollDetailsLayout;
+import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.ibeef.cowboying.view.fragment.CowClaimBuyWayFragment;
 import com.ibeef.cowboying.view.fragment.CowClaimDesFragment;
 import com.ibeef.cowboying.view.fragment.CowClaimSelectFragment;
@@ -49,7 +53,7 @@ import rxfamily.view.BaseFragment;
 /**
  * 养牛方案》》》》认领界面
  */
-public class CowsClaimActivity extends BaseActivity implements PastureDetailBase.IView, UserInfoBase.IView {
+public class CowsClaimActivity extends BaseActivity implements SuperSwipeRefreshLayout.OnPullRefreshListener,PastureDetailBase.IView, UserInfoBase.IView {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -90,6 +94,8 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
     TextView scrollIsShowId;
     @Bind(R.id.rv_middle_id)
     RelativeLayout rvMiddleId;
+//    @Bind(R.id.swipe_ly)
+//    SuperSwipeRefreshLayout swipeLy;
     private List<String> dataBeen = Arrays.asList(CHANNELS);
     private ArrayList<BaseFragment> fragmentList;
     private MainFragmentAdapter mainFragmentAdapter;
@@ -122,6 +128,15 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         schemId= getIntent().getIntExtra("schemId",0);
         pastureDetailPresenter=new PastureDetailPresenter(this);
         userInfoPresenter=new UserInfoPresenter(this);
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pastureDetailPresenter.getSchemeDetail(reqData,schemId);
+
+//        swipeLy.setHeaderViewBackgroundColor(getResources().getColor(R.color.colorAccent));
+//        swipeLy.setHeaderView(createHeaderView());// add headerView
+//        swipeLy.setTargetScrollWithLayout(true);
+//        swipeLy.setOnPullRefreshListener(this);
     }
 
     @Override
@@ -131,7 +146,6 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
         reqData.put("Authorization",token);
         reqData.put("version",getVersionCodes());
         userInfoPresenter.getUserInfo(reqData);
-        pastureDetailPresenter.getSchemeDetail(reqData,schemId);
     }
 
     private void initMagicIndicator(SchemeDetailReultBean schemeDetailReultBean) {
@@ -321,7 +335,7 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
 
     @Override
     public void hideLoading() {
-
+//        swipeLy.setRefreshing(false);
     }
 
     @Override
@@ -343,5 +357,23 @@ public class CowsClaimActivity extends BaseActivity implements PastureDetailBase
             startActivity(new Intent(CowsClaimActivity.this, MainActivity.class));
         }
         finish();
+    }
+
+    @Override
+    public void onRefresh() {
+        Map<String, String> reqData = new HashMap<>();
+        reqData.put("Authorization",token);
+        reqData.put("version",getVersionCodes());
+        pastureDetailPresenter.getSchemeDetail(reqData,schemId);
+    }
+
+    @Override
+    public void onPullDistance(int distance) {
+
+    }
+
+    @Override
+    public void onPullEnable(boolean enable) {
+
     }
 }

@@ -4,16 +4,15 @@
     android:layout_height="wrap_content">
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp">
+        android:layout_height="wrap_content" android:layout_marginLeft="10dp">
         <ImageView
-            android:layout_width="140dp" android:id="@+id/show_img_id"
-            android:layout_height="180dp"
-            android:scaleType="fitXY"/>
+            android:layout_width="290dp" android:id="@+id/show_img_id"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"/>
         <ImageView
             android:layout_width="wrap_content" android:id="@+id/img_stat_id"
             android:layout_height="wrap_content" android:src="@mipmap/vediostart"
-            android:layout_marginTop="75dp" android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center" />
     </FrameLayout>
 
 </RelativeLayout>

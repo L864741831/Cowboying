@@ -12,7 +12,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ibeef.cowboying.R;
 import com.ibeef.cowboying.bean.MyOrderListBean;
-import com.ibeef.cowboying.utils.WrapContentLinearLayoutManager;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
 
 import java.util.ArrayList;

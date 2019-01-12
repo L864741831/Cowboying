@@ -74,6 +74,21 @@ public abstract class BaseFragment extends RxFragment {
         Glide.with(this).load(R.drawable.pushcows).into(image_view);
         return headerView;
     }
+
+    /**
+     * 下拉加载更多
+     * @return
+     */
+    public View createHeaderViewTrasport() {
+        View headerView = LayoutInflater.from(mActivity)
+                .inflate(R.layout.layout_head_transport, null);
+        text_view=headerView.findViewById(R.id.text_view);
+        image_view=headerView.findViewById(R.id.image_view);
+        text_view.setVisibility(View.VISIBLE);
+        text_view.setText("正在加载，请稍后...");
+        Glide.with(this).load(R.drawable.pushcows).into(image_view);
+        return headerView;
+    }
     /**
      * 获取宿主Activity
      * @return

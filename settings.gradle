@@ -1,1 +1,1 @@
-include ':app', ':rxfamily'
+include ':app', ':rxfamily','photoview'

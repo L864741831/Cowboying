@@ -332,11 +332,18 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderListBa
             afterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Hawk.put(HawkKey.PRODUCR_ID, myOrderListDetailBean.getBizData().getShopOrderProductResVos().get(position).getProductId());
-                    removeALLActivity();
-                    Intent intent1=new Intent(MyOrderDetailActivity.this,MainActivity.class);
-                    intent1.putExtra("index",1);
-                    startActivity(intent1);
+                    //0下架，1上架 2删除
+                    if("0".equals(beanList.get(position).getStatus())){
+                        showToast("该商品已经下架啦！");
+                    }else  if("1".equals(beanList.get(position).getStatus())){
+                        Hawk.put(HawkKey.PRODUCR_ID, myOrderListDetailBean.getBizData().getShopOrderProductResVos().get(position).getProductId());
+                        removeALLActivity();
+                        Intent intent1=new Intent(MyOrderDetailActivity.this,MainActivity.class);
+                        intent1.putExtra("index",1);
+                        startActivity(intent1);
+                    }else  if("2".equals(beanList.get(position).getStatus())){
+                        showToast("该商品已经下架啦！");
+                    }
                 }
             });
 //  订单状态（0：未支付；1：已支付；2：已发货；3：确认收货；4：退款中；5：已退款；6：已取消；）'

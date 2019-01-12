@@ -33,34 +33,42 @@ public class DiscountCoupondapter extends BaseQuickAdapter<MyDiscountCouponListB
         int i = d.intValue();
         Double d1 = new Double(item.getParValue());
         int i1 = d1.intValue();
-          helper.setText(R.id.tv_type_id,item.getName())
-                .setText(R.id.tv_condition_1_id,"· 满"+i+"元可用 ·")
+          helper.setText(R.id.tv_condition_1_id,"· 满"+i+"元可用 ·")
                 .setText(R.id.tv_time_id,DateUtils.formatDate(item.getUseStartTime(),DateUtils.TYPE_04)+"-"+DateUtils.formatDate(item.getUseEndTime(),DateUtils.TYPE_04))
                 .setText(R.id.tv_price_id,i1+"");
           //getUseType 使用类型（0：全部；1：养牛；2：拼牛；3：商城；） getUseSchemeType适用方案类型（0：所有；1：活期；2：定期）
           if("0".equals(item.getUseType())){
               if("0".equals(item.getUseSchemeType())){
-                  helper.setText(R.id.tv_condition_2_id,"本平台内全场通用");
+                  helper.setText(R.id.tv_condition_2_id,"本平台内全场通用")
+                          .setText(R.id.tv_type_id,"通用券");
               }else  if("1".equals(item.getUseSchemeType())){
-                  helper.setText(R.id.tv_condition_2_id,"仅可参与活期养牛使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可参与活期养牛使用")
+                          .setText(R.id.tv_type_id,"养牛券");
               }else  if("2".equals(item.getUseSchemeType())){
-                  helper.setText(R.id.tv_condition_2_id,"仅可参与定期养牛使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可参与定期养牛使用")
+                          .setText(R.id.tv_type_id,"养牛券");
               }
           }else  if("1".equals(item.getUseType())){
               if("0".equals(item.getUseSchemeType())){
-                  helper.setText(R.id.tv_condition_2_id,"仅可参与养牛使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可参与养牛使用")
+                          .setText(R.id.tv_type_id,"养牛券");
               }else if("1".equals(item.getUseSchemeType())){
-                  helper.setText(R.id.tv_condition_2_id,"仅可参与活期养牛使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可参与活期养牛使用")
+                          .setText(R.id.tv_type_id,"养牛券");
               }else  if("2".equals(item.getUseSchemeType())){
-                  helper.setText(R.id.tv_condition_2_id,"仅可参与定期养牛使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可参与定期养牛使用")
+                          .setText(R.id.tv_type_id,"养牛券");
               }
           }else  if("2".equals(item.getUseType())){
-              helper.setText(R.id.tv_condition_2_id,"仅可参与拼牛使用");
+              helper.setText(R.id.tv_condition_2_id,"仅可参与拼牛使用")
+                      .setText(R.id.tv_type_id,"拼牛券");
           }else  if("3".equals(item.getUseType())){
               if(SDCardUtil.isNullOrEmpty(item.getUseProductName())){
-                  helper.setText(R.id.tv_condition_2_id,"仅可购买牛肉使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可购买牛肉使用")
+                          .setText(R.id.tv_type_id,"商城券");
               }else {
-                  helper.setText(R.id.tv_condition_2_id,"仅可购买"+item.getUseProductName()+"使用");
+                  helper.setText(R.id.tv_condition_2_id,"仅可购买"+item.getUseProductName()+"使用")
+                          .setText(R.id.tv_type_id,"商城券");
               }
 
           }

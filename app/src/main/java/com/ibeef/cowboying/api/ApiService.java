@@ -713,4 +713,38 @@ public interface ApiService {
     @GET("yingshi/getToken")
     Observable<VideoAppkeyResultBean> getVideoAppKey(@HeaderMap Map<String, String> headers);
 
+    /**
+     *门店详情
+     * @return
+     */
+    @GET("shop/store/detail")
+    Observable<OfflineStoreInfoResultBean> getOfflinestoreInfo(@HeaderMap Map<String, String> headers);
+
+    /**
+     *首页我们的牧场列表
+     * @return
+     */
+    @GET("pasture/home")
+    Observable<HomeParstureResultBean> getHomeParsture(@HeaderMap Map<String, String> headers);
+
+    /**
+     *获取首页资讯信息接口
+     * @return
+     */
+    @GET("information/firstPage/list")
+    Observable<HomeParstureMessegeResultBean> getHomeParstureMessege(@HeaderMap Map<String, String> headers);
+
+    /**
+     *获取更多资讯信息
+     * @return
+     */
+    @GET("information/moreInfo/list")
+    Observable<HomeParstureMessegeResultBean> getHomeParstureMoreMessege(@HeaderMap Map<String, String> headers,@Query("currentPage") int currentPage);
+    /**
+     *获取首页养牛方案列表
+     * @return
+     */
+    @GET("adopt/scheme/firstPage/list")
+    Observable<HomeBuyCowPlanResultBean> getHomeBuyCowPlay(@HeaderMap Map<String, String> headers);
+
 }

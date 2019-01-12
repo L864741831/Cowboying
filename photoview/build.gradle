@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+    api "com.android.support:appcompat-v7:$supportlib_version"// 使用google的appcompat-v7包
+}

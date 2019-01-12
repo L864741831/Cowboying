@@ -50,10 +50,12 @@ public class PastureDetailPresenter extends BasePresenter implements PastureDeta
 
     @Override
     public void getSchemeDetail(Map<String, String> headers, int schemeId) {
+        mView.showLoading();
         addSubscription(mModel.getSchemeDetail(headers,schemeId,new ResponseCallback<SchemeDetailReultBean>() {
             @Override
             public void onSuccess(SchemeDetailReultBean result) {
                 mView.getSchemeDetail(result);
+                mView.hideLoading();
 
             }
 
@@ -61,6 +63,7 @@ public class PastureDetailPresenter extends BasePresenter implements PastureDeta
             public void onFaild(String msg) {
                 Log.e("onFaild", msg + "");
                 mView.showMsg(msg);
+                mView.hideLoading();
             }
         }));
     }

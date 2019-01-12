@@ -129,7 +129,16 @@ public class IncomeInfoResultBean {
              */
 
             private String date;
+            private String orderCode;
             private BigDecimal amount;
+
+            public String getOrderCode() {
+                return orderCode;
+            }
+
+            public void setOrderCode(String orderCode) {
+                this.orderCode = orderCode;
+            }
 
             public String getDate() {
                 return date;

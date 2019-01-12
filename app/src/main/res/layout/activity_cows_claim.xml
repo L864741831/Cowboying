@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.CowsClaimActivity" android:background="@color/white">
     <include layout="@layout/include_title" android:id="@+id/inclut_id"/>
-
+   <!-- <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
+        android:layout_width="match_parent" android:id="@+id/swipe_ly"
+        android:layout_height="wrap_content" >-->
     <com.ibeef.cowboying.view.customview.DragScrollDetailsLayout
-        android:layout_width="match_parent" android:layout_above="@+id/rv_bottom_id"
-        android:layout_height="wrap_content" android:layout_below="@+id/inclut_id">
+        android:layout_width="match_parent"   android:layout_above="@+id/rv_bottom_id"
+        android:layout_below="@+id/inclut_id"
+        android:layout_height="wrap_content" android:id="@+id/top_scroll_id">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -134,6 +137,7 @@
         </LinearLayout>
 
     </com.ibeef.cowboying.view.customview.DragScrollDetailsLayout>
+   <!-- </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent" android:id="@+id/rv_middle_id"

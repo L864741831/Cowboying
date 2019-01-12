@@ -36,8 +36,8 @@ public class HomeSellCowNumResultBean {
     }
 
     public  class BizDataBean {
-        private int totalSalesQuantity;
-        private int totalUserQuantity;
+        private String totalSalesQuantity;
+        private String totalUserQuantity;
         private boolean showStatistic;
 
         public boolean isShowStatistic() {
@@ -48,19 +48,19 @@ public class HomeSellCowNumResultBean {
             this.showStatistic = showStatistic;
         }
 
-        public int getTotalSalesQuantity() {
+        public String getTotalSalesQuantity() {
             return totalSalesQuantity;
         }
 
-        public void setTotalSalesQuantity(int totalSalesQuantity) {
+        public void setTotalSalesQuantity(String totalSalesQuantity) {
             this.totalSalesQuantity = totalSalesQuantity;
         }
 
-        public int getTotalUserQuantity() {
+        public String getTotalUserQuantity() {
             return totalUserQuantity;
         }
 
-        public void setTotalUserQuantity(int totalUserQuantity) {
+        public void setTotalUserQuantity(String totalUserQuantity) {
             this.totalUserQuantity = totalUserQuantity;
         }
     }

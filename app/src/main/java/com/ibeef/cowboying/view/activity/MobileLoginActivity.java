@@ -50,6 +50,8 @@ public class MobileLoginActivity extends BaseActivity {
     TextView sureTxtId;
     @Bind(R.id.register_rule_id)
     TextView registerRuleId;
+    @Bind(R.id.action_login_tv)
+    TextView action_login_tv;
     @Bind(R.id.show_bind_rv)
     RelativeLayout showBindRv;
     private String stadus;
@@ -94,9 +96,11 @@ public class MobileLoginActivity extends BaseActivity {
             pwdLoginId.setVisibility(View.GONE);
         } else if ("2".equals(stadus)) {
             //注册流程
+            action_login_tv.setText("登录");
+            action_login_tv.setVisibility(View.VISIBLE);
             pwdLoginId.setVisibility(View.GONE);
             registerRuleId.setVisibility(View.VISIBLE);
-            stadusTitleId.setText("输入手机号码");
+            stadusTitleId.setText("手机号注册");
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 registerRuleId.setText(Html.fromHtml("注册代表你已同意<font color='#4393F5'>注册协议</font>和<font color='#4393F5'>隐私政策</font>", Html.FROM_HTML_MODE_LEGACY));
             } else {
@@ -119,6 +123,10 @@ public class MobileLoginActivity extends BaseActivity {
             pwdLoginId.setVisibility(View.GONE);
             stadusTitleId.setText("输入新的手机号");
             oldmobile = getIntent().getStringExtra("oldmobile");
+        }else if("0".equals(stadus)){
+            action_login_tv.setText("注册");
+            stadusTitleId.setText("手机号登录");
+            action_login_tv.setVisibility(View.VISIBLE);
         }
         cancleTxtId.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +142,7 @@ public class MobileLoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.sure_txt_id, R.id.register_rule_id})
+    @OnClick({R.id.close_img_id, R.id.sure_id, R.id.back_id, R.id.pwd_login_id, R.id.action_right_tv, R.id.sure_txt_id, R.id.register_rule_id,R.id.action_login_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_img_id:
@@ -215,6 +223,18 @@ public class MobileLoginActivity extends BaseActivity {
                     //正常登录流程
                     startActivity(PwdLoginActivity.class);
                 }
+                break;
+            case R.id.action_login_tv:
+                Intent intent1=new Intent(MobileLoginActivity.this,MobileLoginActivity.class);
+                if("0".equals(stadus)){
+                    //来自登录头，去注册
+                    intent1.putExtra("stadus","2");
+                }else {
+                    //来自注册，去登陆
+                    intent1.putExtra("stadus","0");
+                }
+                startActivity(intent1);
+                finish();
                 break;
             default:
                 break;

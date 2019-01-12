@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -65,11 +66,11 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     @Bind(R.id.char_id)
     LineChart chart;
     @Bind(R.id.yesterday_money_rv)
-    TextView yesterdayMoneyRv;
+    LinearLayout yesterdayMoneyRv;
     @Bind(R.id.yesterday_money_id)
     TextView yesterdayMoneyId;
     @Bind(R.id.add_money_rv)
-    TextView addMoneyRv;
+    LinearLayout addMoneyRv;
 
     private List<Integer> integery;
     private IncomeInfoPresenter incomeInfoPresenter;
@@ -221,7 +222,7 @@ public class MyAllMoneyActivity extends BaseActivity implements IncomeInfoBase.I
     }
 
     @OnClick({R.id.back_id, R.id.all_money_id, R.id.yesterday_money_rv,R.id.add_money_rv,
-            R.id.my_wallet_show, R.id.white_money_show, R.id.get_money_id,R.id.ll_my_wallet_show,R.id.ll_white_money_show,
+            R.id.get_money_id,R.id.ll_my_wallet_show,R.id.ll_white_money_show,
             R.id.get_money_record_id})
     public void onViewClicked(View view) {
         switch (view.getId()) {

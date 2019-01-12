@@ -8,9 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +29,6 @@ import com.ibeef.cowboying.bean.ShowDeleveryResultBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyOrderListPresenter;
 import com.ibeef.cowboying.utils.SDCardUtil;
-import com.ibeef.cowboying.utils.WrapContentLinearLayoutManager;
 import com.ibeef.cowboying.view.activity.AfterSaleApplyActivity;
 import com.ibeef.cowboying.view.activity.MainActivity;
 import com.ibeef.cowboying.view.activity.MyOrderDetailActivity;
@@ -46,7 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.ButterKnife;
 import rxfamily.view.BaseFragment;
 
 

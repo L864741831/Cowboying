@@ -10,24 +10,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="55dp" android:orientation="horizontal"
-            android:paddingLeft="10dp"
+            android:gravity="center"
             android:background="@color/white">
             <TextView
-                android:layout_width="wrap_content" android:id="@+id/time_txt_id"
+                android:layout_weight="0.3"
+                android:layout_width="0dp" android:id="@+id/order_txt_id"
+                android:layout_height="wrap_content" android:text="订单编号"
+                android:gravity="center" android:textSize="14sp" />
+            <TextView
+                android:layout_weight="0.3"
+                android:layout_width="0dp" android:id="@+id/add_money_id"
+                android:layout_height="wrap_content" android:text="+10"
+                android:gravity="center" android:textSize="14sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_weight="0.3"
+                android:layout_width="0dp" android:id="@+id/time_txt_id"
                 android:layout_height="wrap_content" android:text="2018-10-2"
-                android:layout_gravity="center_vertical"
-                android:textSize="14sp" android:layout_marginLeft="20dp"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/cows_identify_rv"
-                android:layout_gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content" android:id="@+id/add_money_id"
-                    android:layout_height="wrap_content" android:text="+10"
-                    android:gravity="center_vertical" android:layout_marginRight="40dp"
-                    android:layout_alignParentRight="true" android:textSize="15sp"
-                    android:textColor="@color/black"/>
-            </RelativeLayout>
+                android:gravity="center" android:textSize="14sp" />
         </LinearLayout>
     <View
       style="@style/line1"/>

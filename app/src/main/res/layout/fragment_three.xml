@@ -8,7 +8,7 @@
         android:layout_width="match_parent" android:id="@+id/swipe_ly"
         android:layout_height="wrap_content" android:background="@color/colorAccent">
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="match_parent"  android:scrollbars="none"
             android:layout_height="match_parent" android:background="@color/colorAccent">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -16,8 +16,8 @@
                 android:background="@color/white">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="205dp" android:background="@mipmap/headbg"
-                    android:orientation="vertical">
+                    android:layout_height="225dp" android:background="@mipmap/headbg"
+                    android:orientation="vertical" android:paddingTop="20dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -62,7 +62,7 @@
                         <TextView
                             android:layout_width="wrap_content" android:id="@+id/name_id"
                             android:layout_height="wrap_content" android:textColor="@color/white"
-                            android:text="全民养牛" android:layout_toRightOf="@+id/fm_id"
+                            android:text="口袋牧场" android:layout_toRightOf="@+id/fm_id"
                             android:layout_marginTop="65dp" android:layout_marginLeft="15dp"
                             android:textSize="15sp"/>
                     </RelativeLayout>
@@ -116,6 +116,23 @@
                                 android:layout_height="wrap_content" android:textSize="13sp"
                                 android:text="取货码" android:textColor="@color/white"
                                 android:layout_gravity="center" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/offline_store_lv"
+                            android:layout_width="0dp" android:layout_height="match_parent"
+                            android:layout_weight="0.25" android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:layout_gravity="center" android:src="@mipmap/offlinestoreicon"
+                                android:layout_marginTop="10dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:textSize="13sp"
+                                android:text="线下门店" android:textColor="@color/white"
+                                android:layout_gravity="center" android:layout_marginTop="6dp"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

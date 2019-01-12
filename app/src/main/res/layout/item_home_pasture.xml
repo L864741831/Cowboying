@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/homef7"
+    android:layout_height="140dp"
+    tools:context=".view.activity.CowClaimPastRecordActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/homepasturebg" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical" android:paddingRight="10dp"
+            android:layout_marginLeft="25dp" android:layout_toLeftOf="@+id/pasture_img_id">
+            <TextView
+                android:layout_width="match_parent" android:id="@+id/pasture_name_id"
+                android:layout_height="wrap_content" android:textColor="@color/black"
+                android:textSize="16sp" android:text="安格斯牧场"
+                android:layout_marginTop="20dp" android:maxLines="1" android:ellipsize="end"/>
+            <TextView
+                android:layout_width="match_parent" android:id="@+id/pasture_des_id"
+                android:layout_height="match_parent" android:lineSpacingExtra="5dp"
+                android:textSize="13sp" android:text="安格斯牧场"
+                android:layout_marginTop="20dp" android:ellipsize="end" android:maxLines="3"
+                android:gravity="bottom" android:layout_marginBottom="15dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="130dp" android:id="@+id/pasture_img_id"
+            android:layout_height="105dp" android:layout_marginRight="15dp"
+            android:scaleType="centerCrop" android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

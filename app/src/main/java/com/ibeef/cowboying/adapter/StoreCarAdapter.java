@@ -35,9 +35,12 @@ public class StoreCarAdapter extends BaseQuickAdapter<CarListResultBean.BizDataB
     protected void convert(final BaseViewHolder helper, CarListResultBean.BizDataBean item) {
 
         AmountViewWhite amountViewWhite=helper.getView(R.id.amout_num_white_id);
-        amountViewWhite.setGoods_storage(item.getStock());
+        if(item.getStock()==0){
+            amountViewWhite.setGoods_storage(item.getQuantity());
+        }else {
+            amountViewWhite.setGoods_storage(item.getStock());
+        }
         amountViewWhite.intEdit(item.getQuantity()+"");
-
         CheckBox all_ck_id=helper.getView(R.id.all_ck_id);
         if(0==item.getDefautChoose()){
             all_ck_id.setBackground(ContextCompat.getDrawable(context, R.mipmap.unhascheck));

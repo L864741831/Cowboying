@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -40,11 +41,7 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
                 .setText(R.id.vip_level_txt_id,"· VIP"+item.getVipLevel()+" ·")
                 .setText(R.id.minlevle_txt_id,i1+"起投")
                 .setText(R.id.percent_txt_id,item.getExpectRate());
-        if("1".equals(item.getType())){
-            helper.setText(R.id.percent_way_txt_id,"T+7");
-        }else   if("2".equals(item.getType())){
-            helper.setText(R.id.percent_way_txt_id,"锁定期"+item.getLockMonths()+"个月");
-        }
+
         int num1=item.getTotalStock()-item.getStock();
         int num2=item.getTotalStock();
         // 创建一个数值格式化对象
@@ -72,6 +69,7 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
         ImageView imageView= helper.getView(R.id.show_img_id);
         Glide.with(context).load(Constant.imageDomain+item.getImageUrl()).apply(options).into(imageView);
         TextView textView=helper.getView(R.id.now_claim_btn_id);
+
         if("1".equals(item.getCurStatus())){
             //当前类型（1：可以认领；2：即将开始；3：领完）
             textView.setBackground(context.getResources().getDrawable(R.drawable.shape_oval_white2_btn));
@@ -85,6 +83,27 @@ public class BuyCowListAdapter extends BaseQuickAdapter<ActiveSchemeResultBean.B
             textView.setBackground(context.getResources().getDrawable(R.drawable.shape_oval_colorhui_btn));
             textView.setTextColor(context.getResources().getColor(R.color.white));
             textView.setText("已售罄");
+        }
+
+        RelativeLayout rv_progress_id=helper.getView(R.id.rv_progress_id);
+        if("1".equals(item.getType())){
+            helper.setText(R.id.percent_way_txt_id,"锁定期七天");
+            rv_progress_id.setVisibility(View.VISIBLE);
+        }else   if("2".equals(item.getType())){
+            helper.setText(R.id.percent_way_txt_id,"锁定期"+item.getLockMonths()+"个月");
+            rv_progress_id.setVisibility(View.VISIBLE);
+        }else if("3".equals(item.getType())){
+            helper.setText(R.id.parsture_addr_id,"虚拟牧场")
+                    .setText(R.id.periods_txt_id,"新手福利")
+                    .setText(R.id.percent_way_txt_id,"锁定期七天")
+                    .setText(R.id.minlevle_txt_id,"预估年化收益")
+                    .setText(R.id.vip_level_txt_id,"· VIP1·")
+                    .setText(R.id.minpercent_txt_id,"每日限量发放"+item.getDayStock()+"份");
+            textView.setBackground(context.getResources().getDrawable(R.drawable.shape_oval_white2_btn));
+            textView.setTextColor(context.getResources().getColor(R.color.black));
+            textView.setText("一元体验");
+            rv_progress_id.setVisibility(View.INVISIBLE);
+            Glide.with(context).load(Constant.imageDomain+item.getBannerImageUrl()).apply(options).into(imageView);
         }
     }
 }

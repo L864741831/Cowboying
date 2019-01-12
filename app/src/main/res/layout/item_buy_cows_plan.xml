@@ -81,7 +81,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="match_parent" android:id="@+id/rv_progress_id"
                     android:layout_height="wrap_content" android:layout_marginTop="5dp">
                     <TextView
                         android:layout_width="wrap_content" android:id="@+id/percent_zero_txt_id"

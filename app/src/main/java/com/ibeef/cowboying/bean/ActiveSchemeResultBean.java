@@ -130,6 +130,24 @@ public class ActiveSchemeResultBean implements Serializable {
         private String lockMonths;
         private String projectDescribe;
         private String curStatus;
+        private String bannerImageUrl;
+        private int dayStock;
+
+        public String getBannerImageUrl() {
+            return bannerImageUrl;
+        }
+
+        public void setBannerImageUrl(String bannerImageUrl) {
+            this.bannerImageUrl = bannerImageUrl;
+        }
+
+        public int getDayStock() {
+            return dayStock;
+        }
+
+        public void setDayStock(int dayStock) {
+            this.dayStock = dayStock;
+        }
 
         public int getSchemeId() {
             return schemeId;

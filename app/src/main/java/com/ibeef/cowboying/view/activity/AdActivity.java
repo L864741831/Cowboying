@@ -102,90 +102,106 @@ public class AdActivity extends BaseActivity implements HomeBannerBase.IView{
                 // url广告webview地址，广告title
                 if(!TextUtils.isEmpty(info.getBizData().getPageUrl())){
                     continueCount = false;
-                    switch (info.getBizData().getPageUrl()){
-                        case "adopt_scheme_list":
-                            //养牛方案列表
-                            Intent intent=new Intent(AdActivity.this,BuyCowsPlanActivity.class);
-                            intent.putExtra("isAd",true);
-                            startActivity(intent);
-                            break;
-                        case "adopt_scheme_detail":
-                            //养牛方案详情
-                            Intent intent4=new Intent(AdActivity.this,CowsClaimActivity.class);
-                            intent4.putExtra("schemId",Integer.parseInt(info.getBizData().getParams()));
-                            intent4.putExtra("isAd",true);
-                            startActivity(intent4);
-                            break;
-                        case "adopt_order_list":
-                            //养牛订单列表
-                            Intent intent2=new Intent(AdActivity.this,MyCowsActivity.class);
-                            intent2.putExtra("isAd",true);
-                            startActivity(intent2);
-                            break;
-                        case "adopt_order_detail":
-                            //养牛订单详情
-                            Intent intent3 = new Intent(AdActivity.this, MyCowsDetailActivity.class);
-                            intent3.putExtra("orderId",info.getBizData().getParams()+"");
-                            intent3.putExtra("isAd",true);
-                            startActivity(intent3);
-                            break;
-                        case "pasture_list":
-                            //合作牧场列表
-                            Intent intent5=new Intent(AdActivity.this,RanchConsociationActivity.class);
-                            intent5.putExtra("isAd",true);
-                            startActivity(intent5);
-                            break;
-                        case "shop_product_list":
-                            //商城商品列表
-                            Intent intent1=new Intent(AdActivity.this,MainActivity.class);
-                            intent1.putExtra("index",1);
-                            startActivity(intent1);
-                            break;
-                        case "shop_order_list":
-                            //商城订单列表
-                            Intent intent6=new Intent(AdActivity.this,MyOrderActivity.class);
-                            intent6.putExtra("isAd",true);
-                            startActivity(intent6);
-                            break;
-                        case "shop_order_detail":
-                            //商城订单详情
-                            Intent intent7 = new Intent(AdActivity.this, MyOrderDetailActivity.class);
-                            intent7.putExtra("orderId",info.getBizData().getParams()+"");
-                            intent7.putExtra("isAd",true);
-                            startActivity(intent7);
-                            break;
-                        case "total_assets":
-                            //总资产
-                            Intent intent8=new Intent(AdActivity.this,MyAllMoneyActivity.class);
-                            intent8.putExtra("isAd",true);
-                            startActivity(intent8);
-                            break;
-                        case "coupon_list":
-                            //优惠券列表
-                            Intent intent9=new Intent(AdActivity.this,DiscountCouponActivity.class);
-                            intent9.putExtra("isAd",true);
-                            startActivity(intent9);
-                            break;
-                        case "contract_list":
-                            //合同列表
-                            Intent intent10=new Intent(AdActivity.this,MyContractActivity.class);
-                            intent10.putExtra("isAd",true);
-                            startActivity(intent10);
-                            break;
-                        case "vip_card_detail":
-                            //会员卡详情
-                            startActivity(VipCardActivity.class);
-                            break;
-                        case "new_welfare":
-                            //新人福利
-                            if(!SDCardUtil.isNullOrEmpty(homeBannerResultBean)){
-                                Intent intent11=new Intent(AdActivity.this,NewManwelfareActivity.class);
-                                intent11.putExtra("infos",homeBannerResultBean.getBizData().getNewUserActivity());
-                                startActivity(intent11);
-                            }
-                            break;
-                        default:
-                            break;
+                    if(TextUtils.isEmpty(info.getBizData().getPageUrl())){
+                        return;
+                    }
+                    if(info.getBizData().getPageUrl().contains("http")){
+                        Intent intent1=new Intent(AdActivity.this,AdWebviewActivity.class);
+                        intent1.putExtra("url",info.getBizData().getPageUrl());
+                        intent1.putExtra("title","");
+                        startActivity(intent1);
+                    }else {
+                        switch (info.getBizData().getPageUrl()) {
+                            case "adopt_scheme_list":
+                                //养牛方案列表
+                                Intent intent = new Intent(AdActivity.this, BuyCowsPlanActivity.class);
+                                intent.putExtra("isAd", true);
+                                startActivity(intent);
+                                break;
+                            case "adopt_scheme_detail":
+                                //养牛方案详情
+                                if(!TextUtils.isEmpty(info.getBizData().getParams())){
+                                    Intent intent4 = new Intent(AdActivity.this, CowsClaimActivity.class);
+                                    intent4.putExtra("schemId", Integer.parseInt(info.getBizData().getParams()));
+                                    intent4.putExtra("isAd", true);
+                                    startActivity(intent4);
+                                }
+                                break;
+                            case "adopt_order_list":
+                                //养牛订单列表
+                                Intent intent2 = new Intent(AdActivity.this, MyCowsActivity.class);
+                                intent2.putExtra("isAd", true);
+                                startActivity(intent2);
+                                break;
+                            case "adopt_order_detail":
+                                //养牛订单详情
+                                if(!TextUtils.isEmpty(info.getBizData().getParams())){
+                                    Intent intent3 = new Intent(AdActivity.this, MyCowsDetailActivity.class);
+                                    intent3.putExtra("orderId", info.getBizData().getParams() + "");
+                                    intent3.putExtra("isAd", true);
+                                    startActivity(intent3);
+                                }
+                                break;
+                            case "pasture_list":
+                                //合作牧场列表
+                                Intent intent5 = new Intent(AdActivity.this, RanchConsociationActivity.class);
+                                intent5.putExtra("isAd", true);
+                                startActivity(intent5);
+                                break;
+                            case "shop_product_list":
+                                //商城商品列表
+                                Intent intent1 = new Intent(AdActivity.this, MainActivity.class);
+                                intent1.putExtra("index", 1);
+                                startActivity(intent1);
+                                break;
+                            case "shop_order_list":
+                                //商城订单列表
+                                Intent intent6 = new Intent(AdActivity.this, MyOrderActivity.class);
+                                intent6.putExtra("isAd", true);
+                                startActivity(intent6);
+                                break;
+                            case "shop_order_detail":
+                                //商城订单详情
+                                if(!TextUtils.isEmpty(info.getBizData().getParams())){
+                                    Intent intent7 = new Intent(AdActivity.this, MyOrderDetailActivity.class);
+                                    intent7.putExtra("orderId", info.getBizData().getParams() + "");
+                                    intent7.putExtra("isAd", true);
+                                    startActivity(intent7);
+                                }
+                                break;
+                            case "total_assets":
+                                //总资产
+                                Intent intent8 = new Intent(AdActivity.this, MyAllMoneyActivity.class);
+                                intent8.putExtra("isAd", true);
+                                startActivity(intent8);
+                                break;
+                            case "coupon_list":
+                                //优惠券列表
+                                Intent intent9 = new Intent(AdActivity.this, DiscountCouponActivity.class);
+                                intent9.putExtra("isAd", true);
+                                startActivity(intent9);
+                                break;
+                            case "contract_list":
+                                //合同列表
+                                Intent intent10 = new Intent(AdActivity.this, MyContractActivity.class);
+                                intent10.putExtra("isAd", true);
+                                startActivity(intent10);
+                                break;
+                            case "vip_card_detail":
+                                //会员卡详情
+                                startActivity(VipCardActivity.class);
+                                break;
+                            case "new_welfare":
+                                //新人福利
+                                if (!SDCardUtil.isNullOrEmpty(homeBannerResultBean)) {
+                                    Intent intent11 = new Intent(AdActivity.this, NewManwelfareActivity.class);
+                                    intent11.putExtra("infos", homeBannerResultBean.getBizData().getNewUserActivity());
+                                    startActivity(intent11);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     finish();
                 }else {

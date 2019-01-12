@@ -24,20 +24,20 @@
                     android:layout_height="wrap_content" android:drawableLeft="@mipmap/showaddbg"
                     android:layout_marginTop="15dp" android:textColor="@color/colorAccent"
                     android:layout_marginRight="10dp" android:layout_marginLeft="20dp"
-                    android:text="xiaoxiao" android:drawablePadding="15dp"
+                    android:text="" android:drawablePadding="15dp"
                     android:textSize="@dimen/sp_14" android:layout_toLeftOf="@+id/mobile_txt_id"/>
 
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/mobile_txt_id"
                     android:layout_height="wrap_content" android:textColor="@color/colorAccent"
-                    android:textSize="14sp" android:text="10000000000"
+                    android:textSize="14sp" android:text=""
                     android:layout_alignParentRight="true" android:layout_marginTop="15dp"
                     android:layout_marginRight="40dp"/>
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/del_addr_txt_id"
                     android:layout_height="wrap_content" android:textSize="14sp"
                     android:textColor="@color/colorAccent" android:layout_below="@+id/show_addr_id"
-                    android:text="河南省" android:layout_marginLeft="60dp"
+                    android:text="" android:layout_marginLeft="60dp"
                     android:layout_marginTop="5dp" android:layout_marginBottom="10dp"
                     android:layout_marginRight="40dp"/>
                 <ImageView
@@ -54,13 +54,13 @@
                     android:layout_height="wrap_content" android:drawableLeft="@mipmap/showaddbg"
                     android:layout_marginTop="15dp" android:textColor="@color/colorAccent"
                     android:layout_marginRight="10dp" android:layout_marginLeft="20dp"
-                    android:text="xiaoxiao" android:drawablePadding="10dp"
+                    android:text="" android:drawablePadding="10dp"
                     android:textSize="@dimen/sp_16" android:layout_centerHorizontal="true"/>
                 <TextView
                     android:layout_width="wrap_content" android:id="@+id/show_store_addr_id"
                     android:layout_height="wrap_content" android:layout_centerHorizontal="true"
                     android:layout_below="@+id/show_store_id" android:layout_marginTop="10dp"
-                    android:text="河南省京广路" android:textSize="12sp"
+                    android:text="" android:textSize="12sp"
                     android:layout_marginBottom="10dp"/>
             </RelativeLayout>
             <View
@@ -185,13 +185,12 @@
                 android:orientation="vertical" android:padding="15dp">
                 <TextView
                     android:layout_width="match_parent" android:id="@+id/show_title_id"
-                    android:layout_height="wrap_content" android:text="选择自取门店"
+                    android:layout_height="wrap_content" android:text="选择线下门店地址"
                     android:textSize="18sp"
                     android:textColor="@color/black" android:gravity="center_horizontal"/>
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent" android:id="@+id/ry_store_id"
-                    android:layout_height="wrap_content" android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dp_10"/>
+                    android:layout_height="wrap_content" android:layout_gravity="center" />
 
             </LinearLayout>
             <View

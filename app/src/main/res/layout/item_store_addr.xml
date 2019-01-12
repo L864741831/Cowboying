@@ -6,22 +6,27 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     tools:context=".view.activity.InviteFriendHistoryActivity">
+    <TextView
+        android:layout_width="wrap_content" android:id="@+id/title_name_id"
+        android:layout_height="wrap_content" android:textColor="@color/colorAccent"
+        android:text="口袋牧场"  android:layout_marginLeft="25dp"
+        android:textSize="15sp" android:layout_marginTop="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:orientation="horizontal"
-        android:layout_marginTop="10dp" android:gravity="center">
+        android:layout_height="wrap_content" android:orientation="horizontal">
         <CheckBox
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/all_ck_id"  android:visibility="gone"
-            android:background="@drawable/unhascheck" android:checked="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/all_ck_id"
+            android:background="@mipmap/unhascheck" android:checked="true"
+            android:visibility="gone"
             android:button="@null"  android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"/>
 
         <TextView
             android:layout_width="wrap_content" android:id="@+id/store_addr_id"
-            android:layout_height="wrap_content" android:text="222222"
-            android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"
-            android:textColor="@color/colorAccent"
+            android:layout_height="wrap_content" android:text=""
+            android:layout_gravity="center_vertical" android:layout_marginLeft="25dp"
+            android:lineSpacingExtra="5dp"
             android:layout_marginRight="10dp"/>
     </LinearLayout>
 

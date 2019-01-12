@@ -1,5 +1,7 @@
 package com.ibeef.cowboying.config;
 
+import com.amap.api.maps.model.LatLng;
+
 /**
  * 用到的公共常量
  */
@@ -91,4 +93,18 @@ public class Constant {
      * 萤石云app key
      */
     public static  String APPKEYYHC = "6db46fefb0534ce494d1e148bccc7ec8";
+
+    //1.百度地图包名
+    public static final String BAIDUMAP_PACKAGENAME = "com.baidu.BaiduMap";
+    //2.高德地图包名
+    public static final String AUTONAVI_PACKAGENAME = "com.autonavi.minimap";
+    //3.腾讯地图包名
+    public static final String QQMAP_PACKAGENAME = "com.tencent.map";
+    public static final LatLng ZHENGZHOUGD = new LatLng(34.793525,113.680560);// 郑州市口袋牧场经纬度
+    public static final String KDJ = "113.686419";// 郑州市口袋牧场经度
+    public static final String KDW = "34.799591";// 郑州市口袋牧场纬度
+     public static final String GDKDJ = "113.680560";// 郑州市口袋牧场经度高德
+    public static final String GDKDW = "34.793525";// 郑州市口袋牧场纬度 高德
+     public static final String TXKDJ = "113.680341";// 郑州市口袋牧场经度腾讯
+    public static final String TXKDW = "34.793957";// 郑州市口袋牧场纬度腾讯
 }

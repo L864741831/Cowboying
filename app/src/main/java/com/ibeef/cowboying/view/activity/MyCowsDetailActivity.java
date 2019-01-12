@@ -162,12 +162,12 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
         rvCowsList.setHasFixedSize(true);
         rvCowsList.setNestedScrollingEnabled(false);
         beanList = new ArrayList<>();
+        myCowsOrderPresenter = new MyCowsOrderPresenter(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        myCowsOrderPresenter = new MyCowsOrderPresenter(this);
         if (!TextUtils.isEmpty(token)) {
             Map<String, String> reqData = new HashMap<>();
             reqData.put("Authorization", token);
@@ -364,6 +364,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 tvStatusId.setText("待付款");
                 btnCancleOrder.setVisibility(View.VISIBLE);
                 btnToPay.setVisibility(View.VISIBLE);
+                btnSellWant.setVisibility(View.GONE);
             } else if ("2".equals(status)) {
                 btnSeeOrderProgress.setVisibility(View.VISIBLE);
                 //已付款未分配（比待付款多了一个支付时间和支付时间）
@@ -371,6 +372,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 tvStatusId.setText("待分配牛只");
                 rlPayTime.setVisibility(View.VISIBLE);
                 rlPayWay.setVisibility(View.VISIBLE);
+                btnSellWant.setVisibility(View.GONE);
             } else if ("3".equals(status)) {
                 tvStatusId.setText("已分配牛只");
                 btnSeeOrderProgress.setVisibility(View.VISIBLE);
@@ -380,6 +382,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 rlPayWay.setVisibility(View.VISIBLE);
                 rlAssignTime.setVisibility(View.VISIBLE);
             } else if ("4".equals(status)) {
+                btnSellWant.setVisibility(View.GONE);
                 tvStatusId.setText("已分配牛只");
                 btnSeeOrderProgress.setVisibility(View.VISIBLE);
                 //已分配锁定期中（只有定期养牛才会有这个状态）
@@ -398,9 +401,11 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 rlPayWay.setVisibility(View.VISIBLE);
                 rlAssignTime.setVisibility(View.VISIBLE);
                 rlSellTime.setVisibility(View.VISIBLE);
+                btnSellWant.setVisibility(View.GONE);
                 tvSellTime.setText(myCowsOrderListDetailBean.getBizData().getSellTime());
             } else if ("6".equals(status)) {
                 tvStatusId.setText("交易完成");
+                btnSellWant.setVisibility(View.GONE);
                 btnSeeOrderProgress.setVisibility(View.VISIBLE);
                 btnDeletOrder.setVisibility(View.VISIBLE);
                 //交易完成（比交易完成多一个出售成功时间）
@@ -417,6 +422,7 @@ public class MyCowsDetailActivity extends BaseActivity implements MyCowsOrderBas
                 storeName.setText("交易关闭");
                 btnCancleOrder.setVisibility(View.GONE);
                 btnToPay.setVisibility(View.GONE);
+                btnSellWant.setVisibility(View.GONE);
                 //交易关闭
                 rlTransactionEndTime.setVisibility(View.VISIBLE);
                 tvTransactionEndTime.setText(myCowsOrderListDetailBean.getBizData().getCloseTime());

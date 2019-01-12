@@ -3,11 +3,9 @@ package com.ibeef.cowboying.application;
 import android.os.StrictMode;
 import android.util.Log;
 
-import com.ibeef.cowboying.config.Constant;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
-import com.videogo.openapi.EZOpenSDK;
 
 import cn.jpush.android.api.JPushInterface;
 import rxfamily.application.RxApplication;

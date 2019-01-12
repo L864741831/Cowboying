@@ -36,10 +36,10 @@ import com.ibeef.cowboying.view.activity.MyAllMoneyActivity;
 import com.ibeef.cowboying.view.activity.MyContractActivity;
 import com.ibeef.cowboying.view.activity.MyCowsActivity;
 import com.ibeef.cowboying.view.activity.MyOrderActivity;
+import com.ibeef.cowboying.view.activity.OfflineStoreActivity;
 import com.ibeef.cowboying.view.activity.PayActivity;
 import com.ibeef.cowboying.view.activity.PersonalInformationActivity;
 import com.ibeef.cowboying.view.activity.PickUpCodeActivity;
-import com.ibeef.cowboying.view.activity.SetUpActivity;
 import com.ibeef.cowboying.view.activity.VipCardActivity;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.orhanobut.hawk.Hawk;
@@ -82,6 +82,8 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
     LinearLayout waitGetGoodsId;
     @Bind(R.id.wait_push_goods_id)
     LinearLayout waitPushGoodsId;
+    @Bind(R.id.offline_store_lv)
+    LinearLayout offlineStoreLv;
 
     TextView cattleNumId;
     @Bind(R.id.me_cattle_rv)
@@ -154,7 +156,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
         super.onResume();
         token= Hawk.get(HawkKey.TOKEN);
         if(TextUtils.isEmpty(token)) {
-            nameId.setText("全民养牛");
+            nameId.setText("口袋牧场");
             headImg.setImageResource(R.mipmap.defaulthead);
         }else {
             Map<String, String> reqData = new HashMap<>();
@@ -175,7 +177,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
             R.id.please_codeId, R.id.get_goods_codeId, R.id.all_order_id, R.id.wait_to_pay_id, R.id.wait_to_delevery_id,
             R.id.wait_get_goods_id, R.id.wait_push_goods_id, R.id.me_cattle_rv, R.id.cattle_oder_rv, R.id.all_money_rv,
             R.id.beef_house_rv, R.id.write_money_rv, R.id.coupon_num_rv, R.id.contract_id_rv, R.id.invite_friend_id_rv,
-            R.id.tell_us_id_rv,R.id.after_sale_goods_id})
+            R.id.tell_us_id_rv,R.id.after_sale_goods_id,R.id.offline_store_lv})
     public void onViewClicked(View view) {
         Intent intent=new Intent(getHoldingActivity(),MyOrderActivity.class);
         switch (view.getId()) {
@@ -191,7 +193,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
                 if(TextUtils.isEmpty(token)){
                     startActivity(LoginActivity.class);
                 }else {
-                    startActivity(SetUpActivity.class);
+                    startActivity(PersonalInformationActivity.class);
                 }
                 break;
             case R.id.head_img:
@@ -257,6 +259,10 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
             case R.id.cattle_oder_rv:
                 //拼牛订单
 
+                break;
+            case R.id.offline_store_lv:
+                //线下门店
+                startActivity(OfflineStoreActivity.class);
                 break;
             case R.id.all_money_rv:
                 //总资产
@@ -400,7 +406,7 @@ public class ThreeFragment extends BaseFragment  implements SuperSwipeRefreshLay
             Hawk.put(HawkKey.userId, userInfoResultBean.getBizData().getUserId()+"");
             Glide.with(this).load(Constant.imageDomain+userInfoResultBean.getBizData().getHeadImage()).apply(options).into(headImg);
             if(SDCardUtil.isNullOrEmpty(userInfoResultBean.getBizData().getNickName())){
-                nameId.setText("全民养牛");
+                nameId.setText("口袋牧场");
             }else {
                 nameId.setText(userInfoResultBean.getBizData().getNickName());
             }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,8 +40,8 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
     private int currentPage=1;
     private boolean isFirst=true;
     private boolean isMoreLoad=false;
-    RelativeLayout rvOrder;
-    RelativeLayout rvShowId;
+    private RelativeLayout rvOrder;
+    private LinearLayout rvShowId;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         loadingLayout=view.findViewById(R.id.loading_layout);
@@ -61,12 +62,12 @@ public class AddIncomeFragment extends BaseFragment implements BaseQuickAdapter.
         addMoneyPresenter=new AddMoneyPresenter(this);
 
         //昨日收益
-        if("1".equals(incomeType)){
+//        if("1".equals(incomeType)){
             type_txt_id.setText("订单收益(元)");
-        }else  if("2".equals(incomeType)){
+//        }else  if("2".equals(incomeType)){
             //累计收益
-            type_txt_id.setText("当日收益(元)");
-        }
+//            type_txt_id.setText("当日收益(元)");
+//        }
         rvShowId.setVisibility(View.VISIBLE);
         ryId.setVisibility(View.VISIBLE);
         Map<String, String> reqData = new HashMap<>();

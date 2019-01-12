@@ -16,6 +16,7 @@ import com.ibeef.cowboying.bean.VipCardBean;
 import com.ibeef.cowboying.bean.VipCardListBean;
 import com.ibeef.cowboying.config.HawkKey;
 import com.ibeef.cowboying.presenter.MyContractPresenter;
+import com.ibeef.cowboying.utils.SDCardUtil;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
@@ -141,7 +142,11 @@ public class VipCardActivity extends BaseActivity implements MyContractBase.IVie
                 //没有会员卡
                 ivVipCardBgNull.setVisibility(View.VISIBLE);
                 tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText("线下门店地址："+vipCardBean.getBizData().getStoreAddress());
+                if(SDCardUtil.isNullOrEmpty(vipCardBean.getBizData().getStoreAddress())){
+                    tvAddressInfo.setText("暂无线下门店地址");
+                }else {
+                    tvAddressInfo.setText("线下门店地址："+vipCardBean.getBizData().getStoreAddress());
+                }
                 actionNewQuestionTv.setVisibility(View.GONE);
             }
         }
