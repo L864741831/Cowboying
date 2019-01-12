@@ -1,5 +1,7 @@
 package com.ibeef.cowboying.view.fragment;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +20,9 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -78,6 +82,7 @@ import com.ibeef.cowboying.view.activity.RanchDynamicActivity;
 import com.ibeef.cowboying.view.activity.VipCardActivity;
 import com.ibeef.cowboying.view.customview.GlideBlurformation;
 import com.ibeef.cowboying.view.customview.GlideRoundTransformAll;
+import com.ibeef.cowboying.view.customview.HeadZoomScrollView;
 import com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout;
 import com.ibeef.cowboying.view.customview.ViewPagerLayoutManager;
 import com.jaeger.library.StatusBarUtil;
@@ -134,6 +139,15 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
     private ViewPagerLayoutManager mLayoutManager,mLayoutManager1;
     private HomeParstureMessegeResultBean homeParstureMessegeResultBean;
     private boolean isPause=false;
+    //    zoomView原本的宽高
+    private int zoomViewWidth = 0;
+    private int zoomViewHeight = 0;
+    //    回弹时间系数，系数越小，回弹越快
+    private float mReplyRatio = 0.5f;
+    //    最大的放大倍数
+    private float mScaleTimes = 2f;
+    //    滑动放大系数，系数越大，滑动时放大程度越大
+    private float mScaleRatio = 0.4f;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         swipeLy=view.findViewById(R.id.swipe_ly);
@@ -186,7 +200,35 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 
     }
 
+    /**放大view*/
+    private void setZoom(float s) {
+        float scaleTimes = (float) ((zoomViewWidth+s)/(zoomViewWidth*1.0));
+//        如超过最大放大倍数，直接返回
+        if (scaleTimes > mScaleTimes) {
+            return;
+        }
 
+        ViewGroup.LayoutParams layoutParams = img_top_id.getLayoutParams();
+        layoutParams.width = (int) (zoomViewWidth + s);
+        layoutParams.height = (int)(zoomViewHeight*((zoomViewWidth+s)/zoomViewWidth));
+//        设置控件水平居中
+        ((ViewGroup.MarginLayoutParams) layoutParams).setMargins(-(layoutParams.width - zoomViewWidth) / 2, 0, 0, 0);
+        img_top_id.setLayoutParams(layoutParams);
+    }
+
+    /**回弹*/
+    private void replyView() {
+        final float distance = img_top_id.getMeasuredWidth() - zoomViewWidth;
+        // 设置动画
+        ValueAnimator anim = ObjectAnimator.ofFloat(distance, 0.0F).setDuration((long) (distance * mReplyRatio));
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                setZoom((Float) animation.getAnimatedValue());
+            }
+        });
+        anim.start();
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -865,6 +907,16 @@ public class HomeFragment extends BaseFragment implements SuperSwipeRefreshLayou
 
     @Override
     public void onPullDistance(int distance) {
+        if (zoomViewWidth <= 0 || zoomViewHeight <=0) {
+            zoomViewWidth = img_top_id.getMeasuredWidth();
+            zoomViewHeight = img_top_id.getMeasuredHeight();
+        }
+        if(distance>0){
+            setZoom((int) ((distance)*mScaleRatio));
+        }
+//        else  if(distance==0){
+//            replyView();
+//        }
 
     }
 

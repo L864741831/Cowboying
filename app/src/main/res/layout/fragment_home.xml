@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.HomeFragment">
     <EditText
         android:layout_width="wrap_content"
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="match_parent" android:id="@+id/img_top_id"
-            android:layout_height="250dp"  />
+            android:layout_height="270dp"   app:layout_collapseMode="parallax" />
         <com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout
             android:id="@+id/swipe_ly"
             android:layout_width="match_parent"
@@ -27,7 +26,6 @@
                     android:layout_height="wrap_content">
                     <!-- <include layout="@layout/home_head_view"/>
      -->
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/home_ry_id"
                         android:layout_width="match_parent"
@@ -47,7 +45,6 @@
                 </FrameLayout>
             </LinearLayout>
         </com.ibeef.cowboying.view.customview.SuperSwipeRefreshLayout>
-
     </FrameLayout>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.ibeef.cowboying.view.activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -26,6 +28,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.bumptech.glide.Glide;
@@ -179,18 +182,28 @@ public class OfflineStoreActivity extends BaseActivity implements AMap.OnMarkerC
         map_container.setScrollView(nest_scroll_id);
 
         aMap.clear();
+
+        //自定义位置显示的marker
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View view = mInflater.inflate(R.layout.custom_map_marker, null);
+        Bitmap bitmap =convertViewToBitmap(view);
         MarkerOptions markOptiopns = new MarkerOptions();
         markOptiopns.position(Constant.ZHENGZHOUGD);
-        TextView textView = new TextView(getApplicationContext());
-        textView.setText("到口袋牧场去");
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.BLACK);
-        textView.setBackgroundResource(R.drawable.custom_info_bubble);
-        markOptiopns.icon(BitmapDescriptorFactory.fromView(textView));
+        markOptiopns.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+        markOptiopns.draggable(false);
         aMap.addMarker(markOptiopns);
 
-
     }
+
+
+    public static Bitmap convertViewToBitmap(View view) {
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+        Bitmap bitmap = view.getDrawingCache();
+        return bitmap;
+    }
+
     /**
      * 根据动画按钮状态，调用函数animateCamera或moveCamera来改变可视区域
      */
