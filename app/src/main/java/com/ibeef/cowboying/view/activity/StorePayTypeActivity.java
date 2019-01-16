@@ -1,7 +1,11 @@
 package com.ibeef.cowboying.view.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +13,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,12 +52,20 @@ import com.orhanobut.hawk.Hawk;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.unionpay.UPPayAssistEx;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import android.os.Handler.Callback;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +74,7 @@ import rxfamily.view.BaseActivity;
 /**
  * 商城支付方式
  */
-public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView, MyOrderListBase.IView,PayPwdBase.IView{
+public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.IView, MyOrderListBase.IView,PayPwdBase.IView, Callback, Runnable {
 
     @Bind(R.id.back_id)
     ImageView backId;
@@ -105,7 +118,11 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     RelativeLayout rv2_id;
     @Bind(R.id.rv3_id)
     RelativeLayout rv3_id;
-    private int type=1;
+    @Bind(R.id.rv4_id)
+    RelativeLayout rv4_id;
+    @Bind(R.id.yl_check)
+    ImageView yl_check;
+    private int type=4;
     private boolean isComplet=true;
     private String token, contents;
     private IWXAPI api;
@@ -116,7 +133,12 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     private  Map<String, String> reqData;
     private IsPayPwdPresenter isPayPwdPresenter;
     private boolean isPwd;
-
+    private Handler mHandlers = null;
+    /*****************************************************************
+     * mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
+     *****************************************************************/
+    private final String mMode = "01";
+    private static final String TN_URL_01 = "http://101.231.204.84:8091/sim/getacptn";
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -159,6 +181,8 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     }
 
     private void init() {
+        initDialog();
+        mHandlers = new Handler(this);
         orderId=getIntent().getIntExtra("orderId",0);
         long createTime=getIntent().getLongExtra("createTime",0);
         Log.i("htht", "createTime::::: "+createTime);
@@ -231,7 +255,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         isPayPwdPresenter=new IsPayPwdPresenter(this);
     }
 
-    @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.rv1_id,R.id.rv2_id, R.id.foret_pwd_id, R.id.pay_back_id,R.id.rv3_id,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id,R.id.lvs_back_id,R.id.my_order_id,R.id.dialog_close_id
+    @OnClick({R.id.cancle_id, R.id.sure_pay_id,R.id.back_id,R.id.rv1_id,R.id.rv2_id, R.id.foret_pwd_id, R.id.pay_back_id,R.id.rv3_id,R.id.rv4_id,R.id.yl_check,R.id.cancle_order_id,R.id.refuce_id,R.id.lvs_id,R.id.lvs_back_id,R.id.my_order_id,R.id.dialog_close_id
     ,R.id.zfb_check,R.id.weixin_check,R.id.wallet_check})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -260,12 +284,21 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 intent1.putExtra("from",true);
                 startActivity(intent1);
                 break;
+            case R.id.rv4_id:
+            case R.id.yl_check:
+                type=4;
+                weixinCheck.setImageResource(R.mipmap.unhascheck);
+                yl_check.setImageResource(R.mipmap.hascheck);
+                zfbCheck.setImageResource(R.mipmap.unhascheck);
+                walletCheck.setImageResource(R.mipmap.unhascheck);
+                break;
             case R.id.rv1_id:
             case R.id.zfb_check:
                 type=1;
                 weixinCheck.setImageResource(R.mipmap.unhascheck);
                 zfbCheck.setImageResource(R.mipmap.hascheck);
                 walletCheck.setImageResource(R.mipmap.unhascheck);
+                yl_check.setImageResource(R.mipmap.unhascheck);
                 break;
             case R.id.rv2_id:
             case R.id.weixin_check:
@@ -273,6 +306,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 weixinCheck.setImageResource(R.mipmap.hascheck);
                 zfbCheck.setImageResource(R.mipmap.unhascheck);
                 walletCheck.setImageResource(R.mipmap.unhascheck);
+                yl_check.setImageResource(R.mipmap.unhascheck);
                 break;
             case R.id.rv3_id:
             case R.id.wallet_check:
@@ -280,6 +314,7 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 weixinCheck.setImageResource(R.mipmap.unhascheck);
                 zfbCheck.setImageResource(R.mipmap.unhascheck);
                 walletCheck.setImageResource(R.mipmap.hascheck);
+                yl_check.setImageResource(R.mipmap.unhascheck);
                 break;
             case R.id.foret_pwd_id:
                 isPwd=false;
@@ -303,6 +338,12 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                     payInitParamBean.setPayType(type+"");
                     orderInitPresenter.getStorePayInit(reqData,payInitParamBean);
                 }
+
+//                /*************************************************
+//                 * 步骤1：从网络开始,获取交易流水号即TN
+//                 ************************************************/
+//                new Thread(StorePayTypeActivity.this).start();
+
                 break;
             default:
                 break;
@@ -484,6 +525,10 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
                 startActivity(intent);
                 finish();
                 accountPayShowRv.setVisibility(View.GONE);
+            }else  if (type == 4) {
+                Message msg = mHandlers.obtainMessage();
+                msg.obj = payInitResultBean.getBizData();
+                mHandlers.sendMessage(msg);
             }
         }else {
             clearData();
@@ -492,6 +537,63 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*************************************************
+         * 步骤3：处理银联手机支付控件返回的支付结果
+         ************************************************/
+        if (data == null) {
+            return;
+        }
+
+        String msg = "";
+        /*
+         * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+         */
+        String str = data.getExtras().getString("pay_result");
+        if (str.equalsIgnoreCase("success")) {
+
+            // 如果想对结果数据验签，可使用下面这段代码，但建议不验签，直接去商户后台查询交易结果
+            // result_data结构见c）result_data参数说明
+            if (data.hasExtra("result_data")) {
+                String result = data.getExtras().getString("result_data");
+                try {
+                    JSONObject resultJson = new JSONObject(result);
+                    String sign = resultJson.getString("sign");
+                    String dataOrg = resultJson.getString("data");
+                    // 此处的verify建议送去商户后台做验签
+                    // 如要放在手机端验，则代码必须支持更新证书
+                    boolean ret = verify(dataOrg, sign, mMode);
+                    if (ret) {
+                        // 验签成功，显示支付结果
+                        msg = "支付成功！";
+                    } else {
+                        // 验签失败
+                        msg = "支付失败！";
+                    }
+                } catch (JSONException e) {
+                }
+            }
+            // 结果result_data为成功时，去商户后台查询一下再展示成功
+            msg = "支付成功！";
+            Intent intent=new Intent(StorePayTypeActivity.this,StorePayResultActivity.class);
+            intent.putExtra("orderId",orderId);
+            startActivity(intent);
+            finish();
+        } else if (str.equalsIgnoreCase("fail")) {
+            msg = "支付失败！";
+        } else if (str.equalsIgnoreCase("cancel")) {
+            msg = "用户取消了支付";
+        }
+
+       showToast(msg);
+    }
+
+    private boolean verify(String msg, String sign64, String mode) {
+        // 此处的verify，商户需送去商户后台做验签
+        return true;
+
+    }
     @Override
     protected void onDestroy() {
         if(orderInitPresenter!=null){
@@ -509,5 +611,71 @@ public class StorePayTypeActivity extends BaseActivity implements OrderInitBase.
     @Override
     public void onBackPressed() {
         lvsBackId.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        String tn = "";
+        if (msg.obj == null || ((String) msg.obj).length() == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("错误提示");
+            builder.setMessage("网络连接失败,请重试!");
+            builder.setNegativeButton("确定",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.create().show();
+        } else {
+            tn = (String) msg.obj;
+            /*************************************************
+             * 步骤2：通过银联工具类启动支付插件
+             ************************************************/
+            // “00” – 银联正式环境
+            // “01” – 银联测试环境，该环境中不发生真实交易
+            dismissLoading();
+            String serverMode = "01";
+            doStartUnionPayPlugin(StorePayTypeActivity.this, tn, serverMode);
+        }
+        return false;
+    }
+
+    /**
+     *  启动支付界面
+     */
+    public void doStartUnionPayPlugin(Activity activity, String tn, String mode) {
+        UPPayAssistEx.startPayByJAR(activity, PayActivity.class, null, null,
+                tn, mode);
+    }
+    @Override
+    public void run() {
+        String tn = null;
+        InputStream is;
+        try {
+
+            String url = TN_URL_01;
+
+            URL myURL = new URL(url);
+            URLConnection ucon = myURL.openConnection();
+            ucon.setConnectTimeout(120000);
+            is = ucon.getInputStream();
+            int i = -1;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while ((i = is.read()) != -1) {
+                baos.write(i);
+            }
+
+            tn = baos.toString();
+            is.close();
+            baos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Message msg = mHandlers.obtainMessage();
+        msg.obj = tn;
+        mHandlers.sendMessage(msg);
     }
 }

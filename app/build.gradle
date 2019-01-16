@@ -131,6 +131,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'com.king.zxing:zxing-lite:1.0.3'
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
-
+    implementation files('libs/UPPayAssistEx.jar')
+    implementation files('libs/UPPayPluginExPro.jar')
 
 }

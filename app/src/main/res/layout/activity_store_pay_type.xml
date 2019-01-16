@@ -22,6 +22,28 @@
                     android:layout_centerVertical="true" android:textColor="@color/black"/>
 
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent" android:background="@color/white"
+                android:layout_height="60dp" android:padding="10dp"
+                android:id="@+id/rv4_id">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="云闪付"
+                    android:textColor="@color/black" android:textSize="15sp"
+                    android:layout_centerVertical="true" android:layout_marginLeft="20dp"
+                    android:drawableLeft="@mipmap/ysficon" android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/ylicon"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                    android:id="@+id/yl_check" android:layout_centerVertical="true"
+                    android:src="@mipmap/hascheck"  android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/colorline"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp" android:background="@color/colorline"/>
@@ -40,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:layout_alignParentRight="true"
                     android:id="@+id/zfb_check" android:layout_centerVertical="true"
-                    android:src="@mipmap/hascheck"  android:layout_marginRight="10dp"/>
+                    android:src="@mipmap/unhascheck"  android:layout_marginRight="10dp"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"

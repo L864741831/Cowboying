@@ -113,7 +113,7 @@ public class TvLiveActivity extends AppCompatActivity implements View.OnClickLis
      */
     private void preparePlay(String mGlobalAreaDomain,String appkey,String accesstoken) {
         //设置debug模式，输出log信息
-        EZUIKit.setDebug(true);
+        EZUIKit.setDebug(false);
         if (TextUtils.isEmpty(mGlobalAreaDomain)) {
             //appkey初始化
             EZUIKit.initWithAppKey(this.getApplication(), appkey);
